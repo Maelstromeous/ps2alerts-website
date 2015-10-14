@@ -5,7 +5,7 @@ namespace Ps2alerts\Website\ServiceProvider;
 use League\Container\ServiceProvider;
 use GuzzleHttp\Client as Guzzle;
 
-class EventServiceProvider extends ServiceProvider
+class GuzzleServiceProvider extends ServiceProvider
 {
     /**
      * @var array
