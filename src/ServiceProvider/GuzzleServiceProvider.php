@@ -20,10 +20,10 @@ class EventServiceProvider extends ServiceProvider
     public function register()
     {
         $this->getContainer()->singleton('GuzzleHttp\Client', function () {
-            return new Guzzle({
+            return new Guzzle([
                 'base_uri' => 'http://api.ps2alerts.com',
                 'timeout'  => 5.0
-            });
+            ]);
         });
     }
 }
