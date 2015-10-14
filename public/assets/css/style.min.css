@@ -1,4 +1,1 @@
-body {
-  background-image: url('../img/background.jpg');
-  font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
-}
+body{background-image:url('../img/background.jpg');font-family:'Noto Sans',Helvetica,Arial,sans-serif;color:#ddd;background-color:#15171e}.background{background-color:rgba(50,50,50,0.5);min-height:50px}a{color:#d71d02}
