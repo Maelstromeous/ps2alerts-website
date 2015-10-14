@@ -42,7 +42,7 @@ class TemplateServiceProvider extends ServiceProvider
                 $debug = false;
             }
 
-            $loader = new Twig_Loader_Filesystem(__DIR__ . '/../../Template');
+            $loader = new Twig_Loader_Filesystem(__DIR__ . '/../../template');
             $twig   = new Twig_Environment($loader, [
                 'cache' => $cache,
                 'debug' => $debug
