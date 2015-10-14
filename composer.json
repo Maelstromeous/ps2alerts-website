@@ -13,7 +13,8 @@
         "league/event": "^2.1",
         "league/route": "^1.1",
         "cocur/slugify": "^1.2",
-        "twig/twig": "^1.20"
+        "twig/twig": "^1.20",
+        "guzzlehttp/guzzle": "^6.1"
     },
     "autoload": {
         "psr-4": {

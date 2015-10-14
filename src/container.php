@@ -11,6 +11,7 @@ $container->singleton('Symfony\Component\HttpFoundation\Request', function() {
 $container->addServiceProvider('Ps2alerts\Website\ServiceProvider\ConfigServiceProvider');
 $container->addServiceProvider('Ps2alerts\Website\ServiceProvider\DatabaseServiceProvider');
 $container->addServiceProvider('Ps2alerts\Website\ServiceProvider\EventServiceProvider');
+$container->addServiceProvider('Ps2alerts\Website\ServiceProvider\GuzzleServiceProvider');
 $container->addServiceProvider('Ps2alerts\Website\ServiceProvider\SessionServiceProvider');
 $container->addServiceProvider('Ps2alerts\Website\ServiceProvider\TemplateServiceProvider');
 
