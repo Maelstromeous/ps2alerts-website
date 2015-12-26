@@ -4,9 +4,13 @@ namespace Ps2alerts\Website\ServiceProvider;
 
 use League\Container\ServiceProvider;
 use GuzzleHttp\Client as Guzzle;
+use Ps2alerts\Website\Contract\ConfigAwareInterface;
+use Ps2alerts\Website\Contract\ConfigAwareTrait;
 
-class GuzzleServiceProvider extends ServiceProvider
+class GuzzleServiceProvider extends ServiceProvider implements ConfigAwareInterface
 {
+    use ConfigAwareTrait;
+
     /**
      * @var array
      */
@@ -21,7 +25,7 @@ class GuzzleServiceProvider extends ServiceProvider
     {
         $this->getContainer()->singleton('GuzzleHttp\Client', function () {
             return new Guzzle([
-                'base_uri' => 'http://api.ps2alerts.com',
+                'base_uri' => $this->getConfigItem('api_url'),
                 'timeout'  => 5.0
             ]);
         });
