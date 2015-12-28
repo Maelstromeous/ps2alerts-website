@@ -28,7 +28,8 @@ class TemplateServiceProvider extends ServiceProvider
         $globals = [
             'base_url'  => $config['base_url'],
             'asset_url' => $config['asset_url'],
-            'env'       => $config['environment']
+            'api_url'   => $config['api_url'],
+            'env'       => $config['environment'],
         ];
 
         // Register the singleton with the container
@@ -49,14 +50,14 @@ class TemplateServiceProvider extends ServiceProvider
             ]);
 
             // Add Globals
-            foreach($globals as $key => $val) {
+            foreach ($globals as $key => $val) {
                 $twig->addGlobal($key, $val);
             }
 
             // Add session flashes into twig global
             $flashes = $this->getContainer()->get('Symfony\Component\HttpFoundation\Session\Session')->getFlashBag();
 
-            foreach($flashes as $type => $messages) {
+            foreach ($flashes as $type => $messages) {
                 $twig->addGlobal($type, $messages);
             }
 

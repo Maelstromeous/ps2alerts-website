@@ -6,11 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %}</title>
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Orbitron:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{{ asset_url }}/css/style.min.css">
+        {% include('common/css.deps.html') %}
+        {% block stylesheets %}{% endblock %}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -19,14 +16,15 @@
         <![endif]-->
     </head>
     <body>
-        <div class="container">
-        {% include('common/header.html') %}
-            {% block body %}{% endblock %}
+        <div class="row">
+            <div class="col s10 offset-s1">
+                {% include('common/header.html') %}
+                    {% block body %}{% endblock %}
+                {% include('common/footer.html') %}
+            </div>
         </div>
-        {% include('common/footer.html') %}
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        {% include('common/js.deps.html') %}
         <script>{% include 'common/global.js' %}</script>
         {% block javascript %}{% endblock %}
     </body>
