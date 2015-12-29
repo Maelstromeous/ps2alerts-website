@@ -14,61 +14,68 @@ var alertStats = {
     }
 };
 
-// Total Alerts
-aja()
-.method('post')
-.url(api_url + '/statistics/alert/total')
-.on('200', function(response) {
-    alertStats.total = response[0]['COUNT'];
-})
-.go();
+getTotalVictories();
+getEmpireVictories();
 
-// Total Dominations
-aja()
-.method('post')
-.url(api_url + '/statistics/alert/total')
-.data({ ResultDomination: 1})
-.on('200', function(response) {
-    alertStats.totalDominations = response[0]['COUNT'];
-})
-.go();
+function getTotalVictories() {
+    Promise.all([
+        readAlertTotals({ ResultValid: 1 }),
+        readAlertTotals({ ResultDomination: 1 }),
+    ]).then(function(totals) {
+        alertStats.total            = totals[0];
+        alertStats.totalDominations = totals[1];
 
-// VS Victories
-aja()
-.method('post')
-.url(api_url + '/statistics/alert/total')
-.data({ ResultWinner: 'vs'})
-.on('200', function(response) {
-    alertStats.victories.vs = response[0]['COUNT'];
-})
-.go();
+        writeTotals();
+    });
+}
 
-// NC Victories
-aja()
-.method('post')
-.url(api_url + '/statistics/alert/total')
-.data({ ResultWinner: 'nc'})
-.on('200', function(response) {
-    alertStats.victories.nc = response[0]['COUNT'];
-})
-.go();
+function getEmpireVictories() {
+    // Initiate a promise to return all data required
+    Promise.all([
+        readAlertTotals({ ResultWinner: 'vs' }),
+        readAlertTotals({ ResultWinner: 'nc' }),
+        readAlertTotals({ ResultWinner: 'tr' }),
+        readAlertTotals({ ResultWinner: 'draw' }),
+    ]).then(function(totals) {
+        // Write to the statistics object
+        alertStats.victories.vs   = totals[0];
+        alertStats.victories.nc   = totals[1];
+        alertStats.victories.tr   = totals[2];
+        alertStats.victories.draw = totals[3];
 
-// TR Victories
-aja()
-.method('post')
-.url(api_url + '/statistics/alert/total')
-.data({ ResultWinner: 'tr'})
-.on('200', function(response) {
-    alertStats.victories.tr = response[0]['COUNT'];
-})
-.go();
+        writeEmpireTotals();
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
 
-// TR Victories
-aja()
-.method('post')
-.url(api_url + '/statistics/alert/total')
-.data({ ResultDraw: 1})
-.on('200', function(response) {
-    alertStats.victories.tr = response[0]['COUNT'];
-})
-.go();
+function writeTotals() {
+    
+}
+
+function writeEmpireTotals() {
+    var empires = ['vs', 'nc', 'tr', 'draw'];
+
+    for (var i = 0; i < empires.length; i++) {
+        $('#' + empires[i] + '-victories').text(alertStats.victories[empires[i]]);
+    }
+
+    $('.victory-card .card .fa-spin').hide();
+    $('.victory-card .card .collection').fadeIn();
+}
+
+function readAlertTotals(filters) {
+    return new Promise(function(resolve, reject) {
+        aja()
+        .method('post')
+        .url(api_url + '/statistics/alert/total')
+        .data(filters)
+        .on('200', function(response) {
+            return resolve(response[0]['COUNT']);
+        })
+        .on('204', function(response) {
+            return reject('No data!');
+        })
+        .go();
+    });
+}
