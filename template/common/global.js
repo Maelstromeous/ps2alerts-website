@@ -25,10 +25,10 @@ function renderTerritoryBar(data, elem) {
 
 	// All good, show it!
 	$(elem).find('.loading').fadeOut(function() {
-		vsBar.css('width', vsPx).fadeIn();
-		ncBar.css('width', ncPx).fadeIn();
-		trBar.css('width', trPx - 1).fadeIn(); // -1 to ensure we don't break container due to rounding
-		drawBar.css('width', drawPx).fadeIn();
+		vsBar.css('width', vsPx).html(data.vs.toFixed(1) + '%').fadeIn();
+		ncBar.css('width', ncPx).html(data.nc.toFixed(1) + '%').fadeIn();
+		trBar.css('width', trPx - 1).html(data.tr.toFixed(1) + '%').fadeIn(); // -1 to ensure we don't break container due to rounding
+		drawBar.css('width', drawPx).html(data.draw.toFixed(1) + '%').fadeIn();
 	});
 }
 
