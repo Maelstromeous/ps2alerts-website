@@ -3,3 +3,4 @@ vendor
 composer.lock
 public/bower_components
 style.min.css
+node_modules
