@@ -3,6 +3,9 @@
         <h3 class="white-text">Alert Victories</h3>
         <h6 class="white-text">Victories from 29-Oct-2014 to {{ 'now'|date('D-M-Y') }}</h6>
     </div>
+    <div class="row">
+        {% include 'common/charts/territory.bar.html' with {elemid: 'victory-territory-bar'} %}
+    </div>
     <div class="col s6 m3 victory-card" id="vs-victory-card">
         <div class="card deep-purple darken-2">
             <div class="card-content white-text">

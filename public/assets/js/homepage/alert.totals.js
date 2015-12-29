@@ -78,6 +78,9 @@ function writeEmpireTotals() {
 
     $('.victory-card .card .fa-spin').hide();
     $('.victory-card .card .collection').fadeIn();
+
+    // Now that all the data is here, set up the victory chart
+    setUpVictoryBar();
 }
 
 function readAlertTotals(filters) {
@@ -94,4 +97,18 @@ function readAlertTotals(filters) {
         })
         .go();
     });
+}
+
+function setUpVictoryBar()
+{
+    var data = {
+        vs:    alertStats.victories.vs / alertStats.total * 100,
+        nc:    alertStats.victories.nc / alertStats.total * 100,
+        tr:    alertStats.victories.tr / alertStats.total * 100,
+        draw:  alertStats.victories.draw / alertStats.total * 100,
+        total: alertStats.total
+    };
+
+    var elem = $('#victory-territory-bar');
+    renderTerritoryBar(data, elem);
 }
