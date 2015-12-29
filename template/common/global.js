@@ -12,9 +12,6 @@ function renderTerritoryBar(data, elem) {
 	if (data.draw === undefined) {
 		data.draw = 0;
 	}
-	console.log(width);
-
-	console.log(data);
 
 	var vsBar   = $(elem).find('.vs-segment');
 	var ncBar   = $(elem).find('.nc-segment');
@@ -26,10 +23,13 @@ function renderTerritoryBar(data, elem) {
     var trPx   = Math.round(width / 100 * data.tr);
     var drawPx = Math.round(width / 100 * data.draw);
 
-	vsBar.css('width', vsPx);
-	ncBar.css('width', ncPx);
-	trBar.css('width', trPx - 1); // -1 to ensure we don't break container due to rounding
-	drawBar.css('width', drawPx);
+	// All good, show it!
+	$(elem).find('.loading').fadeOut(function() {
+		vsBar.css('width', vsPx).fadeIn();
+		ncBar.css('width', ncPx).fadeIn();
+		trBar.css('width', trPx - 1).fadeIn(); // -1 to ensure we don't break container due to rounding
+		drawBar.css('width', drawPx).fadeIn();
+	});
 }
 
 /*$("#credits").popover({
