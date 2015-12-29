@@ -6,8 +6,8 @@ module.exports = {
             optimization: 2
         },
         files: {
-            "public/assets/css/main.css"    : "public/assets/less/main.less",
-            "public/assets/css/homepage.css": "public/assets/less/homepage.less"
+            "public/assets/css/compiled/main.css"    : "public/assets/less/main.less",
+            "public/assets/css/compiled/homepage.css": "public/assets/less/homepage.less"
         }
     }
 };
