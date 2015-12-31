@@ -14,13 +14,39 @@ var alertStats = {
     }
 };
 
-getTotalVictories();
-getEmpireVictories();
+var serverStats = [];
+
+var servers = [1,10,13,17,25,1000,1001,1002,1003,2000,2001,2002,2003];
+
+// Build Server array
+for (var i = 0; i < servers.length; i++) {
+    serverStats[servers[i]] = {
+        vs: 0,
+        nc: 0,
+        tr: 0,
+        draw: 0
+    };
+}
+
+console.log(serverStats);
+
+// ASYNC FUNCTIONS
+setTimeout(function() {
+    getTotalVictories();
+}, 0);
+
+setTimeout(function() {
+    getEmpireVictories();
+}, 0);
+
+setTimeout(function() {
+    getServerVictories();
+}, 0);
 
 function getTotalVictories() {
     Promise.all([
-        readAlertTotals({ ResultValid: 1 }),
-        readAlertTotals({ ResultDomination: 1 }),
+        readStatisticsAlertTotal({ Valid: 1 }),
+        readStatisticsAlertTotal({ ResultDomination: 1 }),
     ]).then(function(totals) {
         alertStats.total            = totals[0];
         alertStats.totalDominations = totals[1];
@@ -32,13 +58,13 @@ function getTotalVictories() {
 function getEmpireVictories() {
     // Initiate a promise to return all data required
     Promise.all([
-        readAlertTotals({ ResultWinner: 'vs' }),
-        readAlertTotals({ ResultWinner: 'nc' }),
-        readAlertTotals({ ResultWinner: 'tr' }),
-        readAlertTotals({ ResultWinner: 'draw' }),
-        readAlertTotals({ ResultWinner: 'vs', ResultDomination: 1 }),
-        readAlertTotals({ ResultWinner: 'nc', ResultDomination: 1 }),
-        readAlertTotals({ ResultWinner: 'tr', ResultDomination: 1 }),
+        readStatisticsAlertTotal({ ResultWinner: 'vs' }),
+        readStatisticsAlertTotal({ ResultWinner: 'nc' }),
+        readStatisticsAlertTotal({ ResultWinner: 'tr' }),
+        readStatisticsAlertTotal({ ResultWinner: 'draw' }),
+        readStatisticsAlertTotal({ ResultWinner: 'vs', ResultDomination: 1 }),
+        readStatisticsAlertTotal({ ResultWinner: 'nc', ResultDomination: 1 }),
+        readStatisticsAlertTotal({ ResultWinner: 'tr', ResultDomination: 1 }),
     ]).then(function(totals) {
         // Write to the statistics object
         alertStats.victories.vs   = totals[0];
@@ -50,6 +76,19 @@ function getEmpireVictories() {
         alertStats.dominations.tr = totals[6];
 
         writeEmpireTotals();
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
+
+function getServerVictories() {
+    console.log("Getting server victories");
+    Promise.all([
+        readApiGet('/statistics/alert/zone')
+    ]).then(function(serverTotals) {
+        console.log(serverTotals[0]);
+        writeServerVictories(serverTotals[0]);
+        writeZoneVictories(serverTotals[0]);
     }).catch(function(error) {
         console.log(error);
     });
@@ -81,22 +120,6 @@ function writeEmpireTotals() {
 
     // Now that all the data is here, set up the victory chart
     setUpVictoryBar();
-}
-
-function readAlertTotals(filters) {
-    return new Promise(function(resolve, reject) {
-        aja()
-        .method('post')
-        .url(api_url + '/statistics/alert/total')
-        .data(filters)
-        .on('200', function(response) {
-            return resolve(response[0]['COUNT']);
-        })
-        .on('204', function(response) {
-            return reject('No data!');
-        })
-        .go();
-    });
 }
 
 function setUpVictoryBar()
