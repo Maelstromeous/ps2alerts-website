@@ -15,8 +15,8 @@ var alertStats = {
 };
 
 var serverStats = [];
-
-var servers = [1,10,13,17,25,1000,1001,1002,1003,2000,2001,2002,2003];
+var zoneStats   = [];
+var serverZoneStats = [];
 
 // Build Server array
 for (var i = 0; i < servers.length; i++) {
@@ -28,7 +28,28 @@ for (var i = 0; i < servers.length; i++) {
     };
 }
 
-console.log(serverStats);
+// Build Zone array
+for (var i = 0; i < zones.length; i++) {
+    console.log(zones[i]);
+    zoneStats[zones[i]] = {
+        vs: 0,
+        nc: 0,
+        tr: 0,
+        draw: 0
+    };
+}
+
+for (var s = 0; s < servers.length; s++) {
+    serverZoneStats[servers[s]] = {};
+    for (var z = 0; z < zones.length; z++) {
+        serverZoneStats[servers[s]][zones[z]] = {};
+        for (var f = 0; f < factions.length; f++) {
+            serverZoneStats[servers[s]][zones[z]][factions[f]] = 0;
+        }
+    }
+}
+
+console.log('ServerZoneStats', serverZoneStats);
 
 // ASYNC FUNCTIONS
 setTimeout(function() {
@@ -82,16 +103,38 @@ function getEmpireVictories() {
 }
 
 function getServerVictories() {
-    console.log("Getting server victories");
     Promise.all([
         readApiGet('/statistics/alert/zone')
     ]).then(function(serverTotals) {
-        console.log(serverTotals[0]);
-        writeServerVictories(serverTotals[0]);
-        writeZoneVictories(serverTotals[0]);
+        calculateServerZoneVictores(serverTotals[0], function() {
+            console.log("server stats finished: ",serverStats);
+            console.log("zone stats finished: ",zoneStats);
+            console.log("Serverzone stats finished:", serverZoneStats);
+
+            writeServerVictories();
+            writeServerZoneVictories();
+        });
+
+        //writeZoneVictories(serverTotals[0]);
     }).catch(function(error) {
         console.log(error);
     });
+}
+
+function calculateServerZoneVictores(data, callback) {
+    for (var server in data) {
+        for (var zone in data[server]) {
+            for (var i = 0; i < factions.length; i++) {
+                var metric = parseInt(data[server][zone][factions[i]]);
+
+                serverStats[server][factions[i]]           += metric;
+                zoneStats[zone][factions[i]]               += metric;
+                serverZoneStats[server][zone][factions[i]] += metric;
+            }
+        }
+    }
+
+    callback();
 }
 
 function writeTotals() {
@@ -135,3 +178,17 @@ function setUpVictoryBar()
     var elem = $('#victory-territory-bar');
     renderTerritoryBar(data, elem);
 }
+
+function writeServerVictories() {
+    for (var server in serverStats) {
+        if (serverStats.hasOwnProperty(server)) {
+            for (var i = 0; i < factions.length; i++) {
+                var elem = $("#server-victories-body tr[data-server='"+server+"']")
+                .find('.'+factions[i]);
+
+                $(elem).html(serverStats[server][factions[i]]);
+            }
+        }
+    }
+}
+
