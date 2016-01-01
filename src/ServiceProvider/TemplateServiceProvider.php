@@ -30,6 +30,30 @@ class TemplateServiceProvider extends ServiceProvider
             'asset_url' => $config['asset_url'],
             'api_url'   => $config['api_url'],
             'env'       => $config['environment'],
+            'servers'   => [1,10,13,17,25,1000,2000],
+            'zones'     => [2,4,6,8],
+            'zoneNames' => [
+                2 => 'indar',
+                4 => 'hossin',
+                6 => 'amerish',
+                8 => 'esamir'
+            ],
+            'serverNames' => [
+                1    => 'Connery',
+                10   => 'Miller',
+                13   => 'Cobalt',
+                17   => 'Emerald',
+                19   => 'Jaeger',
+                25   => 'Briggs',
+                1000 => 'Genudine',
+                1001 => 'Palos',
+                1002 => 'Crux',
+                1003 => 'Searhus',
+                2000 => 'Ceres',
+                2001 => 'Lithcorp',
+                2002 => 'Rashnu'
+            ],
+            'factions' => ['vs','nc','tr','draw']
         ];
 
         // Register the singleton with the container
