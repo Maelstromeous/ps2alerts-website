@@ -5,27 +5,11 @@
 {% endblock %}
 
 {% block body %}
-{% include('home/victories.html') %}
 <div class="row background padding">
-    <div class="col s12 m6">
-        <div class="card grey darken-2 white-text">
-            <div class="card-content">
-                <div class="card-title center-align">
-                    Server Victories
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col s12 m6">
-        <div class="card grey darken-2 white-text">
-            <div class="card-content">
-                <div class="card-title center-align">
-                    Continent Victories
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include('home/victories.html') %}
+    {% include('home/server.cont.stats.html') %}
 </div>
+
 {% endblock %}
 
 {% block javascript %}
