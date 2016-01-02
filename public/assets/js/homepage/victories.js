@@ -114,8 +114,6 @@ function getServerVictories() {
             writeServerVictories();
             writeServerZoneVictories();
         });
-
-        //writeZoneVictories(serverTotals[0]);
     }).catch(function(error) {
         console.log(error);
     });
@@ -192,3 +190,17 @@ function writeServerVictories() {
     }
 }
 
+function writeServerZoneVictories() {
+    for (var server in serverZoneStats) {
+        if (serverZoneStats.hasOwnProperty(server)) {
+            for (var zone in serverZoneStats[server]) {
+                for (var i = 0; i < factions.length; i++) {
+                    var elem = $("#serverzone-victories-body tr[data-server='"+server+"']")
+                    .find("td[data-zone='"+zone+"'][data-faction='"+factions[i]+"']");
+
+                    $(elem).html(serverZoneStats[server][zone][factions[i]]);
+                }
+            }
+        }
+    }
+}
