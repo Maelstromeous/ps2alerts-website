@@ -93,6 +93,21 @@
                         {% endfor %}
                     {% endfor %}
                     </tr>
+                    <tr data-server="totals">
+                        <td class="left-align">
+                            Totals
+                        </td>
+                        {% for zone in zones %}
+                            {% for faction in factions %}
+                        <td
+                            class="{{ faction }}-table-text {{ attribute(zoneNames, zone) }}-back center-align"
+                            data-zone="{{ zone }}"
+                            data-faction="{{ faction }}">
+                            2500
+                        </td>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
                 </tbody>
             </table>
         </div>

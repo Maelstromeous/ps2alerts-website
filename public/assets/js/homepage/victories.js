@@ -30,7 +30,6 @@ for (var i = 0; i < servers.length; i++) {
 
 // Build Zone array
 for (var i = 0; i < zones.length; i++) {
-    console.log(zones[i]);
     zoneStats[zones[i]] = {
         vs: 0,
         nc: 0,
@@ -48,8 +47,6 @@ for (var s = 0; s < servers.length; s++) {
         }
     }
 }
-
-console.log('ServerZoneStats', serverZoneStats);
 
 // ASYNC FUNCTIONS
 setTimeout(function() {
@@ -203,4 +200,14 @@ function writeServerZoneVictories() {
             }
         }
     }
+
+    for (var zone in zoneStats) {
+        for (var i = 0; i < factions.length; i++) {
+            var elem = $("#serverzone-victories-body tr[data-server='totals']")
+            .find("td[data-zone='"+zone+"'][data-faction='"+factions[i]+"']");
+
+            $(elem).html(zoneStats[zone][factions[i]]);
+        }
+    }
+
 }
