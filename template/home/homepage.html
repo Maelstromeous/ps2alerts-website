@@ -24,13 +24,22 @@
     <div class="col s12 m6">
         {% include 'home/charts/server.victories.html' %}
     </div>
+</div>
+<div class="row background padding">
+    <h3 class="white-text center-align">Victory Timeline</h3>
     <div class="col s12">
-        {% include 'home/charts/serverzone.victories.html' %}
+        <div id="victories-timeline"></div>
     </div>
+</div>
+<div class="row background padding">
+    {% include 'home/charts/serverzone.victories.html' %}
 </div>
 {% endblock %}
 
 {% block javascript %}
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
 <script src="{{ asset_url }}/js/homepage/victories.js"></script>
+<script src="{{ asset_url }}/js/homepage/charts/victory.timeline.events.js"></script>
+<script src="{{ asset_url }}/js/homepage/charts/victory.timeline.js"></script>
 <script src="{{ asset_url }}/js/homepage/announcement.js"></script>
 {% endblock %}
