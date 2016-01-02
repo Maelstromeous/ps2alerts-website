@@ -29,7 +29,7 @@
         <script src="{{ asset_url }}/js/common/api.js"></script>
         {% block javascript %}{% endblock %}
 
-        {% if env == 'prod' %}
+        {% if env == 'production' %}
         <script src="{{ asset_url }}/js/common/analytics.js"></script>
         {% endif %}
     </body>
