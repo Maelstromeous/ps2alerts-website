@@ -133,7 +133,13 @@ function calculateServerZoneVictores(data, callback) {
 }
 
 function writeTotals() {
+    $("#total-victory-card").find('.fa-spin').fadeOut(function() {
+        $("#total-victory-card").find('.card-subtitle').html(alertStats.total).fadeIn();
+    });
 
+    $("#total-dominations-card").find('.fa-spin').fadeOut(function() {
+        $("#total-dominations-card").find('.card-subtitle').html(alertStats.totalDominations).fadeIn();
+    });
 }
 
 function writeEmpireTotals() {
@@ -143,7 +149,7 @@ function writeEmpireTotals() {
         var elem = $('#' + empires[i] + '-victories');
         var percentage = alertStats.victories[empires[i]] / alertStats.total * 100;
 
-        $(elem).html('<b>' + alertStats.victories[empires[i]] + '</b> / ' + percentage.toFixed(2) + '%');
+        $(elem).html('<b>' + alertStats.victories[empires[i]] + '</b> / ' + percentage.toFixed(1) + '%');
     }
 
     // Deletes Draw for domination loop
@@ -153,8 +159,9 @@ function writeEmpireTotals() {
         $('#' + empires[i] + '-dominations').text(alertStats.dominations[empires[i]]);
     }
 
-    $('.victory-card .card .fa-spin').hide();
-    $('.victory-card .card .collection').fadeIn();
+    $('.victory-card .card .fa-spin').fadeOut(function() {
+        $('.victory-card .card .collection').fadeIn();
+    });
 
     // Now that all the data is here, set up the victory chart
     setUpVictoryBar();
@@ -171,7 +178,10 @@ function setUpVictoryBar()
     };
 
     var elem = $('#victory-territory-bar');
-    renderTerritoryBar(data, elem);
+    elem.find('.fa-spin').fadeOut(function() {
+        renderTerritoryBar(data, elem);
+    });
+
 }
 
 function writeServerVictories() {
