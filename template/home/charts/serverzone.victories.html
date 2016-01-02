@@ -1,0 +1,62 @@
+<div class="card grey darken-3 white-text">
+    <div class="card-content">
+        <div class="card-title center-align">
+            Continent Victories
+        </div>
+        <table class="responsive-table bordered" id="serverzone-victories-table">
+            <thead>
+                <tr>
+                    <td colspan="1" class="left-align">
+                        Server
+                    </td>
+                    <td colspan="4" class="center-align indar-back">
+                        Indar
+                    </td>
+                    <td colspan="4" class="center-align hossin-back">
+                        Hossin
+                    </td>
+                    <td colspan="4" class="center-align amerish-back">
+                        Amerish
+                    </td>
+                    <td colspan="4" class="center-align esamir-back">
+                        Esamir
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="serverzone-victories-body">
+                {% for server in servers %}
+                <tr data-server="{{ server }}">
+                    <td class="left-align">
+                        {{ attribute(serverNames, server) }}
+                    </td>
+                    {% for zone in zones %}
+                        {% for faction in factions %}
+                    <td
+                        class="{{ faction }}-table-text {{ attribute(zoneNames, zone) }}-back center-align"
+                        data-zone="{{ zone }}"
+                        data-faction="{{ faction }}">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </td>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                </tr>
+                <tr data-server="totals">
+                    <td class="left-align">
+                        Totals
+                    </td>
+                    {% for zone in zones %}
+                        {% for faction in factions %}
+                    <td
+                        class="{{ faction }}-table-text {{ attribute(zoneNames, zone) }}-back center-align"
+                        data-zone="{{ zone }}"
+                        data-faction="{{ faction }}">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

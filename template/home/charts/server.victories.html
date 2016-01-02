@@ -1,0 +1,57 @@
+<div class="card grey darken-3 white-text">
+    <div class="card-content">
+        <div class="card-title center-align">
+            Server Victories
+        </div>
+        <table class="responsive-table bordered" id="server-victories-table">
+            <thead>
+                <tr>
+                    <td class="left-align">
+                        Server
+                    </td>
+                    <td class="center-align">
+                        VS
+                    </td>
+                    <td class="center-align">
+                        NC
+                    </td>
+                    <td class="center-align">
+                        TR
+                    </td>
+                    <td class="center-align">
+                        Draws
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="server-victories-body">
+                {% for server in servers %}
+                <tr data-server="{{ server }}">
+                    <td class="left-align">
+                        {{ attribute(serverNames, server) }}
+                    </td>
+                    <td class="center-align" data-faction="vs">
+                        <span class="material-badge vs z-depth-1">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </span>
+                    </td>
+                    <td class="center-align" data-faction="nc">
+                        <span class="material-badge nc z-depth-1">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </span>
+                    </td>
+                    <td class="center-align" data-faction="tr">
+                        <span class="material-badge tr z-depth-1">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </span>
+                    </td>
+                    <td class="center-align" data-faction="draw">
+                        <span class="material-badge draw z-depth-1">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

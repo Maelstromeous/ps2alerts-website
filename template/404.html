@@ -1,0 +1,11 @@
+{% extends('index.html') %}
+
+{% block title %}Page not found {% endblock %}
+
+{% block body %}
+<h1 class="text-center">Sorry, page could not be found!</h1>
+
+<div style="text-align: center">
+    <a href="{{ base_url }}">Return to Home Page</a>
+</div>
+{% endblock %}

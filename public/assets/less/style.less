@@ -1,0 +1,76 @@
+@import 'variables.less';
+
+body {
+    background-image: url('../../img/background.jpg');
+    font-family: 'Noto Sans',Helvetica,Arial,sans-serif;
+    background-color: #15171E;
+}
+
+// Global class to generally apply to Rows to apply uniform padding
+.padding {
+    padding: @padding-base;
+}
+
+.container, #footer {
+    color: #ddd;
+}
+
+#footer {
+    margin-top: 20px;
+    min-height: inherit;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Default background for assigned DIVs */
+.background {
+    background-color: rgba(50, 50, 50, 0.5);
+    min-height: 50px;
+}
+
+a {
+    color: @brand-psbOrange;
+}
+
+.collection {
+    border: 0;
+}
+
+.fa-refresh.fa-spin {
+    transform-origin: 49% 48.5%;
+}
+
+table tr:last-child {
+    border-bottom: 0 !important;
+}
+
+.card-subtitle {
+    font-size: 18px;
+}
+
+.material-badge {
+    min-width: 3rem;
+    padding: 1px 12px;
+    text-align: center;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: grey;
+    border-radius: 2px;
+}
+
+.material-badge.vs {
+    background-color: @background-vs;
+}
+
+.material-badge.nc {
+    background-color: @background-nc;
+}
+
+.material-badge.tr {
+    background-color: @background-tr;
+}
+
+.material-badge.draw {
+    background-color: @background-draw;
+}
