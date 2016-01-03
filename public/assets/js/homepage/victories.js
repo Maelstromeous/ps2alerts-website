@@ -14,8 +14,8 @@ var alertStats = {
     }
 };
 
-var serverStats = [];
-var zoneStats   = [];
+var serverStats     = [];
+var zoneStats       = [];
 var serverZoneStats = [];
 
 // Build Server array
@@ -137,11 +137,11 @@ function calculateServerZoneVictores(data, callback) {
 
 function writeTotals() {
     $("#total-victory-card").find('.fa-spin').fadeOut(function() {
-        $("#total-victory-card").find('.card-subtitle').html(alertStats.total).fadeIn();
+        $("#total-victory-card").find('span').html(alertStats.total).fadeIn();
     });
 
     $("#total-dominations-card").find('.fa-spin').fadeOut(function() {
-        $("#total-dominations-card").find('.card-subtitle').html(alertStats.totalDominations).fadeIn();
+        $("#total-dominations-card").find('span').html(alertStats.totalDominations).fadeIn();
     });
 
     logDebug('Totals written');
