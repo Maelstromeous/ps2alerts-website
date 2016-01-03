@@ -1,7 +1,8 @@
 // Contains the functions required for interacting with the endpiints
 
 function readApiGet(url) {
-    console.log(api_url + url);
+    logDebug('Calling API:');
+    logDebug(url);
     return new Promise(function(resolve, reject) {
         aja()
         .method('get')

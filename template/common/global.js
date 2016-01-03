@@ -9,6 +9,8 @@ var servers  = [1,10,13,17,25,1000,2000];
 var zones    = [2,4,6,8];
 var factions = ['vs','nc','tr','draw'];
 
+var debug = 1;
+
 var serverNames = {
     1: 'Connery',
     10: 'Miller',
@@ -45,6 +47,13 @@ function renderTerritoryBar(data, elem) {
 		trBar.css('width', trPx - 1).html(data.tr.toFixed(1) + '%').fadeIn(); // -1 to ensure we don't break container due to rounding
 		drawBar.css('width', drawPx).html(data.draw.toFixed(1) + '%').fadeIn();
 	});
+}
+
+// Console.log optional logging messages
+function logDebug(message) {
+    if (debug === 1) {
+        console.log(message);
+    }
 }
 
 /*$("#credits").popover({
