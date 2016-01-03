@@ -6,7 +6,7 @@ function getTimelineData() {
         .url(api_url + '/statistics/alert/history/summary')
         .on('200', function(response) {
             logDebug('Timeline data promise completed');
-            
+
             writeTimeline(response);
         })
         .on('204', function(response) {
@@ -51,6 +51,10 @@ function writeTimeline(data) {
 
     // See victory.timeline.events.js
     victoryChart.addSeries(timelineEvents);
+
+    $('#victories-timeline-container .fa-spin').fadeOut(function() {
+        $('#victories-timeline').animate({opacity: 1}, 1000);
+    });
 }
 
 $(function() {
