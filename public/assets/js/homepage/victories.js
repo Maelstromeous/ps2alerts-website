@@ -66,6 +66,7 @@ function getTotalVictories() {
         readStatisticsAlertTotal({ Valid: 1 }),
         readStatisticsAlertTotal({ ResultDomination: 1 }),
     ]).then(function(totals) {
+        logDebug('Total Victories Promise complete');
         alertStats.total            = totals[0];
         alertStats.totalDominations = totals[1];
 
@@ -84,6 +85,8 @@ function getEmpireVictories() {
         readStatisticsAlertTotal({ ResultWinner: 'nc', ResultDomination: 1 }),
         readStatisticsAlertTotal({ ResultWinner: 'tr', ResultDomination: 1 }),
     ]).then(function(totals) {
+        logDebug('Empire Victories Promise complete');
+
         // Write to the statistics object
         alertStats.victories.vs   = totals[0];
         alertStats.victories.nc   = totals[1];
@@ -103,11 +106,9 @@ function getServerVictories() {
     Promise.all([
         readApiGet('/statistics/alert/zone')
     ]).then(function(serverTotals) {
-        calculateServerZoneVictores(serverTotals[0], function() {
-            console.log("server stats finished: ",serverStats);
-            console.log("zone stats finished: ",zoneStats);
-            console.log("Serverzone stats finished:", serverZoneStats);
+        logDebug('Server Victories Promise complete');
 
+        calculateServerZoneVictores(serverTotals[0], function() {
             writeServerVictories();
             writeServerZoneVictories();
         });
@@ -129,6 +130,8 @@ function calculateServerZoneVictores(data, callback) {
         }
     }
 
+    logDebug('Server Zone victores calculated');
+
     callback();
 }
 
@@ -140,6 +143,8 @@ function writeTotals() {
     $("#total-dominations-card").find('.fa-spin').fadeOut(function() {
         $("#total-dominations-card").find('.card-subtitle').html(alertStats.totalDominations).fadeIn();
     });
+
+    logDebug('Totals written');
 }
 
 function writeEmpireTotals() {
@@ -155,13 +160,15 @@ function writeEmpireTotals() {
     // Deletes Draw for domination loop
     delete empires[3];
 
-    for (var i = 0; i < empires.length; i++) {
-        $('#' + empires[i] + '-dominations').text(alertStats.dominations[empires[i]]);
+    for (var e = 0; e < empires.length; e++) {
+        $('#' + empires[e] + '-dominations').text(alertStats.dominations[empires[e]]);
     }
 
     $('.victory-card .card .fa-spin').fadeOut(function() {
         $('.victory-card .card .collection').fadeIn();
     });
+
+    logDebug('Server victory cards written');
 
     // Now that all the data is here, set up the victory chart
     setUpVictoryBar();
@@ -182,6 +189,7 @@ function setUpVictoryBar()
         renderTerritoryBar(data, elem);
     });
 
+    logDebug('Victory Bar rendered');
 }
 
 function writeServerVictories() {
@@ -195,6 +203,8 @@ function writeServerVictories() {
             }
         }
     }
+
+    logDebug('Server Victories written');
 }
 
 function writeServerZoneVictories() {
@@ -211,6 +221,8 @@ function writeServerZoneVictories() {
         }
     }
 
+    logDebug('Server Zone Stats written');
+
     for (var zone in zoneStats) {
         for (var i = 0; i < factions.length; i++) {
             var elem = $("#serverzone-victories-body tr[data-server='totals']")
@@ -220,4 +232,5 @@ function writeServerZoneVictories() {
         }
     }
 
+    logDebug('Server Zone Totals written');
 }

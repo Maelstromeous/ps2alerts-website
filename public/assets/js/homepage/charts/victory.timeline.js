@@ -5,6 +5,8 @@ function getTimelineData() {
         .method('post')
         .url(api_url + '/statistics/alert/history/summary')
         .on('200', function(response) {
+            logDebug('Timeline data promise completed');
+            
             writeTimeline(response);
         })
         .on('204', function(response) {
