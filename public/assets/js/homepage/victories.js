@@ -154,7 +154,7 @@ function writeEmpireTotals() {
         var elem = $('#' + empires[i] + '-victories');
         var percentage = alertStats.victories[empires[i]] / alertStats.total * 100;
 
-        $(elem).html('<b>' + alertStats.victories[empires[i]] + '</b> / ' + percentage.toFixed(1) + '%');
+        $(elem).html(alertStats.victories[empires[i]] + ' / ' + percentage.toFixed(1) + '%');
     }
 
     // Deletes Draw for domination loop
