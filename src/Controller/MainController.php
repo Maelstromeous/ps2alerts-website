@@ -20,7 +20,7 @@ class MainController implements TemplateAwareInterface
     public function index(Request $request, Response $response)
     {
         return $response->setContent(
-            $this->getTemplateDriver()->render('home/homepage.html')
+            $this->getTemplateDriver()->render('home/index.html')
         );
     }
 }
