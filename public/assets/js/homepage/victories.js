@@ -177,17 +177,14 @@ function writeEmpireTotals() {
 function setUpVictoryBar()
 {
     var data = {
-        vs:    alertStats.victories.vs / alertStats.total * 100,
-        nc:    alertStats.victories.nc / alertStats.total * 100,
-        tr:    alertStats.victories.tr / alertStats.total * 100,
-        draw:  alertStats.victories.draw / alertStats.total * 100,
-        total: alertStats.total
+        vs:    alertStats.victories.vs,
+        nc:    alertStats.victories.nc,
+        tr:    alertStats.victories.tr,
+        draw:  alertStats.victories.draw,
     };
 
     var elem = $('#victory-territory-bar');
-    elem.find('.fa-spin').fadeOut(function() {
-        renderTerritoryBar(data, elem);
-    });
+    renderTerritoryBar(data, elem);
 
     logDebug('Victory Bar rendered');
 }
@@ -195,12 +192,21 @@ function setUpVictoryBar()
 function writeServerVictories() {
     for (var server in serverStats) {
         if (serverStats.hasOwnProperty(server)) {
-            for (var i = 0; i < factions.length; i++) {
-                var elem = $("#server-victories-body tr[data-server='"+server+"']")
-                .find('.'+factions[i]);
+            var total =
+                serverStats[server].vs +
+                serverStats[server].nc +
+                serverStats[server].tr +
+                serverStats[server].draw;
 
-                $(elem).html(serverStats[server][factions[i]]);
-            }
+            var data = {
+                vs:    serverStats[server].vs,
+                nc:    serverStats[server].nc,
+                tr:    serverStats[server].tr,
+                draw:  serverStats[server].draw,
+            };
+
+            var elem = $('#server-victory-bar-' + server);
+            renderTerritoryBar(data, elem, true, true);
         }
     }
 

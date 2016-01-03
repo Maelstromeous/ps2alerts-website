@@ -91,3 +91,14 @@ table tr:last-child {
     transform: translateY(-47.5%);
     transform: translateX(-43.5%);
 }
+
+.simulated-table-row {
+    border-bottom: 1px solid @border-color;
+    padding-top: @padding-base;
+    padding-bottom: @padding-base;
+    overflow: hidden;
+}
+
+.simulated-table-row:last-child {
+    border-bottom: 0;
+}

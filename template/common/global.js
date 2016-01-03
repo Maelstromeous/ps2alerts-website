@@ -24,28 +24,85 @@ var serverNames = {
 
 // Global function which takes a territory bar element and data, and then renders
 // the bar with unform widths etc.
-function renderTerritoryBar(data, elem) {
+function renderTerritoryBar(data, elem, numbers, showOpposite) {
     var width = $(elem).outerWidth();
+
 	if (data.draw === undefined) {
 		data.draw = 0;
 	}
 
-	var vsBar   = $(elem).find('.vs-segment');
-	var ncBar   = $(elem).find('.nc-segment');
-	var trBar   = $(elem).find('.tr-segment');
-	var drawBar = $(elem).find('.draw-segment');
+    var totalSum = data.vs + data.nc + data.tr + data.draw;
+    var totalPx = 0;
 
-    var vsPx   = Math.round(width / 100 * data.vs);
-    var ncPx   = Math.round(width / 100 * data.nc);
-    var trPx   = Math.round(width / 100 * data.tr);
-    var drawPx = Math.round(width / 100 * data.draw);
+    // Standardize the width to a whole number to lessen the chance of decking
+    $(elem).css('width', width.toFixed(0));
 
 	// All good, show it!
 	$(elem).find('.loading').fadeOut(function() {
-		vsBar.css('width', vsPx).html(data.vs.toFixed(1) + '%').fadeIn();
-		ncBar.css('width', ncPx).html(data.nc.toFixed(1) + '%').fadeIn();
-		trBar.css('width', trPx - 1).html(data.tr.toFixed(1) + '%').fadeIn(); // -1 to ensure we don't break container due to rounding
-		drawBar.css('width', drawPx).html(data.draw.toFixed(1) + '%').fadeIn();
+        for (var i = 0; i < factions.length; i++) {
+            var segment = $(elem).find('.' + factions[i] + '-segment');
+            var metric  = $(segment).find('span')
+            var per     = data[factions[i]] / totalSum * 100;
+            var px      = Math.round(width / 100 * per);
+            var html    = '';
+            var cutoff  = 45;
+
+            totalPx += px;
+
+            // Add data attributes should we ever want to do "flipovers"
+            $(metric).attr({
+                "data-percent" : per.toFixed(1),
+                "data-number"  : data[factions[i]]
+            });
+
+            if (numbers === true) {
+                html = data[factions[i]];
+            } else {
+                html = per.toFixed(1) + '%';
+            }
+
+            // Adds the class metric-flipover. See function flipoverSegments.
+            if (showOpposite === true) {
+                var flipto = 'numbers';
+
+                if (numbers === true) {
+                    flipto = 'percent';
+                }
+
+                $(metric).attr('flipto', flipto).addClass('metric-flipover');
+            }
+
+            // If we have a width breakage
+            if (totalPx > width) {
+                px -= (totalPx - width);
+            }
+
+            segment.css('width', px);
+            metric.html(html);
+
+            // Removes the text if the segment is too small to hold it
+            if (px < cutoff) {
+                metric.html('');
+                metric.attr('cutoff', 1);
+
+                // Add a tooltip to the segment so people can hover over and
+                // still get the information
+                segment.attr({
+                    "data-position": "top",
+                    "data-delay"   : "0",
+                    "data-tooltip" : factions[i] + ': '+ data[factions[i]] + ' (' + per.toFixed(1) + '%)'
+                }).addClass('tooltipped');
+
+                fireTooltips(segment);
+            }
+        }
+
+        var fadeInTimeout = 0;
+
+        $(elem).find('.segment').each(function(index, el) {
+            $(el).delay(fadeInTimeout).fadeIn();
+            fadeInTimeout += 100;
+        });
 	});
 }
 
@@ -63,3 +120,50 @@ function logDebug(message) {
 	title: "Creditations"
 });
 */
+
+setInterval(function() {
+    flipoverMetrics();
+}, 5000);
+
+// Grabs all metrics elements and flips them over, showing percentage / numerical
+// values
+function flipoverMetrics() {
+    $('.metric-flipover').each(function(index, el) {
+        var flipto = $(this).attr('flipto');
+        var metric;
+        var segment = $(this).hasClass('segment-metric');
+
+        if (flipto === 'numbers') {
+            $(this).attr('flipto', 'percent');
+            metric = $(this).attr('data-number');
+        } else {
+            $(this).attr('flipto', 'numbers');
+            metric = $(this).attr('data-percent') + '%';
+        }
+
+        $(this).fadeOut(function() {
+            $(this).html(metric);
+
+            // If part of a territory bar segment, calculate whether or not
+            // to show the html part based on size.
+            if (segment === true) {
+                var width = $(this).parent('div').outerWidth();
+                var cutoff = 45;
+
+                if (width < cutoff) {
+                    $(this).html('');
+                }
+            }
+
+            $(this).fadeIn();
+        });
+    });
+}
+
+$(document).ready(function(){
+    fireTooltips( $('.tooltipped') );
+});
+
+function fireTooltips(elem) {
+    $(elem).tooltip();
+}
