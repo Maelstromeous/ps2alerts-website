@@ -41,12 +41,12 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
 	$(elem).find('.loading').fadeOut(function() {
         for (var i = 0; i < factions.length; i++) {
             var segment = $(elem).find('.' + factions[i] + '-segment');
-            var metric  = $(segment).find('span')
+            var metric  = $(segment).find('span');
             var per     = data[factions[i]] / totalSum * 100;
             var px      = Math.round(width / 100 * per);
             var html    = '';
             var cutoff  = 45;
-
+            
             totalPx += px;
 
             // Add data attributes should we ever want to do "flipovers"
