@@ -217,24 +217,18 @@ function writeServerZoneVictories() {
     for (var server in serverZoneStats) {
         if (serverZoneStats.hasOwnProperty(server)) {
             for (var zone in serverZoneStats[server]) {
-                for (var i = 0; i < factions.length; i++) {
-                    var elem = $("#serverzone-victories-body tr[data-server='"+server+"']")
-                    .find("td[data-zone='"+zone+"'][data-faction='"+factions[i]+"']");
+                var data = {
+                    vs:    serverZoneStats[server][zone].vs,
+                    nc:    serverZoneStats[server][zone].nc,
+                    tr:    serverZoneStats[server][zone].tr,
+                    draw:  serverZoneStats[server][zone].draw,
+                };
 
-                    $(elem).html(serverZoneStats[server][zone][factions[i]]);
-                }
+                var elem = $('#serverzone-victories-container')
+                    .find('#zone-victories-'+ zone + '-' + server);
+
+                renderTerritoryBar(data, elem, true, true);
             }
-        }
-    }
-
-    logDebug('Server Zone Stats written');
-
-    for (var zone in zoneStats) {
-        for (var i = 0; i < factions.length; i++) {
-            var elem = $("#serverzone-victories-body tr[data-server='totals']")
-            .find("td[data-zone='"+zone+"'][data-faction='"+factions[i]+"']");
-
-            $(elem).html(zoneStats[zone][factions[i]]);
         }
     }
 

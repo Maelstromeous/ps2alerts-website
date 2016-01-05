@@ -1,59 +1,22 @@
 <h3 class="center-align">Continent Victories</h3>
-<div class="col s12">
-    <table class="responsive-table bordered" id="serverzone-victories-table">
-        <thead>
-            <tr>
-                <td colspan="1" class="left-align">
-                    Server
-                </td>
-                <td colspan="4" class="center-align indar-back">
-                    Indar
-                </td>
-                <td colspan="4" class="center-align hossin-back">
-                    Hossin
-                </td>
-                <td colspan="4" class="center-align amerish-back">
-                    Amerish
-                </td>
-                <td colspan="4" class="center-align esamir-back">
-                    Esamir
-                </td>
-            </tr>
-        </thead>
-        <tbody id="serverzone-victories-body">
-            {% for server in servers %}
-            <tr data-server="{{ server }}">
-                <td class="left-align">
-                    {{ attribute(serverNames, server) }}
-                </td>
-                {% for zone in zones %}
-                    {% for faction in factions %}
-                <td
-                    class="{{ faction }}-table-text {{ attribute(zoneNames, zone) }}-back center-align"
-                    data-zone="{{ zone }}"
-                    data-faction="{{ faction }}">
-                    <i class="fa fa-refresh fa-spin"></i>
-                </td>
-                    {% endfor %}
-                {% endfor %}
-            {% endfor %}
-            </tr>
-            <tr data-server="totals">
-                <td class="left-align">
-                    Totals
-                </td>
-                {% for zone in zones %}
-                    {% for faction in factions %}
-                <td
-                    class="{{ faction }}-table-text {{ attribute(zoneNames, zone) }}-back center-align"
-                    data-zone="{{ zone }}"
-                    data-faction="{{ faction }}">
-                    <i class="fa fa-refresh fa-spin"></i>
-                </td>
-                    {% endfor %}
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
 
+{% for zone in zones %}
+{% set zoneName = attribute(zoneNames, zone) %}
+<div class="col s12 m6">
+    <div class="card {{ zoneName }}-back">
+        <div class="card-content white-text">
+            <p class="card-title center-align">{{ zoneName|capitalize }}</p>
+            {% for server in servers %}
+            <div class="simulated-table-row white-text">
+                <div class="col s12 m2">
+                    {{ attribute(serverNames, server) }}
+                </div>
+                <div class="col s12 m10" data-zone="{{ zone }}" data-server="{{ server }}">
+                    {% include 'common/charts/territory.bar.html' with {elemid: 'zone-victories-'  ~ zone ~ '-' ~ server} %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+{% endfor %}
