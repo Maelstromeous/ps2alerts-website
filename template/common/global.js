@@ -46,8 +46,18 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
             var px      = Math.round(width / 100 * per);
             var html    = '';
             var cutoff  = 45;
-            
+
+            // Calculate the final segment using the remaining space
+            if (factions[i] === 'draw') {
+                px = (width - totalPx);
+            }
+
             totalPx += px;
+
+            // If we have a width breakage
+            if (totalPx > width) {
+                px =  (totalPx - width);
+            }
 
             // Add data attributes should we ever want to do "flipovers"
             $(metric).attr({
@@ -70,11 +80,6 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
                 }
 
                 $(metric).attr('flipto', flipto).addClass('metric-flipover');
-            }
-
-            // If we have a width breakage
-            if (totalPx > width) {
-                px -= (totalPx - width);
             }
 
             segment.css('width', px);
