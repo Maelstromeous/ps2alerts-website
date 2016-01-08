@@ -89,7 +89,6 @@ class TemplateServiceProvider extends ServiceProvider
             if ($debug === true) {
                 $twig->addExtension(new Twig_Extension_Debug);
             }
-            $twig->addExtension(new SlugifyExtension(Slugify::create(null, array('lowercase' => false))));
 
             return $twig;
         });
