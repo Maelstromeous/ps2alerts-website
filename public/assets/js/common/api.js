@@ -22,7 +22,7 @@ function readApiGet(url) {
 
 function readStatisticsAlertTotal(filters) {
     var data = {
-        wheres : filters
+        wheres : JSON.stringify(filters)
     };
 
     return new Promise(function(resolve, reject) {
