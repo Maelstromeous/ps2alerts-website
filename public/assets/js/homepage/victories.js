@@ -180,7 +180,7 @@ function setUpVictoryBar()
         vs:    alertStats.victories.vs,
         nc:    alertStats.victories.nc,
         tr:    alertStats.victories.tr,
-        draw:  alertStats.victories.draw,
+        draw:  alertStats.victories.draw
     };
 
     var elem = $('#victory-territory-bar');
