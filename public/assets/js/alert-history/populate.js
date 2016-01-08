@@ -6,7 +6,7 @@ function getAlertHistory(filters) {
     ]).then(function(data) {
         logDebug('Alert History promise complete');
         writeAlertHistory(data[0]);
-    });
+     });
 }
 
 function readAlertHistory(filters) {
@@ -34,13 +34,32 @@ function readAlertHistory(filters) {
     });
 }
 
+// Goes through all results and writes the partials then appends to the list
 function writeAlertHistory(data) {
     for (var alert in data) {
-        console.log(data[alert]);
+        $('#history-list').append(
+            twig({ ref: "twigAlertTable"}).render(data[alert])
+        );
 
-        var html = '<div class="alert-history-row">';
-        
+        var metrics = {
+            vs:    parseInt(data[alert].map[0].controlVS),
+            nc:    parseInt(data[alert].map[0].controlNC),
+            tr:    parseInt(data[alert].map[0].controlTR)
+        };
+
+        var total = (metrics.vs + metrics.nc + metrics.tr);
+        var diff = 100 - total;
+
+        if (diff < 0) {
+            diff = 0;
+        }
+
+        metrics.draw = diff;
+
+        var elem = $('#alert-' + data[alert].ResultID);
+
+        renderTerritoryBar(metrics, elem);
     }
-
-    console.log(data);
+    // Setup tooltips for newly generated content
+    fireTooltips( $('.tooltipped') );
 }

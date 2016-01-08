@@ -10,33 +10,17 @@
 <div class="row background padding">
     <div class="row center-align">
         <h3>Alert History</h3>
-        <h6>Dates: <span id="dateFrom"></span> - <span id="dateTo"></span></h6>
+        <h6>
+            Dates:
+            <span id="dateFrom">
+
+            </span> -
+            <span id="dateTo">
+                {{ 'now'|date('d-M-Y') }} (now)
+            </span>
+        </h6>
     </div>
-    <div id="history-list">
-        <ul class="list-collection white-text">
-            <li class="simulated-table-row">
-                <div class="col s12 m2">
-                    Some Alert
-                </div>
-                <div class="col s12 m9" data-zone="{{ zone }}" data-server="{{ server }}">
-                    {% include 'common/charts/territory.bar.html' with {elemid: 'zone-victories-'  ~ zone ~ '-' ~ server} %}
-                </div>
-                <div class="col s12 m1">
-                     <a class="btn btn-alert-history waves-effect waves-light a-back">
-                         <i class="fa fa-bar-chart-o tooltipped" data-position="top" data-delay="0" data-tooltip="View this alert's statistics"></i>
-                     </a>
-                </div>
-            </li>
-            <li class="simulated-table-row">
-                <div class="col s12 m2">
-                    Some Alert
-                </div>
-                <div class="col s12 m10" data-zone="{{ zone }}" data-server="{{ server }}">
-                    {% include 'common/charts/territory.bar.html' with {elemid: 'zone-victories-'  ~ zone ~ '-' ~ server} %}
-                </div>
-            </li>
-        </ul>
-    </div>
+    <div id="history-list"></div>
 </div>
 {% endblock %}
 
