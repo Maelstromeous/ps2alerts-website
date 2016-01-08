@@ -14,8 +14,8 @@ var alertStats = {
     }
 };
 
-var serverStats = [];
-var zoneStats   = [];
+var serverStats     = [];
+var zoneStats       = [];
 var serverZoneStats = [];
 
 // Build Server array
@@ -154,7 +154,7 @@ function writeEmpireTotals() {
         var elem = $('#' + empires[i] + '-victories');
         var percentage = alertStats.victories[empires[i]] / alertStats.total * 100;
 
-        $(elem).html('<b>' + alertStats.victories[empires[i]] + '</b> / ' + percentage.toFixed(1) + '%');
+        $(elem).html(alertStats.victories[empires[i]] + ' / ' + percentage.toFixed(1) + '%');
     }
 
     // Deletes Draw for domination loop
@@ -217,24 +217,18 @@ function writeServerZoneVictories() {
     for (var server in serverZoneStats) {
         if (serverZoneStats.hasOwnProperty(server)) {
             for (var zone in serverZoneStats[server]) {
-                for (var i = 0; i < factions.length; i++) {
-                    var elem = $("#serverzone-victories-body tr[data-server='"+server+"']")
-                    .find("td[data-zone='"+zone+"'][data-faction='"+factions[i]+"']");
+                var data = {
+                    vs:    serverZoneStats[server][zone].vs,
+                    nc:    serverZoneStats[server][zone].nc,
+                    tr:    serverZoneStats[server][zone].tr,
+                    draw:  serverZoneStats[server][zone].draw,
+                };
 
-                    $(elem).html(serverZoneStats[server][zone][factions[i]]);
-                }
+                var elem = $('#serverzone-victories-container')
+                    .find('#zone-victories-'+ zone + '-' + server);
+
+                renderTerritoryBar(data, elem, true, true);
             }
-        }
-    }
-
-    logDebug('Server Zone Stats written');
-
-    for (var zone in zoneStats) {
-        for (var i = 0; i < factions.length; i++) {
-            var elem = $("#serverzone-victories-body tr[data-server='totals']")
-            .find("td[data-zone='"+zone+"'][data-faction='"+factions[i]+"']");
-
-            $(elem).html(zoneStats[zone][factions[i]]);
         }
     }
 

@@ -10,8 +10,8 @@
 {% include 'home/announcement.html' %}
 <div class="row background padding">
     <div class="row center-align">
-        <h3 class="white-text">Alert Victories</h3>
-        <h6 class="white-text">Victories from 29-Oct-2014 to {{ 'now'|date('d-M-Y') }}</h6>
+        <h3>Alert Victories</h3>
+        <h6>Victories from 29-Oct-2014 to {{ 'now'|date('d-M-Y') }}</h6>
     </div>
     <div class="row">
         <div class="col s12">
@@ -26,16 +26,14 @@
     </div>
 </div>
 <div class="row background padding">
-    <h3 class="white-text center-align">Victory Timeline</h3>
+    <h3 class="center-align">Victory Timeline</h3>
     <div class="chart-container" id="victories-timeline-container">
         <div id="victories-timeline" class="chart"></div>
         <i class="fa fa-4x fa-refresh fa-spin"></i>
     </div>
 </div>
-<div class="row background padding">
-    <div class="row">
-        {% include 'home/charts/serverzone.victories.html' %}
-    </div>
+<div class="row background padding" id="serverzone-victories-container">
+    {% include 'home/charts/serverzone.victories.html' %}
 </div>
 {% endblock %}
 

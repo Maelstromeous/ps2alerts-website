@@ -28,7 +28,7 @@ try {
 } catch (NotFoundException $e) {
     $response = $container->get('Symfony\Component\HttpFoundation\Response');
 
-    $response->setContent(
+    $response->setStatusCode(404)->setContent(
         $container->get('Twig_Environment')->render('404.html')
     );
 }

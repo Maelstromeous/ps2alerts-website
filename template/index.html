@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %}</title>
 
+        {% block stylesheets_deps %}{% endblock %}
         {% include('common/css.deps.html') %}
         {% block stylesheets %}{% endblock %}
 

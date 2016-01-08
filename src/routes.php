@@ -13,6 +13,8 @@ $route = new RouteCollection(
  * Routes
  */
 $route->get('/', 'Ps2alerts\Website\Controller\MainController::index');
+$route->get('/alert-history', 'Ps2alerts\Website\Controller\MainController::alertHistory');
+
 
 /**
  * Return the dispatcher to the app loader

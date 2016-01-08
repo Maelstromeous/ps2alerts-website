@@ -13,14 +13,31 @@ class MainController implements TemplateAwareInterface
 
     /**
      * Homepage
+     *
      * @param  \Symfony\Component\HttpFoundation\Request  $request
      * @param  \Symfony\Component\HttpFoundation\Response $response
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, Response $response)
     {
         return $response->setContent(
-            $this->getTemplateDriver()->render('home/homepage.html')
+            $this->getTemplateDriver()->render('home/index.html')
+        );
+    }
+
+    /**
+     * Alert History
+     *
+     * @param  \Symfony\Component\HttpFoundation\Request  $request
+     * @param  \Symfony\Component\HttpFoundation\Response $response
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function alertHistory(Request $request, Response $response)
+    {
+        return $response->setContent(
+            $this->getTemplateDriver()->render('alert-history/index.html')
         );
     }
 }
