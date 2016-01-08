@@ -1,5 +1,3 @@
-var api_url = '{{ api_url }}';
-
 var vsColor   = '#61088F';
 var ncColor   = '#2732A8';
 var trColor   = '#A90000';
