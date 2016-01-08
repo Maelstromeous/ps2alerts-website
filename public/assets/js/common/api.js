@@ -22,13 +22,12 @@ function readApiGet(url) {
 
 function readStatisticsAlertTotal(filters) {
     var data = {
-        wheres : filters
+        wheres : JSON.stringify(filters)
     };
 
     return new Promise(function(resolve, reject) {
         aja()
         .method('post')
-        .type('json')
         .url(api_url + '/statistics/alert/total')
         .data(data)
         .on('200', function(response) {
