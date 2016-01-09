@@ -8,8 +8,11 @@
             <div class="col s12 m2">
                 {{ attribute(serverNames, server) }}
             </div>
-            <div class="col s12 m10" data-server="server">
-                {% include 'common/charts/territory.bar.html' with {elemid: 'server-victory-bar-' ~ server} %}
+            <div
+                id="server-victory-bar-{{ server }}"
+                class="col s12 m10"
+                data-server="{{ server }}"
+                data-placeholder="territory-bar">
             </div>
         </div>
         {% endfor %}

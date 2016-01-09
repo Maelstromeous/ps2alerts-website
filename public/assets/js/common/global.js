@@ -163,10 +163,14 @@ function flipoverMetrics() {
     });
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
     fireTooltips( $('.tooltipped') );
 });
 
 function fireTooltips(elem) {
     $(elem).tooltip();
 }
+
+$(window).ready(function() {
+     loadPlaceholders('territory-bar');
+});
