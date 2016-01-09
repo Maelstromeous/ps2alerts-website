@@ -136,12 +136,12 @@ function calculateServerZoneVictores(data, callback) {
 }
 
 function writeTotals() {
-    $("#total-victory-card").find('.fa-spin').fadeOut(function() {
-        $("#total-victory-card").find('span').html(alertStats.total).fadeIn();
+    $("#total-victory-card .metric").find('.fa-spin').fadeOut(function() {
+        $("#total-victory-card .metric").html(alertStats.total).fadeIn();
     });
 
-    $("#total-dominations-card").find('.fa-spin').fadeOut(function() {
-        $("#total-dominations-card").find('span').html(alertStats.totalDominations).fadeIn();
+    $("#total-dominations-card .metric").find('.fa-spin').fadeOut(function() {
+        $("#total-dominations-card .metric").html(alertStats.totalDominations).fadeIn();
     });
 
     logDebug('Totals written');

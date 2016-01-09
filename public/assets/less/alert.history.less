@@ -1,15 +1,55 @@
 @import 'variables';
 
+@card-tint: 0%;
+@card-trans: 75%;
+
+@background-vs-dark: darken(@background-vs, @card-tint);
+@background-nc-dark: darken(@background-nc, @card-tint);
+@background-tr-dark: darken(@background-tr, @card-tint);
+
+.card-vs {
+    background-color: fadeout(@background-vs-dark, @card-trans) !important;
+}
+
+.card-nc {
+    background-color: fadeout(@background-nc-dark, @card-trans) !important;
+}
+
+.card-tr {
+    background-color: fadeout(@background-tr-dark, @card-trans) !important;
+}
+
+#history-list .card {
+    margin-bottom: 0.3rem;
+}
+
+#history-list .card-content .row {
+    margin-bottom: 15px;
+}
+
+.block-title {
+    display: block;
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+}
+
 .btn-alert-history {
     width: 100%;
 }
 
-.alert-row-top {
-    margin-bottom: 10px;
-    overflow: hidden;
+.alert-row-seperator {
+    border-top: 1px dashed @border-color;
+}
+
+@line-height: 36px;
+
+#history-list .card-content .row .btn {
+    line-height: @line-height;
+    padding: 0 5px;
+    margin-top: 3px;
 }
 
 .alert-history-label {
-    line-height: 36px;
     text-align: center;
+    font-size: 1.3rem;
 }
