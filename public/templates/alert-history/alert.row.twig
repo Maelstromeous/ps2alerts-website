@@ -1,28 +1,32 @@
-<div class="simulated-table-row">
-    <div class="alert-row-top">
-        <div class="col m3 alert-history-label">
-            <span class="parseDateTime" data-timestamp="{{ alert.ResultEndTime }}">
-                <b>{{ alert.ResultEndTime|date('d-M-Y H:i:s') }}</b>
-            </span>
-        </div>
-        <div class="col m2 alert-history-label">
-            {{ attribute(serverNames, alert.ResultServer) }}
-        </div>
-        <div class="col m2 alert-history-label">
-            {{ attribute(zoneNames, alert.ResultAlertCont) }}
-        </div>
-        <div class="col m2 alert-history-label">
-            {{ attribute(times, alert.ResultTimeType) }}
-        </div>
-        <div class="col m3 alert-history-label">
-             <a
-                class="btn btn-alert-history waves-effect  waves-light tooltipped"
-                data-position="top"
-                data-delay="0"
-                data-tooltip="View this alert's statistics">
-                <i class="fa fa-bar-chart-o"></i>
-             </a>
+<div class="col s12">
+    <div class="card blue-grey darken-2">
+        <div class="card-content overflow-hidden">
+            <div class="alert-row-top">
+                <div class="col m3 alert-history-label">
+                    <span class="parseDateTime" data-timestamp="{{ alert.ResultEndTime }}">
+                        <b>{{ alert.ResultEndTime|date('d-M-Y H:i:s') }}</b>
+                    </span>
+                </div>
+                <div class="col m2 alert-history-label">
+                    {{ attribute(serverNames, alert.ResultServer) }}
+                </div>
+                <div class="col m2 alert-history-label">
+                    {{ attribute(zoneNames, alert.ResultAlertCont) }}
+                </div>
+                <div class="col m2 alert-history-label">
+                    {{ attribute(times, alert.ResultTimeType) }}
+                </div>
+                <div class="col m3">
+                    <a
+                        class="btn btn-alert-history waves-effect  waves-light tooltipped"
+                        data-position="top"
+                        data-delay="0"
+                        data-tooltip="View this alert's statistics">
+                        <i class="fa fa-bar-chart-o"></i>
+                    </a>
+                </div>
+            </div>
+            <div id="alert-{{ alert.ResultID }}" class="col s12" data-placeholder="territory-bar"></div>
         </div>
     </div>
-    <div id="alert-{{ alert.ResultID }}" class="col s12" data-placeholder="territory-bar"></div>
 </div>
