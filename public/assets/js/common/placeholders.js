@@ -22,7 +22,7 @@ function loadPlaceholders(type, specificEl, callback) {
             }).render();
         }
 
-        if (specificEl !== null) {
+        if (specificEl) {
             $(specificEl).html(territoryBarRender);
         } else {
             $('[data-placeholder="territory-bar"]').each(function(index, el) {
