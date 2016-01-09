@@ -63,7 +63,6 @@ function writeAlertHistory(data) {
         });
     }
 
-
     // Setup tooltips for newly generated content
     fireTooltips( $('.tooltipped') );
 }
