@@ -4,17 +4,29 @@
             <div class="row">
                 <div class="col m3 alert-history-label">
                     <span class="parseDateTime" data-timestamp="{{ alert.ResultEndTime }}">
-                        <b>{{ alert.ResultEndTime|date('d-M-Y H:i:s') }}</b>
+                        {{ alert.ResultEndTime|date('d-M-Y H:i:s') }}
+                    </span>
+                    <span class="block-title grey-text">
+                        ENDED
                     </span>
                 </div>
                 <div class="col m2 alert-history-label">
                     {{ attribute(serverNames, alert.ResultServer) }}
+                    <span class="block-title grey-text">
+                        SERVER
+                    </span>
                 </div>
                 <div class="col m2 alert-history-label">
                     {{ attribute(zoneNames, alert.ResultAlertCont) }}
+                    <span class="block-title grey-text">
+                        CONTINENT
+                    </span>
                 </div>
                 <div class="col m2 alert-history-label">
                     {{ attribute(times, alert.ResultTimeType) }}
+                    <span class="block-title grey-text">
+                        TIME BRACKET
+                    </span>
                 </div>
                 <div class="col m3">
                     <a
