@@ -1,5 +1,15 @@
 <div class="col s12">
-    <div class="card blue-grey darken-2">
+    <div
+        class="card
+        {% if alert.ResultWinner == 'VS' %}
+        card-vs
+        {% elseif alert.ResultWinner == 'NC' %}
+        card-nc
+        {% elseif alert.ResultWinner == 'TR' %}
+        card-tr
+        {% endif %}
+        {% if alert.InProgress == 1 %}darken-1{% else %}darken-2{% endif %}"
+    >
         <div class="card-content overflow-hidden">
             <div class="row">
                 <div class="col m3 alert-history-label">
@@ -7,7 +17,11 @@
                         {{ alert.ResultEndTime|date('d-M-Y H:i:s') }}
                     </span>
                     <span class="block-title grey-text">
+                        {% if alert.InProgress == 1 %}
+                        STARTED
+                        {% else %}
                         ENDED
+                        {% endif %}
                     </span>
                 </div>
                 <div class="col m2 alert-history-label">

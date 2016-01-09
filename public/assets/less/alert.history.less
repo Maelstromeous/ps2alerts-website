@@ -1,5 +1,25 @@
 @import 'variables';
 
+@card-tint: 10%;
+@card-trans: 70%;
+
+@background-vs-dark: darken(@background-vs, @card-tint);
+@background-nc-dark: darken(@background-nc, @card-tint);
+@background-tr-dark: darken(@background-tr, @card-tint);
+
+.card-vs {
+    background-color: fadeout(@background-vs-dark, @card-trans) !important;
+}
+
+.card-nc {
+    background-color: fadeout(@background-nc-dark, @card-trans) !important;
+}
+
+.card-tr {
+    background-color: fadeout(@background-tr-dark, @card-trans) !important;
+}
+
+
 #history-list .card {
     margin-bottom: 0.3rem;
 }
