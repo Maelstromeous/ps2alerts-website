@@ -1,20 +1,20 @@
 <div class="simulated-table-row">
     <div class="alert-row-top">
-        <div class="col m3">
+        <div class="col m3 alert-history-label">
             <span class="parseDateTime" data-timestamp="{{ alert.ResultEndTime }}">
                 <b>{{ alert.ResultEndTime|date('d-M-Y H:i:s') }}</b>
             </span>
         </div>
-        <div class="col m2">
+        <div class="col m2 alert-history-label">
             {{ attribute(serverNames, alert.ResultServer) }}
         </div>
-        <div class="col m2">
+        <div class="col m2 alert-history-label">
             {{ attribute(zoneNames, alert.ResultAlertCont) }}
         </div>
-        <div class="col m2">
+        <div class="col m2 alert-history-label">
             {{ attribute(times, alert.ResultTimeType) }}
         </div>
-        <div class="col m3">
+        <div class="col m3 alert-history-label">
              <a
                 class="btn btn-alert-history waves-effect  waves-light tooltipped"
                 data-position="top"
