@@ -163,10 +163,48 @@ function flipoverMetrics() {
     });
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
     fireTooltips( $('.tooltipped') );
 });
 
 function fireTooltips(elem) {
     $(elem).tooltip();
+}
+
+$(window).ready(function() {
+     loadPlaceholders('territory-bar');
+});
+
+// Declare variables to hold the placeholder content in memory for quick use later
+var territoryBarRender;
+
+// Function which gets the correct placeholder HTML for each element
+function loadPlaceholders(type, specificEl, callback) {
+    var data = {};
+
+    if (type === 'territory-bar') {
+        // If the placeholder variable is undefined or empty, generate it and populate it
+        if (typeof(territoryBarRender) === 'undefined' || territoryBarRender.length === 0) {
+            logDebug("Rendering territory bar placeholder");
+
+            territoryBarRender = twig({
+                id: "territoryBarRender",
+                href: base_url + "/templates/common/placeholders/territory.bar.twig",
+                async: false
+            }).render();
+        }
+
+        if (specificEl !== null) {
+            $(specificEl).html(territoryBarRender);
+        } else {
+            $('[data-placeholder="territory-bar"]').each(function(index, el) {
+                $(el).html(territoryBarRender);
+            });
+
+        }
+
+        if (typeof(callback) !== 'undefined') {
+            callback();
+        }
+    }
 }

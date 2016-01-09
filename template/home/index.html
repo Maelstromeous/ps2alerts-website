@@ -14,9 +14,7 @@
         <h6>Victories from 29-Oct-2014 to {{ 'now'|date('d-M-Y') }}</h6>
     </div>
     <div class="row">
-        <div class="col s12">
-            {% include 'common/charts/territory.bar.html' with {elemid: 'victory-territory-bar'} %}
-        </div>
+        <div id="victory-bar" class="col s12" data-placeholder="territory-bar"></div>
     </div>
     <div class="col s12 m6" id="victory-card-container">
         {% include 'home/victory.cards.html' %}
@@ -38,7 +36,7 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="{{ asset_url }}/js/homepage/victories.js"></script>
 <script src="{{ asset_url }}/js/homepage/charts/victory.timeline.events.js"></script>
 <script src="{{ asset_url }}/js/homepage/charts/victory.timeline.js"></script>

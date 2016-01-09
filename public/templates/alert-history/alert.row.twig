@@ -4,9 +4,7 @@
             {{ ResultEndTime|date('d-M-Y H:i:s') }}
         </span>
     </div>
-    <div class="col s12 m9">
-        {% include '../common/territory.bar.twig' with {elemid: 'alert-' ~  ResultID} %}
-    </div>
+    <div id="alert-{{ ResultID }}" class="col s12 m9" data-placeholder="territory-bar"></div>
     <div class="col s12 m1">
          <a
             class="btn btn-alert-history waves-effect waves-light a-back tooltipped"

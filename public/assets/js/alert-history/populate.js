@@ -38,7 +38,7 @@ function readAlertHistory(filters) {
 function writeAlertHistory(data) {
     for (var alert in data) {
         $('#history-list').append(
-            twig({ ref: "twigAlertTable"}).render(data[alert])
+            twig({ ref: "historyAlert"}).render(data[alert])
         );
 
         var metrics = {
@@ -57,9 +57,13 @@ function writeAlertHistory(data) {
         metrics.draw = diff;
 
         var elem = $('#alert-' + data[alert].ResultID);
-
-        renderTerritoryBar(metrics, elem);
+        // Fire territory bar placeholder method
+        loadPlaceholders('territory-bar', elem, function() {
+            renderTerritoryBar(metrics, elem.find('.territory-bar'));
+        });
     }
+
+
     // Setup tooltips for newly generated content
     fireTooltips( $('.tooltipped') );
 }
