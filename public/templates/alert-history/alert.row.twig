@@ -1,7 +1,7 @@
 <div class="col s12">
     <div class="card blue-grey darken-2">
         <div class="card-content overflow-hidden">
-            <div class="alert-row-top">
+            <div class="row">
                 <div class="col m3 alert-history-label">
                     <span class="parseDateTime" data-timestamp="{{ alert.ResultEndTime }}">
                         <b>{{ alert.ResultEndTime|date('d-M-Y H:i:s') }}</b>
@@ -24,6 +24,11 @@
                         data-tooltip="View this alert's statistics">
                         <i class="fa fa-bar-chart-o"></i>
                     </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="alert-row-seperator"></div>
                 </div>
             </div>
             <div id="alert-{{ alert.ResultID }}" class="col s12" data-placeholder="territory-bar"></div>
