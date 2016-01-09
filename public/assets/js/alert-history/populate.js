@@ -44,8 +44,6 @@ function writeAlertHistory(data) {
             times       : times
         };
 
-        console.log(toPass);
-
         $('#history-list').append(
             twig({ ref: "historyAlert"}).render(toPass)
         );

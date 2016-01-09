@@ -1,17 +1,19 @@
 // Global function which takes a territory bar element and data, and then renders
 // the bar with unform widths etc.
 function renderTerritoryBar(data, elem, numbers, showOpposite) {
-    var width = $(elem).outerWidth();
+    var width = $(elem).outerWidth()
 
 	if (data.draw === undefined) {
 		data.draw = 0;
 	}
 
     var totalSum = data.vs + data.nc + data.tr + data.draw;
-    var totalPx = 0;
+    var totalPer = 0;
 
     // Standardize the width to a whole number to lessen the chance of decking
     $(elem).css('width', width.toFixed(0));
+
+    console.log(data);
 
 	// All good, show it!
 	$(elem).find('.loading').fadeOut(function() {
@@ -19,21 +21,20 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
             var segment = $(elem).find('.' + factions[i] + '-segment');
             var metric  = $(segment).find('span');
             var per     = data[factions[i]] / totalSum * 100;
-            var px      = Math.round(width / 100 * per);
             var html    = '';
-            var cutoff  = 45;
+            var cutoff  = 5; // 5%
 
             // Calculate the final segment using the remaining space
             if (factions[i] === 'draw') {
-                px = (width - totalPx);
+                console.log( $(elem).id );
+                console.log('totalPer',totalPer);
+                var diff = 100 - totalPer;
+                console.log('diff', diff);
+                per = diff;
+                console.log('floored per', per);
             }
 
-            totalPx += px;
-
-            // If we have a width breakage
-            if (totalPx > width) {
-                px =  (totalPx - width);
-            }
+            totalPer += per;
 
             // Add data attributes should we ever want to do "flipovers"
             $(metric).attr({
@@ -58,11 +59,14 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
                 $(metric).attr('flipto', flipto).addClass('metric-flipover');
             }
 
-            segment.css('width', px);
+            // SET THE WIDTH!
+            segment.css('width', per.toFixed(1)+'%');
+            //
+
             metric.html(html);
 
             // Removes the text if the segment is too small to hold it
-            if (px < cutoff) {
+            if (per < cutoff) {
                 metric.html('');
                 metric.attr('cutoff', 1);
 
@@ -128,10 +132,8 @@ function flipoverMetrics() {
             // If part of a territory bar segment, calculate whether or not
             // to show the html part based on size.
             if (segment === true) {
-                var width = $(this).parent('div').outerWidth();
-                var cutoff = 45;
-
-                if (width < cutoff) {
+                var cutoff = $(this).attr('cutoff');
+                if (cutoff === "1") {
                     $(this).html('');
                 }
             }
