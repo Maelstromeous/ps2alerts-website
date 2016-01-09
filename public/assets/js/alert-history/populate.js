@@ -37,8 +37,17 @@ function readAlertHistory(filters) {
 // Goes through all results and writes the partials then appends to the list
 function writeAlertHistory(data) {
     for (var alert in data) {
+        var toPass = {
+            alert       : data[alert],
+            serverNames : serverNames,
+            zoneNames   : zoneNames,
+            times       : times
+        };
+
+        console.log(toPass);
+
         $('#history-list').append(
-            twig({ ref: "historyAlert"}).render(data[alert])
+            twig({ ref: "historyAlert"}).render(toPass)
         );
 
         var metrics = {

@@ -1,17 +1,28 @@
 <div class="simulated-table-row">
-    <div class="col s12 m2">
-        <span class="parseDateTime" data-timestamp="{{ ResultEndTime }}">
-            {{ ResultEndTime|date('d-M-Y H:i:s') }}
-        </span>
+    <div class="alert-row-top">
+        <div class="col m3 alert-history-label">
+            <span class="parseDateTime" data-timestamp="{{ alert.ResultEndTime }}">
+                <b>{{ alert.ResultEndTime|date('d-M-Y H:i:s') }}</b>
+            </span>
+        </div>
+        <div class="col m2 alert-history-label">
+            {{ attribute(serverNames, alert.ResultServer) }}
+        </div>
+        <div class="col m2 alert-history-label">
+            {{ attribute(zoneNames, alert.ResultAlertCont) }}
+        </div>
+        <div class="col m2 alert-history-label">
+            {{ attribute(times, alert.ResultTimeType) }}
+        </div>
+        <div class="col m3">
+             <a
+                class="btn btn-alert-history waves-effect  waves-light tooltipped"
+                data-position="top"
+                data-delay="0"
+                data-tooltip="View this alert's statistics">
+                <i class="fa fa-bar-chart-o"></i>
+             </a>
+        </div>
     </div>
-    <div id="alert-{{ ResultID }}" class="col s12 m9" data-placeholder="territory-bar"></div>
-    <div class="col s12 m1">
-         <a
-            class="btn btn-alert-history waves-effect waves-light a-back tooltipped"
-            data-position="top"
-            data-delay="0"
-            data-tooltip="View this alert's statistics">
-            <i class="fa fa-bar-chart-o"></i>
-         </a>
-    </div>
+    <div id="alert-{{ alert.ResultID }}" class="col s12" data-placeholder="territory-bar"></div>
 </div>
