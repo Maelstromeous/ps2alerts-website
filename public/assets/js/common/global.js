@@ -1,7 +1,7 @@
 // Global function which takes a territory bar element and data, and then renders
 // the bar with unform widths etc.
 function renderTerritoryBar(data, elem, numbers, showOpposite) {
-    var width = $(elem).outerWidth()
+    var width = $(elem).outerWidth();
 
 	if (data.draw === undefined) {
 		data.draw = 0;
@@ -21,8 +21,9 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
             var segment = $(elem).find('.' + factions[i] + '-segment');
             var metric  = $(segment).find('span');
             var per     = data[factions[i]] / totalSum * 100;
+            var perPx   = width / 100 * per; // Used for metric flip
             var html    = '';
-            var cutoff  = 5; // 5%
+            var cutoff  = 45; // 45px is about the right size for 1000 / 50.0%
 
             totalPer += per;
 
@@ -56,7 +57,7 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
             metric.html(html);
 
             // Removes the text if the segment is too small to hold it
-            if (per < cutoff) {
+            if (perPx < cutoff) {
                 metric.html('');
                 metric.attr('cutoff', 1);
 
