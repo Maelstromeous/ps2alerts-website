@@ -1,9 +1,30 @@
 {% extends 'index.html' %}
 
+{% block stylesheets %}
+<link href="{{ asset_url }}/css/compiled/alert.history.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block title %}Alert History - PS2Alerts{% endblock %}
 
 {% block body %}
 <div class="row background padding">
-    <h3 class="center-align">Alert History</h3>
+    <div class="row center-align">
+        <h3>Alert History</h3>
+        <h6>
+            Dates:
+            <span id="dateFrom">
+
+            </span> -
+            <span id="dateTo">
+                {{ 'now'|date('d-M-Y') }} (now)
+            </span>
+        </h6>
+    </div>
+    <div id="history-list"></div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset_url }}/js/alert-history/templates.js"></script>
+<script src="{{ asset_url }}/js/alert-history/populate.js"></script>
 {% endblock %}

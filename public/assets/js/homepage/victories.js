@@ -180,10 +180,10 @@ function setUpVictoryBar()
         vs:    alertStats.victories.vs,
         nc:    alertStats.victories.nc,
         tr:    alertStats.victories.tr,
-        draw:  alertStats.victories.draw,
+        draw:  alertStats.victories.draw
     };
 
-    var elem = $('#victory-territory-bar');
+    var elem = $('#victory-bar .territory-bar');
     renderTerritoryBar(data, elem);
 
     logDebug('Victory Bar rendered');
@@ -205,7 +205,7 @@ function writeServerVictories() {
                 draw:  serverStats[server].draw,
             };
 
-            var elem = $('#server-victory-bar-' + server);
+            var elem = $('#server-victory-bar-' + server + ' .territory-bar');
             renderTerritoryBar(data, elem, true, true);
         }
     }
@@ -225,7 +225,7 @@ function writeServerZoneVictories() {
                 };
 
                 var elem = $('#serverzone-victories-container')
-                    .find('#zone-victories-'+ zone + '-' + server);
+                    .find('#serverzone-'+zone+'-'+server+' .territory-bar');
 
                 renderTerritoryBar(data, elem, true, true);
             }
