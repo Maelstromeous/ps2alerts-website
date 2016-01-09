@@ -24,16 +24,6 @@ function renderTerritoryBar(data, elem, numbers, showOpposite) {
             var html    = '';
             var cutoff  = 5; // 5%
 
-            // Calculate the final segment using the remaining space
-            if (factions[i] === 'draw') {
-                console.log( $(elem).id );
-                console.log('totalPer',totalPer);
-                var diff = 100 - totalPer;
-                console.log('diff', diff);
-                per = diff;
-                console.log('floored per', per);
-            }
-
             totalPer += per;
 
             // Add data attributes should we ever want to do "flipovers"
