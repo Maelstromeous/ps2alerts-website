@@ -25,13 +25,11 @@
             </div>
         </div>
 
-        {% include('common/js.deps.html') %}
-        <script>{% include 'common/js.injection.js' %}</script>
-        <script src="{{ asset_url }}/js/common/data.js"></script>
-        <script src="{{ base_url }}/bower_components/twig.js/twig.min.js"></script>
-        <script src="{{ asset_url }}/js/common/placeholders.js"></script>
-        <script src="{{ asset_url }}/js/common/global.js"></script>
-        <script src="{{ asset_url }}/js/common/api.js"></script>
+        <script src="{{ base_url }}/bower_components/angular/angular.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <script>{% include('common/js.injection.js') %}</script>
+        <script src="{{ asset_url }}/js/ps2alerts.js"></script>
         {% block javascript %}{% endblock %}
 
         {% if env == 'production' %}

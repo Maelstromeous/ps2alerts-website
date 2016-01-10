@@ -8,7 +8,16 @@
 
 {% block body %}
 {% include 'home/announcement.html' %}
-<div class="row background padding">
+
+{% verbatim %}
+<div ng-app="ps2alerts">
+    <div class="row background padding" ng-controller="AlertMetricsController">
+        <h3>Alert Victories</h3>
+        <h6>Victories from 26-Oct-2014 to {{ date | date:'dd-MMM-yyyy' }}</h6>
+    </div>
+</div>
+{% endverbatim %}
+
     <div class="row center-align">
         <h3>Alert Victories</h3>
         <h6>Victories from 29-Oct-2014 to {{ 'now'|date('d-M-Y') }}</h6>
@@ -22,23 +31,21 @@
     <div class="col s12 m6">
         {% include 'home/charts/server.victories.html' %}
     </div>
-</div>
-<div class="row background padding">
-    <h3 class="center-align">Victory Timeline</h3>
-    <div class="chart-container" id="victories-timeline-container">
-        <div id="victories-timeline" class="chart"></div>
-        <i class="fa fa-4x fa-refresh fa-spin"></i>
+
+    <div class="row background padding">
+        <h3 class="center-align">Victory Timeline</h3>
+        <div class="chart-container" id="victories-timeline-container">
+            <div id="victories-timeline" class="chart"></div>
+            <i class="fa fa-4x fa-refresh fa-spin"></i>
+        </div>
+    </div>
+    <div class="row background padding" id="serverzone-victories-container">
+        {% include 'home/charts/serverzone.victories.html' %}
     </div>
 </div>
-<div class="row background padding" id="serverzone-victories-container">
-    {% include 'home/charts/serverzone.victories.html' %}
-</div>
+
 {% endblock %}
 
 {% block javascript %}
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="{{ asset_url }}/js/homepage/victories.js"></script>
-<script src="{{ asset_url }}/js/homepage/charts/victory.timeline.events.js"></script>
-<script src="{{ asset_url }}/js/homepage/charts/victory.timeline.js"></script>
-<script src="{{ asset_url }}/js/homepage/announcement.js"></script>
 {% endblock %}
