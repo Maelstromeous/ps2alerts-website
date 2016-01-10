@@ -1,4 +1,6 @@
 .env
 node_modules
 public/bower_components
-public/assets/css/compiled
+public/assets/css/compiled/*
+public/assets/css/main.css
+public/assets/js/main.js
