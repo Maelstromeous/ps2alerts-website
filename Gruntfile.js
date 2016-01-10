@@ -18,7 +18,8 @@ module.exports = function(grunt) {
                     'public/bower_components/angular-route/angular-route.min.js',
                     'public/bower_components/Materalize/js/materialize.min.js',
                     'public/app.js',
-                    'public/controllers/main.js',
+                    'public/controllers/**/*.js',
+                    'public/directives/**/*.js',
                 ],
                 dest: 'public/assets/js/main.js'
             },
