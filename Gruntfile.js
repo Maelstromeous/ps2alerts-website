@@ -42,7 +42,10 @@ module.exports = function(grunt) {
                 }
             },
             scripts: {
-                files: ['public/controllers/**/*.js'],
+                files: [
+                    'public/controllers/**/*.js',
+                    'public/directives/**/*.js'
+                ],
                 tasks: ['js'],
                 options: {
                     atBegin: true
