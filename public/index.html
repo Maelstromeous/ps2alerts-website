@@ -7,27 +7,26 @@
         <title></title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Orbitron:400,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="assets/css/main.css">
 
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-
     </head>
     <body>
-        <div class="container">
-            <header navigation-header></header>
+        <div class="row">
+            <div class="col s12 m10 offset-m1">
+                <header site-header></header>
 
-            <div class="row padding background">
                 <div ng-view></div>
+
+                <footer site-footer>
+
+                </footer>
             </div>
-
-            <footer>
-
-            </footer>
         </div>
-
         <script src="assets/js/main.js"></script>
     </body>
 </html>
