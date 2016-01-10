@@ -1,18 +1,22 @@
 /* use strict */
 
 var app = angular.module('Ps2Alerts', ['ngRoute'])
-.config(['$routeProvider', function ($routeProvider) {
+.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: "partials/home/index.html"
+            templateUrl: "partials/home/index.html",
+            controller: "MainController"
         })
         .when('/pageTwo', {
             templateUrl: "partials/home/page2.html",
         })
+        .when('/alert-history', {
+            templateUrl: 'partials/alert-history/alert.history.html'
+        })
         .otherwise({
-            redirectTo: "/"
+            templateUrl: 'partials/common/404.html'
         });
-}]);
+});
 
 app.controller('MainController', function($scope) {
     $scope.labelName = "New Button";
@@ -22,4 +26,10 @@ app.controller('MainController', function($scope) {
 
 app.controller('MainPageCtrl', function($scope) {
     $scope.homePageMessage = "Hello, Matt!";
+});
+
+app.directive('navigationHeader', function() {
+    return {
+        templateUrl: 'partials/common/header.html'
+    };
 });
