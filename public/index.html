@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title></title>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="assets/css/main.css">
 
@@ -17,19 +16,18 @@
 
     </head>
     <body>
-
         <div class="container">
             <header navigation-header></header>
-            <div ng-view></div>
+
+            <div class="row padding background">
+                <div ng-view></div>
+            </div>
+
             <footer>
 
             </footer>
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-        <script src="bower_components/angular-route/angular-route.min.js"></script>
         <script src="assets/js/main.js"></script>
     </body>
 </html>
