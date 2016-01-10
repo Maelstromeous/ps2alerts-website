@@ -4,19 +4,12 @@ var app = angular.module('Ps2Alerts', ['ngRoute'])
 .config(function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: "partials/home/index.html",
-            controller: "MainController"
+            templateUrl: 'views/home/index.html'
         })
         .when('/alert-history', {
-            templateUrl: 'partials/alert-history/alert.history.html'
+            templateUrl: 'views/alert-history/index.html'
         })
         .otherwise({
-            templateUrl: 'partials/common/404.html'
+            templateUrl: 'views/common/404.html'
         });
-});
-
-app.directive('navigationHeader', function() {
-    return {
-        templateUrl: 'partials/common/header.html'
-    };
 });
