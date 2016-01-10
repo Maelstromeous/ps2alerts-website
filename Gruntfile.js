@@ -1,10 +1,56 @@
 module.exports = function(grunt) {
-  var path = require('path');
+    'use strict';
 
-  require('load-grunt-config')(grunt, {
-    configPath: path.join(process.cwd(), 'gruntconfig/config'),
-    jitGrunt: {
-      customTasksDir: 'gruntconfig/tasks'
-    }
-  });
+    grunt.initConfig( {
+        concat: {
+            css: {
+                src: [
+                    'public/assets/css/compiled/main.css',
+                    'public/assets/css/compiled/homepage.css',
+                    'public/assets/css/compiled/alert.history.css'
+                ],
+                dest: 'public/assets/css/main.css'
+            },
+            js: {
+                src: [
+                    'public/app.js',
+                    'public/controllers/main.js'
+                ],
+                dest: 'public/assets/js/main.js'
+            },
+        },
+        less: {
+            development: {
+                files: {
+                    "public/assets/css/compiled/main.css":          "public/assets/less/main.less",
+                    "public/assets/css/compiled/homepage.css":      "public/assets/less/homepage.less",
+                    "public/assets/css/compiled/alert.history.css": "public/assets/less/alert.history.less"
+                }
+            }
+        },
+        watch: {
+            less: {
+                files: ['public/assets/less/**/*.less'], // which files to watch
+                tasks: ['css'],
+                options: {
+                    nospawn: true
+                }
+            },
+            scripts: {
+                files: ['public/controllers/**/*.js'],
+                tasks: ['js'],
+                options: {
+                    atBegin: true
+                }
+            }
+        }
+    });
+
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
+    grunt.registerTask('default', ['css', 'js']);
+    grunt.registerTask('css', ['less', 'concat:css']);
+    grunt.registerTask('js', ['concat:js']);
 };
