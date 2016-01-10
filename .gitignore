@@ -5,4 +5,4 @@ public/bower_components
 style.min.css
 node_modules
 public/assets/css/compiled
-!old/public/bower_components/
+!old/
