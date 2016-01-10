@@ -3,15 +3,14 @@
 var app = angular.module('Ps2Alerts', ['ngRoute'])
 .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
-        .when('', {
-            templateUrl: "partials/home/index.html",
-            controller: "MainPageCtrl"
+        .when('/home', {
+            template: 'Hello home!'
         })
         .when('/pageTwo', {
             templateUrl: "partials/home/page2.html",
         })
         .otherwise({
-            templateUrl: "partials/common/404.html"
+            redirectTo: "/home"
         });
 
     $locationProvider.html5Mode({
