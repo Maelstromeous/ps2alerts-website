@@ -17,6 +17,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular-route": "~1.4.8"
+    "angular-route": "~1.4.8",
+    "Materialize": "materialize#~0.97.5",
+    "font-awesome": "~4.5.0"
   }
 }

@@ -5,6 +5,7 @@ module.exports = function(grunt) {
         concat: {
             css: {
                 src: [
+                    'public/bower_components/Materialize/dist/css/materialize.min.css',
                     'public/assets/css/compiled/main.css',
                     'public/assets/css/compiled/homepage.css',
                     'public/assets/css/compiled/alert.history.css'
@@ -13,8 +14,11 @@ module.exports = function(grunt) {
             },
             js: {
                 src: [
+                    'public/bower_components/angular/angular.min.js',
+                    'public/bower_components/angular-route/angular-route.min.js',
+                    'public/bower_components/Materalize/js/materialize.min.js',
                     'public/app.js',
-                    'public/controllers/main.js'
+                    'public/controllers/main.js',
                 ],
                 dest: 'public/assets/js/main.js'
             },
@@ -22,15 +26,15 @@ module.exports = function(grunt) {
         less: {
             development: {
                 files: {
-                    "public/assets/css/compiled/main.css":          "public/assets/less/main.less",
-                    "public/assets/css/compiled/homepage.css":      "public/assets/less/homepage.less",
-                    "public/assets/css/compiled/alert.history.css": "public/assets/less/alert.history.less"
+                    "public/assets/css/compiled/main.css"          : "public/assets/less/main.less",
+                    "public/assets/css/compiled/homepage.css"      : "public/assets/less/homepage.less",
+                    "public/assets/css/compiled/alert.history.css" : "public/assets/less/alert.history.less"
                 }
             }
         },
         watch: {
             less: {
-                files: ['public/assets/less/**/*.less'], // which files to watch
+                files: ['public/assets/less/**/*.less'],
                 tasks: ['css'],
                 options: {
                     nospawn: true
