@@ -2,12 +2,13 @@
   "name": "ps2alerts",
   "homepage": "https://github.com/Maelstrome26/PS2Alerts",
   "authors": [
-    "Maelstrome26 <maelstrome26@gmail.com>"
+    "Matthew Cavanagh <maelstrome26@gmail.com>"
   ],
   "description": "",
   "main": "",
   "moduleType": [],
   "license": "MIT",
+  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -16,8 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "aja": "~0.4.1",
-    "twig.js": "~0.8.6",
-    "angular": "~1.4.8"
+    "angular-route": "~1.4.8"
   }
 }
