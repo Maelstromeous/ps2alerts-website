@@ -2,13 +2,12 @@
 
 </div>
 
-<div class="row padding background" ng-controller="VictoryController">
+<div class="row padding background" ng-controller="VictoryController as VictoryCtrl">
     <div class="row center-align">
         <h3>Alert Victories</h3>
         <h6>Victories from 29-Oct-2014 to {{ today | date : 'dd-MMM-yyyy' }}</h6>
 
-        ENV: {{ baseUrl }}
+        <h2>Total victories: {{ alertTotal }}</h2>
+        <button ng-click="incrementTotal(1)">Increment</button>
     </div>
-
-
 </div>

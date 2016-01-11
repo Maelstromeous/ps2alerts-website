@@ -1,9 +1,9 @@
-app.controller('VictoryController', function($scope, ENV) {
+app.controller('VictoryController', function($scope, ENV, AlertStatisticsService) {
     $scope.today = new Date();
 
-    $scope.baseUrl = ENV.baseUrl;
-});
+    $scope.incrementTotal = function(by) {
+        AlertStatisticsService.incrementTotal(by);
+    };
 
-app.controller('ServerVictoryController', function($scope) {
-
+    $scope.alertTotal = AlertStatisticsService.total;
 });
