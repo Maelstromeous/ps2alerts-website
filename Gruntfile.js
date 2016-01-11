@@ -12,14 +12,21 @@ module.exports = function(grunt) {
                 ],
                 dest: 'public/assets/css/main.css'
             },
-            js: {
+            js_deps : {
                 src: [
                     'public/bower_components/angular/angular.min.js',
                     'public/bower_components/angular-route/angular-route.min.js',
                     'public/bower_components/Materalize/js/materialize.min.js',
+                ],
+                dest: 'public/assets/js/deps.js'
+            },
+            js: {
+                src: [
+                    'public/config.js',
                     'public/app.js',
                     'public/controllers/**/*.js',
                     'public/directives/**/*.js',
+                    'public/services/**/*.js',
                 ],
                 dest: 'public/assets/js/main.js'
             },
@@ -51,14 +58,48 @@ module.exports = function(grunt) {
                     atBegin: true
                 }
             }
-        }
+        },
+        ngconstant: {
+            // Options for all targets
+            options: {
+                space: '  ',
+                wrap: '"use strict";\n\n{%= __ngModule %}',
+                name: 'config',
+            },
+            // Environment targets
+            development: {
+                options: {
+                    dest: 'public/config.js'
+                },
+                constants: {
+                    ENV: {
+                        environment: 'development',
+                        baseUrl: 'http://192.168.33.10/ps2alerts/public',
+                        apiUrl: 'http://192.168.33.10/ps2alerts-api/public'
+                    }
+                }
+            },
+            production: {
+                options: {
+                    dest: 'public/config.js'
+                },
+                constants: {
+                    ENV: {
+                        name: 'production',
+                        apiEndpoint: 'http://api.livesite.com'
+                    }
+                }
+            }
+        },
     });
 
+    grunt.loadNpmTasks('grunt-ng-constant');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['css', 'js']);
+    grunt.registerTask('default', ['env', 'css', 'js']);
+    grunt.registerTask('env', ['ngconstant:development']);
     grunt.registerTask('css', ['less', 'concat:css']);
-    grunt.registerTask('js', ['concat:js']);
+    grunt.registerTask('js', ['concat:js', 'concat:js_deps']);
 };
