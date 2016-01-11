@@ -31,24 +31,26 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         factory.dominations = data.data[0]["COUNT"];
     });
 
-    $log.log(ConfigDataService.factions[0]);
-
     // Populate faction wins
     for (var i = 0; i < ConfigDataService.factions.length; i++) {
+        var faction = ConfigDataService.factions[i].toUpperCase();
+
         $http({
             method: 'POST',
             url   : ConfigDataService.apiUrl + '/statistics/alert/total',
             data  :
             { "wheres":
-                { "ResultWinner": ConfigDataService.factions[i].toUpperCase() }
+                { "ResultWinner": faction }
             }
         }).then(function(data) {
             factory.factionWins[faction] = data.data[0]["COUNT"];
         });
     }
 
-    for (var d = 0; i < ConfigDataService.factions.length; d++) {
+    for (var d = 0; d < ConfigDataService.factions.length; d++) {
         if (d < 3) { // Don't want 4th draw loop as there is no such thing
+            var faction = ConfigDataService.factions[d].toUpperCase();
+            $log.log(faction);
             $http({
                 method: 'POST',
                 url   : ConfigDataService.apiUrl + '/statistics/alert/total',
@@ -56,10 +58,11 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
                 { "wheres":
                     {
                         "ResultDomination": 1,
-                        "ResultWinner": ConfigDataService.factions[i].toUpperCase()
+                        "ResultWinner": faction
                     }
                 }
             }).then(function(data) {
+                $log.log(data);
                 factory.factionDoms[faction] = data.data[0]["COUNT"];
             });
         }
