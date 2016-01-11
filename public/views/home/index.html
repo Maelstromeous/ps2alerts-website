@@ -7,7 +7,7 @@
         <h3>Alert Victories</h3>
         <h6>Victories from 29-Oct-2014 to {{ today | date : 'dd-MMM-yyyy' }}</h6>
 
-        <h2>Total victories: {{ alertTotal }}</h2>
-        <button ng-click="incrementTotal(1)">Increment</button>
+        <h2>Total victories: {{ AlertStats.total }}</h2>
+        <button class="btn" ng-click="AlertStats.incrementTotal(1)">Increment</button>
     </div>
 </div>
