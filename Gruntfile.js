@@ -27,6 +27,7 @@ module.exports = function(grunt) {
                     'public/controllers/**/*.js',
                     'public/directives/**/*.js',
                     'public/services/**/*.js',
+                    'public/assets/js/common.js',
                 ],
                 dest: 'public/assets/js/main.js'
             },
@@ -50,9 +51,11 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: [
+                    'public/app.js',
                     'public/controllers/**/*.js',
                     'public/directives/**/*.js',
-                    'public/services/**/*.js'
+                    'public/services/**/*.js',
+                    'public/assets/js/common.js'
                 ],
                 tasks: ['js'],
                 options: {
