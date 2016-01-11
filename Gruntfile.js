@@ -111,10 +111,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['env', 'css', 'js']);
-    grunt.registerTask('envDev', ['ngconstant:development']);
-    grunt.registerTask('envStaging', ['ngconstant:staging']);
-    grunt.registerTask('envProduction', ['ngconstant:production']);
+    grunt.registerTask('default', ['css', 'js']);
+    grunt.registerTask('envDev', ['ngconstant:development', 'concat:js']);
+    grunt.registerTask('envStaging', ['ngconstant:staging', 'concat:js']);
+    grunt.registerTask('envProduction', ['ngconstant:production', 'concat:js']);
     grunt.registerTask('css', ['less', 'concat:css']);
     grunt.registerTask('js', ['concat:js', 'concat:js_deps']);
 };
