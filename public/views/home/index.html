@@ -1,3 +1,14 @@
-<div ng-controller="HomeController as HomeCtrl">
-    {{ PageMessage }}
+<div ng-include="'views/home/announcement.html'">
+
+</div>
+
+<div class="row padding background" ng-controller="VictoryController">
+    <div class="row center-align">
+        <h3>Alert Victories</h3>
+        <h6>Victories from 29-Oct-2014 to {{ today | date : 'dd-MMM-yyyy' }}</h6>
+
+        ENV: {{ baseUrl }}
+    </div>
+
+
 </div>
