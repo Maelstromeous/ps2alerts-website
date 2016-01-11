@@ -51,7 +51,8 @@ module.exports = function(grunt) {
             scripts: {
                 files: [
                     'public/controllers/**/*.js',
-                    'public/directives/**/*.js'
+                    'public/directives/**/*.js',
+                    'public/services/**/*.js'
                 ],
                 tasks: ['js'],
                 options: {
@@ -75,7 +76,7 @@ module.exports = function(grunt) {
                     ENV: {
                         environment: 'development',
                         baseUrl: 'http://192.168.33.10/ps2alerts/public',
-                        apiUrl: 'http://192.168.33.10/ps2alerts-api/public'
+                        apiUrl: 'http://192.168.33.10/ps2alerts-api/public/v2'
                     }
                 }
             },
