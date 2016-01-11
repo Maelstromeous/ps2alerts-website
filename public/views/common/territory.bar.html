@@ -1,0 +1,22 @@
+<div
+    class="territory-bar z-depth-1 grey darken-3"
+    vs="{{vs}}"
+    nc="{{nc}}"
+    tr="{{tr}}"
+    draw="{{draw}}">
+    <div class="loading" ng-hide="total > 0">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="segment vs-segment" style="width:{{ vs / total * 100 | number: 2 }}%" ng-show="vs > 0">
+        <span class="segment-metric">{{ vs / total * 100 | number:1 }}%</span>
+    </div>
+    <div class="segment nc-segment" style="width:{{ nc / total * 100 | number: 2 }}%" ng-show="nc > 0">
+        <span class="segment-metric">{{ nc / total * 100 | number:1 }}%</span>
+    </div>
+    <div class="segment tr-segment" style="width:{{ tr / total * 100 | number: 2 }}%" ng-show="tr > 0">
+        <span class="segment-metric">{{ tr / total * 100 | number:1 }}%</span>
+    </div>
+    <div class="segment draw-segment" style="width:{{ draw / total * 100 | number: 2 }}%" ng-show="draw > 0">
+        <span class="segment-metric">{{ draw / total * 100 | number:1 }}%</span>
+    </div>
+</div>
