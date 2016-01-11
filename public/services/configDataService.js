@@ -1,8 +1,10 @@
-app.service('ConfigDataService', function() {
+app.service('ConfigDataService', function(ENV) {
     var factory = {};
 
-    factory.baseUrl = config.baseUrl;
-    factory.apiUrl = config.apiUrl;
+    factory.baseUrl = ENV.baseUrl;
+    factory.apiUrl = ENV.apiUrl;
+
+    factory.factions = ['vs','nc','tr','draw'];
 
     return factory;
 });
