@@ -79,17 +79,30 @@ module.exports = function(grunt) {
                     }
                 }
             },
+            staging: {
+                options: {
+                    dest: 'public/config.js'
+                },
+                constants: {
+                    ENV: {
+                        environment: 'staging',
+                        baseUrl: 'https://staging.ps2alerts.com',
+                        apiUrl: 'https://api.ps2alerts.com/v2'
+                    }
+                }
+            },
             production: {
                 options: {
                     dest: 'public/config.js'
                 },
                 constants: {
                     ENV: {
-                        name: 'production',
-                        apiEndpoint: 'http://api.livesite.com'
+                        environment: 'production',
+                        baseUrl: 'https://www.ps2alerts.com',
+                        apiUrl: 'https://api.ps2alerts.com/v2'
                     }
                 }
-            }
+            },
         },
     });
 
@@ -99,7 +112,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['env', 'css', 'js']);
-    grunt.registerTask('env', ['ngconstant:development']);
+    grunt.registerTask('envDev', ['ngconstant:development']);
+    grunt.registerTask('envStaging', ['ngconstant:staging']);
+    grunt.registerTask('envProduction', ['ngconstant:production']);
     grunt.registerTask('css', ['less', 'concat:css']);
     grunt.registerTask('js', ['concat:js', 'concat:js_deps']);
 };
