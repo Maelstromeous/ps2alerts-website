@@ -1,6 +1,6 @@
 /* use strict */
 
-var app = angular.module('Ps2Alerts', ['ngRoute'])
+var app = angular.module('Ps2Alerts', ['ngRoute', 'config'])
 .config(function ($routeProvider) {
     $routeProvider
         .when('/', {
