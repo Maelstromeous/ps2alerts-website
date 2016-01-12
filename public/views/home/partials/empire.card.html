@@ -10,7 +10,7 @@
             <div ng-show="AlertStats.factionWins[empire] > 0">
                 Victories
                 <span class="badge">
-                    {{ AlertStats.factionWins[empire] }}
+                    {{ AlertStats.factionWins[empire] | number }}
                     /
                     {{ AlertStats.factionWins[empire] / AlertStats.total * 100 | number:1 }}%
                 </span>
@@ -23,7 +23,7 @@
             <div ng-show="AlertStats.factionDoms[empire] > 0">
                 Dominations
                 <span class="badge">
-                    {{ AlertStats.factionDoms[empire] }}
+                    {{ AlertStats.factionDoms[empire] | number }}
                     /
                     {{ AlertStats.factionDoms[empire] / AlertStats.dominations * 100 | number:1 }}%
                 </span>
