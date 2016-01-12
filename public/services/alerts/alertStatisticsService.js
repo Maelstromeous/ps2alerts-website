@@ -20,7 +20,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         method : 'POST',
         url    : ConfigDataService.apiUrl + '/statistics/alert/total'
     }).then(function(data) {
-        factory.total = data.data[0]["COUNT"];
+        factory.total = data.data[0].COUNT;
     });
 
     $http({
@@ -28,7 +28,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         url   : ConfigDataService.apiUrl + '/statistics/alert/total',
         data  : { "wheres": { "ResultDomination": "1" } }
     }).then(function(data) {
-        factory.dominations = data.data[0]["COUNT"];
+        factory.dominations = data.data[0].COUNT;
     });
 
     $http({
@@ -39,7 +39,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             { "ResultWinner": "vs" }
         }
     }).then(function(data) {
-        factory.factionWins["vs"] = data.data[0]["COUNT"];
+        factory.factionWins.vs = data.data[0].COUNT;
     });
 
     $http({
@@ -50,7 +50,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             { "ResultWinner": "nc" }
         }
     }).then(function(data) {
-        factory.factionWins["nc"] = data.data[0]["COUNT"];
+        factory.factionWins.nc = data.data[0].COUNT;
     });
 
     $http({
@@ -61,7 +61,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             { "ResultWinner": "tr" }
         }
     }).then(function(data) {
-        factory.factionWins["tr"] = data.data[0]["COUNT"];
+        factory.factionWins.tr = data.data[0].COUNT;
     });
 
     $http({
@@ -72,7 +72,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             { "ResultWinner": "draw" }
         }
     }).then(function(data) {
-        factory.factionWins["draw"] = data.data[0]["COUNT"];
+        factory.factionWins.draw = data.data[0].COUNT;
     });
 
     $http({
@@ -86,7 +86,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             }
         }
     }).then(function(data) {
-        factory.factionDoms["vs"] = data.data[0]["COUNT"];
+        factory.factionDoms.vs = data.data[0].COUNT;
     });
 
     $http({
@@ -100,7 +100,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             }
         }
     }).then(function(data) {
-        factory.factionDoms["nc"] = data.data[0]["COUNT"];
+        factory.factionDoms.nc = data.data[0].COUNT;
     });
 
     $http({
@@ -114,7 +114,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             }
         }
     }).then(function(data) {
-        factory.factionDoms["tr"] = data.data[0]["COUNT"];
+        factory.factionDoms.tr = data.data[0].COUNT;
     });
 
     return factory;

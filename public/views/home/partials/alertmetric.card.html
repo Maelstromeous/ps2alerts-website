@@ -1,0 +1,12 @@
+<div class="home-normal-card" card-title="Total Dominations" metric="dominations"></div>
+<div class="victory-card card blue-grey darken-3 center-align">
+    <div class="card-content white-text">
+        <h1>
+            <i class="fa fa-spin fa-refresh" ng-hide="AlertStats[metric] > 0"></i>
+            <span ng-show="AlertStats[metric] > 0">{{ AlertStats[metric] | number }}</span>
+        </h1>
+        <p>
+            {{ cardTitle }}
+        </p>
+    </div>
+</div>
