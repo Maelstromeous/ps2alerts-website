@@ -1,0 +1,36 @@
+<div class="victory-card card {{ cardClass }}">
+    <div class="card-content">
+        <p class="card-title center-align">{{ cardTitle }}</p>
+    </div>
+    <div class="collection" style="display: block;">
+        <div class="collection-item grey-text">
+            <div class="center-align" ng-hide="AlertStats.factionWins[faction] > 0">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+            <div ng-show="AlertStats.factionWins[faction] > 0">
+                Victories
+                <span class="badge">
+                    <b>{{ AlertStats.factionWins[faction] | number }}</b>
+                    /
+                    {{ AlertStats.factionWins[faction] / AlertStats.total * 100 | number:1 }}%
+                </span>
+            </div>
+        </div>
+        <div class="collection-item grey-text" ng-hide="faction == 'draw'">
+            <div class="center-align" ng-hide="AlertStats.factionDoms[faction] > 0">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+            <div ng-show="AlertStats.factionDoms[faction] > 0">
+                Dominations
+                <span class="badge">
+                    <b>{{ AlertStats.factionDoms[faction] | number }}</b>
+                    /
+                    {{ AlertStats.factionDoms[faction] / AlertStats.dominations * 100 | number:1 }}%
+                </span>
+            </div>
+        </div>
+        <div class="collection-item grey-text" ng-show="faction == 'draw'">
+            Dominations<span class="badge">N/A</span>
+        </div>
+    </div>
+</div>

@@ -1,12 +1,12 @@
-app.directive('homeEmpireCard', function(AlertStatisticsService) {
+app.directive('homeFactionCard', function(AlertStatisticsService) {
     return {
         restrict: 'A',
         scope : {
-            empire: '@',
+            faction: '@',
             cardClass: '@',
             cardTitle: '@'
         },
-        templateUrl: 'views/home/partials/empire.card.html',
+        templateUrl: 'views/home/partials/faction.card.html',
         link:function(scope) {
             scope.AlertStats = AlertStatisticsService;
         }

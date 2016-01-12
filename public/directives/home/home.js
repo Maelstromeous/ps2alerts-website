@@ -12,6 +12,6 @@ app.directive('homeTabs', function() {
 
 app.directive('homeEmpireVictories', function() {
     return {
-        templateUrl: 'views/home/empire.victories.html'
+        templateUrl: 'views/home/faction.victories.html'
     };
 });
