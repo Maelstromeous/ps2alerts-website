@@ -2,18 +2,16 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
     var factory = {
         total: 0,
         dominations: 0,
-        factionWins: {
-            vs: 0,
-            nc: 0,
-            tr: 0,
-            draw: 0
-        },
-        factionDoms: {
-            vs: 0,
-            nc: 0,
-            tr: 0
-        }
+        factionWins: {},
+        factionDoms: {}
     };
+
+    angular.forEach(ConfigDataService.factions, function(faction) {
+        factory.factionWins[faction] = 0;
+        if (faction !== 'draw') {
+            factory.factionDoms[faction] = 0;
+        }
+    });
 
     // Get teh dataz
     $http({
