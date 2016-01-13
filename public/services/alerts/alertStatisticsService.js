@@ -12,9 +12,6 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             vs: 0,
             nc: 0,
             tr: 0
-        },
-        error: function(error) {
-            $log.log(error);
         }
     };
 
@@ -26,7 +23,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
     }).then(function(data) {
         factory.total = data.data[0].COUNT;
     }, function(error) {
-        factory.error(data);
+        $log.log(error);
     });
 
     $http({
