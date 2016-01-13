@@ -25,7 +25,9 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         headers: {'Content-type': 'application/json'}
     }).then(function(data) {
         factory.total = data.data[0].COUNT;
-    }, factory.error(data));
+    }, function(error) {
+        factory.error(data);
+    });
 
     $http({
         method: 'POST',
