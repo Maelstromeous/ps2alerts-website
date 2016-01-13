@@ -31,6 +31,8 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         headers: {'Content-type': 'application/json'}
     }).then(function(data) {
         factory.dominations = data.data[0].COUNT;
+    }).error(function(response) {
+        $log.log(response);
     });
 
     $http({
