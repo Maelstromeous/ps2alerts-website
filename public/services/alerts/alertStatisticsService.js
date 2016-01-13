@@ -15,106 +15,40 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         }
     };
 
-    // Get the metrics
+    // Get teh dataz
     $http({
         method : 'POST',
-        url    : ConfigDataService.apiUrl + '/statistics/alert/total'
+        url    : ConfigDataService.apiUrl + '/statistics/alert/total',
     }).then(function(data) {
         factory.total = data.data[0].COUNT;
     });
 
     $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  : { "wheres": { "ResultDomination": "1" } }
+        method : 'POST',
+        url    : ConfigDataService.apiUrl + '/statistics/alert/total',
+        data   : {"wheres":{"ResultDomination": 1}}
     }).then(function(data) {
         factory.dominations = data.data[0].COUNT;
     });
 
-    $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  :
-        { "wheres":
-            { "ResultWinner": "vs" }
-        }
-    }).then(function(data) {
-        factory.factionWins.vs = data.data[0].COUNT;
-    });
+    angular.forEach(ConfigDataService.factions, function(faction) {
+        $http({
+            method : 'POST',
+            url    : ConfigDataService.apiUrl + '/statistics/alert/total',
+            data   : {"wheres":{"ResultWinner":faction}}
+        }).then(function(data) {
+            factory.factionWins[faction] = data.data[0].COUNT;
+        });
 
-    $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  :
-        { "wheres":
-            { "ResultWinner": "nc" }
+        if (faction !== 'draw') {
+            $http({
+                method : 'POST',
+                url    : ConfigDataService.apiUrl + '/statistics/alert/total',
+                data   : {"wheres":{"ResultWinner": faction,"ResultDomination": 1}}
+            }).then(function(data) {
+                factory.factionDoms[faction] = data.data[0].COUNT;
+            });
         }
-    }).then(function(data) {
-        factory.factionWins.nc = data.data[0].COUNT;
-    });
-
-    $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  :
-        { "wheres":
-            { "ResultWinner": "tr" }
-        }
-    }).then(function(data) {
-        factory.factionWins.tr = data.data[0].COUNT;
-    });
-
-    $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  :
-        { "wheres":
-            { "ResultWinner": "draw" }
-        }
-    }).then(function(data) {
-        factory.factionWins.draw = data.data[0].COUNT;
-    });
-
-    $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  :
-        { "wheres":
-            {
-                "ResultDomination": 1,
-                "ResultWinner": "vs"
-            }
-        }
-    }).then(function(data) {
-        factory.factionDoms.vs = data.data[0].COUNT;
-    });
-
-    $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  :
-        { "wheres":
-            {
-                "ResultDomination": 1,
-                "ResultWinner": "nc"
-            }
-        }
-    }).then(function(data) {
-        factory.factionDoms.nc = data.data[0].COUNT;
-    });
-
-    $http({
-        method: 'POST',
-        url   : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data  :
-        { "wheres":
-            {
-                "ResultDomination": 1,
-                "ResultWinner": "tr"
-            }
-        }
-    }).then(function(data) {
-        factory.factionDoms.tr = data.data[0].COUNT;
     });
 
     return factory;
