@@ -16,7 +16,10 @@
         <![endif]-->
     </head>
     <body ng-app="Ps2Alerts" class="blue-grey darken-4">
-        <header site-header></header>
+        <header>
+            <img src="assets/img/headers/header0.png" class="responsive-img">
+            <div ng-include="'views/common/header.html'"></div>
+        </header>
         <main>
             <div ng-view></div>
         </main>
