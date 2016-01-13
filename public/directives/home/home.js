@@ -9,9 +9,3 @@ app.directive('homeTabs', function() {
         templateUrl: 'views/home/tabs.html'
     };
 });
-
-app.directive('homeEmpireVictories', function() {
-    return {
-        templateUrl: 'views/home/faction.victories.html'
-    };
-});
