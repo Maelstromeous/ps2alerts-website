@@ -12,6 +12,9 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             vs: 0,
             nc: 0,
             tr: 0
+        },
+        error: function(error) {
+            $log.log(error);
         }
     };
 
@@ -22,7 +25,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         headers: {'Content-type': 'application/json'}
     }).then(function(data) {
         factory.total = data.data[0].COUNT;
-    });
+    }, factory.error(data));
 
     $http({
         method: 'POST',
@@ -31,8 +34,6 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         headers: {'Content-type': 'application/json'}
     }).then(function(data) {
         factory.dominations = data.data[0].COUNT;
-    }).error(function(response) {
-        $log.log(response);
     });
 
     $http({
