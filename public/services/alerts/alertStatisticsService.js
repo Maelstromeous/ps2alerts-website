@@ -15,38 +15,30 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
 
     // Get teh dataz
     $http({
-        method : 'POST',
-        url    : ConfigDataService.apiUrl + '/statistics/alert/total',
+        method : 'GET',
+        url    : ConfigDataService.apiUrl + '/alerts/counts/victories',
     }).then(function(data) {
-        factory.total = data.data[0].COUNT;
+        var returned             = data.data.data; // #Dataception
+        factory.total            = returned.total;
+        factory.factionWins.vs   = returned.vs;
+        factory.factionWins.nc   = returned.nc;
+        factory.factionWins.tr   = returned.tr;
+        factory.factionWins.draw = returned.draw;
+
+        $log.log(factory.factionWins);
     });
 
     $http({
-        method : 'POST',
-        url    : ConfigDataService.apiUrl + '/statistics/alert/total',
-        data   : {"wheres":{"ResultDomination": 1}}
+        method : 'GET',
+        url    : ConfigDataService.apiUrl + '/alerts/counts/dominations',
     }).then(function(data) {
-        factory.dominations = data.data[0].COUNT;
-    });
+        var returned             = data.data.data; // #Dataception
+        factory.dominations      = returned.total;
+        factory.factionDoms.vs   = returned.vs;
+        factory.factionDoms.nc   = returned.nc;
+        factory.factionDoms.tr   = returned.tr;
 
-    angular.forEach(ConfigDataService.factions, function(faction) {
-        $http({
-            method : 'POST',
-            url    : ConfigDataService.apiUrl + '/statistics/alert/total',
-            data   : {"wheres":{"ResultWinner":faction}}
-        }).then(function(data) {
-            factory.factionWins[faction] = data.data[0].COUNT;
-        });
-
-        if (faction !== 'draw') {
-            $http({
-                method : 'POST',
-                url    : ConfigDataService.apiUrl + '/statistics/alert/total',
-                data   : {"wheres":{"ResultWinner": faction,"ResultDomination": 1}}
-            }).then(function(data) {
-                factory.factionDoms[faction] = data.data[0].COUNT;
-            });
-        }
+        $log.log(factory.factionDoms);
     });
 
     return factory;
