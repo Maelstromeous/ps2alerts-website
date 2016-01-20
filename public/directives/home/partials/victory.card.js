@@ -1,28 +1,25 @@
-app.directive('homeFactionCard', function(AlertStatisticsService) {
-    return {
-        restrict: 'A',
-        scope : {
-            faction: '@',
-            cardClass: '@',
-            cardTitle: '@'
-        },
-        templateUrl: 'views/home/partials/faction.card.html',
-        link:function(scope) {
-            scope.AlertStats = AlertStatisticsService;
-        }
-    };
-});
-
 app.directive('homeAlertMetricCard', function(AlertStatisticsService) {
     return {
         restrict: 'A',
         scope : {
             cardTitle: '@',
-            metric: '@'
+            metric:    '@'
         },
         templateUrl: 'views/home/partials/alertmetric.card.html',
+    };
+});
+
+app.directive('homeFactionCard', function(AlertStatisticsService) {
+    return {
+        restrict: 'A',
+        scope : {
+            cardClass: '@',
+            cardTitle: '@',
+            faction:   '@',
+        },
         link:function(scope) {
-            scope.AlertStats = AlertStatisticsService;
-        }
+            scope.stats = AlertStatisticsService.totals;
+        },
+        templateUrl: 'views/home/partials/faction.card.html',
     };
 });

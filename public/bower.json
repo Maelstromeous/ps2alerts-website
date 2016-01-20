@@ -20,6 +20,7 @@
     "angular-route": "~1.4.8",
     "Materialize": "materialize#~0.97.5",
     "font-awesome": "~4.5.0",
-    "angular-materialize": "~0.1.2"
+    "angular-materialize": "~0.1.2",
+    "SpinKit": "spinkit#~1.2.5"
   }
 }

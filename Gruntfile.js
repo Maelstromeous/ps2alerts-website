@@ -6,6 +6,7 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'public/bower_components/Materialize/dist/css/materialize.min.css',
+                    'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
                     'public/assets/css/compiled/main.css',
                     'public/assets/css/compiled/homepage.css',
                     'public/assets/css/compiled/alert.history.css'
