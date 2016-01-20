@@ -5,7 +5,8 @@
     <div class="collection" style="display: block;">
         <div class="collection-item grey-text">
             <div>
-                Victories
+                <span ng-show="faction == 'draw'">Draws</span>
+                <span ng-show="faction != 'draw'">Victories</span>
                 <span class="badge" ng-hide="stats.alerts[faction] > 0">
                     <i class="fa fa-refresh fa-spin"></i>
                 </span>
