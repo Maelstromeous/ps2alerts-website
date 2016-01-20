@@ -1,16 +1,16 @@
 <section ng-controller="VictoryController">
     <div class="row center-align">
         <h1 class="header-no-margin">Alert Statistics</h1>
-        <h6>Statistics shown from 29-Oct-2014 to {{ today | date : 'dd-MMM-yyyy' }}</h6>
+        <h6>Statistics shown from 29-Oct-2014 to {{today | date : 'dd-MMM-yyyy'}}</h6>
     </div>
     <div class="col s12">
         <div class="row">
             <territory-bar
-                vs="{{ AlertStats.totals.alerts.vs }}"
-                nc="{{ AlertStats.totals.alerts.nc }}"
-                tr="{{ AlertStats.totals.alerts.tr }}"
-                draw="{{ AlertStats.totals.alerts.draw }}"
-                total="{{ AlertStats.totals.alerts.total }}">
+                vs="{{alertStats.totals.alerts.vs}}"
+                nc="{{alertStats.totals.alerts.nc}}"
+                tr="{{alertStats.totals.alerts.tr}}"
+                draw="{{alertStats.totals.alerts.draw}}"
+                total="{{alertStats.totals.alerts.total}}">
             </territory-bar>
         </div>
     </div>
@@ -20,13 +20,13 @@
                 home-alert-metric-card
                 class="col s12 m6"
                 card-title="Total Alerts"
-                metric="{{ AlertStats.totals.alerts.total }}">
+                metric="{{alertStats.totals.alerts.total}}">
             </div>
             <div
                 home-alert-metric-card
                 class="col s12 m6"
                 card-title="Total Dominations"
-                metric="{{ AlertStats.totals.dominations.total }}">
+                metric="{{alertStats.totals.dominations.total}}">
             </div>
 
             <div
