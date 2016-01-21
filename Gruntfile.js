@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                     'public/bower_components/angular-animate/angular-animate.min.js',
                     'public/bower_components/jquery/dist/jquery.min.js',
                     'public/bower_components/Materalize/js/materialize.min.js',
-                    'public/bower_components/angular-materialize/src/materialize.min.js',
+                    'public/bower_components/angular-materialize/src/materialize.min.js'
                 ],
                 dest: 'public/assets/js/deps.js'
             },
@@ -32,6 +32,7 @@ module.exports = function(grunt) {
                     'public/directives/**/*.js',
                     'public/services/**/*.js',
                     'public/assets/js/common.js',
+                    'public/assets/js/websocketMonitor.js',
                 ],
                 dest: 'public/assets/js/main.js'
             },
@@ -59,7 +60,8 @@ module.exports = function(grunt) {
                     'public/controllers/**/*.js',
                     'public/directives/**/*.js',
                     'public/services/**/*.js',
-                    'public/assets/js/common.js'
+                    'public/assets/js/common.js',
+                    'public/assets/js/websocketMonitor.js'
                 ],
                 tasks: ['js'],
                 options: {

@@ -1,0 +1,41 @@
+<div ng-controller="RealTimeMonitorController">
+    <div class="row center-align monitor-labels">
+        <div class="col s2">
+            <span>Server</span>
+        </div>
+        <div class="col s2">
+            <span>Continent</span>
+        </div>
+        <div class="col s2">
+            <span>Remaining</span>
+        </div>
+        <div class="col s6">
+            <span>Territory</span>
+        </div>
+    </div>
+    <div ng-repeat="(server, zones) in websocket.actives">
+        <div ng-repeat="alert in zones">
+            <div class="row monitor-row center-align">
+                <div class="col s2">
+                    {{config.serverNames[alert.server]}}
+                </div>
+                <div class="col s2">
+                    {{config.zoneNames[alert.zone]}}
+                </div>
+                <div class="col s2" stat="{{ alert.countdown }}">
+                    {{alert.countdown|date:'HH:mm:ss'}}
+                </div>
+                <div class="col s6">
+                    <territory-bar
+                        vs="{{alert.vs}}"
+                        nc="{{alert.nc}}"
+                        tr="{{alert.tr}}"
+                        draw="0"
+                        total="100"
+                        decimal="0">
+                    </territory-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

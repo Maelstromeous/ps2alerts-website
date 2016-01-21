@@ -1,7 +1,7 @@
 /* use strict */
 
-var app = angular.module('Ps2Alerts', ['ngRoute', 'config'])
-.config(function ($routeProvider) {
+var app = angular.module('Ps2Alerts', ['ngRoute', 'config']);
+app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'views/home/index.html'

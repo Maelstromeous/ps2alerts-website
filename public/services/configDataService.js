@@ -15,6 +15,13 @@ app.service('ConfigDataService', function(ENV) {
         1000: 'Genudine',
         2000: 'Ceres'
     };
+    factory.zones = [2,4,6,8];
+    factory.zoneNames = {
+        2: 'Indar',
+        4: 'Hossin',
+        6: 'Amerish',
+        8: 'Esamir'
+    };
 
     return factory;
 });

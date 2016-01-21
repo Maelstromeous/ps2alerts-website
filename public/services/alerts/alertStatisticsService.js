@@ -32,8 +32,6 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         url    : ConfigDataService.apiUrl + '/alerts/counts/victories',
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
-        $log.log('returned victories', returned);
-
         angular.forEach(returned, function(values, server) {
             angular.forEach(ConfigDataService.factions, function(faction) {
                 factory.victories[server][faction] = values.data[faction];
@@ -42,8 +40,6 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
 
             factory.totals.alerts.total += values.data.total;
         });
-
-        $log.log(factory);
     });
 
     $http({
@@ -51,7 +47,6 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         url    : ConfigDataService.apiUrl + '/alerts/counts/dominations',
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
-        $log.log('returned dominations', returned);
 
         angular.forEach(returned, function(values, server) {
             angular.forEach(ConfigDataService.factions, function(faction) {
