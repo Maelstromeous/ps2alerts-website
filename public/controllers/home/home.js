@@ -1,9 +1,9 @@
-app.controller('VictoryController', function($scope, ENV, AlertStatisticsService) {
+app.controller('VictoryController', function($scope, ConfigDataService, AlertStatisticsService) {
     $scope.today = new Date();
-
-    $scope.AlertStats = AlertStatisticsService;
+    $scope.alertStats = AlertStatisticsService;
+    $scope.config = ConfigDataService;
 });
 
-app.controller('ServerVictoryController', function($scope, ENV, ServerStatisticsService) {
-    $scope.ServerStats = ServerStatisticsService;
+app.controller('ServerVictoryController', function($scope, ServerStatisticsService) {
+    $scope.serverStats = ServerStatisticsService;
 });

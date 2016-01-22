@@ -7,7 +7,8 @@ app.directive('territoryBar', function() {
             nc: '@',
             tr: '@',
             draw: '@',
-            total: '@'
+            total: '@',
+            decimal: '@'
         },
         templateUrl: 'views/common/territory.bar.html'
     };
