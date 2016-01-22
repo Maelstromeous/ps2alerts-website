@@ -97,7 +97,7 @@ module.exports = function(grunt) {
                     ENV: {
                         environment: 'staging',
                         baseUrl: 'https://staging.ps2alerts.com',
-                        apiUrl: 'https://api.ps2alerts.com/v2'
+                        apiUrl: 'https://staging.api.ps2alerts.com/v2'
                     }
                 }
             },

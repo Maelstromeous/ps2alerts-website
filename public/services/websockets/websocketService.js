@@ -112,7 +112,8 @@ app.service('WebsocketService', function($log, AlertStatisticsService) {
     };
 
     factory.endActive = function (message) {
-        var alert = message.data;
+        console.log('Ending alert: ', message.data);
+        var alert = parseAlertDataUpdate(message.data);
         delete factory.actives[alert.server][alert.zone];
 
         AlertStatisticsService.increaseAlertTotal();
@@ -135,11 +136,6 @@ app.service('WebsocketService', function($log, AlertStatisticsService) {
             server:    parseInt(alert.world),
             zone:      parseInt(alert.zone)
         };
-
-        console.log('parsed alert', obj);
-        console.log('alert.endtime', alert.endTime);
-        console.log('alert.remaining', alert.remaining);
-        console.log('countdown', obj.countdown);
 
         return obj;
     };
