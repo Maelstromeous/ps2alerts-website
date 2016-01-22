@@ -20,7 +20,8 @@ module.exports = function(grunt) {
                     'public/bower_components/angular-animate/angular-animate.min.js',
                     'public/bower_components/jquery/dist/jquery.min.js',
                     'public/bower_components/Materalize/js/materialize.min.js',
-                    'public/bower_components/angular-materialize/src/materialize.min.js'
+                    'public/bower_components/angular-materialize/src/materialize.min.js',
+                    'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
                 ],
                 dest: 'public/assets/js/deps.js'
             },

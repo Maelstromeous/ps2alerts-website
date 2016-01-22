@@ -4,8 +4,4 @@ app.controller('RealTimeMonitorController', function($scope, ConfigDataService, 
 
     // Start the engines
     $scope.websocket.initWebSocket();
-
-    $interval(function() {
-        $scope.websocket.timers();
-    }, 1000);
 });

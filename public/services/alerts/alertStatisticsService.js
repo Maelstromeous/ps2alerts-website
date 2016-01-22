@@ -12,6 +12,15 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         }
     };
 
+    factory.increaseAlertTotal = function() {
+        factory.totals.alerts.total++;
+    };
+
+    factory.increaseVictories = function (server, faction) {
+        factory.victories[server][faction]++;
+        factory.totals.alerts[faction]++;
+    };
+
     // Instantiate the object properties
     angular.forEach(ConfigDataService.servers, function (server) {
         angular.forEach(ConfigDataService.factions, function(faction) {

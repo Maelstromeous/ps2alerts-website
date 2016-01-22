@@ -1,4 +1,4 @@
-app.service('WebsocketService', function($log) {
+app.service('WebsocketService', function($log, AlertStatisticsService) {
     var factory = {};
 
     factory.webSocket = {};
@@ -55,11 +55,11 @@ app.service('WebsocketService', function($log) {
                         break;
                     }
                     case 'alertStart': {
-                        factory.addActive(message);
+                        factory.addActive(message.data);
                         break;
                     }
                     case 'alertEnd': {
-                        factory.removeActive(message);
+                        factory.endActive(message);
                         break;
                     }
                     case 'alertStatus': {
@@ -74,20 +74,7 @@ app.service('WebsocketService', function($log) {
     factory.initActives = function (message) {
         angular.forEach(message.data, function(server) {
             angular.forEach(server, function(alert) {
-                console.log(alert);
-                factory.actives[alert.world] = {};
-                factory.actives[alert.world][alert.zone] = {
-                    started: parseInt(alert.startTime),
-                    ends: parseInt(alert.endTime),
-                    countdown: parseInt(alert.remaining+'000'),
-                    vs: parseInt(alert.controlVS),
-                    nc: parseInt(alert.controlNC),
-                    tr: parseInt(alert.controlTR),
-                    server: parseInt(alert.world),
-                    zone: parseInt(alert.zone),
-                };
-                var obj = factory.actives[alert.world][alert.zone];
-                factory.actives[obj.server][obj.zone].cutoff = 100 - obj.vs - obj.nc - obj.tr;
+                factory.addActive(alert);
             });
         });
 
@@ -95,39 +82,78 @@ app.service('WebsocketService', function($log) {
     };
 
     factory.updateActives = function (message) {
-        if (message.data.defence === 0) {
-            var alert = message.data;
-            factory.actives[alert.world][alert.zone].vs = parseInt(alert.controlVS);
-            factory.actives[alert.world][alert.zone].nc = parseInt(alert.controlNC);
-            factory.actives[alert.world][alert.zone].tr = parseInt(alert.controlTR);
-            factory.actives[alert.world][alert.zone].cutoff = 100 - alert.vs - alert.nc - alert.tr;
+        var alert = factory.parseAlertDataUpdate(message.data);
 
-            console.log("Updated Actives");
-            $log.log(factory.actives[alert.world][alert.zone]);
+        if (alert.defence === 0) {
+            factory.actives[alert.server][alert.zone].vs = alert.vs;
+            factory.actives[alert.server][alert.zone].nc = alert.nc;
+            factory.actives[alert.server][alert.zone].tr = alert.tr;
+            factory.actives[alert.server][alert.zone].cutoff = 100 - alert.vs - alert.nc - alert.tr;
         }
     };
 
-    factory.addActive = function (message) {
-        var alert = message.data;
+    factory.addActive = function (messageData) {
+        console.log("Adding new alert");
+        console.log('Raw alert', messageData);
+        var alert = factory.parseAlertDataInitial(messageData);
+
         if (typeof factory.actives[alert.server] === 'undefined') {
             factory.actives[alert.server] = {};
         }
+
+        factory.actives[alert.server][alert.zone] = alert;
+
+        // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
+        setTimeout(function() {
+            setMonitorCountdown(alert.alertID);
+        }, 1000);
+
+        console.log("Started alert", factory.actives[alert.server][alert.zone]);
     };
 
-    factory.removeActive = function (message) {
+    factory.endActive = function (message) {
         var alert = message.data;
         delete factory.actives[alert.server][alert.zone];
-        console.log("Removed alert", alert.server, alert.zone);
+
+        AlertStatisticsService.increaseAlertTotal();
+        console.log("Ended alert", alert.server, alert.zone);
     };
 
-    factory.timers = function () {
-        angular.forEach(factory.actives, function (servers) {
-            angular.forEach(servers, function (alert) {
-                var server = alert.server;
-                var zone = alert.zone;
-                factory.actives[server][zone].countdown--;
-            });
-        });
+    factory.parseAlertDataInitial = function (alert) {
+        var time = new Date().getTime();
+        var remainingJS = (parseInt(alert.remaining) * 1000);
+        var realEnd = (time + remainingJS);
+
+        var obj = {
+            alertID:   parseInt(alert.resultID),
+            started:   parseInt(alert.startTime),
+            ends:      parseInt(alert.endTime),
+            countdown: realEnd,
+            vs:        parseInt(alert.controlVS),
+            nc:        parseInt(alert.controlNC),
+            tr:        parseInt(alert.controlTR),
+            server:    parseInt(alert.world),
+            zone:      parseInt(alert.zone)
+        };
+
+        console.log('parsed alert', obj);
+        console.log('alert.endtime', alert.endTime);
+        console.log('alert.remaining', alert.remaining);
+        console.log('countdown', obj.countdown);
+
+        return obj;
+    };
+
+    factory.parseAlertDataUpdate = function (alert) {
+        return {
+            alertID: parseInt(alert.resultID),
+            vs:      parseInt(alert.controlVS),
+            nc:      parseInt(alert.controlNC),
+            tr:      parseInt(alert.controlTR),
+            server:  parseInt(alert.world),
+            zone:    parseInt(alert.zone),
+            defence: parseInt(alert.defence)
+        };
     };
 
     return factory;

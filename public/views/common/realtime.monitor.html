@@ -1,4 +1,4 @@
-<div ng-controller="RealTimeMonitorController">
+<div ng-controller="RealTimeMonitorController" class="row">
     <div class="row center-align monitor-labels">
         <div class="col s2">
             <span>Server</span>
@@ -15,15 +15,15 @@
     </div>
     <div ng-repeat="(server, zones) in websocket.actives">
         <div ng-repeat="alert in zones">
-            <div class="row monitor-row center-align">
+            <div class="row monitor-row center-align" id="monitor-{{alert.alertID}}">
                 <div class="col s2">
                     {{config.serverNames[alert.server]}}
                 </div>
                 <div class="col s2">
                     {{config.zoneNames[alert.zone]}}
                 </div>
-                <div class="col s2" stat="{{ alert.countdown }}">
-                    {{alert.countdown|date:'HH:mm:ss'}}
+                <div class="col s2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}" todate2="{{alert.countdown}}">
+                    00:00:00
                 </div>
                 <div class="col s6">
                     <territory-bar
