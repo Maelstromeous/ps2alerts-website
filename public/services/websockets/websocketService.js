@@ -8,7 +8,7 @@ app.service('WebsocketService', function($log, AlertStatisticsService) {
 
     factory.initWebSocket = function() {
         console.log('Connecting websocket...');
-        factory.webSocket = new WebSocket('ws://212.71.244.253:1337?apikey=692e01b167f4c5c28cdc95389f038393');
+        factory.webSocket = new WebSocket('ws://api.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393');
 
         factory.webSocket.onopen = function () {
             console.log('Websocket Connected');

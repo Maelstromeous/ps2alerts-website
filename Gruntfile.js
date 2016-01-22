@@ -96,8 +96,8 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         environment: 'staging',
-                        baseUrl: 'https://staging.ps2alerts.com',
-                        apiUrl: 'https://staging.api.ps2alerts.com/v2'
+                        baseUrl: 'http://staging.ps2alerts.com',
+                        apiUrl: 'http://staging.api.ps2alerts.com/v2'
                     }
                 }
             },
@@ -108,8 +108,8 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         environment: 'production',
-                        baseUrl: 'https://www.ps2alerts.com',
-                        apiUrl: 'https://api.ps2alerts.com/v2'
+                        baseUrl: 'http://www.ps2alerts.com',
+                        apiUrl: 'http://api.ps2alerts.com/v2'
                     }
                 }
             },
