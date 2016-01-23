@@ -83,6 +83,7 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
 
     factory.addActive = function (messageData) {
         factory.parseAlertDataInitial(messageData, function(alert) {
+            console.log("Starting Alert", alert);
             factory.actives[alert.id] = alert;
 
             // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
@@ -95,6 +96,7 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
     factory.updateActives = function (message) {
         factory.parseAlertDataUpdate(message.data, function(alert) {
             if (alert.defence === 0) {
+                console.log("Logging capture", alert);
                 factory.actives[alert.id].vs = alert.vs;
                 factory.actives[alert.id].nc = alert.nc;
                 factory.actives[alert.id].tr = alert.tr;
