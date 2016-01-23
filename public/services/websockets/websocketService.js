@@ -124,7 +124,7 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
     factory.parseAlertDataInitial = function (alert, callback) {
         var time = new Date().getTime();
         var remainingJS = (parseInt(alert.remaining) * 1000);
-        var realEnd = (time + remainingJS);
+        var realEnd = (time + remainingJS) - 1; // - 1 because of setTimeout
 
         var obj = {
             id:        parseInt(alert.resultID),
@@ -173,7 +173,7 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
 
         var testData = {
             startTime: timestamp,
-            endTime:   timestamp + 5400,
+            endTime:   timestamp + 5399, // - 1 because of setTimeout
             world:     10,
             zone:      2,
             resultID:  12345,
