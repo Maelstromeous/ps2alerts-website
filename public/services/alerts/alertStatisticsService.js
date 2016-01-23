@@ -16,9 +16,18 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         factory.totals.alerts.total++;
     };
 
+    factory.increaseDominationTotal = function() {
+        factory.totals.dominations.total++;
+    };
+
     factory.increaseVictories = function (server, faction) {
         factory.victories[server][faction]++;
         factory.totals.alerts[faction]++;
+    };
+
+    factory.increaseDominations = function (server, faction) {
+        factory.dominations[server][faction]++;
+        factory.totals.dominations[faction]++;
     };
 
     // Instantiate the object properties
@@ -30,7 +39,7 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
             factory.victories[server][faction]   = 0;
             factory.dominations[server][faction] = 0;
 
-            factory.totals.alerts[faction] = 0;
+            factory.totals.alerts[faction]      = 0;
             factory.totals.dominations[faction] = 0;
         });
     });

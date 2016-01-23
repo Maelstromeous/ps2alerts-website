@@ -23,5 +23,16 @@ app.service('ConfigDataService', function(ENV) {
         8: 'Esamir'
     };
 
+    factory.convertFactionNameToInt = function(name) {
+        switch(name) {
+            case "VS":
+                return 1;
+            case "NC":
+                return 2;
+            case "TR":
+                return 3;
+        }
+    };
+
     return factory;
 });

@@ -1,4 +1,4 @@
-app.service('WebsocketService', function($rootScope, $log, AlertStatisticsService) {
+app.service('WebsocketService', function($rootScope, $log, AlertStatisticsService, ConfigDataService) {
     var factory = {};
 
     factory.webSocket = {};
@@ -50,12 +50,12 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
 
             if (typeof message.messageType !== 'undefined') {
                 switch (message.messageType) {
-                    case 'update': {
-                        factory.updateActives(message);
-                        break;
-                    }
                     case 'alertStart': {
                         factory.addActive(message.data);
+                        break;
+                    }
+                    case 'update': {
+                        factory.updateActives(message);
                         break;
                     }
                     case 'alertEnd': {
@@ -81,6 +81,17 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
         $log.log(factory.actives);
     };
 
+    factory.addActive = function (messageData) {
+        factory.parseAlertDataInitial(messageData, function(alert) {
+            factory.actives[alert.id] = alert;
+
+            // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
+            setTimeout(function() {
+                setMonitorCountdown(alert.id);
+            }, 1000);
+        });
+    };
+
     factory.updateActives = function (message) {
         factory.parseAlertDataUpdate(message.data, function(alert) {
             if (alert.defence === 0) {
@@ -93,37 +104,30 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
         });
     };
 
-    factory.addActive = function (messageData) {
-        factory.parseAlertDataInitial(messageData, function(alert) {
-            factory.actives[alert.id] = alert;
-
-            // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
-            setTimeout(function() {
-                setMonitorCountdown(alert.id);
-            }, 1000);
-
-            $rootScope.$apply();
-        });
-    };
-
     factory.endActive = function (message) {
-        console.log('Ending alert: ', message.data);
-        factory.parseAlertDataUpdate(message.data, function(alert) {
+        factory.parseAlertDataEnd(message.data, function(alert) {
+            console.log("Ending Alert: ", alert);
+
             delete factory.actives[alert.id];
 
             AlertStatisticsService.increaseAlertTotal();
-            $rootScope.$apply();
-            console.log("Ended alert", alert.id);
+            AlertStatisticsService.increaseVictories(alert.server, alert.winner);
+
+            if (alert.domination === 1) {
+                AlertStatisticsService.increaseDominationTotal();
+                AlertStatisticsService.increaseDominations(alert.server, alert.winner);
+            }
         });
     };
 
+    // Also handles starts as it's the same fields
     factory.parseAlertDataInitial = function (alert, callback) {
         var time = new Date().getTime();
         var remainingJS = (parseInt(alert.remaining) * 1000);
         var realEnd = (time + remainingJS);
 
         var obj = {
-            id:   parseInt(alert.resultID),
+            id:        parseInt(alert.resultID),
             started:   parseInt(alert.startTime),
             ends:      parseInt(alert.endTime),
             countdown: realEnd,
@@ -149,9 +153,72 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
         });
     };
 
-    factory.addNewAlert = function() {
-        var testData = {};
+    factory.parseAlertDataEnd = function (alert, callback) {
+        callback({
+            id:         parseInt(alert.resultID),
+            ended:      parseInt(alert.endTime),
+            vs:         parseInt(alert.controlVS),
+            nc:         parseInt(alert.controlNC),
+            tr:         parseInt(alert.controlTR),
+            server:     parseInt(alert.world),
+            zone:       parseInt(alert.zone),
+            domination: parseInt(alert.domination),
+            winner:     alert.winner.toLowerCase()
+        });
+    };
+
+    factory.addAlertTest = function() {
+        var timestamp = new Date().getTime();
+        timestamp = timestamp / 1000;
+
+        var testData = {
+            startTime: timestamp,
+            endTime:   timestamp + 5400,
+            world:     10,
+            zone:      2,
+            resultID:  12345,
+            controlVS: 33,
+            controlNC: 33,
+            controlTR: 33,
+            remaining: 5400
+        };
         factory.addActive(testData);
+    };
+
+    factory.endAlertTest = function() {
+        var testData = {
+            data: {
+                controlNC: "37",
+                controlTR: "27",
+                controlVS: "35",
+                domination: 1,
+                endtime: "1453570024",
+                resultID: 12345,
+                winner: "NC",
+                world: "10",
+                zone: "2"
+            }
+        };
+
+        factory.endActive(testData);
+    };
+
+    factory.updateAlertTest = function() {
+        var testData = {
+            data: {
+                controlNC: "37",
+                controlTR: "27",
+                controlVS: "35",
+                domination: 1,
+                endtime: "1453570024",
+                resultID: 12345,
+                winner: "NC",
+                world: "10",
+                zone: "2"
+            }
+        };
+
+        factory.endActive(testData);
     };
 
     return factory;
