@@ -13,28 +13,26 @@
             <span>Territory</span>
         </div>
     </div>
-    <div ng-repeat="(server, zones) in websocket.actives">
-        <div ng-repeat="alert in zones">
-            <div class="row monitor-row center-align" id="monitor-{{alert.alertID}}">
-                <div class="col s2">
-                    {{config.serverNames[alert.server]}}
-                </div>
-                <div class="col s2">
-                    {{config.zoneNames[alert.zone]}}
-                </div>
-                <div class="col s2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}" todate2="{{alert.countdown}}">
-                    00:00:00
-                </div>
-                <div class="col s6">
-                    <territory-bar
-                        vs="{{alert.vs}}"
-                        nc="{{alert.nc}}"
-                        tr="{{alert.tr}}"
-                        draw="0"
-                        total="100"
-                        decimal="0">
-                    </territory-bar>
-                </div>
+    <div ng-repeat="(id, alert) in websocket.actives">
+        <div class="row monitor-row center-align" id="monitor-{{id}}">
+            <div class="col s2">
+                {{config.serverNames[alert.server]}}
+            </div>
+            <div class="col s2">
+                {{config.zoneNames[alert.zone]}}
+            </div>
+            <div class="col s2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
+                00:00:00
+            </div>
+            <div class="col s6">
+                <territory-bar
+                    vs="{{alert.vs}}"
+                    nc="{{alert.nc}}"
+                    tr="{{alert.tr}}"
+                    draw="0"
+                    total="100"
+                    decimal="0">
+                </territory-bar>
             </div>
         </div>
     </div>

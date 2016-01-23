@@ -1,4 +1,4 @@
-app.service('WebsocketService', function($log, AlertStatisticsService) {
+app.service('WebsocketService', function($rootScope, $log, AlertStatisticsService) {
     var factory = {};
 
     factory.webSocket = {};
@@ -82,51 +82,48 @@ app.service('WebsocketService', function($log, AlertStatisticsService) {
     };
 
     factory.updateActives = function (message) {
-        var alert = factory.parseAlertDataUpdate(message.data);
-
-        if (alert.defence === 0) {
-            factory.actives[alert.server][alert.zone].vs = alert.vs;
-            factory.actives[alert.server][alert.zone].nc = alert.nc;
-            factory.actives[alert.server][alert.zone].tr = alert.tr;
-            factory.actives[alert.server][alert.zone].cutoff = 100 - alert.vs - alert.nc - alert.tr;
-        }
+        factory.parseAlertDataUpdate(message.data, function(alert) {
+            if (alert.defence === 0) {
+                factory.actives[alert.id].vs = alert.vs;
+                factory.actives[alert.id].nc = alert.nc;
+                factory.actives[alert.id].tr = alert.tr;
+                factory.actives[alert.id].cutoff = 100 - alert.vs - alert.nc - alert.tr;
+                $rootScope.$apply();
+            }
+        });
     };
 
     factory.addActive = function (messageData) {
-        console.log("Adding new alert");
-        console.log('Raw alert', messageData);
-        var alert = factory.parseAlertDataInitial(messageData);
+        factory.parseAlertDataInitial(messageData, function(alert) {
+            factory.actives[alert.id] = alert;
 
-        if (typeof factory.actives[alert.server] === 'undefined') {
-            factory.actives[alert.server] = {};
-        }
+            // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
+            setTimeout(function() {
+                setMonitorCountdown(alert.id);
+            }, 1000);
 
-        factory.actives[alert.server][alert.zone] = alert;
-
-        // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
-        setTimeout(function() {
-            setMonitorCountdown(alert.alertID);
-        }, 1000);
-
-        console.log("Started alert", factory.actives[alert.server][alert.zone]);
+            $rootScope.$apply();
+        });
     };
 
     factory.endActive = function (message) {
         console.log('Ending alert: ', message.data);
-        var alert = parseAlertDataUpdate(message.data);
-        delete factory.actives[alert.server][alert.zone];
+        factory.parseAlertDataUpdate(message.data, function(alert) {
+            delete factory.actives[alert.id];
 
-        AlertStatisticsService.increaseAlertTotal();
-        console.log("Ended alert", alert.server, alert.zone);
+            AlertStatisticsService.increaseAlertTotal();
+            $rootScope.$apply();
+            console.log("Ended alert", alert.id);
+        });
     };
 
-    factory.parseAlertDataInitial = function (alert) {
+    factory.parseAlertDataInitial = function (alert, callback) {
         var time = new Date().getTime();
         var remainingJS = (parseInt(alert.remaining) * 1000);
         var realEnd = (time + remainingJS);
 
         var obj = {
-            alertID:   parseInt(alert.resultID),
+            id:   parseInt(alert.resultID),
             started:   parseInt(alert.startTime),
             ends:      parseInt(alert.endTime),
             countdown: realEnd,
@@ -137,19 +134,24 @@ app.service('WebsocketService', function($log, AlertStatisticsService) {
             zone:      parseInt(alert.zone)
         };
 
-        return obj;
+        callback(obj);
     };
 
-    factory.parseAlertDataUpdate = function (alert) {
-        return {
-            alertID: parseInt(alert.resultID),
+    factory.parseAlertDataUpdate = function (alert, callback) {
+        callback({
+            id:      parseInt(alert.resultID),
             vs:      parseInt(alert.controlVS),
             nc:      parseInt(alert.controlNC),
             tr:      parseInt(alert.controlTR),
             server:  parseInt(alert.world),
             zone:    parseInt(alert.zone),
             defence: parseInt(alert.defence)
-        };
+        });
+    };
+
+    factory.addNewAlert = function() {
+        var testData = {};
+        factory.addActive(testData);
     };
 
     return factory;
