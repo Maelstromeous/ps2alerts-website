@@ -1,16 +1,16 @@
 <div ng-controller="RealTimeMonitorController" class="row grey darken-3" id="alert-monitor">
     <div class="col s12 m8 offset-m2">
-        <div class="row center-align">
-            <div class="sk-three-bounce" ng-show="websocket.loaded == 0">
+        <div class="center-align">
+            <div class="row sk-three-bounce" ng-show="websocket.loaded == 0">
                 <div class="sk-child sk-bounce1"></div>
                 <div class="sk-child sk-bounce2"></div>
                 <div class="sk-child sk-bounce3"></div>
             </div>
-            <div ng-show="websocket.count == 0 && websocket.loaded == 1">
+            <div class="row" ng-show="websocket.count == 0 && websocket.loaded == 1">
                 <h4>There are no alerts currently running</h4>
                 <h6>New alerts will show up here as they start</h6>
             </div>
-            <div class="monitor-labels" ng-show="websocket.count > 1 && websocket.loaded == 1">
+            <div class="row monitor-labels" ng-show="websocket.count > 1 && websocket.loaded == 1">
                 <div class="col s2">
                     <span>Server</span>
                 </div>
