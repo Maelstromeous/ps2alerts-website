@@ -89,7 +89,7 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
             // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
             setTimeout(function() {
                 setMonitorCountdown(alert.id);
-            }, 1000);
+            }, 1);
 
             $rootScope.$apply();
         });
