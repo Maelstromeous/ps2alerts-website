@@ -1,7 +1,8 @@
-vendor
 .env
-composer.lock
-public/bower_components
-style.min.css
 node_modules
-public/assets/css/compiled
+public/bower_components
+public/assets/css/compiled/*
+public/assets/css/main.css
+public/assets/js/main.js
+deps.js
+config.js

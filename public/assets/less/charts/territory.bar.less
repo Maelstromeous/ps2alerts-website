@@ -5,6 +5,9 @@
     height: @territory-bar-height;
     background-color: #FFF;
     color: #FFF;
+    border: 1px solid #ccc;
+    line-height: @territory-bar-height - 2;
+    display: table;
 }
 
 .territory-bar .loading {
@@ -17,9 +20,9 @@
 .territory-bar .tr-segment,
 .territory-bar .draw-segment {
     height: 100%;
-    float: left;
     text-align: center;
-    display: none;
+    display: table-cell;
+    transition: width 0.5s;
 }
 
 .territory-bar .vs-segment {
@@ -36,4 +39,22 @@
 
 .territory-bar .draw-segment {
     background-color: @background-draw;
+}
+
+@keyframes vsWin {
+    0% { background-color: @background-vs }
+    50% { background-color: green }
+    100% { background-color: @background-vs }
+}
+
+@keyframes ncWin {
+    0% { background-color: @background-nc }
+    50% { background-color: green }
+    100% { background-color: @background-nc }
+}
+
+@keyframes trWin {
+    0% { background-color: @background-tr }
+    50% { background-color: green }
+    100% { background-color: @background-tr }
 }

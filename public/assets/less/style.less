@@ -1,32 +1,20 @@
 @import 'variables.less';
 
 body {
-    background-image: url('../../img/background.jpg');
     font-family: 'Noto Sans',Helvetica,Arial,sans-serif;
-    background-color: #15171E;
+    background-color: #000;
     color: #FFF;
+}
+
+main {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 // Global class to generally apply to Rows to apply uniform padding
 .padding {
     padding: @padding-base;
-}
-
-.container, #footer {
-    color: #DDD;
-}
-
-#footer {
-    margin-top: 20px;
-    min-height: inherit;
-    padding: 10px;
-    text-align: center;
-}
-
-/* Default background for assigned DIVs */
-.background {
-    background-color: rgba(50, 50, 50, 0.6);
-    min-height: 50px;
 }
 
 a {
@@ -62,22 +50,6 @@ table tr:last-child {
     width: 100%;
     background-color: grey;
     border-radius: 2px;
-}
-
-.material-badge.vs {
-    background-color: @background-vs;
-}
-
-.material-badge.nc {
-    background-color: @background-nc;
-}
-
-.material-badge.tr {
-    background-color: @background-tr;
-}
-
-.material-badge.draw {
-    background-color: @background-draw;
 }
 
 .chart-container {
@@ -131,4 +103,39 @@ table tr:last-child {
 
 .no-padding {
     padding: 0;
+}
+
+.fade.ng-hide {
+  opacity: 0;
+}
+
+.fade.ng-hide-remove,
+.fade.ng-hide-add {
+  display: block !important;
+}
+
+.fade.ng-hide-remove {
+  transition: all linear 1000ms;
+}
+
+.fade.ng-hide-add {
+  transition: all linear 500ms;
+}
+
+.header-no-margin {
+    margin: 0;
+}
+
+.sk-three-bounce {
+    width: 100%;
+    margin: 0;
+}
+
+.sk-three-bounce .sk-child {
+    background-color: #fff;
+}
+
+.caption {
+    font-size: 0.9em;
+    color: #ccc;
 }
