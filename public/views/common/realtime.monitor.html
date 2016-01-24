@@ -17,16 +17,16 @@
         <div class="row">
             <div ng-repeat="(id, alert) in websocket.actives">
                 <div class="row monitor-row center-align" id="monitor-{{id}}">
-                    <div class="col s2">
+                    <div class="col s4 m2">
                         {{config.serverNames[alert.server]}}
                     </div>
-                    <div class="col s2">
+                    <div class="col s4 m2">
                         {{config.zoneNames[alert.zone]}}
                     </div>
-                    <div class="col s2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
+                    <div class="col s4 m2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
                         00:00:00
                     </div>
-                    <div class="col s6">
+                    <div class="col s12 m6">
                         <territory-bar
                             vs="{{alert.vs}}"
                             nc="{{alert.nc}}"
@@ -37,6 +37,11 @@
                         </territory-bar>
                     </div>
                 </div>
+            </div>
+            <div class="col s12">
+                <p class="center-align caption">
+                    Real Time Alert Monitor
+                </p>
             </div>
         </div>
     </div>
