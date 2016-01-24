@@ -90,6 +90,8 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
             setTimeout(function() {
                 setMonitorCountdown(alert.id);
             }, 1000);
+
+            $rootScope.$apply();
         });
     };
 
@@ -119,6 +121,8 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
                 AlertStatisticsService.increaseDominationTotal();
                 AlertStatisticsService.increaseDominations(alert.server, alert.winner);
             }
+
+            $rootScope.$apply();
         });
     };
 
