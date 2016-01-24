@@ -1,39 +1,46 @@
-<div ng-controller="RealTimeMonitorController" class="row">
-    <div class="row center-align monitor-labels">
-        <div class="col s2">
-            <span>Server</span>
-        </div>
-        <div class="col s2">
-            <span>Continent</span>
-        </div>
-        <div class="col s2">
-            <span>Remaining</span>
-        </div>
-        <div class="col s6">
-            <span>Territory</span>
-        </div>
-    </div>
-    <div ng-repeat="(id, alert) in websocket.actives">
-        <div class="row monitor-row center-align" id="monitor-{{id}}">
+<div ng-controller="RealTimeMonitorController" class="row grey darken-3" id="alert-monitor">
+    <div class="col s12 m8 offset-m2">
+        <div class="row center-align monitor-labels">
             <div class="col s2">
-                {{config.serverNames[alert.server]}}
+                <span>Server</span>
             </div>
             <div class="col s2">
-                {{config.zoneNames[alert.zone]}}
+                <span>Continent</span>
             </div>
-            <div class="col s2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
-                00:00:00
+            <div class="col s2">
+                <span>Remaining</span>
             </div>
             <div class="col s6">
-                <territory-bar
-                    vs="{{alert.vs}}"
-                    nc="{{alert.nc}}"
-                    tr="{{alert.tr}}"
-                    draw="0"
-                    total="100"
-                    decimal="0">
-                </territory-bar>
+                <span>Territory</span>
             </div>
         </div>
+        <div class="row">
+            <div ng-repeat="(id, alert) in websocket.actives">
+                <div class="row monitor-row center-align" id="monitor-{{id}}">
+                    <div class="col s2">
+                        {{config.serverNames[alert.server]}}
+                    </div>
+                    <div class="col s2">
+                        {{config.zoneNames[alert.zone]}}
+                    </div>
+                    <div class="col s2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
+                        00:00:00
+                    </div>
+                    <div class="col s6">
+                        <territory-bar
+                            vs="{{alert.vs}}"
+                            nc="{{alert.nc}}"
+                            tr="{{alert.tr}}"
+                            draw="0"
+                            total="100"
+                            decimal="0">
+                        </territory-bar>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="progress">
+        <div class="determinate" style="width: 100%"></div>
     </div>
 </div>
