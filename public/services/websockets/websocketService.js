@@ -2,7 +2,8 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
     var factory = {};
 
     factory.webSocket = {};
-    factory.authed = 0;
+    factory.loaded = 0;
+    factory.count = 0;
 
     factory.actives = {};
 
@@ -77,6 +78,7 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
     };
 
     factory.initActives = function (message) {
+        factory.loaded = 1;
         angular.forEach(message.data, function(server) {
             angular.forEach(server, function(alert) {
                 factory.addActive(alert);
@@ -90,11 +92,12 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
         factory.parseAlertDataInitial(messageData, function(alert) {
             console.log("Starting Alert", alert);
             factory.actives[alert.id] = alert;
+            factory.count++;
 
             // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
             setTimeout(function() {
                 setMonitorCountdown(alert.id);
-            }, 1000);
+            }, 1);
 
             $rootScope.$apply();
         });
@@ -118,6 +121,7 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
             console.log("Ending Alert: ", alert);
 
             delete factory.actives[alert.id];
+            factory.count--;
 
             AlertStatisticsService.increaseAlertTotal();
             AlertStatisticsService.increaseVictories(alert.server, alert.winner);

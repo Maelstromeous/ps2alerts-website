@@ -4,8 +4,15 @@
     padding-top: 20px;
 }
 
+#alert-monitor .caption {
+    margin-bottom: 0;
+}
+
 .monitor-labels {
     margin-bottom: 5px;
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
 }
 
 .monitor-labels span {
@@ -14,4 +21,7 @@
 
 .monitor-row {
     margin-bottom: 2px;
+    @media screen and (max-width: 600px) {
+        margin-bottom: 10px;
+    }
 }
