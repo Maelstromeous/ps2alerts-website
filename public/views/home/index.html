@@ -1,5 +1,5 @@
 <section ng-controller="VictoryController">
-    <div class="row center-align">
+    <div class="row center-align flow-text">
         <h1 class="header-no-margin">Alert Statistics</h1>
         <h6>Statistics shown from 29-Oct-2014 to {{today | date : 'dd-MMM-yyyy'}}</h6>
     </div>
@@ -29,7 +29,6 @@
                 card-title="Total Dominations"
                 metric="{{alertStats.totals.dominations.total}}">
             </div>
-
             <div
                 home-faction-card
                 class="col s12 m6"
