@@ -6,11 +6,11 @@
                 <div class="sk-child sk-bounce2"></div>
                 <div class="sk-child sk-bounce3"></div>
             </div>
-            <div class="row" ng-show="websocket.count == 0 && websocket.loaded == 1">
+            <div ng-show="websocket.count == 0 && websocket.loaded == 1">
                 <h4>There are no alerts currently running</h4>
                 <h6>New alerts will show up here as they start</h6>
             </div>
-            <div class="row monitor-labels" ng-show="websocket.count > 1 && websocket.loaded == 1">
+            <div class="row monitor-labels" ng-show="websocket.count > 0 && websocket.loaded == 1">
                 <div class="col s2">
                     <span>Server</span>
                 </div>
