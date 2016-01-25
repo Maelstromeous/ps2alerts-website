@@ -19,6 +19,11 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
             var message = factory.parse(rawMessage);
             factory.handleWebsocketMessage(message);
         };
+
+        factory.webSocket.onclose = function() {
+            console.log("Websocket Connection Lost... Reconnecting");
+            return factory.initWebSocket();
+        };
     };
 
     factory.authenticate = function () {
