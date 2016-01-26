@@ -50,10 +50,6 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
 
     factory.handleWebsocketMessage = function (message) {
         if (message !== null) {
-            if (message.messageType !== 'keepalive') {
-                console.log('Websocket message:', message);
-            }
-
             if (typeof message.messageType !== 'undefined') {
                 switch (message.messageType) {
                     case 'alertStart': {
@@ -84,13 +80,10 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
                 factory.addActive(alert);
             });
         });
-
-        $log.log(factory.actives);
     };
 
     factory.addActive = function (messageData) {
         factory.parseAlertDataInitial(messageData, function(alert) {
-            console.log("Starting Alert", alert);
             factory.actives[alert.id] = alert;
             factory.count++;
 
@@ -106,7 +99,6 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
     factory.updateActives = function (message) {
         factory.parseAlertDataUpdate(message.data, function(alert) {
             if (alert.defence === 0) {
-                console.log("Logging capture", alert);
                 factory.actives[alert.id].vs = alert.vs;
                 factory.actives[alert.id].nc = alert.nc;
                 factory.actives[alert.id].tr = alert.tr;
@@ -118,8 +110,6 @@ app.service('WebsocketService', function($rootScope, $log, AlertStatisticsServic
 
     factory.endActive = function (message) {
         factory.parseAlertDataEnd(message.data, function(alert) {
-            console.log("Ending Alert: ", alert);
-
             delete factory.actives[alert.id];
             factory.count--;
 
