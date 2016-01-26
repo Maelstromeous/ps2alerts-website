@@ -4,6 +4,4 @@ app.controller('VictoryController', function($scope, ConfigDataService, AlertSta
     $scope.config = ConfigDataService;
 });
 
-app.controller('ServerVictoryController', function($scope, ServerStatisticsService) {
-    $scope.serverStats = ServerStatisticsService;
 });
