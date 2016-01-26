@@ -23,15 +23,7 @@ app.service('ZoneStatisticsService', function ($http, $log, ConfigDataService) {
         url    : ConfigDataService.apiUrl + '/alerts/counts/victories?zones=2',
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
-
-        $log.log(returned);
-        angular.forEach(returned, function (values, server) {
-            angular.forEach(ConfigDataService.factions, function (faction) {
-                factory.zones[2][server][faction] = values.data[faction];
-            });
-
-            factory.zones[2][server].total = values.data.total;
-        });
+        factory.handleZoneData(2, returned);
     });
 
     $http({
@@ -39,15 +31,7 @@ app.service('ZoneStatisticsService', function ($http, $log, ConfigDataService) {
         url    : ConfigDataService.apiUrl + '/alerts/counts/victories?zones=4',
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
-
-        $log.log(returned);
-        angular.forEach(returned, function (values, server) {
-            angular.forEach(ConfigDataService.factions, function (faction) {
-                factory.zones[4][server][faction] = values.data[faction];
-            });
-
-            factory.zones[4][server].total = values.data.total;
-        });
+        factory.handleZoneData(4, returned);
     });
 
     $http({
@@ -55,15 +39,7 @@ app.service('ZoneStatisticsService', function ($http, $log, ConfigDataService) {
         url    : ConfigDataService.apiUrl + '/alerts/counts/victories?zones=6',
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
-
-        $log.log(returned);
-        angular.forEach(returned, function (values, server) {
-            angular.forEach(ConfigDataService.factions, function (faction) {
-                factory.zones[6][server][faction] = values.data[faction];
-            });
-
-            factory.zones[6][server].total = values.data.total;
-        });
+        factory.handleZoneData(6, returned);
     });
 
     $http({
@@ -71,16 +47,18 @@ app.service('ZoneStatisticsService', function ($http, $log, ConfigDataService) {
         url    : ConfigDataService.apiUrl + '/alerts/counts/victories?zones=8',
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
+        factory.handleZoneData(8, returned);
+    });
 
-        $log.log(returned);
-        angular.forEach(returned, function (values, server) {
+    factory.handleZoneData = function(zone, data) {
+        angular.forEach(data, function (values, server) {
             angular.forEach(ConfigDataService.factions, function (faction) {
-                factory.zones[8][server][faction] = values.data[faction];
+                factory.zones[zone][server][faction] = values.data[faction];
             });
 
-            factory.zones[8][server].total = values.data.total;
+            factory.zones[zone][server].total = values.data.total;
         });
-    });
+    };
 
     $log.log(factory.zones);
 
