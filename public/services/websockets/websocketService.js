@@ -1,4 +1,4 @@
-app.service('WebsocketService', function($rootScope, $log, AlertStatisticsService, ConfigDataService) {
+app.service('WebsocketService', function($rootScope, AlertStatisticsService, ConfigDataService) {
     var factory = {};
 
     factory.webSocket = {};
