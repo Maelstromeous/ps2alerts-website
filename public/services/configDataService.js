@@ -13,7 +13,9 @@ app.service('ConfigDataService', function(ENV) {
         17:   'Emerald',
         25:   'Briggs',
         1000: 'Genudine',
-        2000: 'Ceres'
+        1001: 'Lithcorp',
+        2000: 'Ceres',
+        2001: 'Palos'
     };
     factory.zones = [2,4,6,8];
     factory.zoneNames = {
