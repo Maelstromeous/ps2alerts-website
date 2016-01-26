@@ -4,4 +4,6 @@ app.controller('VictoryController', function($scope, ConfigDataService, AlertSta
     $scope.config = ConfigDataService;
 });
 
+app.controller('ZoneVictoryController', function($scope, ZoneStatisticsService) {
+    $scope.zoneStats = ZoneStatisticsService;
 });
