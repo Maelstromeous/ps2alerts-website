@@ -65,7 +65,6 @@ app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) 
         url    : ConfigDataService.apiUrl + '/alerts/counts/dominations',
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
-
         angular.forEach(returned, function(values, server) {
             angular.forEach(ConfigDataService.factions, function(faction) {
                 factory.dominations[server][faction] = values.data[faction];
