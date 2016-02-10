@@ -1,41 +1,50 @@
 module.exports = function(grunt) {
     'use strict';
 
-    grunt.initConfig( {
-        concat: {
-            css: {
-                src: [
-                    'public/bower_components/Materialize/dist/css/materialize.min.css',
-                    'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
-                    'public/assets/css/compiled/main.css',
-                    'public/assets/css/compiled/homepage.css',
-                    'public/assets/css/compiled/alert.history.css'
-                ],
-                dest: 'public/assets/css/main.css'
-            },
-            js_deps : {
-                src: [
-                    'public/bower_components/angular/angular.min.js',
-                    'public/bower_components/angular-route/angular-route.min.js',
-                    'public/bower_components/jquery/dist/jquery.min.js',
-                    'public/bower_components/Materalize/js/materialize.min.js',
-                    'public/bower_components/angular-materialize/src/materialize.min.js',
-                    'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
-                ],
-                dest: 'public/assets/js/deps.js'
-            },
+    grunt.initConfig({
+        uglify: {
             js: {
-                src: [
-                    'public/config.js',
-                    'public/app.js',
-                    'public/controllers/**/*.js',
-                    'public/directives/**/*.js',
-                    'public/services/**/*.js',
-                    'public/assets/js/common.js',
-                    'public/assets/js/websocketMonitor.js',
-                ],
-                dest: 'public/assets/js/main.js'
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    'public/assets/js/deps.js': [
+                        'public/bower_components/angular/angular.min.js',
+                        'public/bower_components/angular-route/angular-route.min.js',
+                        'public/bower_components/jquery/dist/jquery.min.js',
+                        'public/bower_components/Materalize/js/materialize.min.js',
+                        'public/bower_components/angular-materialize/src/materialize.min.js',
+                        'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
+                    ],
+                    'public/assets/js/main.js': [
+                        'public/config.js',
+                        'public/app.js',
+                        'public/controllers/**/*.js',
+                        'public/directives/**/*.js',
+                        'public/services/**/*.js',
+                        'public/assets/js/common.js',
+                        'public/assets/js/websocketMonitor.js',
+                    ]
+                }
+            }
+        },
+        cssmin: {
+            options: {
+                shorthandCompacting: false,
+                roundingPrecision: -1
             },
+            target: {
+                files: {
+                    'public/assets/css/main.css': [
+                        'public/bower_components/Materialize/dist/css/materialize.min.css',
+                        'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
+                        'public/assets/css/compiled/main.css',
+                        'public/assets/css/compiled/homepage.css',
+                        'public/assets/css/compiled/alert.history.css'
+                    ]
+                }
+            }
         },
         less: {
             development: {
@@ -117,14 +126,15 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-ng-constant');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['css', 'js']);
-    grunt.registerTask('envDev', ['ngconstant:development', 'concat:js']);
-    grunt.registerTask('envStaging', ['ngconstant:staging', 'concat:js']);
-    grunt.registerTask('envProduction', ['ngconstant:production', 'concat:js']);
-    grunt.registerTask('css', ['less', 'concat:css']);
-    grunt.registerTask('js', ['concat:js', 'concat:js_deps']);
+    grunt.registerTask('envDev', ['ngconstant:development', 'uglify:js']);
+    grunt.registerTask('envStaging', ['ngconstant:staging', 'uglify:js']);
+    grunt.registerTask('envProduction', ['ngconstant:production', 'uglify:js']);
+    grunt.registerTask('css', ['less', 'cssmin']);
+    grunt.registerTask('js', ['uglify:js']);
 };
