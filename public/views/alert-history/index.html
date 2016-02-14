@@ -2,11 +2,16 @@
     <div class="row center-align flow-text">
         <h1 class="header-no-margin">Alert History</h1>
     </div>
-    <div stats="{{data.history}}">
-
-    </div>
     <div class="row">
         <div class="col s12">
+            <div class="sk-three-bounce" ng-show="!data.history.length">
+                <div class="sk-child sk-bounce1"></div>
+                <div class="sk-child sk-bounce2"></div>
+                <div class="sk-child sk-bounce3"></div>
+                <p class="caption center-align">
+                    Loading
+                </p>
+            </div>
             <div ng-repeat="(key, alert) in data.history"
                 history-row
                 metrics="alert"
