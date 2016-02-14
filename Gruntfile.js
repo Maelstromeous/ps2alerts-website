@@ -3,9 +3,9 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         uglify: {
-            js: {
+            jsDeps: {
                 options: {
-                    beautify: true,
+                    beautify: false,
                     mangle: false
                 },
                 files: {
@@ -13,10 +13,16 @@ module.exports = function(grunt) {
                         'public/bower_components/angular/angular.min.js',
                         'public/bower_components/angular-route/angular-route.min.js',
                         'public/bower_components/jquery/dist/jquery.min.js',
-                        'public/bower_components/Materalize/js/materialize.min.js',
-                        'public/bower_components/angular-materialize/src/materialize.min.js',
                         'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
-                    ],
+                    ]
+                }
+            },
+            jsApp: {
+                options: {
+                    beautify: false,
+                    mangle: false
+                },
+                files: {
                     'public/assets/js/main.js': [
                         'public/config.js',
                         'public/app.js',
@@ -37,7 +43,6 @@ module.exports = function(grunt) {
             target: {
                 files: {
                     'public/assets/css/main.css': [
-                        'public/bower_components/Materialize/dist/css/materialize.min.css',
                         'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
                         'public/assets/css/compiled/main.css',
                         'public/assets/css/compiled/homepage.css',
@@ -72,7 +77,7 @@ module.exports = function(grunt) {
                     'public/assets/js/common.js',
                     'public/assets/js/websocketMonitor.js'
                 ],
-                tasks: ['js'],
+                tasks: ['jsApp'],
                 options: {
                     atBegin: true
                 }
@@ -136,5 +141,7 @@ module.exports = function(grunt) {
     grunt.registerTask('envStaging', ['ngconstant:staging', 'uglify:js']);
     grunt.registerTask('envProduction', ['ngconstant:production', 'uglify:js']);
     grunt.registerTask('css', ['less', 'cssmin']);
-    grunt.registerTask('js', ['uglify:js']);
+    grunt.registerTask('js', ['uglify:jsDeps', 'uglify:jsApp']);
+    grunt.registerTask('jsApp', ['uglify:jsApp']);
+    grunt.registerTask('jsDeps', ['uglify:jsDeps']);
 };
