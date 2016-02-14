@@ -1,8 +1,9 @@
 <section ng-controller="AlertHistoryController as AlertHistroyCtrl" id="history-list">
     <div class="row center-align flow-text">
         <h1 class="header-no-margin">Alert History</h1>
+        <h6 ng-hide="!data.history.length">Showing {{data.history.length}} Results</h6>
     </div>
-    <div class="row">
+    <div class="row row-no-margin">
         <div class="col s12">
             <div class="sk-three-bounce" ng-show="!data.history.length">
                 <div class="sk-child sk-bounce1"></div>
