@@ -3,6 +3,54 @@
         <h1 class="header-no-margin">Alert History</h1>
         <h6 ng-hide="!data.history.length">Showing {{data.history.length}} Results</h6>
     </div>
+
+    <div class="row">
+        <div class="input-field col s3">
+            <select multiple id="server">
+                <option value="0" selected>Any Server</option>
+                <option value="25">Briggs</option>
+                <option value="13">Cobalt</option>
+                <option value="1">Connery</option>
+                <option value="17">Emerald</option>
+                <option value="10">Miller</option>
+                <option value="1000">Genudine (PS4 US)</option>
+                <option value="2000">Ceres (PS4 EU)</option>
+            </select>
+            <label for="server">Servers</label>
+        </div>
+
+        <div class="input-field col s3">
+            <select multiple id="zone">
+                <option value="0" selected>Any Continent</option>
+                <option value="6">Amerish</option>
+                <option value="8">Esamir</option>
+                <option value="4">Hossin</option>
+                <option value="2">Indar</option>
+            </select>
+            <label for="zone">Continent</label>
+        </div>
+
+        <div class="input-field col s3">
+            <select multiple id="time">
+                <option value="0" selected>Any Time Period</option>
+                <option value="MOR">Morning (00:00 - 11:59)</option>
+                <option value="AFT">Afternoon (12:00 - 16:59)</option>
+                <option value="PRI">Prime Time (17:00 - 23:59)</option>
+            </select>
+            <label for="time">Time Bracket</label>
+        </div>
+
+        <div class="input-field col s3">
+            <select multiple id="faction">
+                <option value="0" selected>Any Faction</option>
+                <option value="vs">Vanu Sovereignty</option>
+                <option value="nc">New Conglomerate</option>
+                <option value="tr">Terran Empire</option>
+            </select>
+            <label for="faction">Faction Victory</label>
+        </div>
+    </div>
+
     <div class="row row-no-margin">
         <div class="col s12">
             <div class="sk-three-bounce" ng-show="!data.history.length">
@@ -20,5 +68,4 @@
             </div>
         </div>
     </div>
-
 </section>
