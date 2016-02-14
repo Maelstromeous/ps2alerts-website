@@ -1,3 +1,4 @@
-app.controller('AlertHistoryController', function($scope) {
-    $scope.PageMessage = "Hello Alert History!";
+app.controller('AlertHistoryController', function($scope, ConfigDataService, AlertHistoryService) {
+    $scope.data = AlertHistoryService;
+    $scope.config = ConfigDataService;
 });
