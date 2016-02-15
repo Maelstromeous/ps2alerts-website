@@ -17,5 +17,8 @@ app.config(function ($routeProvider) {
 /* Global Javascript */
 
 $(window).load(function() {
-    $(".button-collapse").sideNav();
+    $(".button-collapse").sideNav({
+        edge: 'left',
+        closeOnClick: true
+    });
 });
