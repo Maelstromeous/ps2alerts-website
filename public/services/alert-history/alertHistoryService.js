@@ -1,10 +1,30 @@
 app.service('AlertHistoryService', function ($http, $log, ConfigDataService) {
     var factory = {
-        history: {}
     };
 
     factory.resetData = function() {
         factory.history = {};
+        factory.metrics = {
+            caps: 0,
+            defs: 0,
+            wins : {
+                vs: 0,
+                nc: 0,
+                tr: 0,
+                draw: 0
+            },
+            brackets: {
+                mor: 0,
+                aft: 0,
+                pri: 0
+            },
+            zones: {
+                2: 0,
+                4: 0,
+                6: 0,
+                8: 0
+            }
+        };
     };
 
     factory.applyFilter = function(filters) {
@@ -44,13 +64,18 @@ app.service('AlertHistoryService', function ($http, $log, ConfigDataService) {
             // Generate metrics and transform timestamps
             angular.forEach(returned, function(alert) {
                 var last = alert.maps.data.length - 1;
-                alert.caps = 0;
 
                 angular.forEach(alert.maps.data, function(map) {
                     if (map.isDefence === false) {
-                        alert.caps++;
+                        factory.metrics.caps++;
+                    } else {
+                        factory.metrics.defs++;
                     }
                 });
+
+                factory.metrics.wins[alert.winner.toLowerCase()]++;
+                factory.metrics.brackets[alert.timeBracket.toLowerCase()]++;
+                factory.metrics.zones[alert.zone]++;
 
                 alert.started = alert.started * 1000;
                 alert.ended   = alert.ended * 1000;
@@ -59,7 +84,7 @@ app.service('AlertHistoryService', function ($http, $log, ConfigDataService) {
 
             factory.history = returned;
 
-            $log.log(factory.history);
+            $log.log(factory);
         });
     };
 
