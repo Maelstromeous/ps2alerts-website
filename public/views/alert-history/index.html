@@ -10,7 +10,7 @@
                     <div class="col s12 m8 l4 center-align">
                         <button
                             ng-repeat="server in config.serversAlpha"
-                            ng-class="selectedServers.indexOf(server) == -1 ? 'btn-inactive' : ''"
+                            ng-class="filters.servers.indexOf(server) == -1 ? 'btn-inactive' : ''"
                             class="btn waves-effect waves-light"
                             ng-click="toggleServer(server)">
                                 {{::config.serverNames[server]}}
@@ -20,7 +20,7 @@
                     <div class="col s12 m4 l3 center-align">
                         <button
                             ng-repeat="zone in config.zonesAlpha"
-                            ng-class="selectedZones.indexOf(zone) == -1 ? 'btn-inactive' : ''"
+                            ng-class="filters.zones.indexOf(zone) == -1 ? 'btn-inactive' : ''"
                             class="btn waves-effect waves-light"
                             ng-click="toggleZone(zone)">
                                 {{::config.zoneNames[zone]}}
@@ -30,7 +30,7 @@
                     <div class="col s12 m4 l2 center-align">
                         <button
                             ng-repeat="faction in config.factions"
-                            ng-class="selectedFactions.indexOf(faction) == -1 ? 'btn-inactive' : '{{faction}}-back'"
+                            ng-class="filters.factions.indexOf(faction) == -1 ? 'btn-inactive' : '{{faction}}-back'"
                             class="btn waves-effect waves-light"
                             ng-click="toggleFaction(faction)">
                                 {{faction|uppercase}}
@@ -40,7 +40,7 @@
                     <div class="col s12 m8 l3 center-align">
                         <button
                             ng-repeat="(bracket, info) in config.timeBrackets"
-                            ng-class="selectedBrackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
+                            ng-class="filters.brackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
                             ng-click="toggleBracket(bracket)"
                             class="btn waves-effect waves-light tooltipped"
                             data-tooltip="{{info.desc}}"
@@ -50,7 +50,9 @@
                         <p class="caption center-align" ng-init="setTooltips()">Time Brackets</p>
                     </div>
                     <div class="col s12 flow-text center-align">
-                        <button class="btn btn-large btn-apply waves-effect waves-light">                             <i class="fa fa-filter"></i> Filter
+                        <button
+                            ng-click="applyFilter()"
+                            class="btn btn-large btn-apply waves-effect waves-light">                             <i class="fa fa-filter"></i> Filter
                         </button>
                     </div>
                 </div>

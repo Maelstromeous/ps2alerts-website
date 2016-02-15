@@ -2,50 +2,66 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
     $scope.data   = AlertHistoryService;
     $scope.config = ConfigDataService;
 
-    $scope.selectedServers  = [1,10,13,17,25,1000,2000]; // Set Default
-    $scope.selectedZones    = [2,4,6,8];
-    $scope.selectedBrackets = ['MOR','AFT','PRI'];
-    $scope.selectedFactions = ['vs','nc','tr','draw'];
+    $scope.filters = {};
+    $scope.filters.servers  = [1,10,13,17,25,1000,2000]; // Set Default
+    $scope.filters.zones    = [2,4,6,8];
+    $scope.filters.brackets = ['MOR','AFT','PRI'];
+    $scope.filters.factions = ['vs','nc','tr','draw'];
+
+    $scope.setTooltips = function() {
+        setTimeout(function() {
+            $('.tooltipped').tooltip({
+                delay: 50
+            });
+        },1); // Ewwwww
+    };
+
+    $scope.applyFilter = function() {
+        $scope.data.resetData();
+        $scope.data.applyFilter($scope.filters);
+    };
+
+    $scope.applyFilter();
 
     $scope.toggleServer = function(server) {
-        var index = $scope.selectedServers.indexOf(server);
+        var index = $scope.filters.servers.indexOf(server);
         if (index > -1) {
-            $scope.selectedServers.splice(index, 1); // Remove element from array
+            $scope.filters.servers.splice(index, 1); // Remove element from array
         } else {
-            $scope.selectedServers.push(server);
+            $scope.filters.servers.push(server);
         }
     };
 
     $scope.toggleZone = function(zone) {
-        var index = $scope.selectedZones.indexOf(zone);
+        var index = $scope.filters.zones.indexOf(zone);
         if (index > -1) {
-            $scope.selectedZones.splice(index, 1); // Remove element from array
+            $scope.filters.zones.splice(index, 1); // Remove element from array
         } else {
-            $scope.selectedZones.push(zone);
+            $scope.filters.zones.push(zone);
         }
     };
 
     $scope.toggleBracket = function(bracket) {
-        var index = $scope.selectedBrackets.indexOf(bracket);
+        var index = $scope.filters.brackets.indexOf(bracket);
         if (index > -1) {
-            $scope.selectedBrackets.splice(index, 1); // Remove element from array
+            $scope.filters.brackets.splice(index, 1); // Remove element from array
         } else {
-            $scope.selectedBrackets.push(bracket);
+            $scope.filters.brackets.push(bracket);
         }
-    }
+    };
 
     $scope.toggleFaction = function(faction) {
-        var index = $scope.selectedFactions.indexOf(faction);
+        var index = $scope.filters.factions.indexOf(faction);
         if (index > -1) {
-            $scope.selectedFactions.splice(index, 1); // Remove element from array
+            $scope.filters.factions.splice(index, 1); // Remove element from array
         } else {
-            $scope.selectedFactions.push(faction);
+            $scope.filters.factions.push(faction);
         }
-    }
+    };
 
     $scope.filter = function() {
-        $log.log($scope.selectedServers);
-    }
+        $log.log($scope.filters.servers);
+    };
 
     $scope.started = new Date('2014-10-30');
     $scope.today   = new Date();
@@ -64,13 +80,4 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
 
     $scope.dateFrom = new Date();
     $scope.dateTo   = new Date();
-
-    $scope.setTooltips = function() {
-        setTimeout(function() {
-            $('.tooltipped').tooltip({
-                delay: 50
-            });
-        },1); // Ewwwww
-
-    };
 });
