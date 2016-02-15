@@ -3,10 +3,6 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
     $scope.config = ConfigDataService;
 
     $scope.filters = {};
-    $scope.filters.servers  = [1,10,13,17,25,1000,2000]; // Set Default
-    $scope.filters.zones    = [2,4,6,8];
-    $scope.filters.brackets = ['MOR','AFT','PRI'];
-    $scope.filters.factions = ['vs','nc','tr','draw'];
 
     $scope.setTooltips = function() {
         setTimeout(function() {
@@ -21,7 +17,24 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
         $scope.data.applyFilter($scope.filters);
     };
 
-    $scope.applyFilter();
+    $scope.clearFilter = function() {
+        $scope.data.resetData();
+        $scope.filters.servers  = [];
+        $scope.filters.zones    = [];
+        $scope.filters.brackets = [];
+        $scope.filters.factions = [];
+    };
+
+    $scope.showAll = function() {
+        $scope.data.resetData();
+        $scope.filters.servers  = [1,10,13,17,25,1000,2000]; // Set Default
+        $scope.filters.zones    = [2,4,6,8];
+        $scope.filters.brackets = ['MOR','AFT','PRI'];
+        $scope.filters.factions = ['vs','nc','tr','draw'];
+        $scope.data.applyFilter($scope.filters);
+    };
+
+    $scope.showAll();
 
     $scope.toggleServer = function(server) {
         var index = $scope.filters.servers.indexOf(server);

@@ -49,10 +49,19 @@
                         </button>
                         <p class="caption center-align" ng-init="setTooltips()">Time Brackets</p>
                     </div>
-                    <div class="col s12 flow-text center-align">
+                    <div class="col s12 center-align">
                         <button
                             ng-click="applyFilter()"
-                            class="btn btn-large btn-apply waves-effect waves-light">                             <i class="fa fa-filter"></i> Filter
+                            class="btn btn-apply waves-effect waves-light">                             <i class="fa fa-filter"></i> Filter
+                        </button>
+                        <button
+                            ng-click="showAll()"
+                            class="btn waves-effect waves-light">
+                            <i class="fa fa-eye"></i> Show All
+                        </button>
+                        <button
+                            ng-click="clearFilter()"
+                            class="btn btn-inactive waves-effect waves-light">                             <i class="fa fa-eye-slash"></i> Hide All
                         </button>
                     </div>
                 </div>
