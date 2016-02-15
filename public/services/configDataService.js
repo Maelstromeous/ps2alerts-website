@@ -34,9 +34,18 @@ app.service('ConfigDataService', function(ENV) {
         8: 'Esamir'
     };
     factory.timeBrackets = {
-        'MOR': 'Morning (00:00 - 11:59)',
-        'AFT': 'Afternoon (12:00 - 16:59)',
-        'PRI': 'Prime TIme (17:00 - 23:59)'
+        'MOR': {
+            label: 'Morning',
+            desc: '(00:00 - 11:59)'
+        },
+        'AFT': {
+            label: 'Afternoon',
+            desc: '(12:00 - 16:59)'
+        },
+        'PRI': {
+            label: 'Prime Time',
+            desc: '(17:00 - 23:59)'
+        }
     };
 
     factory.convertFactionNameToInt = function(name) {

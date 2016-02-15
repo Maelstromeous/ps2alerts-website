@@ -1,5 +1,5 @@
 app.controller('AlertHistoryController', function($scope, $log, ConfigDataService, AlertHistoryService) {
-    $scope.data = AlertHistoryService;
+    $scope.data   = AlertHistoryService;
     $scope.config = ConfigDataService;
 
     $scope.selectedServers  = [1,10,13,17,25,1000,2000]; // Set Default
@@ -64,4 +64,13 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
 
     $scope.dateFrom = new Date();
     $scope.dateTo   = new Date();
+
+    $scope.setTooltips = function() {
+        setTimeout(function() {
+            $('.tooltipped').tooltip({
+                delay: 50
+            });
+        },1); // Ewwwww
+
+    };
 });

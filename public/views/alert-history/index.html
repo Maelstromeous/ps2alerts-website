@@ -7,7 +7,7 @@
         <div class="card blue-grey darken-3">
             <div class="card-content">
                 <div class="row row-no-margin filters">
-                    <div class="col s8 center-align">
+                    <div class="col s12 m8 l4 center-align">
                         <button
                             ng-repeat="server in config.serversAlpha"
                             ng-class="selectedServers.indexOf(server) == -1 ? 'btn-inactive' : ''"
@@ -17,7 +17,7 @@
                         </button>
                         <p class="caption center-align">Servers</p>
                     </div>
-                    <div class="col s4 center-align">
+                    <div class="col s12 m4 l3 center-align">
                         <button
                             ng-repeat="zone in config.zonesAlpha"
                             ng-class="selectedZones.indexOf(zone) == -1 ? 'btn-inactive' : ''"
@@ -27,18 +27,7 @@
                         </button>
                         <p class="caption center-align">Zones</p>
                     </div>
-                    <div class="col s8 center-align">
-                        <button
-                            ng-repeat="(bracket, desc) in config.timeBrackets"
-                            ng-class="selectedBrackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
-                            class="btn waves-effect waves-light"
-                            ng-click="toggleBracket(bracket)"
-                            bracket="{{bracket}}">
-                                {{ desc }}
-                        </button>
-                        <p class="caption center-align">Time Brackets</p>
-                    </div>
-                    <div class="col s4 center-align">
+                    <div class="col s12 m4 l2 center-align">
                         <button
                             ng-repeat="faction in config.factions"
                             ng-class="selectedFactions.indexOf(faction) == -1 ? 'btn-inactive' : '{{faction}}-back'"
@@ -47,6 +36,18 @@
                                 {{faction|uppercase}}
                         </button>
                         <p class="caption center-align">Factions</p>
+                    </div>
+                    <div class="col s12 m8 l3 center-align">
+                        <button
+                            ng-repeat="(bracket, info) in config.timeBrackets"
+                            ng-class="selectedBrackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
+                            ng-click="toggleBracket(bracket)"
+                            class="btn waves-effect waves-light tooltipped"
+                            data-tooltip="{{info.desc}}"
+                            data-position="top">
+                                {{info.label}}
+                        </button>
+                        <p class="caption center-align" ng-init="setTooltips()">Time Brackets</p>
                     </div>
                     <div class="col s12 flow-text center-align">
                         <p><i class="fa fa-filter"></i> Filters</p>
