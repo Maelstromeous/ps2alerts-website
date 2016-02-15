@@ -13,3 +13,9 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/common/404.html'
         });
 });
+
+/* Global Javascript */
+
+$(window).load(function() {
+    $(".button-collapse").sideNav();
+});
