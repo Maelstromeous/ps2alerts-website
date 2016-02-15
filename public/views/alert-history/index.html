@@ -1,58 +1,65 @@
-<section ng-controller="AlertHistoryController as AlertHistroyCtrl" id="history-list">
+<section ng-controller="AlertHistoryController as AlertHistroyCtrl">
     <div class="row center-align flow-text">
         <h1 class="header-no-margin">Alert History</h1>
-        <h6 ng-hide="!data.history.length">Showing {{data.history.length}} Results</h6>
     </div>
 
-    <div class="row">
-        <div class="input-field col s3">
-            <select multiple id="server">
-                <option value="0" selected>Any Server</option>
-                <option value="25">Briggs</option>
-                <option value="13">Cobalt</option>
-                <option value="1">Connery</option>
-                <option value="17">Emerald</option>
-                <option value="10">Miller</option>
-                <option value="1000">Genudine (PS4 US)</option>
-                <option value="2000">Ceres (PS4 EU)</option>
-            </select>
-            <label for="server">Servers</label>
-        </div>
-
-        <div class="input-field col s3">
-            <select multiple id="zone">
-                <option value="0" selected>Any Continent</option>
-                <option value="6">Amerish</option>
-                <option value="8">Esamir</option>
-                <option value="4">Hossin</option>
-                <option value="2">Indar</option>
-            </select>
-            <label for="zone">Continent</label>
-        </div>
-
-        <div class="input-field col s3">
-            <select multiple id="time">
-                <option value="0" selected>Any Time Period</option>
-                <option value="MOR">Morning (00:00 - 11:59)</option>
-                <option value="AFT">Afternoon (12:00 - 16:59)</option>
-                <option value="PRI">Prime Time (17:00 - 23:59)</option>
-            </select>
-            <label for="time">Time Bracket</label>
-        </div>
-
-        <div class="input-field col s3">
-            <select multiple id="faction">
-                <option value="0" selected>Any Faction</option>
-                <option value="vs">Vanu Sovereignty</option>
-                <option value="nc">New Conglomerate</option>
-                <option value="tr">Terran Empire</option>
-            </select>
-            <label for="faction">Faction Victory</label>
+    <div class="col s12">
+        <div class="card blue-grey darken-3">
+            <div class="card-content">
+                <div class="row row-no-margin filters">
+                    <div class="col s8 center-align">
+                        <button
+                            ng-repeat="server in config.serversAlpha"
+                            ng-class="selectedServers.indexOf(server) == -1 ? 'btn-inactive' : ''"
+                            class="btn waves-effect waves-light"
+                            ng-click="toggleServer(server)">
+                                {{::config.serverNames[server]}}
+                        </button>
+                        <p class="caption center-align">Servers</p>
+                    </div>
+                    <div class="col s4 center-align">
+                        <button
+                            ng-repeat="zone in config.zonesAlpha"
+                            ng-class="selectedZones.indexOf(zone) == -1 ? 'btn-inactive' : ''"
+                            class="btn waves-effect waves-light"
+                            ng-click="toggleZone(zone)">
+                                {{::config.zoneNames[zone]}}
+                        </button>
+                        <p class="caption center-align">Zones</p>
+                    </div>
+                    <div class="col s8 center-align">
+                        <button
+                            ng-repeat="(bracket, desc) in config.timeBrackets"
+                            ng-class="selectedBrackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
+                            class="btn waves-effect waves-light"
+                            ng-click="toggleBracket(bracket)"
+                            bracket="{{bracket}}">
+                                {{ desc }}
+                        </button>
+                        <p class="caption center-align">Time Brackets</p>
+                    </div>
+                    <div class="col s4 center-align">
+                        <button
+                            ng-repeat="faction in config.factions"
+                            ng-class="selectedZones.indexOf(faction) == -1 ? 'btn-inactive' : ''"
+                            class="btn waves-effect waves-light {{faction}}-back"
+                            ng-click="toggleZone(faction)">
+                                {{faction|uppercase}}
+                        </button>
+                        <p class="caption center-align">Factions</p>
+                    </div>
+                    <div class="col s12 flow-text center-align">
+                        <p><i class="fa fa-filter"></i> Filters</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row row-no-margin">
+    <div class="row row-no-margin" id="history-list">
         <div class="col s12">
+            <div class="row center-align flow-text">
+                <h6 ng-hide="!data.history.length">Showing {{data.history.length}} Results</h6>
+            </div>
             <div class="sk-three-bounce" ng-show="!data.history.length">
                 <div class="sk-child sk-bounce1"></div>
                 <div class="sk-child sk-bounce2"></div>
