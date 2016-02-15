@@ -43,7 +43,7 @@
                             ng-repeat="faction in config.factions"
                             ng-class="selectedFactions.indexOf(faction) == -1 ? 'btn-inactive' : '{{faction}}-back'"
                             class="btn waves-effect waves-light"
-                            ng-click="toggleZone(faction)">
+                            ng-click="toggleFaction(faction)">
                                 {{faction|uppercase}}
                         </button>
                         <p class="caption center-align">Factions</p>
