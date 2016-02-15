@@ -41,8 +41,8 @@
                     <div class="col s4 center-align">
                         <button
                             ng-repeat="faction in config.factions"
-                            ng-class="selectedZones.indexOf(faction) == -1 ? 'btn-inactive' : ''"
-                            class="btn waves-effect waves-light {{faction}}-back"
+                            ng-class="selectedFactions.indexOf(faction) == -1 ? 'btn-inactive' : '{{faction}}-back'"
+                            class="btn waves-effect waves-light"
                             ng-click="toggleZone(faction)">
                                 {{faction|uppercase}}
                         </button>

@@ -5,7 +5,7 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
     $scope.selectedServers  = [1,10,13,17,25,1000,2000]; // Set Default
     $scope.selectedZones    = [2,4,6,8];
     $scope.selectedBrackets = ['MOR','AFT','PRI'];
-    $scope.selectedFactions = ['VS','NC','TR','DRAW'];
+    $scope.selectedFactions = ['vs','nc','tr','draw'];
 
     $scope.toggleServer = function(server) {
         var index = $scope.selectedServers.indexOf(server);
