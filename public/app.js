@@ -14,6 +14,10 @@ app.config(function ($routeProvider) {
         });
 });
 
+app.run(function(AnalyticsService) {
+    var analytics = AnalyticsService;
+});
+
 /* Global Javascript */
 
 $(window).load(function() {
