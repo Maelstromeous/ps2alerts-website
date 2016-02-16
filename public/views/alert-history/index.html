@@ -7,7 +7,7 @@
         <div class="card blue-grey darken-3">
             <div class="card-content">
                 <div class="row row-no-margin filters">
-                    <div class="col s12 m8 l4 center-align">
+                    <div class="col s12 m8 l3 center-align no-padding">
                         <button
                             ng-repeat="server in config.serversAlpha"
                             ng-class="filters.servers.indexOf(server) == -1 ? 'btn-inactive' : ''"
@@ -17,7 +17,7 @@
                         </button>
                         <p class="caption center-align">Servers</p>
                     </div>
-                    <div class="col s12 m4 l3 center-align">
+                    <div class="col s12 m4 l3 center-align no-padding">
                         <button
                             ng-repeat="zone in config.zonesAlpha"
                             ng-class="filters.zones.indexOf(zone) == -1 ? 'btn-inactive' : ''"
@@ -27,7 +27,7 @@
                         </button>
                         <p class="caption center-align">Zones</p>
                     </div>
-                    <div class="col s12 m4 l2 center-align">
+                    <div class="col s12 m4 l3 center-align no-padding">
                         <button
                             ng-repeat="faction in config.factions"
                             ng-class="filters.factions.indexOf(faction) == -1 ? 'btn-inactive' : '{{faction}}-back'"
@@ -37,7 +37,7 @@
                         </button>
                         <p class="caption center-align">Factions</p>
                     </div>
-                    <div class="col s12 m8 l3 center-align">
+                    <div class="col s12 m8 l3 center-align no-padding">
                         <button
                             ng-repeat="(bracket, info) in config.timeBrackets"
                             ng-class="filters.brackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
@@ -49,7 +49,7 @@
                         </button>
                         <p class="caption center-align" ng-init="setTooltips()">Time Brackets</p>
                     </div>
-                    <div class="col s12 center-align">
+                    <div class="col s12 center-align apply-btns">
                         <button
                             ng-click="applyFilter()"
                             class="btn btn-apply waves-effect waves-light">                             <i class="fa fa-filter"></i> Filter
