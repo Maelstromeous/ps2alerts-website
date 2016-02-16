@@ -13,3 +13,7 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/common/404.html'
         });
 });
+
+app.run(function(AnalyticsService) {
+    var analytics = AnalyticsService;
+});
