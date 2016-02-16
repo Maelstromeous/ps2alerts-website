@@ -29,8 +29,6 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
 
     factory.applyFilter = function(filters) {
         factory.resetData();
-        console.log(filters);
-
         var url = ConfigDataService.apiUrl + '/alerts/history?embed=maps';
 
         // Servers = [1,10,13,17,25,1000,2000];
@@ -51,8 +49,6 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
         if (filters.brackets && filters.brackets.length > 0) {
             url += '&brackets=' + filters.brackets.toString();
         }
-
-        console.log(url);
 
         // Get the data
         $http({
@@ -93,8 +89,6 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
             });
 
             factory.history = returned;
-
-            $log.log(factory);
         });
     };
 
