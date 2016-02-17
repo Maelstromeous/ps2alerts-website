@@ -1,6 +1,7 @@
 app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataService) {
     var factory = {
-        empty: false
+        empty: false,
+        inProgress: false
     };
 
     factory.resetData = function() {
@@ -29,76 +30,80 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
     };
 
     factory.applyFilter = function(filters) {
-        factory.resetData();
-        var url = ConfigDataService.apiUrl + '/alerts/history?embed=maps';
+        if (factory.inProgress === false) {
+            factory.resetData();
+            factory.inProgress = true;
+            var url = ConfigDataService.apiUrl + '/alerts/history?embed=maps';
 
-        // Servers = [1,10,13,17,25,1000,2000];
-        if (filters.servers && filters.servers.length > 0) {
-            url += '&servers=' + filters.servers.toString();
-        }
-        // Zones = [2,4,6,8];
-        if (filters.zones && filters.zones.length > 0) {
-            url += '&zones=' + filters.zones.toString();
-        }
-
-        // factions = ['vs','nc','tr','draw'];
-        if (filters.factions && filters.factions.length > 0) {
-            url += '&factions=' + filters.factions.toString();
-        }
-
-        // brackets = ['MOR','AFT','PRI'];
-        if (filters.brackets && filters.brackets.length > 0) {
-            url += '&brackets=' + filters.brackets.toString();
-        }
-
-        factory.empty = false;
-
-        // Get the data
-        $http({
-            method : 'GET',
-            url    : url,
-        }).then(function(data) {
-            var returned = data.data.data; // #Dataception
-
-            if (returned.length === 0) {
-                // Stop here and return
-                factory.empty = true;
-                return false;
+            // Servers = [1,10,13,17,25,1000,2000];
+            if (filters.servers && filters.servers.length > 0) {
+                url += '&servers=' + filters.servers.toString();
+            }
+            // Zones = [2,4,6,8];
+            if (filters.zones && filters.zones.length > 0) {
+                url += '&zones=' + filters.zones.toString();
             }
 
-            // Generate metrics and transform timestamps
-            angular.forEach(returned, function(alert) {
-                var last = alert.maps.data.length - 1;
+            // factions = ['vs','nc','tr','draw'];
+            if (filters.factions && filters.factions.length > 0) {
+                url += '&factions=' + filters.factions.toString();
+            }
 
-                angular.forEach(alert.maps.data, function(map) {
-                    if (map.isDefence === false) {
-                        factory.metrics.caps++;
-                    } else {
-                        factory.metrics.defs++;
-                    }
+            // brackets = ['MOR','AFT','PRI'];
+            if (filters.brackets && filters.brackets.length > 0) {
+                url += '&brackets=' + filters.brackets.toString();
+            }
+
+            factory.empty = false;
+
+            // Get the data
+            $http({
+                method : 'GET',
+                url    : url,
+            }).then(function(data) {
+                var returned = data.data.data; // #Dataception
+                factory.inProgress = false;
+
+                if (returned.length === 0) {
+                    // Stop here and return
+                    factory.empty = true;
+                    return false;
+                }
+
+                // Generate metrics and transform timestamps
+                angular.forEach(returned, function(alert) {
+                    var last = alert.maps.data.length - 1;
+
+                    angular.forEach(alert.maps.data, function(map) {
+                        if (map.isDefence === false) {
+                            factory.metrics.caps++;
+                        } else {
+                            factory.metrics.defs++;
+                        }
+                    });
+
+                    factory.metrics.wins[alert.winner.toLowerCase()]++;
+                    factory.metrics.brackets[alert.timeBracket.toLowerCase()]++;
+                    factory.metrics.zones[alert.zone]++;
+
+                    alert.started     = alert.started * 1000;
+                    alert.ended       = alert.ended * 1000;
+                    // Do a series of filtering to remove a crapton of watchers from the view
+                    alert.endedDate   = $filter('date')(alert.ended, 'dd-MMM-yyyy HH:mm:ss');
+                    alert.timeBracket = ConfigDataService.timeBrackets[alert.timeBracket].label;
+                    alert.server      = ConfigDataService.serverNames[alert.server];
+                    alert.zone        = ConfigDataService.zoneNames[alert.zone];
+                    alert.lastMap     = alert.maps.data[last];
+
+                    alert.lastMap.controlTotal =
+                        alert.lastMap.controlVS +
+                        alert.lastMap.controlNC +
+                        alert.lastMap.controlTR;
                 });
 
-                factory.metrics.wins[alert.winner.toLowerCase()]++;
-                factory.metrics.brackets[alert.timeBracket.toLowerCase()]++;
-                factory.metrics.zones[alert.zone]++;
-
-                alert.started     = alert.started * 1000;
-                alert.ended       = alert.ended * 1000;
-                // Do a series of filtering to remove a crapton of watchers from the view
-                alert.endedDate   = $filter('date')(alert.ended, 'dd-MMM-yyyy HH:mm:ss');
-                alert.timeBracket = ConfigDataService.timeBrackets[alert.timeBracket].label;
-                alert.server      = ConfigDataService.serverNames[alert.server];
-                alert.zone        = ConfigDataService.zoneNames[alert.zone];
-                alert.lastMap     = alert.maps.data[last];
-
-                alert.lastMap.controlTotal =
-                    alert.lastMap.controlVS +
-                    alert.lastMap.controlNC +
-                    alert.lastMap.controlTR;
+                factory.history = returned;
             });
-
-            factory.history = returned;
-        });
+        }
     };
 
     return factory;

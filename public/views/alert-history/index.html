@@ -52,8 +52,14 @@
                     <div class="col s12 center-align apply-btns">
                         <button
                             ng-click="applyFilter()"
+                            ng-show="!data.inProgress"
                             class="btn btn-apply waves-effect waves-light">
                             <i class="fa fa-filter"></i> Filter
+                        </button>
+                        <button
+                            ng-show="data.inProgress"
+                            class="btn disabled btn-apply waves-effect waves-light">
+                            <i class="fa fa-spin fa-refresh"></i> Loading...
                         </button>
                         <button
                             ng-click="showAll()"
