@@ -60,11 +60,8 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
 
-            console.log(returned);
-
             if (returned.length === 0) {
                 // Stop here and return
-                console.log("Empty");
                 factory.empty = true;
                 return false;
             }
