@@ -12,7 +12,7 @@
                             ng-repeat="server in config.serversAlpha"
                             ng-class="filters.servers.indexOf(server) == -1 ? 'btn-inactive' : ''"
                             class="btn waves-effect waves-light"
-                            ng-click="toggleServer(server)">
+                            ng-click="toggleFilters('servers', server)">
                                 {{::config.serverNames[server]}}
                         </button>
                         <p class="caption center-align">Servers</p>
@@ -22,7 +22,7 @@
                             ng-repeat="zone in config.zonesAlpha"
                             ng-class="filters.zones.indexOf(zone) == -1 ? 'btn-inactive' : ''"
                             class="btn waves-effect waves-light"
-                            ng-click="toggleZone(zone)">
+                            ng-click="toggleFilters('zones', zone)">
                                 {{::config.zoneNames[zone]}}
                         </button>
                         <p class="caption center-align">Zones</p>
@@ -32,7 +32,7 @@
                             ng-repeat="faction in config.factions"
                             ng-class="filters.factions.indexOf(faction) == -1 ? 'btn-inactive' : '{{faction}}-back'"
                             class="btn waves-effect waves-light"
-                            ng-click="toggleFaction(faction)">
+                            ng-click="toggleFilters('factions', faction)">
                                 {{faction|uppercase}}
                         </button>
                         <p class="caption center-align">Factions</p>
@@ -41,7 +41,7 @@
                         <button
                             ng-repeat="(bracket, info) in config.timeBrackets"
                             ng-class="filters.brackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
-                            ng-click="toggleBracket(bracket)"
+                            ng-click="toggleFilters('brackets', bracket)"
                             class="btn waves-effect waves-light tooltipped"
                             data-tooltip="{{info.desc}}"
                             data-position="top">

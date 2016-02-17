@@ -4,6 +4,13 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
 
     $scope.filters = {};
 
+    $scope.inits = {
+        servers: false,
+        zones: false,
+        factions: false,
+        brackets: false
+    };
+
     $scope.setTooltips = function() {
         setTimeout(function() {
             $('.tooltipped').tooltip({
@@ -18,7 +25,6 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
     };
 
     $scope.clearFilter = function() {
-        $scope.data.resetData();
         $scope.filters.servers  = [];
         $scope.filters.zones    = [];
         $scope.filters.brackets = [];
@@ -32,48 +38,35 @@ app.controller('AlertHistoryController', function($scope, $log, ConfigDataServic
         $scope.filters.brackets = ['MOR','AFT','PRI'];
         $scope.filters.factions = ['vs','nc','tr','draw'];
         $scope.data.applyFilter($scope.filters);
+
+        $scope.inits = {
+            servers: false,
+            zones: false,
+            factions: false,
+            brackets: false
+        };
     };
 
     $scope.showAll();
 
-    $scope.toggleServer = function(server) {
-        var index = $scope.filters.servers.indexOf(server);
+    $scope.toggleFilters = function(type, selection) {
+        console.log(type);
+        $scope.initCheck(type);
+
+        var index = $scope.filters[type].indexOf(selection);
+
         if (index > -1) {
-            $scope.filters.servers.splice(index, 1); // Remove element from array
+            $scope.filters[type].splice(index, 1); // Remove element from array
         } else {
-            $scope.filters.servers.push(server);
+            $scope.filters[type].push(selection);
         }
     };
 
-    $scope.toggleZone = function(zone) {
-        var index = $scope.filters.zones.indexOf(zone);
-        if (index > -1) {
-            $scope.filters.zones.splice(index, 1); // Remove element from array
-        } else {
-            $scope.filters.zones.push(zone);
+    $scope.initCheck = function(type) {
+        if ($scope.inits[type] === false) {
+            $scope.filters[type] = []; // Clear all selections
+            $scope.inits[type] = true;
         }
-    };
-
-    $scope.toggleBracket = function(bracket) {
-        var index = $scope.filters.brackets.indexOf(bracket);
-        if (index > -1) {
-            $scope.filters.brackets.splice(index, 1); // Remove element from array
-        } else {
-            $scope.filters.brackets.push(bracket);
-        }
-    };
-
-    $scope.toggleFaction = function(faction) {
-        var index = $scope.filters.factions.indexOf(faction);
-        if (index > -1) {
-            $scope.filters.factions.splice(index, 1); // Remove element from array
-        } else {
-            $scope.filters.factions.push(faction);
-        }
-    };
-
-    $scope.filter = function() {
-        $log.log($scope.filters.servers);
     };
 
     $scope.started = new Date('2014-10-30');
