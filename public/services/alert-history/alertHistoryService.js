@@ -1,5 +1,7 @@
 app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataService) {
-    var factory = {};
+    var factory = {
+        empty: false
+    };
 
     factory.resetData = function() {
         factory.history = {};
@@ -49,12 +51,23 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
             url += '&brackets=' + filters.brackets.toString();
         }
 
+        factory.empty = false;
+
         // Get the data
         $http({
             method : 'GET',
             url    : url,
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
+
+            console.log(returned);
+
+            if (returned.length === 0) {
+                // Stop here and return
+                console.log("Empty");
+                factory.empty = true;
+                return false;
+            }
 
             // Generate metrics and transform timestamps
             angular.forEach(returned, function(alert) {

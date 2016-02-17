@@ -73,12 +73,21 @@
             <div class="row center-align flow-text">
                 <h6 ng-hide="!data.history.length">Showing {{data.history.length}} Results - Last 48 hours (temporary)</h6>
             </div>
-            <div class="sk-three-bounce" ng-show="!data.history.length">
+            <div class="sk-three-bounce" ng-show="!data.history.length && !data.empty">
                 <div class="sk-child sk-bounce1"></div>
                 <div class="sk-child sk-bounce2"></div>
                 <div class="sk-child sk-bounce3"></div>
                 <p class="caption center-align">
                     Loading
+                </p>
+            </div>
+
+            <div class="center-align flow-text center-align" ng-show="data.empty">
+                <h3>
+                    No results
+                </h3>
+                <p class="caption">
+                    No alerts were found with your selected filters
                 </p>
             </div>
             <div ng-repeat="(key, alert) in data.history"
