@@ -5,7 +5,9 @@ header img {
 }
 
 .nav-wrapper {
-    margin-left: @margin-base;
+    @media screen and (max-width: 992px) {
+        margin-left: @margin-base;
+    }
 }
 
 .progress {
@@ -18,12 +20,20 @@ header img {
     background-color: #A62626;
 }
 
+.nav-main {
+    font-size: 2.0rem;
+}
+
 .nav-seperator {
     border-left: 1px solid @border-color;
 }
 
 nav ul li:hover {
     background-color: rgba(210, 0, 0, 0.3);
+}
+
+nav ul li a:hover {
+    color: #fff;
 }
 
 nav ul li .fa {

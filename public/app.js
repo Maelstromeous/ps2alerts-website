@@ -9,6 +9,9 @@ app.config(function ($routeProvider) {
         .when('/alert-history', {
             templateUrl: 'views/alert-history/index.html'
         })
+        .when('/about', {
+            templateUrl: 'views/about/index.html'
+        })
         .otherwise({
             templateUrl: 'views/common/404.html'
         });
