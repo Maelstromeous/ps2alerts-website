@@ -7,7 +7,7 @@
         <div class="card blue-grey darken-3">
             <div class="card-content">
                 <div class="row row-no-margin filters">
-                    <div class="col s12 m8 l3 center-align no-padding">
+                    <div class="col s12 m8 l4 center-align no-padding">
                         <button
                             ng-repeat="server in config.serversAlpha"
                             ng-class="filters.servers.indexOf(server) == -1 ? 'btn-inactive' : ''"
@@ -37,7 +37,7 @@
                         </button>
                         <p class="caption center-align">Factions</p>
                     </div>
-                    <div class="col s12 m8 l3 center-align no-padding">
+                    <div class="col s12 m8 l2 center-align no-padding">
                         <button
                             ng-repeat="(bracket, info) in config.timeBrackets"
                             ng-class="filters.brackets.indexOf(bracket) == -1 ? 'btn-inactive' : ''"
