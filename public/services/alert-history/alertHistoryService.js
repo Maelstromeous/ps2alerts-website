@@ -1,6 +1,5 @@
 app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataService) {
-    var factory = {
-    };
+    var factory = {};
 
     factory.resetData = function() {
         factory.history = {};
