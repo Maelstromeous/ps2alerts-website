@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
+<html lang="en" ng-app="Ps2Alerts">
+    <head ng-controller="PageMetaController">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PS2Alerts - Planetside 2 Alert Tracker</title>
+        <title>{{meta.title}}</title>
+        <meta property="og:title" content="{{meta.title}}">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{meta.location}}">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Orbitron:400,700" type="text/css">
@@ -17,7 +20,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body ng-app="Ps2Alerts" class="blue-grey darken-4">
+    <body class="blue-grey darken-4">
         <header>
             <img src="assets/img/headers/header0.jpg" class="responsive-img">
             <div ng-include="'views/common/header.html'"></div>
