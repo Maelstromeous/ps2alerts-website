@@ -1,4 +1,4 @@
-app.service('ConfigDataService', function(ENV, $rootScope, $location) {
+app.service('ConfigDataService', function(ENV, $rootScope, $location, $document) {
     var factory = {
         baseUrl: ENV.baseUrl,
         apiUrl: ENV.apiUrl,
@@ -63,7 +63,10 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location) {
     };
 
     factory.setTitle = function(newTitle) {
-        factory.title = newTitle + ' - PS2Alerts';
+        console.log($document[0].title);
+        $document[0].title = newTitle + ' - PS2Alerts';
+        // Directly change the title rather than using binding, due to Javascript
+        // initialization
     };
 
     factory.update = function() {

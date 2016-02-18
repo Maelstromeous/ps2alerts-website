@@ -2,7 +2,7 @@ app.controller('VictoryController', function($scope, ConfigDataService, AlertSta
     $scope.today = new Date();
     $scope.alertStats = AlertStatisticsService;
     $scope.config = ConfigDataService;
-    ConfigDataService.setTitle("Welcome");
+    ConfigDataService.setTitle("Home");
 });
 
 app.controller('VictoryTimelineController', function ($scope) {
