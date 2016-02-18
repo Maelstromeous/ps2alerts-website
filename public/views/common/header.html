@@ -7,26 +7,50 @@
 
 		<ul class="left hide-on-med-and-down">
 			<li>
-				<a href="#/" class="nav-main">PS2Alerts</a>
+				<a href="#/" class="nav-main">
+					PS2Alerts
+				</a>
 			</li>
-			<span ng-include="'views/common/navigation.html'"></span>
+			<li>
+			    <a id="under-dev" href="#/">
+					Under development!
+				</a>
+			</li>
+			<li>
+			    <a href="#/alert-history">
+					<i class="fa fa-tasks fa-fw"></i>
+					Alert History
+				</a>
+			</li>
+			<li>
+			    <a href="#/alert-history">
+					<i class="fa fa-trophy fa-fw"></i>
+					Leaderboards (WIP)
+				</a>
+			</li>
 		</ul>
 		<ul class="right hide-on-med-and-down">
 			<li>
+			    <a href="#/about">
+					<i class="fa fa-info-circle fa-fw"></i>
+					About
+				</a>
+			</li>
+			<li class="tooltipped" data-tooltip="Report bugs and request features on GitHub!" data-position="top">
 			    <a
 			        href="https://github.com/Maelstrome26/PS2Alerts"
 			        target="_blank">
 			        <i class="fa fa-github"></i>
 			    </a>
 			</li>
-			<li>
+			<li class="tooltipped" data-tooltip="Follow the site on Twitter for updates!" data-position="top">
 			    <a
 			        href="https://www.twitter.com/PS2AlertTracker"
 			        target="_blank">
 			        <i class="fa fa-twitter"></i>
 			    </a>
 			</li>
-			<li>
+			<li class="tooltipped" data-tooltip="PS2Alerts Chrome Extension" data-position="top">
 			    <a
 			        href="https://chrome.google.com/webstore/detail/planetside-2-alerts/bondapheaemfkkiabfjnhdempfmnikcg"
 			        target="_blank">
@@ -36,7 +60,12 @@
 
 		</ul>
 		<ul class="side-nav" id="mobile-nav-tray">
-			<div ng-include="'views/common/navigation.html'"></div>
+			<li>
+			    <a href="#/about">About</a>
+			</li>
+			<li>
+			    <a href="#/alert-history">Alert History</a>
+			</li>
 		</ul>
 	</div>
 </nav>
