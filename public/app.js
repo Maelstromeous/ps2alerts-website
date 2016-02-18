@@ -17,8 +17,16 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.run(function(AnalyticsService) {
+app.run(function($rootScope, AnalyticsService) {
     var analytics = AnalyticsService;
+
+    $rootScope.$on('$viewContentLoaded', function() {
+        setTimeout(function() {
+            $('.tooltipped').tooltip({
+                delay: 50
+            });
+        },1); // Ewwwww
+    });
 });
 
 /* Global Javascript */
@@ -27,5 +35,8 @@ $(window).load(function() {
     $(".button-collapse").sideNav({
         edge: 'left',
         closeOnClick: true
+    });
+    $(".tooltipped").tooltip({
+        delay: 50
     });
 });

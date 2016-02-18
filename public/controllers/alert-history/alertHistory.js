@@ -17,14 +17,6 @@ app.controller('AlertHistoryController', function(
         brackets: false
     };
 
-    $scope.setTooltips = function() {
-        setTimeout(function() {
-            $('.tooltipped').tooltip({
-                delay: 50
-            });
-        },1); // Ewwwww
-    };
-
     $scope.applyFilter = function() {
         $scope.data.resetData();
         $scope.data.applyFilter($scope.filters);
