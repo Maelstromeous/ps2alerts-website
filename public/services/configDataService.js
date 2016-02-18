@@ -67,7 +67,6 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location) {
     };
 
     factory.update = function() {
-        console.log('Updating');
         factory.location = factory.baseUrl + '/#' + $location.url();
     };
 
