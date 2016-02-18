@@ -1,6 +1,12 @@
-app.controller('AlertHistoryController', function($scope, $log, ConfigDataService, AlertHistoryService) {
+app.controller('AlertHistoryController', function(
+    $scope,
+    $log,
+    ConfigDataService,
+    AlertHistoryService
+) {
     $scope.data   = AlertHistoryService;
     $scope.config = ConfigDataService;
+    ConfigDataService.setTitle("Alert History");
 
     $scope.filters = {};
 
