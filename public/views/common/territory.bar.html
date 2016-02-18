@@ -18,8 +18,14 @@
             {{tr / total * 100 | number:decimal}}%
         </span>
     </div>
-    <div class="segment draw-segment" style="width:{{draw / total * 100 | number: 2}}%" ng-show="draw > 0">
-        <span class="segment-metric" ng-show="(draw / total * 100) > 5" numerical="{{draw}}">
+    <div
+        class="segment draw-segment"
+        style="width:{{draw / total * 100 | number: 2}}%"
+        ng-class="draw / total * 100 < 5 ? 'tooltipped' : ''"
+        ng-show="draw > 0"
+        data-tooltip="Draws ({{draw / total * 100 | number:decimal}}%)"
+        data-position="top">
+        <span class="segment-metric" ng-show="draw / total * 100 > 5" numerical="{{draw}}">
             {{draw / total * 100 | number:decimal}}%
         </span>
     </div>
