@@ -14,6 +14,7 @@ module.exports = function(grunt) {
                         'public/bower_components/angular-route/angular-route.min.js',
                         'public/bower_components/jquery/dist/jquery.min.js',
                         'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
+                        'public/assets/js/jsloader.js'
                     ]
                 }
             },

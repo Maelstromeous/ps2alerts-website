@@ -1,6 +1,6 @@
 /* use strict */
 
-var app = angular.module('Ps2Alerts', ['ngRoute', 'config']);
+var app = angular.module('Ps2Alerts', ['ngRoute', 'config', 'ngLoadScript']);
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
@@ -11,6 +11,9 @@ app.config(function ($routeProvider) {
         })
         .when('/about', {
             templateUrl: 'views/about/index.html'
+        })
+        .when('/alert/:alert', {
+            templateUrl: 'views/alert/index.html'
         })
         .otherwise({
             templateUrl: 'views/common/404.html'
