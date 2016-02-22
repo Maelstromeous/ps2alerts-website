@@ -1,4 +1,4 @@
-app.service('AlertTimelineService', function ($http, $log, ConfigDataService) {
+app.service('HomeTimelineService', function ($http, $log, ConfigDataService) {
     var factory = {
         dates: {}
     };

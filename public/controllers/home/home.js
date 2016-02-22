@@ -1,14 +1,14 @@
-app.controller('VictoryController', function($scope, ConfigDataService, AlertStatisticsService) {
+app.controller('HomeVictoryController', function($scope, ConfigDataService, HomeStatisticsService) {
     $scope.today = new Date();
-    $scope.alertStats = AlertStatisticsService;
+    $scope.alertStats = HomeStatisticsService;
     $scope.config = ConfigDataService;
     ConfigDataService.setTitle("Home");
 });
 
-app.controller('VictoryTimelineController', function ($scope) {
+app.controller('HomeTimelineController', function ($scope) {
 
 });
 
-app.controller('ZoneVictoryController', function($scope, ZoneStatisticsService) {
-    $scope.zoneStats = ZoneStatisticsService;
+app.controller('HomeZoneVictoryController', function($scope, HomeZoneStatisticsService) {
+    $scope.zoneStats = HomeZoneStatisticsService;
 });

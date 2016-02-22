@@ -1,4 +1,4 @@
-app.directive('historyRow', function(AlertStatisticsService) {
+app.directive('historyRow', function(HomeStatisticsService) {
     return {
         restrict: 'A',
         scope : {

@@ -1,4 +1,4 @@
-app.service('WebsocketService', function($rootScope, AlertStatisticsService, ConfigDataService) {
+app.service('WebsocketService', function($rootScope, HomeStatisticsService, ConfigDataService) {
     var factory = {};
 
     factory.webSocket = {};
@@ -113,12 +113,12 @@ app.service('WebsocketService', function($rootScope, AlertStatisticsService, Con
             delete factory.actives[alert.id];
             factory.count--;
 
-            AlertStatisticsService.increaseAlertTotal();
-            AlertStatisticsService.increaseVictories(alert.server, alert.winner);
+            HomeStatisticsService.increaseAlertTotal();
+            HomeStatisticsService.increaseVictories(alert.server, alert.winner);
 
             if (alert.domination === 1) {
-                AlertStatisticsService.increaseDominationTotal();
-                AlertStatisticsService.increaseDominations(alert.server, alert.winner);
+                HomeStatisticsService.increaseDominationTotal();
+                HomeStatisticsService.increaseDominations(alert.server, alert.winner);
             }
 
             $rootScope.$apply();
