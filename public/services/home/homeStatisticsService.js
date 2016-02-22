@@ -1,4 +1,4 @@
-app.service('AlertStatisticsService', function ($http, $log, ConfigDataService) {
+app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
     var factory = {
         victories: {},
         dominations: {},

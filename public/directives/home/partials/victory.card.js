@@ -1,4 +1,4 @@
-app.directive('homeAlertMetricCard', function(AlertStatisticsService) {
+app.directive('homeAlertMetricCard', function(HomeStatisticsService) {
     return {
         restrict: 'A',
         scope : {
@@ -9,7 +9,7 @@ app.directive('homeAlertMetricCard', function(AlertStatisticsService) {
     };
 });
 
-app.directive('homeFactionCard', function(AlertStatisticsService) {
+app.directive('homeFactionCard', function(HomeStatisticsService) {
     return {
         restrict: 'A',
         scope : {
@@ -18,7 +18,7 @@ app.directive('homeFactionCard', function(AlertStatisticsService) {
             faction:   '@',
         },
         link:function(scope) {
-            scope.stats = AlertStatisticsService.totals;
+            scope.stats = HomeStatisticsService.totals;
         },
         templateUrl: 'views/home/partials/faction.card.html',
     };

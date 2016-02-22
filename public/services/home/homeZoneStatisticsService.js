@@ -1,4 +1,4 @@
-app.service('ZoneStatisticsService', function ($http, $log, ConfigDataService) {
+app.service('HomeZoneStatisticsService', function ($http, $log, ConfigDataService) {
     var factory = {
         zones: {},
         zoneTotals: {}
