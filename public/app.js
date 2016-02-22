@@ -12,6 +12,9 @@ app.config(function ($routeProvider) {
         .when('/about', {
             templateUrl: 'views/about/index.html'
         })
+        .when('/leaderboards', {
+            templateUrl: 'views/leaderboard/index.html'
+        })
         .when('/alert/:alert', {
             templateUrl: 'views/alert/index.html'
         })
