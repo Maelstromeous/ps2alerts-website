@@ -44,12 +44,12 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
                 url += '&zones=' + filters.zones.toString();
             }
 
-            // factions = ['vs','nc','tr','draw'];
+            // Factions = ['vs','nc','tr','draw'];
             if (filters.factions && filters.factions.length > 0) {
                 url += '&factions=' + filters.factions.toString();
             }
 
-            // brackets = ['MOR','AFT','PRI'];
+            // Brackets = ['MOR','AFT','PRI'];
             if (filters.brackets && filters.brackets.length > 0) {
                 url += '&brackets=' + filters.brackets.toString();
             }
