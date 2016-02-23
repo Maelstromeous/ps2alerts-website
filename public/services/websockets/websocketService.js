@@ -198,31 +198,14 @@ app.service('WebsocketService', function(
     };
 
     factory.endAlertTest = function() {
+        console.log('End alert test');
         var testData = {
             data: {
                 controlNC: "37",
                 controlTR: "27",
                 controlVS: "35",
-                domination: 1,
-                endtime: "1453570024",
-                resultID: 12345,
-                winner: "NC",
-                world: "10",
-                zone: "2"
-            }
-        };
-
-        factory.endActive(testData);
-    };
-
-    factory.updateAlertTest = function() {
-        var testData = {
-            data: {
-                controlNC: "37",
-                controlTR: "27",
-                controlVS: "35",
-                domination: 1,
-                endtime: "1453570024",
+                domination: 0,
+                endTime: "1453570024",
                 resultID: 12345,
                 winner: "NC",
                 world: "10",
