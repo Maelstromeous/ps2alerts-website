@@ -72,33 +72,7 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
 
                 // Generate metrics and transform timestamps
                 angular.forEach(returned, function(alert) {
-                    var last = alert.maps.data.length - 1;
-
-                    angular.forEach(alert.maps.data, function(map) {
-                        if (map.isDefence === false) {
-                            factory.metrics.caps++;
-                        } else {
-                            factory.metrics.defs++;
-                        }
-                    });
-
-                    factory.metrics.wins[alert.winner.toLowerCase()]++;
-                    factory.metrics.brackets[alert.timeBracket.toLowerCase()]++;
-                    factory.metrics.zones[alert.zone]++;
-
-                    alert.started     = alert.started * 1000;
-                    alert.ended       = alert.ended * 1000;
-                    // Do a series of filtering to remove a crapton of watchers from the view
-                    alert.endedDate   = $filter('date')(alert.ended, 'dd-MMM-yyyy HH:mm:ss');
-                    alert.timeBracket = ConfigDataService.timeBrackets[alert.timeBracket].label;
-                    alert.server      = ConfigDataService.serverNames[alert.server];
-                    alert.zone        = ConfigDataService.zoneNames[alert.zone];
-                    alert.lastMap     = alert.maps.data[last];
-
-                    alert.lastMap.controlTotal =
-                        alert.lastMap.controlVS +
-                        alert.lastMap.controlNC +
-                        alert.lastMap.controlTR;
+                    alert = factory.parseAlert(alert); // Parse the alert and return
                 });
 
                 factory.history = returned;
@@ -106,9 +80,52 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
         }
     };
 
+    // Parses alerts to add to the list
+    factory.parseAlert = function(alert) {
+        var last = alert.maps.data.length - 1;
+
+        alert.lastMap = alert.maps.data[last];
+
+        alert.lastMap.controlTotal =
+            alert.lastMap.controlVS +
+            alert.lastMap.controlNC +
+            alert.lastMap.controlTR;
+
+        alert.started     = alert.started * 1000;
+        alert.ended       = alert.ended * 1000;
+        // Do a series of filtering to remove a crapton of watchers from the view
+        alert.endedDate   = $filter('date')(alert.ended, 'dd-MMM-yyyy HH:mm:ss');
+        alert.timeBracket = ConfigDataService.timeBrackets[alert.timeBracket].label;
+        alert.server      = ConfigDataService.serverNames[alert.server];
+        alert.zone        = ConfigDataService.zoneNames[alert.zone];
+
+        // Update factory metrics
+        factory.metrics.wins[alert.winner.toLowerCase()]++;
+        factory.metrics.brackets[alert.timeBracket.toLowerCase()]++;
+        factory.metrics.zones[alert.zone]++;
+
+        if (alert.maps.data) {
+            angular.forEach(alert.maps.data, function(map) {
+                if (map.isDefence === false) {
+                    factory.metrics.caps++;
+                } else {
+                    factory.metrics.defs++;
+                }
+            });
+        }
+
+        return alert;
+    };
+
     // Called by WebsocketService when an alert is declared as ended
     factory.appendAlert = function(alert) {
-        console.log('Caught ended alert', alert);
+        // Get the info we need from the API then add to the list
+        $http({
+            method : 'GET',
+            url    : ConfigDataService.apiUrl + '/alerts/' + alert.id +'?embed=maps',
+        }).then(function(data) {
+            factory.history.unshift(factory.parseAlert(data.data.data));
+        });
     };
 
     return factory;
