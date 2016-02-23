@@ -106,5 +106,10 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
         }
     };
 
+    // Called by WebsocketService when an alert is declared as ended
+    factory.appendAlert = function(alert) {
+        console.log('Caught ended alert', alert);
+    };
+
     return factory;
 });

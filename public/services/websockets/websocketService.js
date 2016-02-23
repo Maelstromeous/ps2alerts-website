@@ -1,4 +1,9 @@
-app.service('WebsocketService', function($rootScope, HomeStatisticsService, ConfigDataService) {
+app.service('WebsocketService', function(
+    $rootScope,
+    HomeStatisticsService,
+    AlertHistoryService,
+    ConfigDataService
+) {
     var factory = {};
 
     factory.webSocket = {};
@@ -120,6 +125,8 @@ app.service('WebsocketService', function($rootScope, HomeStatisticsService, Conf
                 HomeStatisticsService.increaseDominationTotal();
                 HomeStatisticsService.increaseDominations(alert.server, alert.winner);
             }
+
+            AlertHistoryService.appendAlert(alert);
 
             $rootScope.$apply();
         });
