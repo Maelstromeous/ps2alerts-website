@@ -45,8 +45,6 @@ app.controller('AlertHistoryController', function(
         };
     };
 
-    $scope.showAll();
-
     $scope.toggleFilters = function(type, selection) {
         console.log(type);
         $scope.initCheck(type);
@@ -84,4 +82,7 @@ app.controller('AlertHistoryController', function(
 
     $scope.dateFrom = new Date();
     $scope.dateTo   = new Date();
+
+    // Show initial data
+    $scope.showAll();
 });
