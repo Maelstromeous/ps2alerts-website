@@ -124,7 +124,9 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
             method : 'GET',
             url    : ConfigDataService.apiUrl + '/alerts/' + alert.id +'?embed=maps',
         }).then(function(data) {
-            factory.history.unshift(factory.parseAlert(data.data.data));
+            var alert = factory.parseAlert(data.data.data);
+            alert.dynamic = true;
+            factory.history.unshift(alert);
         });
     };
 

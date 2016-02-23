@@ -24,9 +24,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="alert-row-seperator">
-
-            </div>
+            <div class="alert-row-seperator"></div>
         </div>
         <territory-bar
             vs="{{::metrics.lastMap.controlVS}}"
@@ -36,5 +34,8 @@
             total="{{::metrics.lastMap.controlTotal}}"
             decimal="0">
         </territory-bar>
+        <p class="caption dynamic-caption" ng-show="metrics.dynamic">
+            This result was automatically added as the alert ended recently. Press Filter if you wish to refresh the filtered list.
+        </p>
     </div>
 </div>
