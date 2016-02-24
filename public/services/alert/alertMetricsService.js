@@ -4,10 +4,7 @@ app.service('AlertMetricsService', function(
     AlertTransformer,
     ConfigDataService
 ) {
-    console.log($routeParams);
-
     var factory = {
-        alertID: $routeParams.alert,
         loading: true,
         // Initialize the data properties of each metric so it can be shortcutted
         metrics: {
@@ -41,31 +38,35 @@ app.service('AlertMetricsService', function(
         }
     };
 
-    $http({
-        method : 'GET',
-        url    : ConfigDataService.apiUrl + '/alerts/' + factory.alertID + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
-    }).then(function(data) {
-        var returned = data.data.data; // #Dataception
+    factory.init = function() {
+        factory.loading = true;
+        $http({
+            method : 'GET',
+            url    : ConfigDataService.apiUrl + '/alerts/' + $routeParams.alert + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
+        }).then(function(data) {
+            var returned = data.data.data; // #Dataception
 
-        var details = {
-            started:     returned.started,
-            ended:       returned.ended,
-            timeBracket: returned.timeBracket,
-            server:      returned.server,
-            zone:        returned.zone,
-            winner:      returned.winner
-        };
+            var details = {
+                started:     returned.started,
+                ended:       returned.ended,
+                timeBracket: returned.timeBracket,
+                server:      returned.server,
+                zone:        returned.zone,
+                winner:      returned.winner
+            };
 
-        factory.details = AlertTransformer.parse(details);
-        factory.metrics = returned;
-        factory.lastMap = _.last(returned.maps.data);
+            factory.details = AlertTransformer.parse(details);
+            factory.metrics = returned;
+            factory.lastMap = _.last(returned.maps.data);
 
-        var last = factory.lastMap;
-        last.controlTotal = last.controlVS + last.controlNC + last.controlTR;
+            var last = factory.lastMap;
+            last.controlTotal = last.controlVS + last.controlNC + last.controlTR;
+            last.controlNeutral = 100 - last.controlTotal;
 
-        factory.loading = false;
-        console.log(factory);
-    });
+            factory.loading = false;
+            console.log(factory);
+        });
+    };
 
     return factory;
 });
