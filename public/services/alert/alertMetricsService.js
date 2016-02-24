@@ -54,12 +54,12 @@ app.service('AlertMetricsService', function(
         factory.metrics = returned;
 
         var details = {
-            started: returned.started,
-            ended: returned.ended,
+            started:     returned.started,
+            ended:       returned.ended,
             timeBracket: returned.timeBracket,
-            server: returned.server,
-            zone: returned.zone,
-            winner: returned.winner
+            server:      returned.server,
+            zone:        returned.zone,
+            winner:      returned.winner
         };
 
         factory.details = AlertTransformer.parse(details);
