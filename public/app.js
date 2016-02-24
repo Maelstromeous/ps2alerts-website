@@ -3,7 +3,7 @@
 var app = angular.module('Ps2Alerts', [
     'ngRoute',
     'config',
-    'datatables',
+    'smart-table',
     'ngLoadScript'
 ]);
 app.config(function ($routeProvider) {
