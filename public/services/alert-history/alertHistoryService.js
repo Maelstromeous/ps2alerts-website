@@ -1,4 +1,10 @@
-app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataService) {
+app.service('AlertHistoryService', function (
+    $http,
+    $log,
+    $filter,
+    ConfigDataService,
+    AlertTransformer
+) {
     var factory = {
         empty: false,
         inProgress: false
@@ -91,13 +97,7 @@ app.service('AlertHistoryService', function ($http, $log, $filter, ConfigDataSer
             alert.lastMap.controlNC +
             alert.lastMap.controlTR;
 
-        alert.started     = alert.started * 1000;
-        alert.ended       = alert.ended * 1000;
-        // Do a series of filtering to remove a crapton of watchers from the view
-        alert.endedDate   = $filter('date')(alert.ended, 'dd-MMM-yyyy HH:mm:ss');
-        alert.timeBracket = ConfigDataService.timeBrackets[alert.timeBracket].label;
-        alert.server      = ConfigDataService.serverNames[alert.server];
-        alert.zone        = ConfigDataService.zoneNames[alert.zone];
+        alert = AlertTransformer.parse(alert);
 
         // Update factory metrics
         factory.metrics.wins[alert.winner.toLowerCase()]++;
