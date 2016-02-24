@@ -45,9 +45,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/assets/css/main.css': [
                         'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
-                        'public/assets/css/compiled/main.css',
-                        'public/assets/css/compiled/homepage.css',
-                        'public/assets/css/compiled/alert.history.css'
+                        'public/assets/css/compiled/main.css'
                     ]
                 }
             }
@@ -55,9 +53,7 @@ module.exports = function(grunt) {
         less: {
             development: {
                 files: {
-                    "public/assets/css/compiled/main.css"          : "public/assets/less/main.less",
-                    "public/assets/css/compiled/homepage.css"      : "public/assets/less/homepage.less",
-                    "public/assets/css/compiled/alert.history.css" : "public/assets/less/alert.history.less"
+                    "public/assets/css/compiled/main.css"    : "public/assets/less/main.less"
                 }
             }
         },
