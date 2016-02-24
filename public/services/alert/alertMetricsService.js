@@ -43,6 +43,8 @@ app.service('AlertMetricsService', function(
             }
         };
 
+        ConfigDataService.setTitle("Alert #" + $routeParams.alert);
+
         console.log($routeParams.alert);
         $http({
             method : 'GET',
