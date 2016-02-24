@@ -68,7 +68,6 @@ app.service('AlertHistoryService', function (
                 url    : url,
             }).then(function(data) {
                 var returned = data.data.data; // #Dataception
-                factory.inProgress = false;
 
                 if (returned.length === 0) {
                     // Stop here and return
@@ -82,6 +81,7 @@ app.service('AlertHistoryService', function (
                 });
 
                 factory.history = returned;
+                factory.inProgress = false;
             });
         }
     };
