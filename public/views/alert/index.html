@@ -7,21 +7,24 @@
             Loading
         </p>
     </div>
+    <div ng-show="!alert.loading">
+        <div class="row" ng-include="'views/alert/general.info.html'"></div>
+        <div class="row">
+            <div class="col s12">
+                <territory-bar
+                    vs="{{alert.lastMap.controlVS}}"
+                    nc="{{alert.lastMap.controlNC}}"
+                    tr="{{alert.lastMap.controlTR}}"
+                    draw="0"
+                    neutral="{{alert.lastMap.controlNeutral}}"
+                    total="100"
+                    decimal="0">
+                </territory-bar>
+            </div>
+        </div>
+        <div ng-include="'views/alert/combat.metrics.html'"></div>
+        <div class="divider">
 
-    <div class="row" ng-show="!alert.loading" ng-include="'views/alert/general.info.html'"></div>
-    <div class="row" ng-show="!alert.loading">
-        <div class="col s12">
-            <territory-bar
-                vs="{{alert.lastMap.controlVS}}"
-                nc="{{alert.lastMap.controlNC}}"
-                tr="{{alert.lastMap.controlTR}}"
-                draw="0"
-                total="{{alert.lastMap.controlTotal}}"
-                decimal="0">
-            </territory-bar>
         </div>
     </div>
-    <div ng-show="!alert.loading" ng-include="'views/alert/combat.metrics.html'"></div>
 </section>
-<script type="text/javascript-lazy">
-</script>
