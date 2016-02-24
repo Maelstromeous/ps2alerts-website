@@ -7,7 +7,13 @@ app.service('AlertMetricsService', function(
     var factory = {
         loading: true,
         // Initialize the data properties of each metric so it can be shortcutted
-        metrics: {
+    };
+
+    factory.init = function() {
+        factory.loading = true;
+        factory.details = {};
+        factory.lastMap = {};
+        factory.metrics = {
             combats: {
                 data: {}
             },
@@ -35,11 +41,9 @@ app.service('AlertMetricsService', function(
             weapons: {
                 data: {}
             }
-        }
-    };
+        };
 
-    factory.init = function() {
-        factory.loading = true;
+        console.log($routeParams.alert);
         $http({
             method : 'GET',
             url    : ConfigDataService.apiUrl + '/alerts/' + $routeParams.alert + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
