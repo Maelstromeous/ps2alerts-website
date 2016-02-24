@@ -1,0 +1,85 @@
+<div class="sk-three-bounce" ng-show="!alert.loaded.players">
+    <div class="sk-child sk-bounce1"></div>
+    <div class="sk-child sk-bounce2"></div>
+    <div class="sk-child sk-bounce3"></div>
+    <p class="caption center-align">
+        Loading
+    </p>
+</div>
+<table
+    class="striped hover"
+    st-table="alert.metrics.players.data"
+    ng-if="alert.loaded.players">
+    <thead>
+        <tr>
+            <th colspan="8" class="leaderboard-search">
+                <input st-search="" class="form-control" placeholder="Search Players" type="text"/>
+            </th>
+        </tr>
+        <tr>
+            <th st-sort="player.player.name">
+                Player Name
+            </th>
+            <th st-sort="alert.references.outfits[player.player.outfitID].outfit.name">
+                Outfit
+            </th>
+            <th st-sort="player.metrics.kills" st-sort-default="true">
+                Kills
+            </th>
+            <th st-sort="player.metrics.deaths">
+                Deaths
+            </th>
+            <th st-sort="player.metrics.kd">
+                KD
+            </th>
+            <th st-sort="player.metrics.teamkills">
+                TKs
+            </th>
+            <th st-sort="player.metrics.suicides">
+                Suicides
+            </th>
+            <th st-sort="player.metrics.headshots">
+                Headshots
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="player in alert.metrics.players.data">
+            <td>
+                {{::player.player.name}}
+            </td>
+            <td>
+                {{::alert.references.outfits[player.player.outfitID].outfit.name}}
+            </td>
+            <td>
+                {{player.metrics.kills}}
+            </td>
+            <td>
+                {{player.metrics.deaths}}
+            </td>
+            <td>
+                {{player.metrics.kd}}
+            </td>
+            <td>
+                {{player.metrics.teamkills}}
+            </td>
+            <td>
+                {{player.metrics.suicides}}
+            </td>
+            <td>
+                {{player.metrics.headshots}}
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8" class="text-center leaderboard-pagination">
+                <div
+                    st-pagination=""
+                    st-items-by-page="itemsByPage"
+                    st-displayed-pages="12">
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
