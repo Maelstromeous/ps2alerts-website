@@ -1,4 +1,37 @@
-table.dataTable tbody tr {
-    background-color: #37474F;
-    border-bottom-color: blue;
+.st-sort-ascent:before {
+    content: '\25B2';
+}
+
+.st-sort-descent:before {
+    content: '\25BC';
+}
+
+.leaderboard-search {
+    padding: 0;
+}
+
+.leaderboard-pagination {
+    padding: 0;
+    nav {
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #888888;
+    }
+
+    .pagination li {
+        float: none;
+    }
+
+    .pagination li:hover {
+        background-color: inherit;
+    }
+
+    .pagination li.active {
+        background-color: #656565;
+    }
+
+    .pagination li.active a:hover {
+        background-color: inherit;
+    }
 }

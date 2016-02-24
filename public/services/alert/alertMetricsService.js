@@ -4,16 +4,13 @@ app.service('AlertMetricsService', function(
     AlertTransformer,
     ConfigDataService
 ) {
-    var factory = {
-        loading: true,
-        // Initialize the data properties of each metric so it can be shortcutted
-    };
+    var factory = {};
 
     factory.init = function() {
-        factory.loading = {
-            main: true,
-            players: true,
-            outfits: true
+        factory.loaded = {
+            main: false,
+            players: false,
+            outfits: false
         };
         factory.details = {};
         factory.lastMap = {};
@@ -71,6 +68,9 @@ app.service('AlertMetricsService', function(
 
             factory.details = AlertTransformer.parse(details);
             factory.metrics = returned;
+
+            factory.loaded.main = true;
+
             factory.lastMap = _.last(returned.maps.data);
 
             var last = factory.lastMap;
@@ -90,8 +90,7 @@ app.service('AlertMetricsService', function(
 
             // Sort the data
             factory.sortPlayers('kills');
-
-            factory.loading = false;
+            factory.loaded.players = true;
 
             console.log(factory);
         });
@@ -103,7 +102,8 @@ app.service('AlertMetricsService', function(
         var outfitID = playerData.player.outfitID;
 
         // Calculate KD
-        playerData.metrics.kd = (playerData.metrics.kills / playerData.metrics.deaths).toFixed(2);
+        playerData.metrics.kd =
+        parseFloat((playerData.metrics.kills / playerData.metrics.deaths).toFixed(2));
 
         factory.references.players[playerData.player.id] = playerData;
 
