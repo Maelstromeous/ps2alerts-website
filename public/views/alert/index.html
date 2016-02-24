@@ -12,15 +12,15 @@
     <div class="row" ng-show="!alert.loading">
         <div class="col s12">
             <territory-bar
-            vs="{{alert.controlVS}}"
-            nc="{{alert.controlNC}}"
-            tr="{{alert.controlTR}}"
-            draw="0"
-            total="{{alert.controlTotal}}"
-            decimal="0">
-        </territory-bar>
+                vs="{{alert.lastMap.controlVS}}"
+                nc="{{alert.lastMap.controlNC}}"
+                tr="{{alert.lastMap.controlTR}}"
+                draw="0"
+                total="{{alert.lastMap.controlTotal}}"
+                decimal="0">
+            </territory-bar>
+        </div>
     </div>
-</div>
     <div ng-show="!alert.loading" ng-include="'views/alert/combat.metrics.html'"></div>
 </section>
 <script type="text/javascript-lazy">

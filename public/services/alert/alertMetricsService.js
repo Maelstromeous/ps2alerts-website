@@ -38,12 +38,7 @@ app.service('AlertMetricsService', function(
             weapons: {
                 data: {}
             }
-        },
-        details: {},
-        controlVS: 0,
-        controlNC: 0,
-        controlTR: 0,
-        statistics: {}
+        }
     };
 
     $http({
@@ -51,7 +46,6 @@ app.service('AlertMetricsService', function(
         url    : ConfigDataService.apiUrl + '/alerts/' + factory.alertID + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
     }).then(function(data) {
         var returned = data.data.data; // #Dataception
-        factory.metrics = returned;
 
         var details = {
             started:     returned.started,
@@ -63,6 +57,12 @@ app.service('AlertMetricsService', function(
         };
 
         factory.details = AlertTransformer.parse(details);
+        factory.metrics = returned;
+        factory.lastMap = _.last(returned.maps.data);
+
+        var last = factory.lastMap;
+        last.controlTotal = last.controlVS + last.controlNC + last.controlTR;
+
         factory.loading = false;
         console.log(factory);
     });
