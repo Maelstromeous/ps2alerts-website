@@ -5,23 +5,25 @@ module.exports = function(grunt) {
         uglify: {
             jsDeps: {
                 options: {
-                    beautify: false,
+                    beautify: true,
                     mangle: false
                 },
                 files: {
                     'public/assets/js/deps.js': [
+                        'public/bower_components/jquery/dist/jquery.min.js',
+                        'public/bower_components/datatables/media/js/jquery.dataTables.min.js',
                         'public/bower_components/angular/angular.min.js',
                         'public/bower_components/angular-route/angular-route.min.js',
-                        'public/bower_components/jquery/dist/jquery.min.js',
+                        'public/bower_components/angular-datatables/dist/angular-datatables.min.js',
                         'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
                         'public/assets/js/jsloader.js',
-                        'public/bower_components/lodash/dist/lodash.min.js'
+                        'public/bower_components/lodash/dist/lodash.min.js',
                     ]
                 }
             },
             jsApp: {
                 options: {
-                    beautify: false,
+                    beautify: true,
                     mangle: false
                 },
                 files: {
@@ -46,7 +48,8 @@ module.exports = function(grunt) {
                 files: {
                     'public/assets/css/main.css': [
                         'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
-                        'public/assets/css/compiled/main.css'
+                        'public/assets/css/compiled/main.css',
+                        'public/bower_components/datatables/media/css/jquery.dataTables.min.css'
                     ]
                 }
             }

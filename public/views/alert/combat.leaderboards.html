@@ -1,0 +1,94 @@
+<h5 class="center-align">Combat Leaderboards</h5>
+<div class="row row-no-margin" id="combat-leaderboards">
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-3">
+            <div
+                class="card-content">
+                <table
+                    datatable="ng"
+                    dt-options="dtOptions"
+                    dt-column-defs="dtColumnDefs"
+                    class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Player Name
+                            </th>
+                            <th>
+                                Outfit
+                            </th>
+                            <th>
+                                Kills
+                            </th>
+                            <th>
+                                Deaths
+                            </th>
+                            <th>
+                                KD
+                            </th>
+                            <th>
+                                TKs
+                            </th>
+                            <th>
+                                Suicides
+                            </th>
+                        </tr>
+                        <tr ng-repeat="player in alert.metrics.players.data">
+                            <td>
+                                {{::player.player.name}}
+                            </td>
+                            <td>
+                                {{::alert.references.outfits[player.player.outfit]}}
+                            </td>
+                            <td>
+                                {{player.metrics.kills}}
+                            </td>
+                            <td>
+                                {{player.metrics.deaths}}
+                            </td>
+                            <td>
+                                {{player.metrics.kd}}
+                            </td>
+                            <td>
+                                {{player.metrics.teamkills}}
+                            </td>
+                            <td>
+                                {{player.metrics.suicides}}
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+                <p class="caption center-align">
+                    Players
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-3">
+            <div class="card-content">
+                <p class="caption center-align">
+                    Outfits
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-3">
+            <div class="card-content">
+                <p class="caption center-align">
+                    Weapons
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-3">
+            <div class="card-content">
+                <p class="caption center-align">
+                    Vehicles
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

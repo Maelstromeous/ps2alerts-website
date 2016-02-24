@@ -181,3 +181,27 @@ h5.flow-text, .flow-text h5 {
 h6.flow-text, .flow-text h6 {
     font-size: 0.8em;
 }
+
+.tabs {
+    background-color: #37474F;
+
+    .tab {
+        border-right: 1px solid @border-color;
+    }
+
+    .tab:last-child {
+        border-right: 0;
+    }
+
+    .tab a {
+        color: #fff;
+    }
+}
+
+table.striped > tbody > tr:nth-child(odd) {
+    background-color: @table-striped;
+}
+
+table.highlight > tbody > tr:hover {
+    background-color: lighten(@table-striped, 15%);
+}

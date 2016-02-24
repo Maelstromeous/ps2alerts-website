@@ -1,6 +1,11 @@
 /* use strict */
 
-var app = angular.module('Ps2Alerts', ['ngRoute', 'config', 'ngLoadScript']);
+var app = angular.module('Ps2Alerts', [
+    'ngRoute',
+    'config',
+    'datatables',
+    'ngLoadScript'
+]);
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
