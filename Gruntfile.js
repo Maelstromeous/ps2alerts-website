@@ -54,7 +54,7 @@ module.exports = function(grunt) {
         less: {
             development: {
                 files: {
-                    "public/assets/css/compiled/main.css"    : "public/assets/less/main.less"
+                    "public/assets/css/compiled/main.css" : "public/assets/less/main.less"
                 }
             }
         },
