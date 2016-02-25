@@ -2,10 +2,59 @@
 
 #alert-monitor {
     padding-top: 20px;
+    position: relative;
 }
 
 #alert-monitor .caption {
     margin-bottom: 0;
+}
+
+#alert-monitor #websocket-status {
+    position: absolute;
+    top: @margin-base;
+    right: @margin-base;
+    .chip {
+        color: #fff;
+    }
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+}
+
+.websocket-disconnected {
+    .chip {
+        background-color: red;
+    }
+    span {
+        display: none;
+    }
+    .disconnected {
+        display: block;
+    }
+}
+
+.websocket-connecting {
+    .chip {
+        background-color: #FFBC00;
+    }
+    span {
+        display: none;
+    }
+    .connecting {
+        display: block;
+    }
+}
+
+.websocket-connected {
+    .chip {
+        background-color: #279E0A;
+    }
+    span {
+        display: none;
+    }
+    .connected {
+        display: block;
+    }
 }
 
 .monitor-labels {

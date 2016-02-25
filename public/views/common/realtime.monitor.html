@@ -1,4 +1,18 @@
 <div ng-controller="RealTimeMonitorController" class="row grey darken-3" id="alert-monitor">
+    <div id="websocket-status">
+        <div class="chip tooltipped" data-tooltip="Status of the PS2Alerts collection system. If this is red, please inform Maelstrome26!" data-position="left">
+            <span class="disconnected">
+                <i class="fa fa-arrow-down"></i> Disconnected!
+            </span>
+            <span class="connecting">
+                <i class="fa fa-refresh fa-spin"></i> Connecting
+            </span>
+            <span class="connected">
+                <i class="fa fa-arrow-up"></i> Online
+            </span>
+        </div>
+    </div>
+
     <div class="col s12 m8 offset-m2">
         <div class="center-align">
             <div class="row sk-three-bounce" ng-show="websocket.loaded == 0">
@@ -52,6 +66,10 @@
             <div class="col s12">
                 <p class="center-align caption">
                     Real Time Alert Monitor
+                    <i
+                        class="fa fa-info-circle tooltipped"
+                        data-tooltip="The Real Time Alert Monitor shows all currently running alerts on PS2 and their current status. All the above information is updated in real time."
+                        data-position="bottom"></i>
                 </p>
             </div>
         </div>

@@ -1,5 +1,6 @@
 app.service('WebsocketService', function(
     $rootScope,
+    $document,
     HomeStatisticsService,
     AlertHistoryService,
     ConfigDataService
@@ -14,6 +15,9 @@ app.service('WebsocketService', function(
 
     factory.initWebSocket = function() {
         console.log('Connecting websocket...');
+
+        $("#websocket-status").removeClass().addClass('websocket-connecting');
+
         factory.webSocket = new WebSocket('ws://api.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393');
 
         factory.webSocket.onopen = function () {
@@ -27,6 +31,7 @@ app.service('WebsocketService', function(
         };
 
         factory.webSocket.onclose = function() {
+            $("#websocket-status").removeClass().addClass('websocket-disconnected');
             setTimeout(function() {
                 console.log("Websocket Connection Lost... Reconnecting");
                 return factory.initWebSocket();
@@ -37,6 +42,7 @@ app.service('WebsocketService', function(
     factory.authenticate = function () {
         console.log('Authenticating...');
         factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
+        $("#websocket-status").removeClass().addClass('websocket-connected');
     };
 
     factory.parse = function(rawMessage) {
