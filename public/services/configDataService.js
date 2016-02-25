@@ -60,6 +60,8 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
                 return 2;
             case 'TR':
                 return 3;
+            default:
+                return null;
         }
     };
 
@@ -71,6 +73,8 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
                 return 'nc';
             case 3:
                 return 'tr';
+            default:
+                return null;
         }
     };
 

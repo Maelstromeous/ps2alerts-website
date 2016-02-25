@@ -14,28 +14,15 @@
 }
 
 #combat-leaderboards {
-    .leaderboards {
-        td {
-            padding: 5px 5px;
-        }
-        .metric {
-            width: 7%;
-
-            @media screen and (max-width: 767px) {
-                width: inherit;
-            }
-        }
-
-        .long {
-            width: 29%;
-
-            @media screen and (max-width: 767px) {
-                width: inherit;
-            }
-        }
-    }
-
     .indicator {
         display: none;
+    }
+
+    table.dataTable .metric {
+        text-align: center;
+    }
+
+    table.dataTable tbody tr.even {
+        background-color: @table-striped;
     }
 }

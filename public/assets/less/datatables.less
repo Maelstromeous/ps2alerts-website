@@ -1,37 +1,14 @@
-.st-sort-ascent:before {
-    content: '\25B2';
+// Datatable compatability
+table.dataTable tbody tr {
+    background-color: #37474F;
 }
 
-.st-sort-descent:before {
-    content: '\25BC';
+table.dataTable tbody td {
+    border-radius: 0;
+    padding: 5px 0;
 }
 
-.leaderboard-search {
-    padding: 0;
-}
-
-.leaderboard-pagination {
-    padding: 0;
-    nav {
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        background-color: #888888;
-    }
-
-    .pagination li {
-        float: none;
-    }
-
-    .pagination li:hover {
-        background-color: inherit;
-    }
-
-    .pagination li.active {
-        background-color: #656565;
-    }
-
-    .pagination li.active a:hover {
-        background-color: inherit;
-    }
+th, td {
+    white-space: nowrap;
+    padding: 10px 0;
 }

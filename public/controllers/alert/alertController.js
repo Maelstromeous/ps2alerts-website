@@ -22,7 +22,24 @@ app.controller('AlertController', function(
                 $('ul.tabs').tabs();
             });
 
-            $scope.apply();
+            $('#playerLeaderboard').DataTable({
+                data: $scope.alert.parsed.players,
+                columns: [
+                    { data: 'name', title: 'Player', className: 'long' },
+                    { data: 'outfit', title: 'Outfit', className: 'long' },
+                    { data: 'kills', title: 'Kills', className: 'metric' },
+                    { data: 'deaths' , title: 'Deaths', className: 'metric' },
+                    { data: 'teamkills', title: 'Teamkills', className: 'metric' },
+                    { data: 'suicides', title: 'Suicides', className: 'metric' },
+                    { data: 'headshots', title: 'Headshots', className: 'metric' },
+                    { data: 'factionAbv', visible: false}
+                ],
+                order: [2, 'desc'],
+                deferRender:    true,
+                scrollY:        450,
+                scrollCollapse: true,
+                scroller:       true
+            });
         }, 1);
     });
 

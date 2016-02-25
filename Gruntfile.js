@@ -13,10 +13,10 @@ module.exports = function(grunt) {
                         'public/bower_components/jquery/dist/jquery.min.js',
                         'public/bower_components/angular/angular.min.js',
                         'public/bower_components/angular-route/angular-route.min.js',
-                        'public/bower_components/angular-smart-table/dist/smart-table.js',
                         'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
                         'public/assets/js/jsloader.js',
                         'public/bower_components/lodash/dist/lodash.min.js',
+                        'public/bower_components/datatables.net/js/jquery.dataTables.min.js'
                     ]
                 }
             },
@@ -47,6 +47,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/assets/css/main.css': [
                         'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
+                        'public/bower_components/datatables.net-dt/css/jquery.dataTables.css',
                         'public/assets/css/compiled/main.css'
                     ]
                 }

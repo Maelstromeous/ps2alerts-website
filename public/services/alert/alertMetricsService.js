@@ -17,36 +17,40 @@ app.service('AlertMetricsService', function(
         factory.lastMap = {};
         factory.metrics = {
             combats: {
-                data: {}
+                data: []
             },
             combatHistorys: {
-                data: {}
+                data: []
             },
             mapInitials: {
-                data: {}
+                data: []
             },
             maps: {
-                data: {}
+                data: []
             },
             outfits: {
-                data: {}
+                data: []
             },
             players: {
-                data: {}
+                data: []
             },
             populations: {
-                data: {}
+                data: []
             },
             vehicles: {
-                data: {}
+                data: []
             },
             weapons: {
-                data: {}
+                data: []
             }
         };
-        factory.references = {
-            players: {},
-            outfits: {}
+
+        // Holds flattened versions of the data for datatables
+        factory.parsed = {
+            players: [],
+            outfits: {},
+            vehicles: {},
+            weapons: {}
         };
 
         ConfigDataService.setTitle("Alert #" + $routeParams.alert);
@@ -99,37 +103,53 @@ app.service('AlertMetricsService', function(
     // or our API should we need to
     factory.addNewPlayer = function(playerData) {
         var outfitID = playerData.player.outfitID;
+        var outfit = factory.parsed.outfits[outfitID];
+
+        var formatted = {
+            id: playerData.player.id,
+            name: playerData.player.name,
+            outfit: outfit.outfit.name,
+            outfitTag: outfit.outfit.tag,
+            faction: playerData.player.faction,
+            kills: playerData.metrics.kills,
+            deaths: playerData.metrics.deaths,
+            teamkills: playerData.metrics.teamkills,
+            suicides: playerData.metrics.suicides,
+            headshots: playerData.metrics.headshots
+        };
 
         // Calculate KD (this is added directly to the data object as we're working
         // in references)
-        playerData.metrics.kd =
-        parseFloat((playerData.metrics.kills / playerData.metrics.deaths).toFixed(2));
+        formatted.kd =
+        parseFloat((formatted.kills / formatted.deaths).toFixed(2));
 
-        if (playerData.metrics.kd == 'Infinity' || isNaN(playerData.metrics.kd)) {
-            playerData.metrics.kd = playerData.metrics.kills;
+        if (formatted.kd == 'Infinity' || isNaN(formatted.kd)) {
+            formatted.kd = formatted.kills;
         }
 
         // Set faction abrivation
-        playerData.player.factionAbv = ConfigDataService.convertFactionIntToName(playerData.player.faction);
-
-        factory.references.players[playerData.player.id] = playerData;
+        formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
         // Attach players to outfits. All players should have outfit IDs,
         // even -1, -2, -3 to denote different faction no outfits
+        //
+        // WILL NEED TO HANDLE IN THE FUTURE WHEN WE ADD NEW PLAYERS TO ADD THEIR OUTFIT INFO
         if (outfitID) {
-            if (factory.references.outfits[outfitID]) {
+            if (factory.parsed.outfits[outfitID]) {
                 // Store a reference that this player is part of the outfit
-                factory.references.outfits[outfitID].players.push(playerData.player.id);
+                factory.parsed.outfits[outfitID].players.push(formatted.id);
             }
         } else {
-            console.log('Missing outfit ID for player: ' + playerData.player.id);
-            console.log(playerData);
+            console.log('Missing outfit ID for player: ' + formatted.id);
+            console.log(formatted);
         }
+
+        factory.parsed.players.push(formatted);
     };
 
     factory.addNewOutfit = function(outfitData) {
         outfitData.players = [];
-        factory.references.outfits[outfitData.outfit.id] = outfitData;
+        factory.parsed.outfits[outfitData.outfit.id] = outfitData;
     };
 
     factory.sortPlayers = function(metric) {
