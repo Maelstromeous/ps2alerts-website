@@ -132,6 +132,7 @@ app.service('AlertMetricsService', function(
         if (outfit) {
             // Store a reference that this player is part of the outfit
             outfit.players.push(formatted.id);
+            outfit.participants = outfit.players.length;
         } else {
             console.log('Missing outfit ID for player: ' + formatted.id);
             console.log(formatted);
@@ -153,7 +154,8 @@ app.service('AlertMetricsService', function(
             teamkills: outfitData.metrics.teamkills,
             suicides: outfitData.metrics.suicides,
             captures: outfitData.metrics.captures,
-            players: [] // Will store all playerIDs for reference
+            players: [], // Will store all playerIDs for reference
+            participants: 0
         };
 
         if (formatted.tag.length === 0) {

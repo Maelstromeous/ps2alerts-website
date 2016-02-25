@@ -18,10 +18,6 @@ app.controller('AlertController', function(
             console.log("Loading leaderboards");
             $scope.loaded.leaderboards = true;
 
-            $(document).ready(function(){
-                $('ul.tabs').tabs();
-            });
-
             $('#player-leaderboard').DataTable({
                 data: $scope.alert.parsed.players,
                 columns: [
@@ -35,7 +31,7 @@ app.controller('AlertController', function(
                     { data: 'factionAbv', visible: false },
                     { data: 'outfitTag', visible: false }
                 ],
-                order: [2, 'desc'],
+                order:          [2, 'desc'],
                 deferRender:    true,
                 scrollY:        450,
                 scrollCollapse: true,
@@ -57,21 +53,25 @@ app.controller('AlertController', function(
             $('#outfit-leaderboard').DataTable({
                 data: $scope.alert.parsed.outfits,
                 columns: [
-                    { data: 'name', title: 'Player', className: 'long' },
-                    { data: 'tag', title: 'Outfit', className: 'long' },
+                    { data: 'name', title: 'Outfit', className: 'long' },
+                    { data: 'tag', title: 'tag', className: 'long' },
+                    { data: 'participants', title: 'Participants', className: 'metric'},
                     { data: 'kills', title: 'Kills', className: 'metric' },
                     { data: 'deaths' , title: 'Deaths', className: 'metric' },
                     { data: 'kd' , title: 'K/D', className: 'metric' },
                     { data: 'teamkills', title: 'Teamkills', className: 'metric' },
                     { data: 'suicides', title: 'Suicides', className: 'metric' },
-                    { data: 'headshots', title: 'Headshots', className: 'metric' },
-                    { data: 'factionAbv', visible: false}
+                    { data: 'captures', title: 'Headshots', className: 'metric' },
                 ],
-                order: [2, 'desc'],
+                order:          [3, 'desc'],
                 deferRender:    true,
                 scrollY:        450,
                 scrollCollapse: true,
                 scroller:       true
+            });
+
+            $(document).ready(function(){
+                $('ul.tabs').tabs();
             });
         }, 1);
     });
