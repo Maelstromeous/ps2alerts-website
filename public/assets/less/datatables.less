@@ -3,12 +3,29 @@ table.dataTable tbody tr {
     background-color: #37474F;
 }
 
-table.dataTable tbody td {
+td, th {
     border-radius: 0;
-    padding: 5px 0;
+    white-space: nowrap;
+    padding: 5px;
 }
 
-th, td {
-    white-space: nowrap;
+th {
     padding: 10px 0;
+}
+
+table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+table.dataTable thead .sorting_asc {
+    background-image: url('../img/datatables/sort_asc.png');
+}
+
+table.dataTable thead .sorting_desc {
+    background-image: url('../img/datatables/sort_desc.png');
+}
+
+table.dataTable thead .sorting {
+    background-image: url('../img/datatables/sort_both.png');
 }
