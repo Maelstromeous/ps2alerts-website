@@ -150,6 +150,16 @@ app.service('AlertMetricsService', function(
     factory.addNewOutfit = function(outfitData) {
         outfitData.players = [];
         factory.parsed.outfits[outfitData.outfit.id] = outfitData;
+    // Calculate KD
+    factory.returnKD = function(data) {
+        data.kd =
+        parseFloat((data.kills / data.deaths).toFixed(2));
+
+        if (data.kd == 'Infinity' || isNaN(data.kd)) {
+            data.kd = data.kills;
+        }
+
+        return data;
     };
 
     factory.sortPlayers = function(metric) {
