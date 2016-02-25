@@ -183,18 +183,33 @@ h6.flow-text, .flow-text h6 {
 }
 
 .tabs {
-    background-color: #37474F;
+    background-color: @tab-background;
 
     .tab {
         border-right: 1px solid @border-color;
     }
 
-    .tab:last-child {
-        border-right: 0;
-    }
-
     .tab a {
         color: #fff;
+        transition: all .3s ease-out
+    }
+
+    .tab a:hover {
+        color: #fff;
+    }
+
+    .tab a:not(.active):hover {
+        background-color: darken(@tab-background, 5%);
+    }
+
+    .tab a.active {
+        background-color: darken(@tab-background, 15%);
+    }
+}
+
+.tabs:last-child {
+    .tab {
+        border-right: 0;
     }
 }
 

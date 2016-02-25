@@ -52,15 +52,28 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
     };
 
     factory.convertFactionNameToInt = function(name) {
+        name = name.toLowerCase();
         switch(name) {
-            case "VS":
+            case 'VS':
                 return 1;
-            case "NC":
+            case 'NC':
                 return 2;
-            case "TR":
+            case 'TR':
                 return 3;
         }
     };
+
+    factory.convertFactionIntToName = function(int) {
+        switch(int) {
+            case 1:
+                return 'vs';
+            case 2:
+                return 'nc';
+            case 3:
+                return 'tr';
+        }
+    };
+
 
     factory.setTitle = function(newTitle) {
         console.log($document[0].title);

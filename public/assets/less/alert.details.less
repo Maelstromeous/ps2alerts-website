@@ -13,7 +13,36 @@
     }
 }
 
-#combat-leaderboards .leaderboard {
-    height: 250px;
-    overflow: scroll;
+#combat-leaderboards {
+    .leaderboards {
+        td {
+            padding: 5px 5px;
+        }
+        .metric {
+            width: 7%;
+
+            @media screen and (max-width: 767px) {
+                width: inherit;
+            }
+        }
+
+        .long {
+            width: 29%;
+
+            @media screen and (max-width: 767px) {
+                width: inherit;
+            }
+        }
+    }
+
+    .indicator {
+        display: none;
+    }
+}
+
+#combat-leaderboards
+
+.leaderboards .card {
+    margin-top: @margin-base;
+    padding-top: @padding-base;
 }

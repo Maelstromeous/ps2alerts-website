@@ -50,7 +50,6 @@ app.service('AlertMetricsService', function(
 
         ConfigDataService.setTitle("Alert #" + $routeParams.alert);
 
-        console.log($routeParams.alert);
         $http({
             method : 'GET',
             url    : ConfigDataService.apiUrl + '/alerts/' + $routeParams.alert + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
@@ -91,8 +90,12 @@ app.service('AlertMetricsService', function(
             // Sort the data
             factory.sortPlayers('kills');
             factory.loaded.players = true;
+            factory.loaded.outfits = true;
 
             console.log(factory);
+            $(document).ready(function(){
+                $('ul.tabs').tabs();
+            });
         });
     };
 
@@ -101,10 +104,14 @@ app.service('AlertMetricsService', function(
     factory.addNewPlayer = function(playerData) {
         var outfitID = playerData.player.outfitID;
 
-        // Calculate KD
+        // Calculate KD (this is added directly to the data object as we're working
+        // in references)
         playerData.metrics.kd =
         parseFloat((playerData.metrics.kills / playerData.metrics.deaths).toFixed(2));
 
+        // Set faction abrivation
+        playerData.player.factionAbv = ConfigDataService.convertFactionIntToName(playerData.player.faction);
+        
         factory.references.players[playerData.player.id] = playerData;
 
         // Attach players to outfits. All players should have outfit IDs,
@@ -122,7 +129,6 @@ app.service('AlertMetricsService', function(
 
     factory.addNewOutfit = function(outfitData) {
         outfitData.players = [];
-        outfitData.metrics = {};
         factory.references.outfits[outfitData.outfit.id] = outfitData;
     };
 
