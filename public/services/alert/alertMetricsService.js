@@ -48,9 +48,9 @@ app.service('AlertMetricsService', function(
         // Holds flattened versions of the data for datatables
         factory.parsed = {
             players: [],
-            outfits: {},
-            vehicles: {},
-            weapons: {}
+            outfits: [],
+            vehicles: [],
+            weapons: []
         };
 
         ConfigDataService.setTitle("Alert #" + $routeParams.alert);
@@ -102,14 +102,18 @@ app.service('AlertMetricsService', function(
     // Function to add new players to various areas, grabbing new data from Census
     // or our API should we need to
     factory.addNewPlayer = function(playerData) {
-        var outfitID = playerData.player.outfitID;
-        var outfit = factory.parsed.outfits[outfitID];
+        // Find the array key for the outfit by ID
+        var outfitRef = _.findIndex(
+            factory.parsed.outfits, { 'id' : playerData.player.outfitID }
+        );
+
+        var outfit = factory.parsed.outfits[outfitRef];
 
         var formatted = {
             id: playerData.player.id,
             name: playerData.player.name,
-            outfit: outfit.outfit.name,
-            outfitTag: outfit.outfit.tag,
+            outfit: outfit.name,
+            outfitTag: outfit.tag,
             faction: playerData.player.faction,
             kills: playerData.metrics.kills,
             deaths: playerData.metrics.deaths,
@@ -118,15 +122,6 @@ app.service('AlertMetricsService', function(
             headshots: playerData.metrics.headshots
         };
 
-        // Calculate KD (this is added directly to the data object as we're working
-        // in references)
-        formatted.kd =
-        parseFloat((formatted.kills / formatted.deaths).toFixed(2));
-
-        if (formatted.kd == 'Infinity' || isNaN(formatted.kd)) {
-            formatted.kd = formatted.kills;
-        }
-
         // Set faction abrivation
         formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
@@ -134,22 +129,41 @@ app.service('AlertMetricsService', function(
         // even -1, -2, -3 to denote different faction no outfits
         //
         // WILL NEED TO HANDLE IN THE FUTURE WHEN WE ADD NEW PLAYERS TO ADD THEIR OUTFIT INFO
-        if (outfitID) {
-            if (factory.parsed.outfits[outfitID]) {
-                // Store a reference that this player is part of the outfit
-                factory.parsed.outfits[outfitID].players.push(formatted.id);
-            }
+        if (outfit) {
+            // Store a reference that this player is part of the outfit
+            outfit.players.push(formatted.id);
         } else {
             console.log('Missing outfit ID for player: ' + formatted.id);
             console.log(formatted);
         }
 
+        formatted = factory.returnKD(formatted); // Parse KD
         factory.parsed.players.push(formatted);
     };
 
     factory.addNewOutfit = function(outfitData) {
-        outfitData.players = [];
-        factory.parsed.outfits[outfitData.outfit.id] = outfitData;
+
+        var formatted = {
+            id: outfitData.outfit.id,
+            name: outfitData.outfit.name,
+            tag: outfitData.outfit.tag,
+            faction: outfitData.outfit.faction,
+            kills: outfitData.metrics.kills,
+            deaths: outfitData.metrics.deaths,
+            teamkills: outfitData.metrics.teamkills,
+            suicides: outfitData.metrics.suicides,
+            captures: outfitData.metrics.captures,
+            players: [] // Will store all playerIDs for reference
+        };
+
+        if (formatted.tag.length === 0) {
+            formatted.tag = null;
+        }
+
+        formatted = factory.returnKD(formatted); // Parse KD
+        factory.parsed.outfits.push(formatted);
+    };
+
     // Calculate KD
     factory.returnKD = function(data) {
         data.kd =
