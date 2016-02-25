@@ -1,4 +1,4 @@
-<div class="sk-three-bounce" ng-show="!alert.loaded.players">
+<div class="sk-three-bounce" ng-show="!loaded.data">
     <div class="sk-child sk-bounce1"></div>
     <div class="sk-child sk-bounce2"></div>
     <div class="sk-child sk-bounce3"></div>
@@ -8,9 +8,9 @@
 </div>
 <table
     class="striped hover"
-    st-safe-src="alert.metrics.players.data"
     st-table="playerLeaderboardCollection"
-    ng-if="alert.loaded.players">
+    st-safe-src="alert.metrics.players.data"
+    ng-if="loaded.leaderboards">
     <thead>
         <tr>
             <th colspan="8" class="leaderboard-search">
@@ -53,7 +53,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="player in alert.metrics.players.data">
+        <tr ng-repeat="player in playerLeaderboardCollection">
             <td class="{{::player.player.factionAbv}}-table-text long">
                 {{::player.player.name}}
             </td>
@@ -88,7 +88,7 @@
             <td colspan="8" class="text-center leaderboard-pagination">
                 <div
                     st-pagination=""
-                    st-items-by-page="25"
+                    st-items-by-page="20"
                     st-displayed-pages="12">
                 </div>
             </td>

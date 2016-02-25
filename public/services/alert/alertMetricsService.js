@@ -1,6 +1,7 @@
 app.service('AlertMetricsService', function(
     $routeParams,
     $http,
+    $rootScope,
     AlertTransformer,
     ConfigDataService
 ) {
@@ -68,8 +69,6 @@ app.service('AlertMetricsService', function(
             factory.details = AlertTransformer.parse(details);
             factory.metrics = returned;
 
-            factory.loaded.main = true;
-
             factory.lastMap = _.last(returned.maps.data);
 
             var last = factory.lastMap;
@@ -89,13 +88,10 @@ app.service('AlertMetricsService', function(
 
             // Sort the data
             factory.sortPlayers('kills');
-            factory.loaded.players = true;
-            factory.loaded.outfits = true;
+
+            $rootScope.$broadcast('dataLoaded', 'loaded');
 
             console.log(factory);
-            $(document).ready(function(){
-                $('ul.tabs').tabs();
-            });
         });
     };
 
@@ -109,9 +105,13 @@ app.service('AlertMetricsService', function(
         playerData.metrics.kd =
         parseFloat((playerData.metrics.kills / playerData.metrics.deaths).toFixed(2));
 
+        if (playerData.metrics.kd == 'Infinity' || isNaN(playerData.metrics.kd)) {
+            playerData.metrics.kd = playerData.metrics.kills;
+        }
+
         // Set faction abrivation
         playerData.player.factionAbv = ConfigDataService.convertFactionIntToName(playerData.player.faction);
-        
+
         factory.references.players[playerData.player.id] = playerData;
 
         // Attach players to outfits. All players should have outfit IDs,

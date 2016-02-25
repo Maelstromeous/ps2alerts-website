@@ -1,5 +1,5 @@
 <section ng-controller="AlertController" id="alert-details">
-    <div class="sk-three-bounce" ng-show="!alert.loaded.main">
+    <div class="sk-three-bounce" ng-show="!loaded.data">
         <div class="sk-child sk-bounce1"></div>
         <div class="sk-child sk-bounce2"></div>
         <div class="sk-child sk-bounce3"></div>
@@ -7,7 +7,7 @@
             Loading
         </p>
     </div>
-    <div ng-show="alert.loaded.main">
+    <div ng-if="loaded.data">
         <div class="row" ng-include="'views/alert/general.info.html'"></div>
         <div class="row">
             <div class="col s12">
