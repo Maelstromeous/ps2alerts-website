@@ -27,8 +27,10 @@ app.service('WebsocketService', function(
         };
 
         factory.webSocket.onclose = function() {
-            console.log("Websocket Connection Lost... Reconnecting");
-            return factory.initWebSocket();
+            setTimeout(function() {
+                console.log("Websocket Connection Lost... Reconnecting");
+                return factory.initWebSocket();
+            }, 2500);
         };
     };
 
