@@ -163,6 +163,10 @@ app.service('AlertMetricsService', function(
         }
 
         formatted = factory.returnKD(formatted); // Parse KD
+
+        // Set faction abrivation
+        formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
+        
         factory.parsed.outfits.push(formatted);
     };
 
