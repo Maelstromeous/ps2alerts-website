@@ -22,7 +22,7 @@ app.controller('AlertController', function(
                 $('ul.tabs').tabs();
             });
 
-            $('#playerLeaderboard').DataTable({
+            $('#player-leaderboard').DataTable({
                 data: $scope.alert.parsed.players,
                 columns: [
                     { data: 'name', title: 'Player', className: 'long name' },
@@ -54,7 +54,7 @@ app.controller('AlertController', function(
                 }
             });
 
-            $('#outfitLeaderboard').DataTable({
+            $('#outfit-leaderboard').DataTable({
                 data: $scope.alert.parsed.outfits,
                 columns: [
                     { data: 'name', title: 'Player', className: 'long' },
