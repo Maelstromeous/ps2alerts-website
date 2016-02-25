@@ -54,7 +54,7 @@ app.controller('AlertController', function(
                 data: $scope.alert.parsed.outfits,
                 columns: [
                     { data: 'name', title: 'Outfit', className: 'long' },
-                    { data: 'tag', title: 'tag', className: 'long' },
+                    { data: 'tag', title: 'Tag', className: 'long' },
                     { data: 'participants', title: 'Participants', className: 'metric'},
                     { data: 'kills', title: 'Kills', className: 'metric' },
                     { data: 'deaths' , title: 'Deaths', className: 'metric' },
