@@ -90,6 +90,10 @@ app.service('AlertMetricsService', function(
             factory.addNewPlayer(player);
         });
 
+        angular.forEach(factory.metrics.weapons.data, function(weapon) {
+            factory.addNewWeapon(weapon);
+        });
+
         // Sort the data
         factory.sortPlayers('kills');
 
@@ -165,11 +169,33 @@ app.service('AlertMetricsService', function(
         factory.parsed.outfits.push(formatted);
     };
 
-    factory.addNewWeapon = function(weaponData) {
-        var weapon
-        var formatted = {
+    factory.addNewWeapon = function(weapon) {
+        var weaponName = 'Unknown / Fatality';
 
+        if (weapon.id > 0) {
+            // Find the array key for the weapon by ID
+            var weaponRef = _.findIndex(
+                factory.configData.weapons.data, { 'id' : weapon.id}
+            );
+
+            var weaponData = factory.configData.weapons.data[weaponRef];
+
+            if (weaponData) {
+                weaponName = weaponData.name
+            } else {
+                console.log("DUFF DATA", weapon.id);
+            }
         }
+
+        var formatted = {
+            id: weapon.id,
+            name: weaponName,
+            kills: weapon.kills,
+            teamkills: weapon.teamkills,
+            headshots: weapon.headshots
+        }
+
+        factory.parsed.weapons.push(formatted);
     }
 
     // Calculate KD
