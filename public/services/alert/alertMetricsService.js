@@ -98,25 +98,25 @@ app.service('AlertMetricsService', function(
 
     // Function to add new players to various areas, grabbing new data from Census
     // or our API should we need to
-    factory.addNewPlayer = function(playerData) {
+    factory.addNewPlayer = function(player) {
         // Find the array key for the outfit by ID
         var outfitRef = _.findIndex(
-            factory.parsed.outfits, { 'id' : playerData.player.outfitID }
+            factory.parsed.outfits, { 'id' : player.player.outfitID }
         );
 
         var outfit = factory.parsed.outfits[outfitRef];
 
         var formatted = {
-            id:        playerData.player.id,
-            name:      playerData.player.name,
+            id:        player.player.id,
+            name:      player.player.name,
             outfit:    outfit.name,
             outfitTag: outfit.tag,
-            faction:   playerData.player.faction,
-            kills:     playerData.metrics.kills,
-            deaths:    playerData.metrics.deaths,
-            teamkills: playerData.metrics.teamkills,
-            suicides:  playerData.metrics.suicides,
-            headshots: playerData.metrics.headshots
+            faction:   player.player.faction,
+            kills:     player.metrics.kills,
+            deaths:    player.metrics.deaths,
+            teamkills: player.metrics.teamkills,
+            suicides:  player.metrics.suicides,
+            headshots: player.metrics.headshots
         };
 
         // Set faction abrivation
@@ -139,16 +139,16 @@ app.service('AlertMetricsService', function(
         factory.parsed.players.push(formatted);
     };
 
-    factory.addNewOutfit = function(outfitData) {
+    factory.addNewOutfit = function(outfit) {
         var formatted = {
-            id:           outfitData.outfit.id,
-            name:         outfitData.outfit.name,
-            tag:          outfitData.outfit.tag,
-            faction:      outfitData.outfit.faction,
-            kills:        outfitData.metrics.kills,
-            deaths:       outfitData.metrics.deaths,
-            teamkills:    outfitData.metrics.teamkills,
-            suicides:     outfitData.metrics.suicides,
+            id:           outfit.outfit.id,
+            name:         outfit.outfit.name,
+            tag:          outfit.outfit.tag,
+            faction:      outfit.outfit.faction,
+            kills:        outfit.metrics.kills,
+            deaths:       outfit.metrics.deaths,
+            teamkills:    outfit.metrics.teamkills,
+            suicides:     outfit.metrics.suicides,
             players:      [], // Will store all playerIDs for reference
             participants: 0
         };
@@ -166,6 +166,7 @@ app.service('AlertMetricsService', function(
     };
 
     factory.addNewWeapon = function(weaponData) {
+        var weapon
         var formatted = {
 
         }
