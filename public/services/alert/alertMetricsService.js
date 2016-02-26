@@ -94,7 +94,7 @@ app.service('AlertMetricsService', function(
         factory.sortPlayers('kills');
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
-    }
+    };
 
     // Function to add new players to various areas, grabbing new data from Census
     // or our API should we need to
@@ -130,12 +130,19 @@ app.service('AlertMetricsService', function(
             // Store a reference that this player is part of the outfit
             outfit.players.push(formatted.id);
             outfit.participants = outfit.players.length;
+
+            // Nullify participants if less than 5 people so that K/D ratios are more accurate
+            if (outfit.participants < 5) {
+                outfit.kd = 0;
+            } else {
+                outfit.kd = factory.returnKD(outfit);
+            }
         } else {
             console.log('Missing outfit ID for player: ' + formatted.id);
             console.log(formatted);
         }
 
-        formatted = factory.returnKD(formatted); // Parse KD
+        formatted.kd = factory.returnKD(formatted); // Parse KD
         factory.parsed.players.push(formatted);
     };
 
@@ -157,7 +164,7 @@ app.service('AlertMetricsService', function(
             formatted.tag = null;
         }
 
-        formatted = factory.returnKD(formatted); // Parse KD
+        formatted.kd = factory.returnKD(formatted); // Parse KD
 
         // Set faction abrivation
         formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
@@ -168,19 +175,19 @@ app.service('AlertMetricsService', function(
     factory.addNewWeapon = function(weaponData) {
         var formatted = {
 
-        }
-    }
+        };
+    };
 
     // Calculate KD
     factory.returnKD = function(data) {
-        data.kd =
+        var kd =
         parseFloat((data.kills / data.deaths).toFixed(2));
 
-        if (data.kd == 'Infinity' || isNaN(data.kd)) {
-            data.kd = data.kills;
+        if (kd == 'Infinity' || isNaN(kd)) {
+            kd = data.kills;
         }
 
-        return data;
+        return kd;
     };
 
     factory.sortPlayers = function(metric) {
@@ -215,7 +222,7 @@ app.service('AlertMetricsService', function(
         }).then(function(returned) {
             return resolve(returned.data.data);
         });
-    })
+    });
 
     factory.getAlertData = function(alertID) {
         return new Promise(function(resolve, reject) {

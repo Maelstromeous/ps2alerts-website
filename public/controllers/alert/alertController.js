@@ -11,7 +11,7 @@ app.controller('AlertController', function(
 
     $scope.$on('dataLoaded', function() {
         $scope.loaded.data = true;
-        
+
         // It seems promises causes some issues with Angular. Need to apply the scope to kick it in the nuts.
         $scope.$apply();
 
@@ -22,6 +22,7 @@ app.controller('AlertController', function(
                 { data: 'outfit', title: 'Outfit', className: 'long outfit' },
                 { data: 'kills', title: 'Kills', className: 'metric' },
                 { data: 'deaths' , title: 'Deaths', className: 'metric' },
+                { data: 'kd' , title: 'K/D', className: 'metric' },
                 { data: 'teamkills', title: 'Teamkills', className: 'metric' },
                 { data: 'suicides', title: 'Suicides', className: 'metric' },
                 { data: 'headshots', title: 'Headshots', className: 'metric' },
@@ -54,7 +55,7 @@ app.controller('AlertController', function(
                 { data: 'participants', title: 'Participants', className: 'metric'},
                 { data: 'kills', title: 'Kills', className: 'metric' },
                 { data: 'deaths' , title: 'Deaths', className: 'metric' },
-                { data: 'kd' , title: 'K/D', className: 'metric' },
+                { data: 'kd' , title: 'K/D *', className: 'metric kd' },
                 { data: 'teamkills', title: 'Teamkills', className: 'metric' },
                 { data: 'suicides', title: 'Suicides', className: 'metric' },
                 { data: 'tag', title: 'Tag', className: 'long', visible: false },
