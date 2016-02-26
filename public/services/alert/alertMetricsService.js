@@ -218,7 +218,7 @@ app.service('AlertMetricsService', function(
     })
 
     factory.getAlertData = function(alertID) {
-        var promise = new Promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             $http({
                 method : 'GET',
                 url    : ConfigDataService.apiUrl + '/alerts/' + alertID + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
@@ -226,8 +226,6 @@ app.service('AlertMetricsService', function(
                 return resolve(returned.data.data);
             });
         });
-
-        return promise;
     };
 
     return factory;
