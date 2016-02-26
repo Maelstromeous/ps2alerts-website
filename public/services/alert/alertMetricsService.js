@@ -110,15 +110,15 @@ app.service('AlertMetricsService', function(
         var outfit = factory.parsed.outfits[outfitRef];
 
         var formatted = {
-            id: playerData.player.id,
-            name: playerData.player.name,
-            outfit: outfit.name,
+            id:        playerData.player.id,
+            name:      playerData.player.name,
+            outfit:    outfit.name,
             outfitTag: outfit.tag,
-            faction: playerData.player.faction,
-            kills: playerData.metrics.kills,
-            deaths: playerData.metrics.deaths,
+            faction:   playerData.player.faction,
+            kills:     playerData.metrics.kills,
+            deaths:    playerData.metrics.deaths,
             teamkills: playerData.metrics.teamkills,
-            suicides: playerData.metrics.suicides,
+            suicides:  playerData.metrics.suicides,
             headshots: playerData.metrics.headshots
         };
 
@@ -145,16 +145,16 @@ app.service('AlertMetricsService', function(
     factory.addNewOutfit = function(outfitData) {
 
         var formatted = {
-            id: outfitData.outfit.id,
-            name: outfitData.outfit.name,
-            tag: outfitData.outfit.tag,
-            faction: outfitData.outfit.faction,
-            kills: outfitData.metrics.kills,
-            deaths: outfitData.metrics.deaths,
-            teamkills: outfitData.metrics.teamkills,
-            suicides: outfitData.metrics.suicides,
-            captures: outfitData.metrics.captures,
-            players: [], // Will store all playerIDs for reference
+            id:           outfitData.outfit.id,
+            name:         outfitData.outfit.name,
+            tag:          outfitData.outfit.tag,
+            faction:      outfitData.outfit.faction,
+            kills:        outfitData.metrics.kills,
+            deaths:       outfitData.metrics.deaths,
+            teamkills:    outfitData.metrics.teamkills,
+            suicides:     outfitData.metrics.suicides,
+            captures:     outfitData.metrics.captures,
+            players:      [], // Will store all playerIDs for reference
             participants: 0
         };
 
@@ -166,7 +166,7 @@ app.service('AlertMetricsService', function(
 
         // Set faction abrivation
         formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
-        
+
         factory.parsed.outfits.push(formatted);
     };
 
