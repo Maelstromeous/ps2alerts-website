@@ -7,7 +7,7 @@ app.service('AlertMetricsService', function(
 ) {
     var factory = {};
 
-    factory.init = function() {
+    factory.init = function(alertID) {
         factory.details = {};
         factory.lastMap = {};
         factory.configData  = {};
@@ -49,11 +49,11 @@ app.service('AlertMetricsService', function(
             weapons:  []
         };
 
-        ConfigDataService.setTitle("Alert #" + $routeParams.alert);
+        ConfigDataService.setTitle("Alert #" + alertID);
 
         // Fire off the queries required to get the data
-        var promise = Promise.all([factory.getConfigData, factory.getAlertData]).then(function(result) {
-            console.log('Promise completed');
+        var promise = Promise.all([factory.getConfigData, factory.getAlertData(alertID)]).then(function(result) {
+            console.log('Promise completed', result);
             factory.configData = result[0];
             // FIRE
             factory.startProcessing(result[1]);
@@ -61,7 +61,6 @@ app.service('AlertMetricsService', function(
     };
 
     factory.startProcessing = function(data) {
-        console.log('data', data);
         var details = {
             started:     data.started,
             ended:       data.ended,
@@ -87,18 +86,13 @@ app.service('AlertMetricsService', function(
             factory.addNewOutfit(outfit);
         });
 
-        console.log('outfits added');
-
         angular.forEach(factory.metrics.players.data, function(player) {
             factory.addNewPlayer(player);
         });
 
-        console.log('players added');
-
         // Sort the data
         factory.sortPlayers('kills');
 
-        console.log('Done!');
         $rootScope.$broadcast('dataLoaded', 'loaded');
     }
 
@@ -223,15 +217,18 @@ app.service('AlertMetricsService', function(
         });
     })
 
-    factory.getAlertData = new Promise(function(resolve, reject) {
-        $http({
-            method : 'GET',
-            url    : ConfigDataService.apiUrl + '/alerts/' + $routeParams.alert + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
-        }).then(function(returned) {
-            return resolve(returned.data.data);
+    factory.getAlertData = function(alertID) {
+        var promise = new Promise(function(resolve, reject) {
+            $http({
+                method : 'GET',
+                url    : ConfigDataService.apiUrl + '/alerts/' + alertID + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
+            }).then(function(returned) {
+                return resolve(returned.data.data);
+            });
         });
-    });
 
+        return promise;
+    };
 
     return factory;
 });

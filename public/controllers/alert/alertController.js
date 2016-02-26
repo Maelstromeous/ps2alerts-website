@@ -1,6 +1,6 @@
 app.controller('AlertController', function(
     $scope,
-    $q,
+    $routeParams,
     AlertMetricsService
 ) {
     $scope.alert = AlertMetricsService;
@@ -11,8 +11,7 @@ app.controller('AlertController', function(
 
     $scope.$on('dataLoaded', function() {
         $scope.loaded.data = true;
-        console.log('Data Loaded!', $scope.loaded.data);
-
+        
         // It seems promises causes some issues with Angular. Need to apply the scope to kick it in the nuts.
         $scope.$apply();
 
@@ -79,13 +78,11 @@ app.controller('AlertController', function(
             }
         });
 
-        console.log('Leaderboards Loaded!');
-
         $(document).ready(function(){
             $('ul.tabs').tabs();
         });
     });
 
     // Instantiate the service
-    $scope.alert.init();
+    $scope.alert.init($routeParams.alert);
 });
