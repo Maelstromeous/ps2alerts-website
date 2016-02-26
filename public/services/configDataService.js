@@ -78,7 +78,6 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
         }
     };
 
-
     factory.setTitle = function(newTitle) {
         console.log($document[0].title);
         $document[0].title = newTitle + ' - PS2Alerts';

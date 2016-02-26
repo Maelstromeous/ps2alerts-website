@@ -1,43 +1,41 @@
-<div ng-show="alert.metrics.winner">
-    <div class="col s12">
-        <div class="card card-{{alert.metrics.winner | lowercase }}" id="alert-info">
-            <div class="card-content center-align">
-                <div class="row center-align" ng-show="alert.metrics.winner">
-                    <div class="col s12">
-                        <h3 class="header-no-margin">{{::alert.details.winnerText}}</h3>
-                        <p class="caption">
-                            Winner
-                        </p>
-                    </div>
+<div class="col s12">
+    <div class="card card-{{alert.metrics.winner | lowercase }}" id="alert-info">
+        <div class="card-content center-align">
+            <div class="row center-align" ng-show="alert.metrics.winner">
+                <div class="col s12">
+                    <h3 class="header-no-margin">{{::alert.details.winnerText}}</h3>
+                    <p class="caption">
+                        Winner
+                    </p>
                 </div>
-                <div class="row" ng-show="alert.metrics.winner">
-                    <div class="row-seperator"></div>
+            </div>
+            <div class="row" ng-show="alert.metrics.winner">
+                <div class="row-seperator"></div>
+            </div>
+            <div class="row row-no-margin">
+                <div class="col no-padding m3">
+                    <h5>{{::alert.details.endedDate}}</h5>
+                    <p class="caption">
+                        Ended
+                    </p>
                 </div>
-                <div class="row row-no-margin">
-                    <div class="col no-padding m3">
-                        <h5>{{::alert.details.endedDate}}</h5>
-                        <p class="caption">
-                            Ended
-                        </p>
-                    </div>
-                    <div class="col no-padding m3">
-                        <h5>{{::alert.details.server}}</h5>
-                        <p class="caption">
-                            Server
-                        </p>
-                    </div>
-                    <div class="col no-padding m3">
-                        <h5>{{::alert.details.zone}}</h5>
-                        <p class="caption">
-                            Continent
-                        </p>
-                    </div>
-                    <div class="col no-padding m3">
-                        <h5>{{::alert.details.timeBracket}}</h5>
-                        <p class="caption">
-                            Time Bracket
-                        </p>
-                    </div>
+                <div class="col no-padding m3">
+                    <h5>{{::alert.details.server}}</h5>
+                    <p class="caption">
+                        Server
+                    </p>
+                </div>
+                <div class="col no-padding m3">
+                    <h5>{{::alert.details.zone}}</h5>
+                    <p class="caption">
+                        Continent
+                    </p>
+                </div>
+                <div class="col no-padding m3">
+                    <h5>{{::alert.details.timeBracket}}</h5>
+                    <p class="caption">
+                        Time Bracket
+                    </p>
                 </div>
             </div>
         </div>
