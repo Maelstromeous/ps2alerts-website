@@ -35,7 +35,7 @@
         <div class="card blue-grey darken-3">
             <div class="card-content">
                 <table id="outfit-leaderboard"></table>
-                <small>* Outfits that have less than 5 players in an alert will have their K/Ds zeroed, in order to prevent one player from having a high K/D and polluting the outfit stats. This won't affect sitewide metrics, this is purely for visual representation on a per-alert basis.</small>
+                <small>* Outfits that have less than 5 players in an alert <b>during "Prime Time"</b> will have their K/Ds zeroed, in order to prevent one player from having a high K/D and polluting the outfit stats. This won't affect sitewide metrics, this is purely for visual representation on a per-alert basis.</small>
             </div>
         </div>
     </div>
@@ -43,10 +43,23 @@
         <div class="card blue-grey darken-3">
             <div class="card-content">
                 <table id="weapon-leaderboard"></table>
-                <small>[I] = Infrantry Weapons</small><br />
-                <small>[V] = Vehicle Weapons</small><br />
-                <small>Weapons that are available to all factions (such as the Frag Grenade) are listed as (Grouped), where all their stats are tallied together. They are also listed seperately so you can see a faction breakdown.</small><br />
-                <small>NS Infrantry weapons are regarded as one weapon to the game, so they're automatically grouped together. Faction information for these weapons is not possible currently.</small>
+                <ul>
+                    <li>
+                        <small>[I] = Infrantry Weapons</small>
+                    </li>
+                    <li>
+                        <small>[V] = Vehicle Weapons</small>
+                    </li>
+                    <li>
+                        <small>Weapons that are available to all factions (such as the Frag Grenade) are listed as (Grouped), where all their stats are tallied together. They are also listed seperately so you can see a faction breakdown.</small>
+                    </li>
+                    <li>
+                        <small>NS Infrantry weapons are regarded as one weapon to the game, so they're automatically grouped together. Faction information for these weapons is not possible currently.</small>
+                    </li>
+                    <li>
+                        <small>Certain weapons are incapable of headshots (such as the frag grenade). Showing 0% is intended.</small>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -54,9 +67,17 @@
         <div class="card blue-grey darken-3">
             <div class="card-content">
                 <table id="vehicle-leaderboard"></table>
-                <small>* Infrantry Death calculations are currently broken. Possibly they're being regarded as vehicle deaths by mistake. Sorry!</small><br />
-                <small>Ejections are counted when the player gets out of a vehicle, the vehicle blows up, but there is no subsequent Player Death within a 1 second period.</small><br />
-                <small>"AA Base Turret??" is a vehicle that keeps cropping up. I've included it to prevent breakage. If you know what the hell this vehicle is (ID 127) please get in touch!</small>
+                <ul>
+                    <li>
+                        <small>* Infrantry Death calculations are currently broken. Possibly they're being regarded as vehicle deaths by mistake. Sorry!</small>
+                    </li>
+                    <li>
+                        <small>Ejections are counted when the player gets out of a vehicle, the vehicle blows up, but there is no subsequent Player Death within a 1 second period.</small>
+                    </li>
+                    <li>
+                        <small>"AA Base Turret??" is a vehicle that keeps cropping up. I've included it to prevent breakage. If you know what the hell this vehicle is (ID 127) please get in touch!</small>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

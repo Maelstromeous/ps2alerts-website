@@ -142,7 +142,7 @@ app.service('AlertMetricsService', function(
             outfit.participants = outfit.players.length;
 
             // Nullify participants if less than 5 people so that K/D ratios are more accurate
-            if (outfit.participants < 5) {
+            if (outfit.participants < 5 && factory.details.timeBracket === 'Prime Time') {
                 outfit.kd = 0;
             } else {
                 outfit.kd = factory.returnKD(outfit);
@@ -154,7 +154,7 @@ app.service('AlertMetricsService', function(
 
         formatted.kd = factory.returnKD(formatted); // Parse KD
         formatted.hsr = factory.calcHSR(formatted);
-        
+
         factory.parsed.players.push(formatted);
     };
 
