@@ -49,8 +49,6 @@ app.service('AlertMetricsService', function(
             weapons:  []
         };
 
-        ConfigDataService.setTitle("Alert #" + alertID);
-
         // Fire off the queries required to get the data
         var promise = Promise.all([factory.getConfigData, factory.getAlertData(alertID)]).then(function(result) {
             console.log('Promise completed', result);
