@@ -5,7 +5,7 @@ var app = angular.module('Ps2Alerts', [
     'config',
     'ngLoadScript'
 ]);
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'views/home/index.html'
@@ -25,6 +25,7 @@ app.config(function ($routeProvider) {
         .otherwise({
             templateUrl: 'views/common/404.html'
         });
+    $locationProvider.html5Mode(true);
 });
 
 app.run(function($rootScope, AnalyticsService) {

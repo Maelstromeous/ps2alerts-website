@@ -1,5 +1,6 @@
 app.service('ConfigDataService', function(ENV, $rootScope, $location, $document) {
     var factory = {
+        environment: ENV.environment,
         baseUrl: ENV.baseUrl,
         apiUrl: ENV.apiUrl,
         factions: ['vs','nc','tr','draw'],
