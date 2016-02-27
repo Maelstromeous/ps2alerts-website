@@ -94,6 +94,10 @@ app.service('AlertMetricsService', function(
             factory.addNewWeapon(weapon);
         });
 
+        angular.forEach(factory.metrics.vehicles.data, function(vehicle) {
+            factory.addNewVehicle(vehicle);
+        });
+
         // Sort the data
         factory.sortPlayers('kills');
 
@@ -149,6 +153,8 @@ app.service('AlertMetricsService', function(
         }
 
         formatted.kd = factory.returnKD(formatted); // Parse KD
+        formatted.hsr = factory.calcHSR(formatted);
+        
         factory.parsed.players.push(formatted);
     };
 
@@ -221,6 +227,8 @@ app.service('AlertMetricsService', function(
                         weapons:    [weapon.id]
                     };
 
+                    newGroup.hsr = factory.calcHSR(newGroup);
+
                     factory.parsed.weapons.push(newGroup);
                 }
 
@@ -229,9 +237,11 @@ app.service('AlertMetricsService', function(
                     var weaponGroup = factory.parsed.weapons[groupIndex];
 
                     weaponGroup.kills     += weapon.kills;
-                    weaponGroup.teamkills += weapon.kills;
+                    weaponGroup.teamkills += weapon.teamkills;
                     weaponGroup.headshots += weapon.headshots;
                     weaponGroup.faction    = 0;
+
+                    weaponGroup.hsr = factory.calcHSR(weaponGroup);
 
                     weaponGroup.weapons.push(weapon.id); // Push this weapon to the group
                 }
@@ -250,9 +260,45 @@ app.service('AlertMetricsService', function(
                 // Set faction abrivation
                 formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
+                formatted.hsr = factory.calcHSR(formatted);
+
                 factory.parsed.weapons.push(formatted);
             } else {
-                console.log("DUFF DATA", weapon.id);
+                console.log("Invalid Weapon ID: ", weapon.id);
+            }
+        }
+    };
+
+    factory.addNewVehicle = function(vehicle) {
+        if (vehicle.id > 0) {
+            var vehicleRef = _.findIndex(
+                factory.configData.vehicles.data, {'id' : vehicle.id}
+            );
+
+            if (vehicleRef !== -1) {
+                var vehicleData = factory.configData.vehicles.data[vehicleRef];
+
+                var formatted = {
+                    id: vehicle.id,
+                    name: vehicleData.name,
+                    type: vehicleData.type,
+                    faction: vehicleData.faction,
+                    kills: vehicle.kills.total,
+                    killsI: vehicle.kills.infantry,
+                    killsV: vehicle.kills.vehicle,
+                    deaths: vehicle.deaths.total,
+                    deathsI: vehicle.deaths.infantry,
+                    deathsV: vehicle.deaths.vehicle,
+                    bails: vehicle.bails
+                };
+
+                formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
+
+                formatted.kd = factory.returnKD(formatted); // Parse KD
+
+                factory.parsed.vehicles.push(formatted);
+            } else {
+                console.log("Invalid Vehicle ID: ", vehicle.id);
             }
         }
     };
@@ -267,6 +313,17 @@ app.service('AlertMetricsService', function(
         }
 
         return kd;
+    };
+
+    // Calculate Headshot Ratio
+    factory.calcHSR = function (weapon) {
+        var hsr = parseFloat((weapon.headshots / weapon.kills * 100).toFixed(1));
+
+        if (hsr == 'Infinity' || isNaN(hsr)) {
+            hsr = weapon.kills;
+        }
+
+        return hsr;
     };
 
     factory.sortPlayers = function(metric) {
