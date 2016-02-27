@@ -35,8 +35,8 @@ app.controller('AlertController', function(
             scrollCollapse: true,
             scroller:       true,
             "rowCallback": function( row, data, index ) {
-                // Format the cells
-                if ( data.factionAbv !== null ) {
+                // Format the faction colors
+                if (data.factionAbv !== null) {
                     $('.name', row).addClass(data.factionAbv + '-table-text');
                     $('.outfit', row).addClass(data.factionAbv + '-table-text');
                 }
@@ -67,8 +67,8 @@ app.controller('AlertController', function(
             scrollCollapse: true,
             scroller:       true,
             "rowCallback": function( row, data, index ) {
-                // Format the cells
-                if ( data.factionAbv !== null ) {
+                // Format the faction colors
+                if (data.factionAbv !== null) {
                     $('.name', row).addClass(data.factionAbv + '-table-text');
                 }
 
@@ -78,6 +78,37 @@ app.controller('AlertController', function(
                 }
             }
         });
+
+        $('#weapon-leaderboard').DataTable({
+            data: $scope.alert.parsed.weapons,
+            columns: [
+                { data: 'name', title: 'Weapon', className: 'long name' },
+                { data: 'kills', title: 'Kills', className: 'metric'},
+                { data: 'teamkills', title: 'Teamkills', className: 'metric' },
+                { data: 'headshots' , title: 'Headshots', className: 'metric' },
+                { data: 'vehicle', visible: false },
+                { data: 'faction' , visible: false }
+            ],
+            order:          [1, 'desc'],
+            deferRender:    true,
+            scrollY:        450,
+            scrollCollapse: true,
+            scroller:       true,
+            "rowCallback": function( row, data, index ) {
+                var vehicle = ' [I]';
+                // Format the cells
+                if (data.factionAbv !== null) {
+                    $('.name', row).addClass(data.factionAbv + '-table-text');
+                }
+
+                if (data.vehicle === 1) {
+                    vehicle = ' [V]';
+                }
+
+                $('.name', row).html(data.name + vehicle);
+            }
+        });
+
 
         $(document).ready(function(){
             $('ul.tabs').tabs();

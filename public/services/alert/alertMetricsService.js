@@ -98,6 +98,8 @@ app.service('AlertMetricsService', function(
         factory.sortPlayers('kills');
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
+
+        console.log(factory);
     };
 
     // Function to add new players to various areas, grabbing new data from Census
@@ -177,32 +179,82 @@ app.service('AlertMetricsService', function(
     };
 
     factory.addNewWeapon = function(weapon) {
-        var weaponName = 'Unknown / Fatality';
-
         if (weapon.id > 0) {
             // Find the array key for the weapon by ID
             var weaponRef = _.findIndex(
-                factory.configData.weapons.data, { 'id' : weapon.id}
+                factory.configData.weapons.data, {'id' : weapon.id}
             );
 
             var weaponData = factory.configData.weapons.data[weaponRef];
 
             if (weaponData) {
-                weaponName = weaponData.name
+                // Do a check to see if the weapon we have, by name, is
+                // already in the data array. This is to merge the cross faction
+                // vehicle weapons into a singular weapon
+                var index = _.findIndex(
+                    factory.parsed.weapons, {'name': weaponData.name}
+                );
+
+                // If weapon by name has been found, check if we have a special
+                // fake weapon for the group
+
+                var groupIndex = _.findIndex(
+                    factory.parsed.weapons, {
+                        'name'   : weaponData.name + ' (Grouped)'
+                    }
+                );
+
+                // If there is no faked "group" weapon
+                if (groupIndex === -1 && index !== -1) {
+                    var existingWeapon = factory.parsed.weapons[index];
+                    var random = Math.floor(Math.random() * 10000);
+
+                    var newGroup = {
+                        id:         weapon.id + '00000' + random, // Randomly scrable the ID
+                        name:       weaponData.name + ' (Grouped)',
+                        kills:      (weapon.kills + existingWeapon.kills),
+                        teamkills:  (weapon.teamkills + existingWeapon.teamkills),
+                        headshots:  (weapon.headshots + existingWeapon.headshots),
+                        vehicle:    weaponData.isVehicle,
+                        faction:    0,
+                        factionAbv: 'grouped',
+                        weapons:    [weapon.id]
+                    };
+
+                    factory.parsed.weapons.push(newGroup);
+                }
+
+                // Else, if the grouped weapon was indeed found, increase it's stats
+                if (groupIndex !== -1) {
+                    var weaponGroup = factory.parsed.weapons[groupIndex];
+
+                    weaponGroup.kills     += weapon.kills;
+                    weaponGroup.teamkills += weapon.kills;
+                    weaponGroup.headshots += weapon.headshots;
+                    weaponGroup.faction    = 0;
+
+                    weaponGroup.weapons.push(weapon.id); // Push this weapon to the group
+                }
+
+                // Continue adding the weapon as a single entity
+                var formatted = {
+                    id:        weapon.id,
+                    name:      weaponData.name,
+                    kills:     weapon.kills,
+                    teamkills: weapon.teamkills,
+                    headshots: weapon.headshots,
+                    vehicle:   weaponData.isVehicle,
+                    faction:   weaponData.faction
+                };
+
+                // Set faction abrivation
+                formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
+
+                factory.parsed.weapons.push(formatted);
             } else {
                 console.log("DUFF DATA", weapon.id);
             }
         }
-
-        var formatted = {
-            id: weapon.id,
-            name: weaponName,
-            kills: weapon.kills,
-            teamkills: weapon.teamkills,
-            headshots: weapon.headshots
-        }
-
-        factory.parsed.weapons.push(formatted);
     };
 
     // Calculate KD
