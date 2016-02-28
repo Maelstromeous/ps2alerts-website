@@ -8,6 +8,7 @@ app.service('AlertMetricsService', function(
     var factory = {};
 
     factory.init = function(alertID) {
+        $rootScope.changeTitle('Alert #' + alertID);
         factory.details = {};
         factory.lastMap = {};
         factory.configData  = {};
@@ -60,6 +61,7 @@ app.service('AlertMetricsService', function(
 
     factory.startProcessing = function(data) {
         var details = {
+            id:          data.id,
             started:     data.started,
             ended:       data.ended,
             timeBracket: data.timeBracket,
@@ -67,6 +69,10 @@ app.service('AlertMetricsService', function(
             zone:        data.zone,
             winner:      data.winner
         };
+
+        var serverName = ConfigDataService.serverNames[details.server];
+
+        $rootScope.changeTitle('Alert #' + details.id + ' (' + serverName + ' - ' + details.winner.toUpperCase() + ')');
 
         factory.details = AlertTransformer.parse(details);
         factory.metrics = data;
