@@ -41,6 +41,10 @@ app.run(function($rootScope, AnalyticsService) {
         $rootScope.title = current.$$route.title + ' - PS2Alerts';
     });
 
+    $rootScope.changeTitle = function(title) {
+        $rootScope.title = title + ' - PS2Alerts';
+    };
+
     $rootScope.$on('$viewContentLoaded', function() {
         setTimeout(function() {
             $('.tooltipped').tooltip({
