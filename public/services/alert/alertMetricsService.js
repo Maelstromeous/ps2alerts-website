@@ -47,7 +47,8 @@ app.service('AlertMetricsService', function(
             players:  [],
             outfits:  [],
             vehicles: [],
-            weapons:  []
+            weapons:  [],
+            captures: []
         };
 
         // Fire off the queries required to get the data
@@ -103,6 +104,10 @@ app.service('AlertMetricsService', function(
 
         angular.forEach(factory.metrics.vehicles.data, function(vehicle) {
             factory.addNewVehicle(vehicle);
+        });
+
+        angular.forEach(factory.metrics.maps.data, function(capture) {
+            factory.addNewCapture(capture);
         });
 
         // Sort the data
@@ -308,6 +313,40 @@ app.service('AlertMetricsService', function(
                 console.log("Invalid Vehicle ID: ", vehicle.id);
             }
         }
+    };
+
+    factory.addNewCapture = function(capture) {
+        var formatted = {
+            timestamp: capture.timestamp,
+            defence: capture.isDefence,
+            vs: capture.controlVS,
+            nc: capture.controlNC,
+            tr: capture.controlTR,
+            outfit: null,
+            facility: null
+        };
+
+        var outfitRef = _.findIndex(
+            factory.parsed.outfits, {'id' : capture.outfitCaptured}
+        );
+
+        var facilityRef = _.findIndex(
+            factory.configData.facilities.data, {'id' : capture.facilityID}
+        );
+
+        if (outfitRef !== -1) {
+            var outfitData = factory.parsed.outfits[outfitRef];
+            formatted.outfit = {
+                'name': outfitData.name,
+                'tag': outfitData.tag
+            };
+        }
+
+        if (facilityRef !== -1) {
+            formatted.facility = factory.configData.facilities.data[outfitRef];
+        }
+
+        factory.parsed.captures.push(formatted);
     };
 
     // Calculate KD
