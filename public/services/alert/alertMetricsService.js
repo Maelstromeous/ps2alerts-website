@@ -153,8 +153,8 @@ app.service('AlertMetricsService', function(
             outfit.players.push(formatted.id);
             outfit.participants = outfit.players.length;
 
-            // Nullify participants if less than 5 people so that K/D ratios are more accurate
-            if (outfit.participants < 5 && factory.details.timeBracket === 'Prime Time') {
+            // Nullify participants if less than 6 people so that K/D ratios are more accurate
+            if (outfit.participants < 6 && factory.details.timeBracket === 'Prime Time') {
                 outfit.kd = 0;
             } else {
                 outfit.kd = factory.returnKD(outfit);
