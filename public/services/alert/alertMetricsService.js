@@ -343,7 +343,7 @@ app.service('AlertMetricsService', function(
         }
 
         if (facilityRef !== -1) {
-            formatted.facility = factory.configData.facilities.data[outfitRef];
+            formatted.facility = factory.configData.facilities.data[facilityRef];
         }
 
         factory.parsed.captures.push(formatted);
