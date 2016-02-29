@@ -141,7 +141,6 @@ app.controller('AlertController', function(
             }
         });
 
-
         $(document).ready(function(){
             $('ul.tabs').tabs();
         });
