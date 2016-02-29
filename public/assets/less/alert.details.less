@@ -1,6 +1,4 @@
-#alert-details #alert-info {
-    margin-bottom: 0.5rem;
-}
+
 
 #alert-details .divider {
     margin-left: 0.75rem;
@@ -13,6 +11,15 @@
     }
 }
 
+.card {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#alert-details #notice {
+    margin-bottom: @margin-base;
+}
+
 #combat-leaderboards {
     .indicator {
         display: none;
@@ -20,15 +27,12 @@
 
     .leaderboards {
         margin-top: 0;
-        .card {
-            margin-top: 0;
-        }
     }
 
     table.dataTable .metric {
         text-align: center;
     }
-    
+
     // Careful with this one, will cause lots of positioning issues if incorrect
     table.dataTable thead td,
     table.dataTable thead th,
