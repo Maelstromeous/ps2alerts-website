@@ -48,7 +48,11 @@ app.service('AlertMetricsService', function(
             outfits:  [],
             vehicles: [],
             weapons:  [],
-            captures: []
+            map: {
+                captures: [],
+                defences: [],
+                all: []
+            }
         };
 
         // Fire off the queries required to get the data
@@ -346,7 +350,15 @@ app.service('AlertMetricsService', function(
             formatted.facility = factory.configData.facilities.data[facilityRef];
         }
 
-        factory.parsed.captures.push(formatted);
+        console.log(formatted.defence);
+
+        if (formatted.defence === true) {
+            factory.parsed.map.defences.push(formatted);
+        } else {
+            factory.parsed.map.captures.push(formatted);
+        }
+
+        factory.parsed.map.all.push(formatted);
     };
 
     // Calculate KD
