@@ -1,10 +1,8 @@
 <nav class="grey darken-4" ng-controller="PageMetaController">
 	<div class="nav-wrapper">
-
 		<a href="#" data-activates="mobile-nav-tray" class="button-collapse">
 			<i class="fa fa-bars"></i>
 		</a>
-
 		<ul class="left hide-on-med-and-down">
 			<li>
 				<a href="{{::meta.baseUrl}}" class="nav-main">
@@ -12,18 +10,18 @@
 				</a>
 			</li>
 			<li>
-			    <a id="under-dev" href="/">
+			    <a id="under-dev" href="{{::meta.baseUrl}}">
 					Under development!
 				</a>
 			</li>
 			<li>
-			    <a href="alert-history">
+			    <a href="{{::meta.baseUrl}}/alert-history">
 					<i class="fa fa-tasks fa-fw"></i>
 					Alert History
 				</a>
 			</li>
 			<li>
-			    <a href="leaderboards">
+			    <a href="{{::meta.baseUrl}}/leaderboards">
 					<i class="fa fa-trophy fa-fw"></i>
 					Leaderboards (WIP)
 				</a>
@@ -31,7 +29,7 @@
 		</ul>
 		<ul class="right hide-on-med-and-down">
 			<li>
-			    <a href="about">
+			    <a href="{{::meta.baseUrl}}/about">
 					<i class="fa fa-info-circle fa-fw"></i>
 					About
 				</a>

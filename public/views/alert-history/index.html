@@ -1,5 +1,5 @@
 <section ng-controller="AlertHistoryController as AlertHistroyCtrl">
-    <div class="row center-align flow-text">
+    <div class="row center-align">
         <h1 class="header-no-margin">Alert History</h1>
     </div>
 
@@ -81,7 +81,7 @@
     </div>
     <div class="row row-no-margin" id="history-list">
         <div class="col s12">
-            <div class="row center-align flow-text">
+            <div class="row center-align">
                 <h6 ng-hide="!data.history.length">Showing {{data.history.length}} Results - Last 48 hours (temporary)</h6>
             </div>
             <div class="sk-three-bounce" ng-show="!data.history.length && !data.empty">
@@ -93,7 +93,7 @@
                 </p>
             </div>
 
-            <div class="center-align flow-text center-align" ng-show="data.empty">
+            <div class="center-align center-align" ng-show="data.empty">
                 <h3>
                     No results
                 </h3>

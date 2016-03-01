@@ -147,43 +147,57 @@ table tr:last-child {
 
 .caption {
     font-size: 0.9em;
-    color: #ccc !important;
+    color: #b9b7b9 !important;
 }
 
 .row-seperator {
     border-top: 1px dashed @border-color;
 }
 
-p {
-    font-size: 0.7em;
-}
-
 h1 {
     font-size: 3.0em;
+    @media screen {
+        @media (max-width: 767px) {
+            font-size: 2.5em;
+        }
+        @media (max-width: 320px) {
+            font-size: 2em;
+        }
+    }
 }
 
 h2 {
-    font-size: 2.5em;
+    font-size: 2.25em;
+    @media screen {
+        @media (max-width: 767px) {
+            font-size: 2em;
+        }
+        @media (max-width: 320px) {
+            font-size: 1.625em;
+        }
+    }
 }
 
 h3 {
-    font-size: 2.0em;
+    font-size: 1.75em;
+    @media screen {
+        @media (max-width: 767px) {
+            font-size: 1.5em;
+        }
+        @media (max-width: 320px) {
+            font-size: 1.375em;
+        }
+    }
 }
 
 h4 {
-    font-size: 1.5em;
+    font-size: 1.125em;
 }
 
-h5 {
-    font-size: 1.0em;
-}
-
-h6 {
-    font-size: 0.8em;
-}
+// If we need less than H4 we're doing something wrong
 
 p {
-    font-size: 0.6em;
+    font-size: 1em;
 }
 
 .tabs {
