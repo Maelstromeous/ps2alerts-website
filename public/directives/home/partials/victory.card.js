@@ -1,14 +1,3 @@
-app.directive('homeAlertMetricCard', function(HomeStatisticsService) {
-    return {
-        restrict: 'A',
-        scope : {
-            cardTitle: '@',
-            metric:    '@'
-        },
-        templateUrl: 'views/home/partials/alertmetric.card.html',
-    };
-});
-
 app.directive('homeFactionCard', function(HomeStatisticsService) {
     return {
         restrict: 'A',
