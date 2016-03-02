@@ -162,6 +162,8 @@ app.service('AlertMetricsService', function(
                 outfit.kd = 0;
             } else {
                 outfit.kd = factory.returnKD(outfit);
+                outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
+                outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
             }
         } else {
             console.log('Missing outfit ID for player: ' + formatted.id);
@@ -176,7 +178,7 @@ app.service('AlertMetricsService', function(
 
     factory.addNewOutfit = function(outfit) {
         var formatted = {
-            id:           outfit.outfit.id,
+            id:           outfit.outfit.id.toString(),
             name:         outfit.outfit.name,
             tag:          outfit.outfit.tag,
             faction:      outfit.outfit.faction,
@@ -185,7 +187,9 @@ app.service('AlertMetricsService', function(
             teamkills:    outfit.metrics.teamkills,
             suicides:     outfit.metrics.suicides,
             players:      [], // Will store all playerIDs for reference
-            participants: 0
+            participants: 0,
+            killsPerParticipant: 0,
+            deathsPerParticipant: 0
         };
 
         if (formatted.tag.length === 0) {
