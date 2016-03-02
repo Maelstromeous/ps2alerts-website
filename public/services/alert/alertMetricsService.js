@@ -350,8 +350,6 @@ app.service('AlertMetricsService', function(
             formatted.facility = factory.configData.facilities.data[facilityRef];
         }
 
-        console.log(formatted.defence);
-
         if (formatted.defence === true) {
             factory.parsed.map.defences.push(formatted);
         } else {
