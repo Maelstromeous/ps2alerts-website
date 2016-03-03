@@ -5,13 +5,16 @@
                 <div class="center-align">
                     <h2 class="header-no-margin">Alert Statistics are in pre-alpha and are <u>NOT</u> finished!</h2>
                     <h4>
-                        Per-alert statistics pages are in the process of being re-written. Check out the status below:
+                        Per-alert statistics pages are in the process of being re-written. See below for a summary of the features
                     </h4>
                 </div>
                 <ul class="collapsible" data-collapsible="expandable">
                     <li>
                         <div class="collapsible-header active completed">
                             <i class="fa fa-check-circle"></i> Completed
+                            <span class="right">
+                                {{::project.completed.length}} items
+                            </span>
                         </div>
                         <div class="collapsible-body">
                             <ul>
@@ -24,6 +27,9 @@
                     <li>
                         <div class="collapsible-header inprogress">
                             <i class="fa fa-refresh"></i> In Development
+                            <span class="right">
+                                {{::project.inprogress.length}} items
+                            </span>
                         </div>
                         <div class="collapsible-body">
                             <ul>
@@ -36,6 +42,9 @@
                     <li>
                         <div class="collapsible-header notstarted">
                             <i class="fa fa-minus-circle"></i> Not Started
+                            <span class="right">
+                                {{::project.completed.length}} items
+                            </span>
                         </div>
                         <div class="collapsible-body">
                             <ul>
@@ -46,6 +55,11 @@
                         </div>
                     </li>
                 </ul>
+                <p class="center-align">
+                    Find out more <i class="fa fa-info-circle"></i>, report bugs <i class="fa fa-bug"></i> and suggest new features on <a href="http://www.github.com/Maelstrome26/PS2Alerts/issues">
+                        <i class="fa fa-github"></i> Github!
+                    </a>
+                </p>
             </div>
         </div>
     </div>
