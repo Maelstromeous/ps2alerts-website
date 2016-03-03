@@ -1,0 +1,52 @@
+<div class="row project-status" ng-show="loaded.data">
+    <div class="col s12 m8 push-m2">
+        <div class="card blue-grey darken-3">
+            <div class="card-content">
+                <div class="center-align">
+                    <h2 class="header-no-margin">Alert Statistics are in pre-alpha and are <u>NOT</u> finished!</h2>
+                    <h4>
+                        Per-alert statistics pages are in the process of being re-written. Check out the status below:
+                    </h4>
+                </div>
+                <ul class="collapsible" data-collapsible="expandable">
+                    <li>
+                        <div class="collapsible-header active completed">
+                            <i class="fa fa-check-circle"></i> Completed
+                        </div>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li ng-repeat="item in project.completed">
+                                    {{::item}}
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header inprogress">
+                            <i class="fa fa-refresh"></i> In Development
+                        </div>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li ng-repeat="item in project.inprogress">
+                                    {{::item}}
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header notstarted">
+                            <i class="fa fa-minus-circle"></i> Not Started
+                        </div>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li ng-repeat="item in project.notstarted">
+                                    {{::item}}
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

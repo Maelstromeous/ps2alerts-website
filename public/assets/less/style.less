@@ -238,3 +238,65 @@ table.striped > tbody > tr:nth-child(odd) {
 table.highlight > tbody > tr:hover {
     background-color: lighten(@table-striped, 15%);
 }
+
+.project-status {
+    h3 {
+        margin-top: 10px;
+    }
+
+    .completed {
+        background-color: #24690E;
+    }
+
+    .inprogress {
+        background-color: #987016;
+    }
+
+    .notstarted {
+        background-color: #5F0202;
+    }
+}
+
+.border-right-m {
+    border-right: 1px solid @border-color;
+    @media screen {
+        @media (max-width: 420px) {
+            border-right: 0;
+        }
+    }
+}
+
+.project-status {
+    .collapsible {
+        margin-top: @margin-base;
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+    }
+
+    .collapsible-body {
+        background-color: lighten(#37474F, 10%);
+    }
+
+    .collapsible-body li {
+        list-style-type: initial;
+        margin-left: @margin-base;
+    }
+
+    .collapsible-header, .collapsible-body {
+        border-bottom: 1px solid #263238;
+    }
+
+    .card-content {
+        padding: @padding-base * 1.5;
+    }
+}
+
+.collapsible-header {
+    padding: 0 @padding-base;
+    background-color: #555E63;
+}
+
+.collapsible-body {
+    padding: @padding-base;
+}

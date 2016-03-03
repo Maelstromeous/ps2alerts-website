@@ -9,8 +9,33 @@ app.controller('AlertController', function(
         data: false
     };
 
+    $scope.project = {
+        completed: [
+            'Basic Alert Information (time, server, continent etc)',
+            'Territory Capture Bar',
+            'Basic Combat Metrics (Kills, Deaths, Tks, Suicides)',
+            'Leaderboard system (Players, Outfits, Weapons, Vehicles)',
+        ],
+        inprogress: [
+            'Map & Facility Statistics',
+            'Outfit Captures'
+        ],
+        notstarted: [
+            'Realtime metrics (live updating)',
+            'Faction Kills timeline',
+            'Class Combat Statistics',
+            'XP Statistics',
+            'Per-player metrics summaries',
+            'Per-outfit metrics summaries'
+        ]
+    };
+
     $scope.$on('dataLoaded', function() {
         $scope.loaded.data = true;
+
+        $('.collapsible').collapsible({
+            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
 
         // It seems promises causes some issues with Angular. Need to apply the scope to kick it in the nuts.
         $scope.$apply();
