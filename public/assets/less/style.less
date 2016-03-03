@@ -290,6 +290,12 @@ table.highlight > tbody > tr:hover {
     .card-content {
         padding: @padding-base * 1.5;
     }
+
+    .collapsible-header .right {
+        @media screen and (max-width: 420px) {
+            display: none;
+        }
+    }
 }
 
 .collapsible-header {
