@@ -178,7 +178,7 @@ app.service('AlertMetricsService', function(
 
     factory.addNewOutfit = function(outfit) {
         var formatted = {
-            id:           outfit.outfit.id.toString(),
+            id:           outfit.outfit.id,
             name:         outfit.outfit.name,
             tag:          outfit.outfit.tag,
             faction:      outfit.outfit.faction,
