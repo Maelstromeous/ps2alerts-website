@@ -54,12 +54,10 @@ app.run(function($rootScope, AnalyticsService) {
     });
 
     $rootScope.$on('project-status', function() {
-        setTimeout(function() {
-            console.log('Rendering project-status');
-            $('.collapsible').collapsible({
-                accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-            });
-        }, 250);
+        console.log('Rendering project-status');
+        $('.collapsible').collapsible({
+            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
     });
 });
 

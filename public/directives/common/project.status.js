@@ -8,5 +8,10 @@ app.directive('projectStatus', function() {
             project:      '='
         },
         templateUrl: 'views/common/partials/project.status.html',
+        link: function( $scope, elem, attrs ) {
+            elem.ready(function(){
+                $scope.$emit('project-status');
+            });
+        }
     };
 });

@@ -21,9 +21,7 @@ app.controller('HomeVictoryController', function($scope, ConfigDataService, Home
             'Last Week & Last Month metrics'
         ]
     };
-
-    $scope.$emit('project-status');
-
+    
     $('body').on('click', "#announcement-view-more", function() {
         var expanded = $("#announcement-view-more").attr('expanded');
         console.log(expanded);
