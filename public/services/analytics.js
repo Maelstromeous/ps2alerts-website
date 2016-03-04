@@ -30,37 +30,34 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
 
             // Campaign and actions are required by GA
             if (campaign && action) {
+                var options = {
+                    hitType: 'event',
+                    eventCategory: campaign,
+                    eventAction: action
+                };
+                if (label.length > 0) {
+                    options.eventLabel = label;
+                }
+
+                if (value.length > 0) {
+                    options.eventValue = value;
+                }
+
                 // If we have dynamic values, set up a click event that checks
                 // the value of the element every time, otherwise statically
                 if (dynamicValue == '1') {
                     console.log('Dynamic');
                     $(el).on('click', function() {
                         value = $(this).attr('ga-value');
-                        $window.ga('send', 'event', campaign, action, label, value);
-                        console.log('ga-event sent:', campaign, action, label, value);
+                        ga('send', options);
+                        console.log('ga-event sent:', options);
                     });
                 } else {
                     $(el).on('click', function() {
-                        var options = {
-                            hitType: 'event',
-                            eventCategory: campaign,
-                            eventAction: action
-                        };
-
-                        if (label.length > 0) {
-                            options.eventLabel = label;
-                        }
-
-                        if (value.length > 0) {
-                            options.eventValue = value;
-                        }
-                        
                         ga('send', options);
                         console.log('ga-event sent:', options);
                     });
                 }
-
-                // Register click event
 
                 factory.registry.push(el); // Push element to registry
                 $(el).attr('ga-registered', 1); // Prevent re-registration

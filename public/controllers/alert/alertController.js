@@ -176,7 +176,7 @@ app.controller('AlertController', function(
         var options = {
             hitType: 'event',
             eventCategory: 'Alert',
-            eventAction: 'Test'
+            eventAction: 'Leaderboards Initial'
         };
         ga('send', options);
         console.log('test sent');
