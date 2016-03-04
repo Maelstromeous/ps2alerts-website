@@ -175,12 +175,11 @@ app.controller('AlertController', function(
         // Simulate a player leaderboard click as it's opened by default
         var options = {
             hitType: 'event',
-            eventCategory: campaign,
-            eventAction: action,
-            eventLabel: label,
-            eventValue: value
+            eventCategory: 'Alert',
+            eventAction: 'Test'
         };
         ga('send', options);
+        console.log('test sent');
     });
 
     // Instantiate the service
