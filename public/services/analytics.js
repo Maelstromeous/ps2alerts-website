@@ -48,7 +48,7 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
                 if (dynamicValue == '1') {
                     console.log('Dynamic');
                     $(el).on('click', function() {
-                        value = $(this).attr('ga-value');
+                        options.eventValue = $(this).attr('ga-value');
                         ga('send', options);
                         console.log('ga-event sent:', options);
                     });
@@ -61,6 +61,8 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
 
                 factory.registry.push(el); // Push element to registry
                 $(el).attr('ga-registered', 1); // Prevent re-registration
+            } else {
+                console.log('Discarded');
             }
         }
     };
