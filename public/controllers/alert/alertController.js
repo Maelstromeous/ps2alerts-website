@@ -10,6 +10,7 @@ app.controller('AlertController', function(
     };
 
     $scope.project = {
+        updated: 'Friday 4th March 2016',
         completed: [
             'Basic Alert Information (time, server, continent etc)',
             'Territory Capture Bar',

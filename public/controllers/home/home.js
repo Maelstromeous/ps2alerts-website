@@ -4,6 +4,7 @@ app.controller('HomeVictoryController', function($scope, ConfigDataService, Home
     $scope.config = ConfigDataService;
 
     $scope.project = {
+        updated: 'Friday 4th March 2016',
         completed: [
             'Basic Statistics (Total Victories, Faction Victories)',
             'Server Victories',
