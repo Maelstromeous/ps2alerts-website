@@ -56,7 +56,7 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
                             eventLabel: label,
                             eventValue: value
                         };
-                        $window.ga('send', options);
+                        ga('send', options);
                         console.log('ga-event sent:', options);
                     });
                 }
