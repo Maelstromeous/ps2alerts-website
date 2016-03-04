@@ -4,6 +4,7 @@ app.directive('projectStatus', function() {
         scope : {
             cardTitle:    '@',
             cardSubtitle: '@',
+            sizing:       '@',
             project:      '='
         },
         templateUrl: 'views/common/partials/project.status.html',
