@@ -29,17 +29,17 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
             var dynamicValue = $(el).attr('ga-dynamic-value');
 
             // Campaign and actions are required by GA
-            if (campaign.length > 0 && action.length > 0) {
+            if (campaign && action) {
                 var options = {
                     hitType: 'event',
                     eventCategory: campaign,
                     eventAction: action
                 };
-                if (label.length > 0) {
+                if (label && label.length > 0) {
                     options.eventLabel = label;
                 }
 
-                if (value.length > 0) {
+                if (value && value.length > 0) {
                     options.eventValue = value;
                 }
 
