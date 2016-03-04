@@ -49,8 +49,15 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
                     });
                 } else {
                     $(el).on('click', function() {
-                        $window.ga('send', 'event', campaign, action, label, value);
-                        console.log('ga-event sent:', campaign, action, label, value);
+                        var options = {
+                            hitType: 'event',
+                            eventCategory: campaign,
+                            eventAction: action,
+                            eventLabel: label,
+                            eventValue: value
+                        };
+                        $window.ga('send', options);
+                        console.log('ga-event sent:', options);
                     });
                 }
 
