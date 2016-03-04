@@ -30,14 +30,6 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
 
             // Campaign and actions are required by GA
             if (campaign && action) {
-                if (!label) {
-                    label = '';
-                }
-
-                if (!value) {
-                    value = '';
-                }
-
                 // If we have dynamic values, set up a click event that checks
                 // the value of the element every time, otherwise statically
                 if (dynamicValue == '1') {
@@ -54,6 +46,15 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
                             eventCategory: campaign,
                             eventAction: action
                         };
+
+                        if (label.length > 0) {
+                            options.eventLabel = label;
+                        }
+
+                        if (value.length > 0) {
+                            options.eventValue = value;
+                        }
+                        
                         ga('send', options);
                         console.log('ga-event sent:', options);
                     });
