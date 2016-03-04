@@ -43,7 +43,7 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
                 if (dynamicValue == '1') {
                     console.log('Dynamic');
                     $(el).on('click', function() {
-                        var value = $(this).attr('ga-value');
+                        value = $(this).attr('ga-value');
                         $window.ga('send', 'event', campaign, action, label, value);
                         console.log('ga-event sent:', campaign, action, label, value);
                     });
@@ -52,9 +52,7 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
                         var options = {
                             hitType: 'event',
                             eventCategory: campaign,
-                            eventAction: action,
-                            eventLabel: label,
-                            eventValue: value
+                            eventAction: action
                         };
                         ga('send', options);
                         console.log('ga-event sent:', options);
