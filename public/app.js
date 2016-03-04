@@ -52,6 +52,15 @@ app.run(function($rootScope, AnalyticsService) {
             });
         },1); // Ewwwww
     });
+
+    $rootScope.$on('project-status', function() {
+        setTimeout(function() {
+            console.log('Rendering project-status');
+            $('.collapsible').collapsible({
+                accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            });
+        });
+    });
 });
 
 /* Global Javascript */

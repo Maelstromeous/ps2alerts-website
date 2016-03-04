@@ -1,7 +1,25 @@
-app.controller('HomeVictoryController', function($scope, $rootScope, ConfigDataService, HomeStatisticsService) {
+app.controller('HomeVictoryController', function($scope, ConfigDataService, HomeStatisticsService) {
     $scope.today = new Date();
     $scope.alertStats = HomeStatisticsService;
     $scope.config = ConfigDataService;
+
+    $scope.project = {
+        completed: [
+            'Basic Statistics (Total Victories, Faction Victories)',
+            'Server Victories',
+        ],
+        inprogress: [
+            'Nothing currently, working on Alert Statistics',
+        ],
+        notstarted: [
+            'Continent Victories',
+            'Victory Timeline',
+            'Rolling Victory Averages',
+            'Last Week & Last Month metrics'
+        ]
+    };
+
+    $scope.$emit('project-status');
 
     $('body').on('click', "#announcement-view-more", function() {
         var expanded = $("#announcement-view-more").attr('expanded');

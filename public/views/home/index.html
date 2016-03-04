@@ -1,5 +1,11 @@
 <section ng-controller="HomeVictoryController">
     <div ng-include="'views/home/announcement.html'"></div>
+    <div
+        project-status
+        card-title="Project Status: Homepage"
+        card-subtitle="The statistics shown on this page will be expanded upon soon. Check below for details"
+        project="project">
+    </div>
     <div class="row center-align">
         <h1 class="header-no-margin">Alert Statistics</h1>
         <h4>Statistics shown from 29-Oct-2014 to {{today | date : 'dd-MMM-yyyy'}}</h4>
@@ -35,25 +41,29 @@
                 class="col s12 m6"
                 card-class="purple darken-2"
                 card-title="Vanu Sovereignty"
-                faction="vs"></div>
+                faction="vs">
+            </div>
             <div
                 home-faction-card
                 class="col s12 m6"
                 card-class="blue darken-4"
                 card-title="New Conglomerate"
-                faction="nc"></div>
+                faction="nc">
+            </div>
             <div
                 home-faction-card
                 class="col s12 m6"
                 card-class="red darken-3"
                 card-title="Terran Republic"
-                faction="tr"></div>
+                faction="tr">
+            </div>
             <div
                 home-faction-card
                 class="col s12 m6"
                 card-class="grey darken-2"
                 card-title="Draws"
-                faction="draw"></div>
+                faction="draw">
+            </div>
         </div>
         <div class="col s12 m6 no-padding">
             <div class="col s12">
@@ -87,8 +97,7 @@
     <div class="col s12">
         <div class="card blue-grey darken-3">
             <div class="card-content">
-                <div id="victoryTimeline">
-                </div>
+                <div id="victoryTimeline"></div>
                 <h4 class="center-align">Victory Timeline</h4>
             </div>
         </div>

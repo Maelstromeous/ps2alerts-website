@@ -32,10 +32,7 @@ app.controller('AlertController', function(
 
     $scope.$on('dataLoaded', function() {
         $scope.loaded.data = true;
-
-        $('.collapsible').collapsible({
-            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-        });
+        $scope.$emit('project-status');
 
         // It seems promises causes some issues with Angular. Need to apply the scope to kick it in the nuts.
         $scope.$apply();

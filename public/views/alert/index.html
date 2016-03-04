@@ -1,5 +1,12 @@
 <section ng-controller="AlertController" id="alert-details">
-    <div ng-include="'views/alert/project.html'"></div>
+    <div
+        project-status
+        card-title="Alert Statistics are in pre-alpha and are NOT finished!"
+        card-subtitle="Per-alert statistics pages are in the process of being re-written. See below for a summary of the features"
+        project="project"
+        ng-show="loaded.data">
+    </div>
+
     <div class="sk-three-bounce" ng-show="!loaded.data">
         <div class="sk-child sk-bounce1"></div>
         <div class="sk-child sk-bounce2"></div>

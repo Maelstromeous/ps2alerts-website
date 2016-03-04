@@ -1,11 +1,13 @@
-<div class="row project-status" ng-show="loaded.data">
+<div class="row project-status">
     <div class="col s12 m8 push-m2">
         <div class="card blue-grey darken-3">
             <div class="card-content">
                 <div class="center-align">
-                    <h2 class="header-no-margin">Alert Statistics are in pre-alpha and are <u>NOT</u> finished!</h2>
+                    <h2 class="header-no-margin">
+                        {{::cardTitle}}
+                    </h2>
                     <h4>
-                        Per-alert statistics pages are in the process of being re-written. See below for a summary of the features
+                        {{::cardSubtitle}}
                     </h4>
                 </div>
                 <ul class="collapsible" data-collapsible="expandable">
