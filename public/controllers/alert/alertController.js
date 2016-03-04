@@ -10,6 +10,8 @@ app.controller('AlertController', function(
     };
 
     $scope.project = {
+        title: 'Project Status: Alert Detail Pages',
+        subtitle: 'Per-alert statistics pages are in the process of being re-written. See below for a summary of the features',
         updated: 'Friday 4th March 2016',
         completed: [
             'Basic Alert Information (time, server, continent etc)',
