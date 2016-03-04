@@ -3,6 +3,8 @@ app.controller('HomeVictoryController', function($scope, ConfigDataService, Home
     $scope.alertStats = HomeStatisticsService;
     $scope.config = ConfigDataService;
 
+    $scope.alertStats.init();
+
     $scope.project = {
         title: 'Project Status: Homepage',
         subtitle: 'The statistics shown on this page will be expanded upon soon. Check below for details',
@@ -21,7 +23,7 @@ app.controller('HomeVictoryController', function($scope, ConfigDataService, Home
             'Last Week & Last Month metrics'
         ]
     };
-    
+
     $('body').on('click', "#announcement-view-more", function() {
         var expanded = $("#announcement-view-more").attr('expanded');
         console.log(expanded);

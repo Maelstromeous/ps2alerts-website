@@ -44,36 +44,38 @@ app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
         });
     });
 
-    // Get the data
-    $http({
-        method : 'GET',
-        url    : ConfigDataService.apiUrl + '/alerts/counts/victories',
-    }).then(function(data) {
-        var returned = data.data.data; // #Dataception
-        angular.forEach(returned, function(values, server) {
-            angular.forEach(ConfigDataService.factions, function(faction) {
-                factory.victories[server][faction] = values.data[faction];
-                factory.totals.alerts[faction]    += values.data[faction];
+    factory.init = function() {
+        // Get the data
+        $http({
+            method : 'GET',
+            url    : ConfigDataService.apiUrl + '/alerts/counts/victories',
+        }).then(function(data) {
+            var returned = data.data.data; // #Dataception
+            angular.forEach(returned, function(values, server) {
+                angular.forEach(ConfigDataService.factions, function(faction) {
+                    factory.victories[server][faction] = values.data[faction];
+                    factory.totals.alerts[faction]    += values.data[faction];
+                });
+
+                factory.totals.alerts.total += values.data.total;
             });
-
-            factory.totals.alerts.total += values.data.total;
         });
-    });
 
-    $http({
-        method : 'GET',
-        url    : ConfigDataService.apiUrl + '/alerts/counts/dominations',
-    }).then(function(data) {
-        var returned = data.data.data; // #Dataception
-        angular.forEach(returned, function(values, server) {
-            angular.forEach(ConfigDataService.factions, function(faction) {
-                factory.dominations[server][faction] = values.data[faction];
-                factory.totals.dominations[faction] += values.data[faction];
+        $http({
+            method : 'GET',
+            url    : ConfigDataService.apiUrl + '/alerts/counts/dominations',
+        }).then(function(data) {
+            var returned = data.data.data; // #Dataception
+            angular.forEach(returned, function(values, server) {
+                angular.forEach(ConfigDataService.factions, function(faction) {
+                    factory.dominations[server][faction] = values.data[faction];
+                    factory.totals.dominations[faction] += values.data[faction];
+                });
+
+                factory.totals.dominations.total += values.data.total;
             });
-
-            factory.totals.dominations.total += values.data.total;
         });
-    });
+    };
 
     return factory;
 });

@@ -1,27 +1,44 @@
-<nav class="grey darken-4" ng-controller="PageMetaController">
+<nav class="grey darken-4" ng-controller="PageMetaController" id="header">
 	<div class="nav-wrapper">
 		<a href="#" data-activates="mobile-nav-tray" class="button-collapse">
 			<i class="fa fa-bars"></i>
 		</a>
 		<ul class="left hide-on-med-and-down">
 			<li>
-				<a href="{{::meta.baseUrl}}" class="nav-main">
+				<a
+					href="{{::meta.baseUrl}}"
+					class="nav-main ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Homepage Button">
 					PS2Alerts
 				</a>
 			</li>
 			<li>
-			    <a id="under-dev" href="{{::meta.baseUrl}}">
+			    <a
+					id="under-dev"
+					href="{{::meta.baseUrl}}"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Under development">
 					Under development!
 				</a>
 			</li>
 			<li>
-			    <a href="{{::meta.baseUrl}}/alert-history">
+			    <a
+					href="{{::meta.baseUrl}}/alert-history"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Alert History">
 					<i class="fa fa-tasks fa-fw"></i>
 					Alert History
 				</a>
 			</li>
 			<li>
-			    <a href="{{::meta.baseUrl}}/leaderboards">
+			    <a
+					href="{{::meta.baseUrl}}/leaderboards"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Leaderboards">
 					<i class="fa fa-trophy fa-fw"></i>
 					Leaderboards (WIP)
 				</a>
@@ -29,7 +46,11 @@
 		</ul>
 		<ul class="right hide-on-med-and-down">
 			<li>
-			    <a href="{{::meta.baseUrl}}/about">
+			    <a
+					href="{{::meta.baseUrl}}/about"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="About">
 					<i class="fa fa-info-circle fa-fw"></i>
 					About
 				</a>
@@ -37,21 +58,30 @@
 			<li class="tooltipped" data-tooltip="Report bugs and request features on GitHub!" data-position="top">
 			    <a
 			        href="https://github.com/Maelstrome26/PS2Alerts"
-			        target="_blank">
+			        target="_blank"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Github">
 			        <i class="fa fa-github"></i>
 			    </a>
 			</li>
 			<li class="tooltipped" data-tooltip="Follow the site on Twitter for updates!" data-position="top">
 			    <a
 			        href="https://www.twitter.com/PS2AlertTracker"
-			        target="_blank">
+			        target="_blank"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="PS2Alerts Twitter">
 			        <i class="fa fa-twitter"></i>
 			    </a>
 			</li>
 			<li class="tooltipped" data-tooltip="PS2Alerts Chrome Extension" data-position="top">
 			    <a
 			        href="https://chrome.google.com/webstore/detail/planetside-2-alerts/bondapheaemfkkiabfjnhdempfmnikcg"
-			        target="_blank">
+			        target="_blank"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Chrome Extension">
 			        <i class="fa fa-chrome"></i>
 			    </a>
 			</li>
@@ -59,10 +89,22 @@
 		</ul>
 		<ul class="side-nav" id="mobile-nav-tray">
 			<li>
-			    <a href="about">About</a>
+			    <a
+					href="{{::meta.baseUrl}}/about"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Under development">
+					About
+				</a>
 			</li>
 			<li>
-			    <a href="alert-history">Alert History</a>
+				<a
+					href="{{::meta.baseUrl}}/alert-history"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Under development">
+					Alert History
+				</a>
 			</li>
 		</ul>
 	</div>

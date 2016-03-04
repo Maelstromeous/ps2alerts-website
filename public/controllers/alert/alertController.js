@@ -1,5 +1,6 @@
 app.controller('AlertController', function(
     $scope,
+    $window,
     $routeParams,
     AlertMetricsService
 ) {
@@ -170,6 +171,9 @@ app.controller('AlertController', function(
         $(document).ready(function(){
             $('ul.tabs').tabs();
         });
+
+        // Simulate a player leaderboard click as it's opened by default
+        $window.ga('send', 'event', 'Alert', 'Leaderboards - Player', 'Opened');
     });
 
     // Instantiate the service

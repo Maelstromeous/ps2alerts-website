@@ -11,6 +11,7 @@ app.directive('projectStatus', function() {
         link: function( $scope, elem, attrs ) {
             elem.ready(function(){
                 $scope.$emit('project-status');
+                $scope.$emit('ga-sync', '#project-status .ga-event');
             });
         }
     };
