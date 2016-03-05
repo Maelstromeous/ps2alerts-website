@@ -115,4 +115,122 @@
             </div>
         </div>
     </div>
+    <div class="col s12 m3">
+        <div class="card blue-grey darken-3">
+            <div class="card-content center-align">
+                <h1>{{alert.metrics.combats.data.kills.total / alert.metrics.combats.data.deaths.total | number: 2}}</h1>
+                <p class="caption">
+                    Overall K/D
+                </p>
+            </div>
+            <div class="card-action">
+                <div class="row row-no-margin">
+                    <div class="col s4 center-align">
+                        <h5 class="vs-table-text">
+                            {{alert.metrics.combats.data.kills.vs / alert.metrics.combats.data.deaths.vs | number: 2}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="nc-table-text">
+                            {{alert.metrics.combats.data.kills.nc / alert.metrics.combats.data.deaths.nc | number: 2}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="tr-table-text">
+                            {{alert.metrics.combats.data.kills.tr / alert.metrics.combats.data.deaths.tr | number: 2}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m3">
+        <div class="card blue-grey darken-3">
+            <div class="card-content center-align">
+                <h1>{{alert.metrics.combats.data.kills.total / alert.details.durationMins | number: 2}}</h1>
+                <p class="caption">
+                    Kills Per Minute (KPM)
+                </p>
+            </div>
+            <div class="card-action">
+                <div class="row row-no-margin">
+                    <div class="col s4 center-align">
+                        <h5 class="vs-table-text">
+                            {{alert.metrics.combats.data.kills.vs / alert.details.durationMins | number: 1}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="nc-table-text">
+                            {{alert.metrics.combats.data.kills.nc / alert.details.durationMins | number: 1}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="tr-table-text">
+                            {{alert.metrics.combats.data.kills.tr / alert.details.durationMins | number: 1}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m3">
+        <div class="card blue-grey darken-3">
+            <div class="card-content center-align">
+                <h1>{{alert.metrics.combats.data.deaths.total / alert.details.durationMins | number: 2}}</h1>
+                <p class="caption">
+                    Deaths Per Minute (DPM)
+                </p>
+            </div>
+            <div class="card-action">
+                <div class="row row-no-margin">
+                    <div class="col s4 center-align">
+                        <h5 class="vs-table-text">
+                            {{alert.metrics.combats.data.deaths.vs / alert.details.durationMins | number: 1}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="nc-table-text">
+                            {{alert.metrics.combats.data.deaths.nc / alert.details.durationMins | number: 1}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="tr-table-text">
+                            {{alert.metrics.combats.data.deaths.tr / alert.details.durationMins | number: 1}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m3">
+        <div class="card blue-grey darken-3">
+            <div class="card-content center-align">
+                <h1>{{alert.metrics.combats.data.kills.total / alert.parsed.players.length | number: 2}}</h1>
+                <p class="caption">
+                    Average Kills per Player
+                </p>
+            </div>
+            <div class="card-action">
+                <div class="row row-no-margin">
+                    <div class="col s4 center-align">
+                        <h5 class="vs-table-text">
+                            {{alert.metrics.combats.data.kills.vs / alert.parsed.players.length | number: 2}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="nc-table-text">
+                            {{alert.metrics.combats.data.kills.nc / alert.parsed.players.length | number: 2}}
+                        </h5>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h5 class="tr-table-text">
+                            {{alert.metrics.combats.data.kills.tr / alert.parsed.players.length | number: 2}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
