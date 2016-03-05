@@ -51,8 +51,9 @@ app.controller('AlertController', function(
                 { data: 'teamkills', title: 'TKs', className: 'metric' },
                 { data: 'suicides', title: 'Suicides', className: 'metric' },
                 { data: 'headshots', title: 'Headshots', className: 'metric' },
-                { data: 'hsr', title: 'Headshot %', className: 'metric hsr' },
+                { data: 'hsr', title: 'HS %', className: 'metric hsr' },
                 { data: 'kpm', title: 'KPM', className: 'metric kpm' },
+                { data: 'dpm', title: 'DPM', className: 'metric dpm' },
                 { data: 'factionAbv', visible: false },
                 { data: 'outfitTag', visible: false }
             ],
@@ -89,6 +90,7 @@ app.controller('AlertController', function(
                 { data: 'killsPerParticipant', title: 'Kills PP', className: 'metric killsPP' },
                 { data: 'deathsPerParticipant', title: 'Deaths PP', className: 'metric deathsPP' },
                 { data: 'kpm', title: 'KPM', className: 'metric kpm' },
+                { data: 'dpm', title: 'DPM', className: 'metric dpm' },
                 { data: 'captures', title: 'Caps', className: 'metric caps' },
                 { data: 'tag', title: 'Tag', className: 'metric', visible: false },
                 { data: 'factionAbv', visible: false }
@@ -118,7 +120,7 @@ app.controller('AlertController', function(
                 { data: 'kills', title: 'Kills', className: 'metric'},
                 { data: 'teamkills', title: 'TKs', className: 'metric' },
                 { data: 'headshots' , title: 'Headshots', className: 'metric' },
-                { data: 'hsr' , title: 'Headshot %', className: 'metric hsr' },
+                { data: 'hsr' , title: 'HS %', className: 'metric hsr' },
                 { data: 'kpm', title: 'KPM', className: 'metric kpm' },
                 { data: 'vehicle', visible: false },
                 { data: 'faction' , visible: false }
@@ -157,6 +159,7 @@ app.controller('AlertController', function(
                 { data: 'deathsV', title: 'Veh Deaths', className: 'metric' },
                 { data: 'bails', title: 'Ejections', className: 'metric' },
                 { data: 'kpm', title: 'KPM', className: 'metric kpm' },
+                { data: 'dpm', title: 'DPM', className: 'metric dpm' },
                 { data: 'factionAbv', visible: false },
                 { data: 'type', visible: false }
             ],
