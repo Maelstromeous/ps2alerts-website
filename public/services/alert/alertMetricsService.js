@@ -363,10 +363,12 @@ app.service('AlertMetricsService', function(
         if (outfitRef !== -1) {
             var outfitData = factory.parsed.outfits[outfitRef];
             formatted.outfitName = outfitData.name;
-            formatted.outfitTag  = outfitData.tag
+            formatted.outfitTag  = outfitData.tag;
 
             // Update outfit metrics
             outfitData.captures++;
+        } else {
+            console.log('Outfit info missing!', capture.outfitCaptured);
         }
 
         if (facilityConfRef !== -1) {
@@ -385,7 +387,7 @@ app.service('AlertMetricsService', function(
                     typeSmall: ConfigDataService.facilityTypesSmall[facility.type],
                     captures: 0,
                     defences: 0,
-                }
+                };
 
                 if (formatted.defence === true) {
                     newFacility.captures = 1;
