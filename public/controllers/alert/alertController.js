@@ -180,6 +180,20 @@ app.controller('AlertController', function(
             $('ul.tabs').tabs();
         });
 
+        $(document).ready(function() {
+            $('.jumpto').on('click', function() {
+                var selector = $(this).attr('data-jumpto');
+
+                console.log('scrolling');
+
+                var element = $(selector);
+
+                $('html, body').animate({
+                    scrollTop: element.offset().top - 10
+                }, 300);
+            })
+        })
+
         // Simulate a player leaderboard click as it's opened by default
         var options = {
             hitType: 'event',
