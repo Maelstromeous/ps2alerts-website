@@ -172,8 +172,6 @@ app.service('AlertMetricsService', function(
 
         formatted.kd = factory.returnKD(formatted); // Parse KD
         formatted.hsr = factory.calcHSR(formatted);
-
-        // KPM calculations
         formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
 
         factory.parsed.players.push(formatted);
@@ -199,10 +197,9 @@ app.service('AlertMetricsService', function(
             formatted.tag = null;
         }
 
-        formatted.kd = factory.returnKD(formatted); // Parse KD
-
-        // Set faction abrivation
         formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
+        formatted.kd = factory.returnKD(formatted); // Parse KD
+        formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
 
         factory.parsed.outfits.push(formatted);
     };

@@ -84,10 +84,11 @@ app.controller('AlertController', function(
                 { data: 'kills', title: 'Kills', className: 'metric' },
                 { data: 'deaths', title: 'Deaths', className: 'metric' },
                 { data: 'kd', title: 'K/D *', className: 'metric kd' },
-                { data: 'killsPerParticipant', title: 'Kills PP', className: 'metric killsPP' },
-                { data: 'deathsPerParticipant', title: 'Deaths PP', className: 'metric deathsPP' },
                 { data: 'teamkills', title: 'Teamkills', className: 'metric' },
                 { data: 'suicides', title: 'Suicides', className: 'metric' },
+                { data: 'killsPerParticipant', title: 'Kills PP', className: 'metric killsPP' },
+                { data: 'deathsPerParticipant', title: 'Deaths PP', className: 'metric deathsPP' },
+                { data: 'kpm', title: 'KPM', className: 'metric kpm' },
                 { data: 'tag', title: 'Tag', className: 'metric', visible: false },
                 { data: 'factionAbv', visible: false }
             ],
