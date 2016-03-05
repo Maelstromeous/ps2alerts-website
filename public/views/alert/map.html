@@ -2,15 +2,27 @@
     <h1 class="center-align">Map Statistics</h1>
     <div
         metric-card
-        class="col s12 m6"
+        class="col s12 m3"
         card-title="Captures"
         metric="{{alert.parsed.map.captures.length}}">
     </div>
     <div
         metric-card
-        class="col s12 m6"
+        class="col s12 m3"
         card-title="Defences"
         metric="{{alert.parsed.map.defences.length}}">
+    </div>
+    <div
+        metric-card
+        class="col s12 m3"
+        card-title="Top Outfit"
+        metric="{{alert.parsed.facilities[0].name}}">
+    </div>
+    <div
+        metric-card
+        class="col s12 m3"
+        card-title="Most Contested Facility"
+        metric="{{alert.parsed.facilities[0].name}}">
     </div>
     <h4 class="center-align">Map timeline and visual map will be added soon.</h4>
     <div class="col s12">
@@ -44,7 +56,7 @@
             <div class="card-content">
                 <table>
                     <tr>
-                        <th class="center-align">
+                        <th>
                             Time
                         </th>
                         <th class="center-align">
@@ -76,7 +88,7 @@
                         <td class="center-align {{::capture.looserFactionAbv}}-table-text">
                             {{::capture.looserFactionAbv | uppercase}}
                         </td>
-                        <td class="center-align">
+                        <td class="center-align {{::capture.captorFactionAbv}}-table-text">
                             {{::capture.outfitTag}}
                         </td>
                         <td class="center-align">
@@ -116,7 +128,7 @@
                                     Defended
                                 </th>
                             </tr>
-                            <tr ng-repeat="(key, facility) in alert.parsed.facilities | orderBy: '-caps'">
+                            <tr ng-repeat="(key, facility) in alert.parsed.facilities">
                                 <td>
                                     {{::facility.name}}
                                 </td>
@@ -124,10 +136,10 @@
                                     Tech Plant
                                 </td>
                                 <td class="center-align">
-                                    {{facility.caps}}
+                                    {{facility.captures}}
                                 </td>
                                 <td class="center-align">
-                                    {{facility.defs}}
+                                    {{facility.defences}}
                                 </td>
                             </tr>
                         </table>

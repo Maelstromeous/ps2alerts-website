@@ -118,6 +118,7 @@ app.service('AlertMetricsService', function(
 
         // Sort the data
         factory.sortPlayers('kills');
+        factory.sortFacilities('captures');
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
 
@@ -374,23 +375,23 @@ app.service('AlertMetricsService', function(
                 var newFacility = {
                     id: facility.id,
                     name: facility.name,
-                    caps: 0,
-                    defs: 0,
+                    captures: 0,
+                    defences: 0,
                 }
 
                 if (formatted.defence === true) {
-                    newFacility.defs = 1;
+                    newFacility.captures = 1;
                 } else {
-                    newFacility.caps = 1;
+                    newFacility.defences = 1;
                 }
 
                 factory.parsed.facilities.push(newFacility);
             } else { // Update facility stats entry
                 var entry = factory.parsed.facilities[facilityStatsRef];
                 if (formatted.defence === true) {
-                    entry.defs++;
+                    entry.defences++;
                 } else {
-                    entry.caps++;
+                    entry.captures++;
                 }
             }
         }
@@ -433,7 +434,41 @@ app.service('AlertMetricsService', function(
     };
 
     factory.sortPlayers = function(metric) {
-        factory.sortPlayersByMetric(factory.metrics.players.data, 'kills');
+        factory.sortPlayersByMetric(factory.metrics.players.data, metric);
+    };
+
+    factory.sortFacilities = function(metric) {
+        factory.sortFacilitiesByMetric(factory.parsed.facilities, metric);
+    };
+
+    // Look into extracting this logic into a new function at some point
+    factory.sortFacilitiesByMetric = function(object, metric) {
+        object.sort(function(fac1, fac2) {
+            if (fac1[metric] < fac2[metric]) {
+                return 1;
+            }
+            if (fac1[metric] > fac2[metric]) {
+                return -1;
+            }
+
+            // If the metrics are exact, make sure to sort by defences
+            if (fac1[metric] === fac2[metric]) {
+                if (fac1.defences < fac2.defences) {
+                    return 1;
+                }
+
+                if (fac1.defences > fac2.defences) {
+                    return -1;
+                }
+
+                // If they are also the same, sort by name
+                if (fac1.name > fac2.name) {
+                    return 1;
+                }
+                return -1;
+            }
+            return 0;
+        });
     };
 
     // Function to sort players metrics
