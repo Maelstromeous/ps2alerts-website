@@ -183,11 +183,7 @@ app.controller('AlertController', function(
         $(document).ready(function() {
             $('.jumpto').on('click', function() {
                 var selector = $(this).attr('data-jumpto');
-
-                console.log('scrolling');
-
-                var element = $(selector);
-
+                var element  = $(selector);
                 $('html, body').animate({
                     scrollTop: element.offset().top - 10
                 }, 300);
