@@ -201,8 +201,7 @@ p {
 }
 
 .tabs {
-    background-color: @tab-background;
-
+    background-color: darken(@tab-background, 15%);
     .tab {
         border-right: 1px solid @border-color;
     }
@@ -216,12 +215,16 @@ p {
         color: #fff;
     }
 
+    .tab a.active {
+        font-weight: bold;
+    }
+
     .tab a:not(.active):hover {
-        background-color: darken(@tab-background, 5%);
+        background-color: lighten(@tab-background, 5%);
     }
 
     .tab a.active {
-        background-color: darken(@tab-background, 15%);
+        background-color: @tab-background;
     }
 }
 
