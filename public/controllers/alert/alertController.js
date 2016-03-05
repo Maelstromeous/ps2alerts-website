@@ -197,7 +197,6 @@ app.controller('AlertController', function(
             eventAction: 'Leaderboards Initial'
         };
         ga('send', options);
-        console.log('test sent');
     });
 
     // Instantiate the service
