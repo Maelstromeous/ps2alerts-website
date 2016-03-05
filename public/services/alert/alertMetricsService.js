@@ -432,7 +432,7 @@ app.service('AlertMetricsService', function(
 
     // Calculate Headshot Ratio
     factory.calcHSR = function (weapon) {
-        var hsr = parseFloat((weapon.headshots / weapon.kills * 100).toFixed(1));
+        var hsr = parseFloat((weapon.headshots / weapon.kills * 100).toFixed(2));
 
         if (hsr == 'Infinity' || isNaN(hsr)) {
             hsr = weapon.kills;
