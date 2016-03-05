@@ -1,4 +1,5 @@
 <div class="row row-no-margin tab-container" id="combat-leaderboards">
+    <h1 class="center-align">Combat Leaderboards</h1>
     <div class="col s12">
         <ul class="tabs">
             <li class="tab col s3">
@@ -9,7 +10,7 @@
                     ga-action="Leaderboards - Players"
                     ga-label="Opened"
                 >
-                    Player Leaderboards
+                    Players ({{alert.parsed.players.length}})
                 </a>
             </li>
             <li class="tab col s3">
@@ -20,7 +21,7 @@
                     ga-action="Leaderboards - Outfits"
                     ga-label="Opened"
                 >
-                    Outfit Leaderboards
+                    Outfits ({{alert.parsed.outfits.length}})
                 </a>
             </li>
             <li class="tab col s3">
@@ -31,7 +32,7 @@
                     ga-action="Leaderboards - Weapons"
                     ga-label="Opened"
                 >
-                    Weapon Leaderboards
+                    Weapons ({{alert.parsed.weapons.length}})
                 </a>
             </li>
             <li class="tab col s3">
@@ -42,7 +43,7 @@
                     ga-action="Leaderboards - Vehicles"
                     ga-label="Opened"
                 >
-                    Vehicle Leaderboards
+                    Vehicles ({{alert.parsed.vehicles.length}})
                 </a>
             </li>
         </ul>
