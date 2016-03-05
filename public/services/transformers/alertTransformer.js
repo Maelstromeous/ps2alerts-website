@@ -12,8 +12,9 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
         alert.zone        = ConfigDataService.zoneNames[alert.zone];
         alert.winnerText  = ConfigDataService.factionsAlpha[alert.winner];
 
-        alert.duration = alert.ended - alert.started;
-        alert.duration = $filter('date')(alert.duration - 1, 'HH:mm:ss', 'UTC');
+        alert.duration     = alert.ended - alert.started;
+        alert.durationTime = $filter('date')(alert.duration - 1, 'HH:mm:ss', 'UTC');
+        alert.durationMins = Math.round((alert.duration / 1000) / 60);
 
         return alert;
     };

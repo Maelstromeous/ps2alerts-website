@@ -52,6 +52,7 @@ app.controller('AlertController', function(
                 { data: 'suicides', title: 'Suicides', className: 'metric' },
                 { data: 'headshots', title: 'Headshots', className: 'metric' },
                 { data: 'hsr', title: 'Headshot %', className: 'metric hsr' },
+                { data: 'kpm', title: 'KPM', className: 'metric kpm' },
                 { data: 'factionAbv', visible: false },
                 { data: 'outfitTag', visible: false }
             ],
