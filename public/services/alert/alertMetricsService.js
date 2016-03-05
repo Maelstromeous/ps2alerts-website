@@ -248,6 +248,7 @@ app.service('AlertMetricsService', function(
                     };
 
                     newGroup.hsr = factory.calcHSR(newGroup);
+                    newGroup.kpm = (newGroup.kills / factory.details.durationMins).toFixed(2);
 
                     factory.parsed.weapons.push(newGroup);
                 }
@@ -262,6 +263,7 @@ app.service('AlertMetricsService', function(
                     weaponGroup.faction    = 0;
 
                     weaponGroup.hsr = factory.calcHSR(weaponGroup);
+                    weaponGroup.kpm = (weaponGroup.kills / factory.details.durationMins).toFixed(2);
 
                     weaponGroup.weapons.push(weapon.id); // Push this weapon to the group
                 }
@@ -281,6 +283,7 @@ app.service('AlertMetricsService', function(
                 formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
                 formatted.hsr = factory.calcHSR(formatted);
+                formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
 
                 factory.parsed.weapons.push(formatted);
             } else {
@@ -315,6 +318,7 @@ app.service('AlertMetricsService', function(
                 formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
                 formatted.kd = factory.returnKD(formatted); // Parse KD
+                formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
 
                 factory.parsed.vehicles.push(formatted);
             } else {
