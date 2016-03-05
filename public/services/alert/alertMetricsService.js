@@ -381,6 +381,8 @@ app.service('AlertMetricsService', function(
                 var newFacility = {
                     id: facility.id,
                     name: facility.name,
+                    type: ConfigDataService.facilityTypes[facility.type],
+                    typeSmall: ConfigDataService.facilityTypesSmall[facility.type],
                     captures: 0,
                     defences: 0,
                 }

@@ -46,6 +46,24 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
                 desc: '(17:00 - 23:59)'
             }
         },
+        facilityTypes: {
+            2: 'Amp Station',
+            3: 'Bio Lab',
+            4: 'Tech Plant',
+            5: 'Large Outpost',
+            6: 'Small Outpost',
+            7: 'Warpgate',
+            8: 'Interlink' // #BRING BACK THE INTERLINK
+        },
+        facilityTypesSmall: {
+            2: 'Amp',
+            3: 'Bio',
+            4: 'Tech',
+            5: 'Lg Outpost',
+            6: 'Sm Outpost',
+            7: 'Warpgate',
+            8: 'Interlink' // #BRING BACK THE INTERLINK
+        },
         meta: {
             title: '',
             location: ''
