@@ -2,6 +2,7 @@ app.service('AlertMetricsService', function(
     $routeParams,
     $http,
     $rootScope,
+    $filter,
     AlertTransformer,
     ConfigDataService
 ) {
@@ -52,7 +53,8 @@ app.service('AlertMetricsService', function(
                 captures: [],
                 defences: [],
                 all: []
-            }
+            },
+            facilities: []
         };
 
         // Fire off the queries required to get the data
@@ -190,7 +192,8 @@ app.service('AlertMetricsService', function(
             players:      [], // Will store all playerIDs for reference
             participants: 0,
             killsPerParticipant: 0,
-            deathsPerParticipant: 0
+            deathsPerParticipant: 0,
+            captures: 0
         };
 
         if (formatted.tag.length === 0) {
@@ -302,17 +305,17 @@ app.service('AlertMetricsService', function(
                 var vehicleData = factory.configData.vehicles.data[vehicleRef];
 
                 var formatted = {
-                    id: vehicle.id,
-                    name: vehicleData.name,
-                    type: vehicleData.type,
+                    id:      vehicle.id,
+                    name:    vehicleData.name,
+                    type:    vehicleData.type,
                     faction: vehicleData.faction,
-                    kills: vehicle.kills.total,
-                    killsI: vehicle.kills.infantry,
-                    killsV: vehicle.kills.vehicle,
-                    deaths: vehicle.deaths.total,
+                    kills:   vehicle.kills.total,
+                    killsI:  vehicle.kills.infantry,
+                    killsV:  vehicle.kills.vehicle,
+                    deaths:  vehicle.deaths.total,
                     deathsI: vehicle.deaths.infantry,
                     deathsV: vehicle.deaths.vehicle,
-                    bails: vehicle.bails
+                    bails:   vehicle.bails
                 };
 
                 formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
@@ -329,34 +332,73 @@ app.service('AlertMetricsService', function(
 
     factory.addNewCapture = function(capture) {
         var formatted = {
-            timestamp: capture.timestamp,
-            defence: capture.isDefence,
-            vs: capture.controlVS,
-            nc: capture.controlNC,
-            tr: capture.controlTR,
-            outfit: null,
-            facility: null
+            timestamp: capture.timestamp * 1000,
+            defence:   capture.isDefence,
+            vs:        capture.controlVS,
+            nc:        capture.controlNC,
+            tr:        capture.controlTR,
+            captor:    capture.facilityNewFaction,
+            looser:    capture.facilityOldFaction,
         };
 
         var outfitRef = _.findIndex(
             factory.parsed.outfits, {'id' : capture.outfitCaptured}
         );
 
-        var facilityRef = _.findIndex(
+        var facilityConfRef = _.findIndex(
             factory.configData.facilities.data, {'id' : capture.facilityID}
+        );
+
+        var facilityStatsRef = _.findIndex(
+            factory.parsed.facilities, {'id' : capture.facilityID}
         );
 
         if (outfitRef !== -1) {
             var outfitData = factory.parsed.outfits[outfitRef];
-            formatted.outfit = {
-                'name': outfitData.name,
-                'tag': outfitData.tag
-            };
+            formatted.outfitName = outfitData.name;
+            formatted.outfitTag  = outfitData.tag
+
+            // Update outfit metrics
+            outfitData.captures++;
         }
 
-        if (facilityRef !== -1) {
-            formatted.facility = factory.configData.facilities.data[facilityRef];
+        if (facilityConfRef !== -1) {
+            var facility = factory.configData.facilities.data[facilityConfRef];
+            formatted.facilityId    = facility.id;
+            formatted.facilityName  = facility.name;
+            formatted.facilityType  = facility.type;
+            formatted.facilityMapId = facility.mapId;
+
+            // Create new facility stats entry
+            if (facilityStatsRef === -1) {
+                var newFacility = {
+                    id: facility.id,
+                    name: facility.name,
+                    caps: 0,
+                    defs: 0,
+                }
+
+                if (formatted.defence === true) {
+                    newFacility.defs = 1;
+                } else {
+                    newFacility.caps = 1;
+                }
+
+                factory.parsed.facilities.push(newFacility);
+            } else { // Update facility stats entry
+                var entry = factory.parsed.facilities[facilityStatsRef];
+                if (formatted.defence === true) {
+                    entry.defs++;
+                } else {
+                    entry.caps++;
+                }
+            }
         }
+
+        formatted.dateTime = $filter('date')(formatted.timestamp, 'HH:mm:ss');
+
+        formatted.captorFactionAbv = ConfigDataService.convertFactionIntToName(formatted.captor);
+        formatted.looserFactionAbv = ConfigDataService.convertFactionIntToName(formatted.looser);
 
         if (formatted.defence === true) {
             factory.parsed.map.defences.push(formatted);

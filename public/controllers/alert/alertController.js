@@ -89,6 +89,7 @@ app.controller('AlertController', function(
                 { data: 'killsPerParticipant', title: 'Kills PP', className: 'metric killsPP' },
                 { data: 'deathsPerParticipant', title: 'Deaths PP', className: 'metric deathsPP' },
                 { data: 'kpm', title: 'KPM', className: 'metric kpm' },
+                { data: 'captures', title: 'Caps', className: 'metric caps' },
                 { data: 'tag', title: 'Tag', className: 'metric', visible: false },
                 { data: 'factionAbv', visible: false }
             ],
@@ -188,4 +189,9 @@ app.controller('AlertController', function(
 
     // Instantiate the service
     $scope.alert.init($routeParams.alert);
+    $scope.filterByProp = function(prop, val) {
+        return function(item) {
+            return item[prop] > val;
+        }
+    }
 });
