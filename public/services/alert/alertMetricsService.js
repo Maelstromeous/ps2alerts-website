@@ -390,9 +390,9 @@ app.service('AlertMetricsService', function(
                 };
 
                 if (formatted.defence === true) {
-                    newFacility.captures = 1;
-                } else {
                     newFacility.defences = 1;
+                } else {
+                    newFacility.captures = 1;
                 }
 
                 factory.parsed.facilities.push(newFacility);
