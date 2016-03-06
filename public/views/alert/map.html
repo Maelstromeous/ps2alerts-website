@@ -56,7 +56,7 @@
             <div class="card-content">
                 <table>
                     <tr>
-                        <th>
+                        <th class="center-align times">
                             Time
                         </th>
                         <th class="center-align">
@@ -71,12 +71,12 @@
                         <th class="center-align">
                             Outfit
                         </th>
-                        <th class="center-align">
+                        <th class="center-align territory-bars">
                             Map %
                         </th>
                     </tr>
                     <tr ng-repeat="(key, capture) in alert.parsed.map.captures">
-                        <td>
+                        <td class="times">
                             {{::capture.dateTime}}
                         </td>
                         <td class="{{::capture.captorFactionAbv}}-table-text">
@@ -91,7 +91,7 @@
                         <td class="center-align {{::capture.captorFactionAbv}}-table-text">
                             {{::capture.outfitTag}}
                         </td>
-                        <td class="center-align">
+                        <td class="territory-bars">
                             <territory-bar
                                 vs="{{::capture.vs}}"
                                 nc="{{::capture.nc}}"
