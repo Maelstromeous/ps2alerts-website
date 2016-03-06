@@ -366,7 +366,11 @@ app.service('AlertMetricsService', function(
             formatted.outfitTag  = outfitData.tag;
 
             // Update outfit metrics
+            if (formatted.defence === true) {
+                outfitData.defences++;
+            } else {
             outfitData.captures++;
+            }
         } else {
             console.log('Outfit info missing!', capture.outfitCaptured);
         }
