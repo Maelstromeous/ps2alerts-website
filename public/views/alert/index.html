@@ -16,40 +16,7 @@
     </div>
     <div ng-show="loaded.data" id="general-info">
         <div class="row" ng-include="'views/alert/general.info.html'"></div>
-        <div class="fixed-action-btn" style="bottom: 24px; right: 24px;">
-            <a class="btn-floating btn-large red" data-tooltip="Quick Navigation" data-position="left">
-                <i class="fa fa-navicon"></i>
-            </a>
-            <ul>
-                <li>
-                    <a
-                        class="btn-floating grey tooltipped jumpto"
-                        data-tooltip="General & Combat Stats"
-                        data-position="left"
-                        data-jumpto="#general-info">
-                        <i class="fa fa-info-circle"></i>
-                    </a>
-                </li>
-                <li>
-                    <a
-                        class="btn-floating grey darken-1 tooltipped jumpto"
-                        data-tooltip="Combat Leaderboards"
-                        data-position="left"
-                        data-jumpto="#combat-leaderboards">
-                        <i class="fa fa-list-ol"></i>
-                    </a>
-                </li>
-                <li>
-                    <a
-                        class="btn-floating grey darken-2 tooltipped jumpto"
-                        data-tooltip="Map Stats"
-                        data-position="left"
-                        data-jumpto="#map-statistics">
-                        <i class="fa fa-globe"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <div alert-fab></div>
         <div class="row">
             <div class="col s12">
                 <territory-bar
