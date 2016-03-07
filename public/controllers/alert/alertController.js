@@ -13,20 +13,22 @@ app.controller('AlertController', function(
     $scope.project = {
         title: 'Project Status: Alert Detail Pages',
         subtitle: 'Per-alert statistics pages are in the process of being re-written. See below for a summary of the features',
-        updated: 'Friday 4th March 2016',
+        updated: 'Sunday 6th March 2016',
         completed: [
             'Basic Alert Information (time, server, continent etc)',
             'Territory Capture Bar',
             'Basic Combat Metrics (Kills, Deaths, Tks, Suicides)',
             'Leaderboard system (Players, Outfits, Weapons, Vehicles)',
-        ],
-        inprogress: [
-            'Map & Facility Statistics',
+            'Basic Facility Statistics',
             'Outfit Captures'
         ],
+        inprogress: [
+            'Map Capture Timeline',
+            'Map "who capped whom" display',
+        ],
         notstarted: [
-            'Realtime metrics (live updating)',
             'Faction Kills timeline',
+            'Realtime metrics (live updating)',
             'Class Combat Statistics',
             'XP Statistics',
             'Per-player metrics summaries',
@@ -206,7 +208,7 @@ app.controller('AlertController', function(
 
     // Instantiate the service
     $scope.alert.init($routeParams.alert);
-    
+
     $scope.filterByProp = function(prop, val) {
         return function(item) {
             return item[prop] > val;
