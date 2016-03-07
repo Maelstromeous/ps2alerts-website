@@ -88,9 +88,7 @@ app.service('AlertHistoryService', function (
 
     // Parses alerts to add to the list
     factory.parseAlert = function(alert) {
-        var last = alert.maps.data.length - 1;
-
-        alert.lastMap = alert.maps.data[last];
+        alert.lastMap = _.last(alert.maps.data);
 
         alert.lastMap.controlTotal =
             alert.lastMap.controlVS +
