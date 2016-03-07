@@ -3,7 +3,6 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
 
     // Parse alert information into a standardized format
     factory.parse = function(alert) {
-
         alert.id = alert.id;
         alert.started = alert.started * 1000;
         alert.server = ConfigDataService.serverNames[alert.server];
@@ -40,7 +39,6 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
             );
             alert.durationMins = Math.round((alert.duration / 1000) / 60);
         }
-        
 
         return alert;
     };
