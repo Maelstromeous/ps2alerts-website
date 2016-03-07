@@ -187,8 +187,8 @@ app.controller('AlertController', function(
                 $('html, body').animate({
                     scrollTop: element.offset().top - 10
                 }, 300);
-            })
-        })
+            });
+        });
 
         // Simulate a player leaderboard click as it's opened by default
         var options = {
@@ -199,11 +199,16 @@ app.controller('AlertController', function(
         ga('send', options);
     });
 
+    $scope.getTopFacilityOutfit = function() {
+        var obj = _.orderBy($scope.alert.parsed.facilities, ['captures'], ['desc']);
+        console.log(obj[0]);
+    };
+
     // Instantiate the service
     $scope.alert.init($routeParams.alert);
     $scope.filterByProp = function(prop, val) {
         return function(item) {
             return item[prop] > val;
-        }
-    }
+        };
+    };
 });
