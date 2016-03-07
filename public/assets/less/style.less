@@ -313,3 +313,15 @@ table.highlight > tbody > tr:hover {
     padding-left: @padding-base / 2 !important;
     padding-right: @padding-base / 2 !important;
 }
+
+table th {
+    border-bottom: 1px solid @border-color;
+}
+
+table.striped > tbody > tr:nth-child(odd) {
+    background: none;
+}
+
+table.striped > tbody > tr:nth-child(even) {
+    background-color: #465156;
+}
