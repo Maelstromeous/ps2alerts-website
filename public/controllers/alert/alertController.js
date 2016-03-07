@@ -206,6 +206,7 @@ app.controller('AlertController', function(
 
     // Instantiate the service
     $scope.alert.init($routeParams.alert);
+    
     $scope.filterByProp = function(prop, val) {
         return function(item) {
             return item[prop] > val;
