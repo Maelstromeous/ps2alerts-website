@@ -4,7 +4,7 @@
             <div class="row center-align" ng-show="alert.metrics.winner">
                 <div class="col s12">
                     <h1 class="header-no-margin">{{::alert.details.winnerText}}</h1>
-                    <p class="caption">
+                    <p class="caption" ng-show="alert.metrics.winnerText != 'Draw'">
                         Winner
                     </p>
                 </div>

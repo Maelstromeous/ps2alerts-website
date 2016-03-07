@@ -70,21 +70,12 @@ app.service('AlertMetricsService', function(
     };
 
     factory.startProcessing = function(data) {
-        var details = {
-            id:          data.id,
-            started:     data.started,
-            ended:       data.ended,
-            timeBracket: data.timeBracket,
-            server:      data.server,
-            zone:        data.zone,
-            winner:      data.winner
-        };
+        factory.details = AlertTransformer.parse(data);
 
-        var serverName = ConfigDataService.serverNames[details.server];
+        var serverName = ConfigDataService.serverNames[factory.details.server];
 
-        $rootScope.changeTitle('Alert #' + details.id + ' (' + serverName + ' - ' + details.winner.toUpperCase() + ')');
+        $rootScope.changeTitle('Alert #' + factory.details.id + ' (' + serverName + ' - ' + factory.details.winner.toUpperCase() + ')');
 
-        factory.details = AlertTransformer.parse(details);
         factory.metrics = data;
 
         factory.lastMap = _.last(data.maps.data);

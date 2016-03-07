@@ -18,6 +18,7 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
             10:   'Miller',
             13:   'Cobalt',
             17:   'Emerald',
+            19:   'Jaeger',
             25:   'Briggs',
             1000: 'Genudine',
             1001: 'Lithcorp',
