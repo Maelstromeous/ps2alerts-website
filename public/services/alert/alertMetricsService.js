@@ -54,7 +54,30 @@ app.service('AlertMetricsService', function(
                 defences: [],
                 all: []
             },
-            facilities: []
+            facilities: [],
+            factions: {
+                'vs': {
+                    kills:     0,
+                    deaths:    0,
+                    suicides:  0,
+                    teamkills: 0,
+                    players:   0
+                },
+                'nc': {
+                    kills:     0,
+                    deaths:    0,
+                    suicides:  0,
+                    teamkills: 0,
+                    players:   0
+                },
+                'tr': {
+                    kills:     0,
+                    deaths:    0,
+                    suicides:  0,
+                    teamkills: 0,
+                    players:   0
+                }
+            }
         };
 
         // Fire off the queries required to get the data
@@ -110,6 +133,15 @@ app.service('AlertMetricsService', function(
         // Sort the data
         factory.sortPlayers('kills');
         factory.sortFacilities('captures');
+
+        angular.forEach(ConfigDataService.factions, function(faction) {
+            if (faction !== 'draw') {
+                factory.parsed.factions[faction].kills     = factory.metrics.combats.data.kills[faction];
+                factory.parsed.factions[faction].deaths    = factory.metrics.combats.data.deaths[faction];
+                factory.parsed.factions[faction].teamkills = factory.metrics.combats.data.teamkills[faction];
+                factory.parsed.factions[faction].suicides  = factory.metrics.combats.data.suicides[faction];
+            }
+        });
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
 
@@ -168,6 +200,10 @@ app.service('AlertMetricsService', function(
         formatted.hsr = factory.calcHSR(formatted);
         formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
         formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+
+        if (formatted.factionAbv !== null) {
+            factory.parsed.factions[formatted.factionAbv].players++;
+        }
 
         factory.parsed.players.push(formatted);
     };

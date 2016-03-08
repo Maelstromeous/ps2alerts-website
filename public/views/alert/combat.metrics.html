@@ -216,17 +216,17 @@
                 <div class="row row-no-margin">
                     <div class="col s4 center-align">
                         <h5 class="vs-table-text">
-                            {{alert.metrics.combats.data.kills.vs / alert.parsed.players.length | number: 2}}
+                            {{alert.metrics.combats.data.kills.vs / alert.parsed.factions.vs.players | number: 2}}
                         </h5>
                     </div>
                     <div class="col s4 center-align">
                         <h5 class="nc-table-text">
-                            {{alert.metrics.combats.data.kills.nc / alert.parsed.players.length | number: 2}}
+                            {{alert.metrics.combats.data.kills.nc / alert.parsed.factions.nc.players | number: 2}}
                         </h5>
                     </div>
                     <div class="col s4 center-align">
                         <h5 class="tr-table-text">
-                            {{alert.metrics.combats.data.kills.tr / alert.parsed.players.length | number: 2}}
+                            {{alert.metrics.combats.data.kills.tr / alert.parsed.factions.tr.players | number: 2}}
                         </h5>
                     </div>
                 </div>
