@@ -10,6 +10,7 @@ app.service('WebsocketService', function(
     factory.webSocket = {};
     factory.loaded = 0;
     factory.count = 0;
+    factory.middlemanDown = 0;
 
     factory.actives = {};
 
@@ -49,6 +50,7 @@ app.service('WebsocketService', function(
     factory.checkMiddleman = function () {
         console.log('Checking middleman...');
         factory.webSocket.send('{"payload":{"action":"middlemanStatus"}}');
+        console.log('Sent middleman...');
     };
 
     factory.parse = function(rawMessage) {
@@ -199,8 +201,18 @@ app.service('WebsocketService', function(
 
     factory.parseMiddleman = function(message) {
         console.log('middleman value', message);
-        if (message.value == 'false') {
+        if (message.value == '0') {
             $("#websocket-status").removeClass().addClass('websocket-middleman-fail');
+
+            factory.middlemanDown = 1;
+            factory.loaded = 0;
+        }
+        if (message.value == '1') {
+            if ( $("#websocket-status").hasClass('websocket-middleman-fail') ) {
+                $("#websocket-status").removeClass().addClass('websocket-connected');
+            }
+            factory.middlemanDown = 0;
+            factory.loaded = 1;
         }
     };
 

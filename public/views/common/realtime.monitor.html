@@ -18,7 +18,7 @@
 
     <div class="col s12 m8 offset-m2">
         <div class="center-align">
-            <div class="row sk-three-bounce" ng-show="websocket.loaded == 0">
+            <div class="row sk-three-bounce" ng-show="websocket.loaded == 0 && websocket.middlemanDown == 0">
                 <div class="sk-child sk-bounce1"></div>
                 <div class="sk-child sk-bounce2"></div>
                 <div class="sk-child sk-bounce3"></div>
@@ -26,6 +26,10 @@
             <div ng-show="websocket.count == 0 && websocket.loaded == 1">
                 <h4>There are no alerts currently running</h4>
                 <h6>New alerts will show up here as they start</h6>
+            </div>
+            <div ng-show="websocket.middlemanDown == 1">
+                <h3>Middleman API is currently offline!</h3>
+                <h4>PS2Alerts will not function while this is down. Please contact <a href="http://www.reddit.com/u/jhett12321">/u/jhett12321</a> and let him know urgently!!</h4>
             </div>
             <div class="row monitor-labels" ng-show="websocket.count > 0 && websocket.loaded == 1">
                 <div class="col s2">
