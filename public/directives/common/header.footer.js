@@ -19,3 +19,14 @@ app.directive('siteFooter', function() {
         }
     };
 });
+
+app.directive('siteSearch', function() {
+    return {
+        templateUrl: 'views/common/search.html',
+        link: function( $scope, elem, attrs ) {
+            elem.ready(function(){
+                $scope.$emit('ga-sync', '#site-search .ga-event');
+            });
+        }
+    };
+});
