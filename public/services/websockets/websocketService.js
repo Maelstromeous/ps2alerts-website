@@ -214,6 +214,8 @@ app.service('WebsocketService', function(
             factory.middlemanDown = 0;
             factory.loaded = 1;
         }
+
+        $rootScope.apply();
     };
 
     factory.addAlertTest = function() {
