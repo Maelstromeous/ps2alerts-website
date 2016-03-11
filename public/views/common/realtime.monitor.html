@@ -34,7 +34,10 @@
             </div>
             <div ng-show="websocket.middlemanDown == 1">
                 <h3>Middleman API is currently offline!</h3>
-                <h4>PS2Alerts will not function while this is down. Please contact <a href="http://www.reddit.com/u/jhett12321">/u/jhett12321</a> and let him know urgently!!</h4>
+                <h4>Alert Tracking will not function while this is down. Please contact <a href="http://www.reddit.com/u/jhett12321">/u/jhett12321</a> and let him know urgently!!</h4>
+                <p>
+                    Note: You are still able to view statistics, however new alerts will not be detected until the service returns.
+                </p>
             </div>
             <div class="row monitor-labels" ng-show="websocket.count > 0 && websocket.loaded == 1">
                 <div class="col s2">
@@ -75,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12">
+            <div class="col s12" ng-show="websocket.middlemanDown == 0">
                 <p class="center-align caption">
                     Real Time Alert Monitor
                     <i
