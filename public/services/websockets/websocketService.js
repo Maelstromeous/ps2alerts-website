@@ -207,6 +207,7 @@ app.service('WebsocketService', function(
             factory.middlemanDown = 1;
             factory.loaded = 0;
         }
+
         if (message.value == '1') {
             if ( $("#websocket-status").hasClass('websocket-middleman-fail') ) {
                 $("#websocket-status").removeClass().addClass('websocket-connected');
@@ -214,8 +215,6 @@ app.service('WebsocketService', function(
             factory.middlemanDown = 0;
             factory.loaded = 1;
         }
-
-        $rootScope.apply();
     };
 
     factory.addAlertTest = function() {
