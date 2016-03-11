@@ -1,6 +1,11 @@
 <div ng-controller="RealTimeMonitorController" class="row grey darken-3" id="alert-monitor">
     <div id="websocket-status">
-        <div class="chip tooltipped" data-tooltip="Status of the PS2Alerts collection system. If this is red, please inform Maelstrome26!" data-position="left">
+        <div
+            class="chip tooltipped"
+            middlemanDown="{{websocket.middlemanDown}}"
+            loaded="{{websocket.loaded}}"
+            data-tooltip="Status of the PS2Alerts collection system. If this is red, please inform Maelstrome26!"
+            data-position="left">
             <span class="disconnected">
                 <i class="fa fa-arrow-down"></i> Disconnected!
             </span>
