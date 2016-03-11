@@ -1,4 +1,7 @@
-<div id="site-search" class="row row-no-margin" ng-controller="SearchController">
+<div
+	id="site-search"
+	class="row row-no-margin grey darken-2"
+	ng-controller="SearchController">
 	<div class="row row-no-margin">
 		<div class="col s12 m8 offset-m2">
 			<form ng-submit="fireSearch()">
@@ -27,8 +30,8 @@
 			</form>
 		</div>
 	</div>
-	<div id="search-results">
-		<div class="col s12 m8 offset-m2" ng-show="service.show">
+	<div id="search-results" ng-show="service.show">
+		<div class="col s12 m8 offset-m2">
 			<div class="sk-three-bounce" ng-show="service.searching">
                 <div class="sk-child sk-bounce1"></div>
                 <div class="sk-child sk-bounce2"></div>
@@ -42,13 +45,10 @@
 				ng-repeat="result in service.results"
 				ng-show="service.results.length > 0">
 				<a href="profiles/{{::type}}/{{result.id}}">
-					<div class="card blue-grey card-{{result.factionAbv}}">
-						<div class="card-content">
-							<h3 class="header-no-margin">{{result.name}}</h3>
-							<p>
-								Server: {{result.server}}
-							</p>
-						</div>
+					<div class="result {{result.factionAbv}}-segment">
+						<b><span ng-show="result.tag">{{result.tag}}</span>
+							{{result.name}}</b> - {{result.server}}
+							{{result}}
 					</div>
 				</a>
 			</div>
