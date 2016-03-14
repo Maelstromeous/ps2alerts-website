@@ -19,7 +19,7 @@ app.service('WebsocketService', function(
 
         $("#websocket-status").removeClass().addClass('websocket-connecting');
 
-        factory.webSocket = new WebSocket('ws://api.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393');
+        factory.webSocket = new WebSocket('ws://ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393');
 
         factory.webSocket.onopen = function () {
             console.log('Websocket Connected');
