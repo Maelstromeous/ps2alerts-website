@@ -11,13 +11,15 @@ app.service('SearchService', function(ConfigDataService, $http) {
         factory.show = false;
         factory.searching = true;
         factory.noresults = false;
+
         console.log('search', ConfigDataService.apiUrl + '/profiles/search/' + type + '/' + term);
+
         $http({
             method : 'GET',
             url    : ConfigDataService.apiUrl + '/profiles/search/' + type + '/' + term
         }).then(function(returned) {
-            factory.searching = false;
             var data = returned.data.data;
+            factory.searching = false;
 
             console.log('returned', data);
 

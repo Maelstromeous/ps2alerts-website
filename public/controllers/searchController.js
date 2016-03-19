@@ -4,6 +4,8 @@ app.controller('SearchController', function($scope, SearchService) {
     $scope.placeholder = '';
     $scope.service = SearchService;
 
+    $scope.timeout = null;
+
     $scope.fireSearch = function() {
         console.log('Firing search');
 
