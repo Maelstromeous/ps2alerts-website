@@ -16,7 +16,6 @@
 
     .search-icons {
         text-align: right;
-        padding-right: 0;
         font-size: 1.75em;
         padding-top: 5px;
     }
@@ -25,9 +24,21 @@
         margin-bottom: 0;
     }
 
-    select {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+    #search-input {
+        padding: 0;
+    }
+
+    #term:focus {
+        box-shadow: none !important;
+    }
+
+    #search-type {
+        margin-top: 1px;
+        padding: 0;
+        select {
+            border-bottom-width: 0;
+            box-shadow: 0 1px 0 0 #26a69a; // This doesn't seem to be working in chrome??
+        }
     }
 
     #search-results {
@@ -67,14 +78,6 @@
 
         .caption {
             margin-bottom: 0;
-        }
-    }
-
-    #search-button {
-        margin-top: 9px;
-        padding-right: 0;
-        button {
-            width: 100%;
         }
     }
 }
