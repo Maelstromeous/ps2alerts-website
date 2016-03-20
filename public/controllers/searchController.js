@@ -26,6 +26,13 @@ app.controller('SearchController', function($scope, SearchService) {
 
     $scope.$on('showSearchResults', function() {
         $("#search-results").fadeIn();
+        var options = {
+            hitType: 'event',
+            eventCategory: 'Search',
+            eventAction: $scope.type,
+            eventLabel: $scope.term
+        };
+        ga('send', options);
     });
 
     $(document).on('click', function (e) {
