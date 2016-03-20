@@ -14,6 +14,9 @@
 						id="term"
 						type="text"
 						ng-model="term">
+						<a id="term-clear" href="#" ng-show="term.length" ng-click="hide()">
+							<i class="fa fa-times-circle" ></i>
+						</a>
 				</div>
 			</div>
 			<div class="col s4" id="search-type">
@@ -28,7 +31,7 @@
 			<div
 				class="search-result {{result.factionAbv}}-segment"
 				ng-repeat="result in service.results | limitTo: 10"
-				ng-show="service.results.length > 0">
+				ng-show="service.results.length">
 				<a
 					href="profiles/{{::type}}/{{result.id}}">
 					<b>
@@ -38,7 +41,7 @@
 						{{result.name}}</b> - {{result.server}}
 				</a>
 			</div>
-			<div ng-show="service.results.length == 0 && !service.searching">
+			<div ng-show="!service.results.length && !service.searching">
 				<h4 class="center-align">No results</h4>
 			</div>
 			<div class="sk-three-bounce" ng-show="service.searching">

@@ -26,11 +26,25 @@
 
     #search-input {
         padding: 0;
+        position: relative;
+        #term-clear {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 12px;
+            padding-right: 0;
+            color: #a5a5a5;
+            :hover {
+                color: lighten(#a5a5a5, 20%);
+            }
+        }
     }
 
     #term:focus {
         box-shadow: none !important;
     }
+
+
 
     #search-type {
         margin-top: 1px;
