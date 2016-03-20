@@ -12,11 +12,11 @@ app.service('SearchService', function(ConfigDataService, $http, $rootScope) {
         factory.searching = true;
         factory.noresults = false;
 
-        console.log('search', ConfigDataService.apiUrl + '/profiles/search/' + type + '/' + term);
+        console.log('search', ConfigDataService.apiUrl + '/search/' + type + '/' + term);
 
         $http({
             method : 'GET',
-            url    : ConfigDataService.apiUrl + '/profiles/search/' + type + '/' + term
+            url    : ConfigDataService.apiUrl + '/search/' + type + '/' + term
         }).then(function(returned) {
             var data = returned.data.data;
             factory.searching = false;
