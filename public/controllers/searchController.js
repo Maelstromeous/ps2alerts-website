@@ -17,10 +17,20 @@ app.controller('SearchController', function($scope, SearchService) {
     $scope.hide = function() {
         $scope.service.results = [];
         $scope.term = '';
-        $scope.service.show = false;
+        $("#search-results").fadeOut();
     };
 
     $scope.$watch('type', function() {
         $scope.placeholder = 'Search ' + _.capitalize($scope.type) + 's';
+    });
+
+    $scope.$on('showSearchResults', function() {
+        $("#search-results").fadeIn();
+    });
+
+    $(document).on('click', function (e) {
+        if ($(e.target).closest("#site-search").length === 0) {
+            $scope.hide();
+        }
     });
 });

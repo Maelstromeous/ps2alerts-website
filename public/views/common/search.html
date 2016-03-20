@@ -1,53 +1,54 @@
 <div
-	id="site-search"
 	class="row row-no-margin grey darken-2"
 	ng-controller="SearchController">
-	<div class="row row-no-margin">
-		<div class="col s12 m8 offset-m2">
-			<form ng-submit="fireSearch()">
-				<div class="col s8 m8 input-field">
-					<div class="col s1 search-icons">
-						<i class="fa fa-search" ng-hide="service.searching"></i>
-						<i class="fa fa-refresh fa-spin" ng-show="service.searching"></i>
-					</div>
-					<div class="col s11" id="search-input">
-						<input
-							placeholder="{{placeholder}}"
-							id="term"
-							type="text"
-							ng-model="term">
-
-						<div id="search-results" ng-show="service.show">
-							<div
-								class="search-result {{result.factionAbv}}-segment"
-								ng-repeat="result in service.results"
-								ng-show="service.results.length > 0">
-								<a
-									class="result "
-									href="profiles/{{::type}}/{{result.id}}">
-									<b>
-										<span ng-show="result.tag">
-											{{result.tag}}
-										</span>
-										{{result.name}}</b> - {{result.server}}
-								</a>
-							</div>
-						</div>
-					</div>
+	<div class="col s12 m4 offset-m4" id="site-search">
+		<form ng-submit="fireSearch()">
+			<div class="col s8 input-field">
+				<div class="col s2 search-icons">
+					<i class="fa fa-search" ng-hide="service.searching"></i>
+					<i class="fa fa-refresh fa-spin" ng-show="service.searching"></i>
 				</div>
-				<div class="col s4 m2">
-					<select class="browser-default" ng-model="type">
-						<option value="player">Players</option>
-						<option value="outfit">Outfits</option>
-						<option value="weapon">Weapons</option>
-					</select>
+				<div class="col s10" id="search-input">
+					<input
+						placeholder="{{placeholder}}"
+						id="term"
+						type="text"
+						ng-model="term">
 				</div>
-				<div class="col s2" id="search-button">
-					<button type="submit" class="btn waves-effect waves-light">
-
-					</button>
-				</div>
-			</form>
+			</div>
+			<div class="col s4">
+				<select class="browser-default" ng-model="type">
+					<option value="player">Players</option>
+					<option value="outfit">Outfits</option>
+					<option value="weapon">Weapons</option>
+				</select>
+			</div>
+		</form>
+		<div id="search-results" class="col s12">
+			<div
+				class="search-result {{result.factionAbv}}-segment"
+				ng-repeat="result in service.results | limitTo: 10"
+				ng-show="service.results.length > 0">
+				<a
+					href="profiles/{{::type}}/{{result.id}}">
+					<b>
+						<span ng-show="result.tag">
+							{{result.tag}}
+						</span>
+						{{result.name}}</b> - {{result.server}}
+				</a>
+			</div>
+			<div ng-show="service.results.length == 0 && !service.searching">
+				<h4 class="center-align">No results</h4>
+			</div>
+			<div class="sk-three-bounce" ng-show="service.searching">
+				<div class="sk-child sk-bounce1"></div>
+				<div class="sk-child sk-bounce2"></div>
+				<div class="sk-child sk-bounce3"></div>
+				<p class="caption center-align">
+					Loading
+				</p>
+			</div>
 		</div>
 	</div>
 </div>

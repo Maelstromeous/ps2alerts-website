@@ -1,4 +1,4 @@
-app.service('SearchService', function(ConfigDataService, $http) {
+app.service('SearchService', function(ConfigDataService, $http, $rootScope) {
     var factory = {};
 
     factory.searching = false;
@@ -8,7 +8,7 @@ app.service('SearchService', function(ConfigDataService, $http) {
 
     factory.search = function(type, term) {
         term = encodeURIComponent(term); // Encodes into URI friendly notation
-        factory.show = false;
+        factory.results = [];
         factory.searching = true;
         factory.noresults = false;
 
@@ -32,19 +32,15 @@ app.service('SearchService', function(ConfigDataService, $http) {
                 });
 
                 factory.results = data;
-            } else {
-                factory.noresults = true;
             }
 
-            factory.show = true;
-
+            $rootScope.$broadcast('showSearchResults', 'loaded');
             console.log(factory.results);
         }, function(error) {
             console.log('Error!', error);
-            factory.noresults = true;
             factory.results = [];
             factory.searching = false;
-            factory.show = true;
+            $rootScope.$broadcast('showSearchResults', 'loaded');
         });
     };
 
