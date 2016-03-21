@@ -27,6 +27,14 @@ app.config(function ($routeProvider, $locationProvider) {
             title: 'Alert',
             templateUrl: 'views/alert/index.html'
         })
+        .when('/profiles/player/:id', {
+            title: 'Player Profile',
+            templateUrl: 'views/profiles/player.html'
+        })
+        .when('/profiles/outfit/:id', {
+            title: 'Outfit Profile',
+            templateUrl: 'views/profiles/outfit.html'
+        })
         .otherwise({
             title: 'Not found!',
             templateUrl: 'views/common/404.html'

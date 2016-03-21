@@ -1,4 +1,4 @@
-app.service('SearchService', function(ConfigDataService, $http) {
+app.service('SearchService', function(ConfigDataService, $http, $rootScope) {
     var factory = {};
 
     factory.searching = false;
@@ -8,16 +8,18 @@ app.service('SearchService', function(ConfigDataService, $http) {
 
     factory.search = function(type, term) {
         term = encodeURIComponent(term); // Encodes into URI friendly notation
-        factory.show = false;
+        factory.results = [];
         factory.searching = true;
         factory.noresults = false;
-        console.log('search', ConfigDataService.apiUrl + '/profiles/search/' + type + '/' + term);
+
+        console.log('search', ConfigDataService.apiUrl + '/search/' + type + '/' + term);
+
         $http({
             method : 'GET',
-            url    : ConfigDataService.apiUrl + '/profiles/search/' + type + '/' + term
+            url    : ConfigDataService.apiUrl + '/search/' + type + '/' + term
         }).then(function(returned) {
-            factory.searching = false;
             var data = returned.data.data;
+            factory.searching = false;
 
             console.log('returned', data);
 
@@ -30,19 +32,15 @@ app.service('SearchService', function(ConfigDataService, $http) {
                 });
 
                 factory.results = data;
-            } else {
-                factory.noresults = true;
             }
 
-            factory.show = true;
-
+            $rootScope.$broadcast('showSearchResults', 'loaded');
             console.log(factory.results);
         }, function(error) {
             console.log('Error!', error);
-            factory.noresults = true;
             factory.results = [];
             factory.searching = false;
-            factory.show = true;
+            $rootScope.$broadcast('showSearchResults', 'loaded');
         });
     };
 

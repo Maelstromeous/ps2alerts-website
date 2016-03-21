@@ -4,6 +4,8 @@ app.controller('SearchController', function($scope, SearchService) {
     $scope.placeholder = '';
     $scope.service = SearchService;
 
+    $scope.timeout = null;
+
     $scope.fireSearch = function() {
         console.log('Firing search');
 
@@ -15,10 +17,27 @@ app.controller('SearchController', function($scope, SearchService) {
     $scope.hide = function() {
         $scope.service.results = [];
         $scope.term = '';
-        $scope.service.show = false;
+        $("#search-results").fadeOut();
     };
 
     $scope.$watch('type', function() {
         $scope.placeholder = 'Search ' + _.capitalize($scope.type) + 's';
+    });
+
+    $scope.$on('showSearchResults', function() {
+        $("#search-results").fadeIn();
+        var options = {
+            hitType: 'event',
+            eventCategory: 'Search',
+            eventAction: $scope.type,
+            eventLabel: $scope.term
+        };
+        ga('send', options);
+    });
+
+    $(document).on('click', function (e) {
+        if ($(e.target).closest("#site-search").length === 0) {
+            $scope.hide();
+        }
     });
 });
