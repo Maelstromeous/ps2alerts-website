@@ -81,7 +81,7 @@ app.service('AlertMetricsService', function(
         };
 
         // Fire off the queries required to get the data
-        var promise = Promise.all([
+        Promise.all([
             factory.getConfigData,
             factory.getAlertData(alertID)
         ]).then(function(result) {
