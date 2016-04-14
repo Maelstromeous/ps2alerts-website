@@ -1,0 +1,22 @@
+{
+    "name": "maelstromeous/ps2alerts",
+    "authors": [
+        {
+            "name": "Matthew Cavanagh",
+            "email": "maelstrome26@gmail.com"
+        }
+    ],
+    "require": {
+        "league/route": "^2.0",
+        "league/container": "^2.2",
+        "twig/twig": "^1.24",
+        "josegonzalez/dotenv": "^2.0",
+        "zendframework/zend-diactoros": "^1.3",
+        "league/event": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ps2alerts\\Frontend\\": "src"
+        }
+    }
+}
