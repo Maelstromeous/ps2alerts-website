@@ -14,10 +14,69 @@ class MainController implements ConfigAwareInterface, TemplateAwareInterface
     use ConfigAwareTrait;
     use TemplateAwareTrait;
 
+    /**
+     * Landing Page
+     *
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface      $response
+     *
+     * @return Psr\Http\Message\ResponseInterface
+     */
     public function landing(ServerRequestInterface $request, ResponseInterface $response)
     {
         $response->getBody()->write(
             $this->getTemplateDriver()->render('landing.html')
+        );
+
+        return $response;
+    }
+
+    /**
+     * About Page
+     *
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface      $response
+     *
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    public function about(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $response->getBody()->write(
+            $this->getTemplateDriver()->render('about.html')
+        );
+
+        return $response;
+    }
+
+    /**
+     * Alert History Page
+     *
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface      $response
+     *
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    public function alertHistory(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $response->getBody()->write(
+            $this->getTemplateDriver()->render('alert-history.html')
+        );
+
+        return $response;
+    }
+
+    /**
+     * Alert Pages
+     *
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface      $response
+     *
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    public function alert(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $response->getBody()->write(
+            $this->getTemplateDriver()->render('alert.html', ['args' => $args])
         );
 
         return $response;
