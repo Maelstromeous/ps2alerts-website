@@ -6,7 +6,7 @@ use League\Route\RouteCollection;
 
 // Load the route collection. If container is not ready, generate one here now.
 $route = new RouteCollection(
-    (isset($container) && $container instanceof ContainerInterface) ? $container : new Container
+    isset($container) && $container instanceof ContainerInterface ? $container : new Container
 );
 
 $route = new League\Route\RouteCollection;

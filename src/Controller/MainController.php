@@ -4,27 +4,24 @@ namespace Ps2alerts\Frontend\Controller;
 
 use Ps2alerts\Frontend\Contract\ConfigAwareInterface;
 use Ps2alerts\Frontend\Contract\ConfigAwareTrait;
-use Ps2alerts\Frontend\Contract\EmitterAwareInterface;
-use Ps2alerts\Frontend\Contract\EmitterAwareTrait;
 use Ps2alerts\Frontend\Contract\TemplateAwareInterface;
 use Ps2alerts\Frontend\Contract\TemplateAwareTrait;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
-class MainController implements ConfigAwareInterface, EmitterAwareInterface, TemplateAwareInterface
+class MainController implements ConfigAwareInterface, TemplateAwareInterface
 {
     use ConfigAwareTrait;
-    use EmitterAwareTrait;
     use TemplateAwareTrait;
 
-    public function landing(ServerRequest $request)
+    public function landing(ServerRequestInterface $request, ResponseInterface $response)
     {
-        var_dump('CONFIG SHOULD WORK HERE');
-        var_dump($this);
-        var_dump($this->getConfig());die;
-        return $this->getEmitterDriver()->emit('render.template', [
-            'title' => 'Test',
-            'code'  => 200
-        ]);
+        // NOT WORKING
+        var_dump($this->getConfig());
+        $response->getBody()->write(
+            $this->getTemplateDriver()->render('landing.html')
+        );
+
+        return $response;
     }
 }

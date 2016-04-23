@@ -9,9 +9,7 @@ class ConfigServiceProvider extends AbstractServiceProvider
     /**
      * @var array
      */
-    protected $provides = [
-        'config'
-    ];
+    protected $provides = ['config'];
 
     /**
      * {@inheritdoc}

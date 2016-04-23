@@ -17,6 +17,9 @@ class TemplateServiceProvider extends AbstractServiceProvider
         'Twig_Environment'
     ];
 
+    /**
+     * {@inheritdoc}
+     */
     public function register()
     {
         $config = $this->getContainer()->get('config');

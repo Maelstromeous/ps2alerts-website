@@ -14,11 +14,11 @@ trait ConfigAwareTrait
     /**
      * Sets the Config
      *
-     * @param array $config
+     * @param array $array
      */
-    public function setConfig(array $config)
+    public function setConfig(array $array)
     {
-        $this->config = $config;
+        $this->config = $array;
     }
 
     /**
