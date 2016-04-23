@@ -50,6 +50,10 @@ class TemplateServiceProvider extends AbstractServiceProvider
                 $twig->addGlobal($key, $val);
             }
 
+            // Add current path
+            $request = $this->getContainer()->get('Zend\Diactoros\ServerRequest');
+            $twig->addGlobal('current_path', $request->getServerParams()['REQUEST_URI']);
+
             // Add extensions
             if ($debug === true) {
                 $twig->addExtension(new Twig_Extension_Debug);
