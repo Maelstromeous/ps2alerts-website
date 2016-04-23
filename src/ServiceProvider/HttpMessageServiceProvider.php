@@ -29,7 +29,6 @@ class HttpMessageServiceProvider extends AbstractServiceProvider
             // @todo: Reconfigure for virtual hosts when local box supports it
             if ($config['environment'] === 'development') {
                 $_SERVER['REQUEST_URI']  = str_replace('/ps2alerts/public', '', $_SERVER['REQUEST_URI']);
-                $_SERVER['REDIRECT_URL'] = str_replace('/ps2alerts/public', '', $_SERVER['REDIRECT_URL']);
             }
 
             return ServerRequestFactory::fromGlobals(
