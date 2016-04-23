@@ -16,6 +16,15 @@ app.service('PlayerProfileService', function ($http, $log, ConfigDataService) {
         });
     };
 
+    factory.getConfigData = new Promise(function(resolve, reject) {
+        $http({
+            method : 'GET',
+            url    : ConfigDataService.apiUrl + '/data?embed=facilities,vehicles,weapons,xps'
+        }).then(function(returned) {
+            return resolve(returned.data.data);
+        });
+    });
+
     factory.getProfileData = function(id) {
         return new Promise(function(resolve, reject) {
             $http({
@@ -26,6 +35,10 @@ app.service('PlayerProfileService', function ($http, $log, ConfigDataService) {
             });
         });
     };
+
+    factory.startProcessing = function(data) {
+        console.log('Got data:', data);
+    }
 
     return factory;
 });
