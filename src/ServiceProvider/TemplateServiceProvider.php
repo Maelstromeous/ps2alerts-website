@@ -26,6 +26,7 @@ class TemplateServiceProvider extends AbstractServiceProvider
         $globals = [
             'base_url'  => $config['base_url'],
             'asset_url' => $config['base_url'] . '/assets',
+            'base_path' => $config['base_path'],
             'env'       => $config['environment']
         ];
 
