@@ -29,7 +29,7 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/profiles/player/:id', {
             title: 'Player Profile',
-            templateUrl: 'views/profiles/player.html'
+            templateUrl: 'views/profiles/player/index.html'
         })
         .when('/profiles/outfit/:id', {
             title: 'Outfit Profile',
