@@ -5,7 +5,14 @@ app.controller('PlayerProfileController', function(
     PlayerProfileService
 ) {
     $scope.service = PlayerProfileService;
+    $scope.loaded = false;
 
     // Instantiate the service
     $scope.service.getProfile($routeParams.id);
+
+    $scope.$on('dataLoaded', function() {
+        console.log('event');
+        $scope.loaded = true;
+        $scope.$apply();
+    });
 });
