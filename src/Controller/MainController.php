@@ -16,7 +16,6 @@ class MainController implements ConfigAwareInterface, TemplateAwareInterface
 
     public function landing(ServerRequestInterface $request, ResponseInterface $response)
     {
-        var_dump($this->getConfig());
         $response->getBody()->write(
             $this->getTemplateDriver()->render('landing.html')
         );
