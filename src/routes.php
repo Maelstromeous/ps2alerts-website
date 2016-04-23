@@ -9,8 +9,6 @@ $route = new RouteCollection(
     isset($container) && $container instanceof ContainerInterface ? $container : new Container
 );
 
-$route = new League\Route\RouteCollection;
-
 $route->get('/', 'Ps2alerts\Frontend\Controller\MainController::landing');
 
 return $route;
