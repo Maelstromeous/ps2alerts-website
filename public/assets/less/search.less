@@ -24,6 +24,11 @@
 
         #search-button {
             color: #fff;
+            transition: color .2s ease-out;
+        }
+
+        #search-button:hover {
+            color: @brand-psbOrange;
         }
     }
 
@@ -45,10 +50,12 @@
             top: 0;
             right: 0;
             padding: 12px;
-            color: #a5a5a5;
-            :hover {
-                color: lighten(#a5a5a5, 20%);
-            }
+            color: darken(#fff, 20%);
+            transition: all .2s ease-out;
+        }
+
+        #term-clear:hover {
+            color: @brand-psbOrange;
         }
 
         #term:focus {
