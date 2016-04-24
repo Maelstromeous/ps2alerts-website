@@ -72,7 +72,7 @@ app.service('PlayerProfileService', function(
                     value.name = 'UNKNOWN!';
                 }
             } else {
-                value.name = "Unknown Method";
+                value.name = "Roadkill / Fatality";
             }
         });
     }
