@@ -13,10 +13,10 @@ app.controller('PlayerProfileController', function(
     $scope.service.getProfile($routeParams.id);
 
     $scope.$on('dataLoaded', function() {
-        console.log('event');
         $scope.loaded = true;
         $scope.$apply();
 
+        $scope.changeTitle('Player Profile - ' + $scope.service.data.name);
         $scope.$emit('ga-sync', '#player-profile .ga-event');
 
         $('#alert-list').DataTable({
