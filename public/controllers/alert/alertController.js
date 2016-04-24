@@ -42,6 +42,18 @@ app.controller('AlertController', function(
         // It seems promises causes some issues with Angular. Need to apply the scope to kick it in the nuts.
         $scope.$apply();
 
+        // Alert Countdown
+        if ($scope.alert.details.ended == 0) {
+            var started = $scope.alert.details.started / 1000; // Start time in seconds
+            var end = (started + 5400) * 1000; // Plus 90 minutes, * 1000 for milliseconds
+
+            setTimeout(function() {
+                $('#alert-countdown').countdown(end, function(event) {
+                    $(this).html(event.strftime('%H:%M:%S'));
+                });
+            }, 1000);
+        }
+
         $('#player-leaderboard').DataTable({
             data: $scope.alert.parsed.players,
             columns: [
