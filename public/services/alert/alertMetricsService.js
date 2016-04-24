@@ -97,7 +97,7 @@ app.service('AlertMetricsService', function(
 
         var serverName = ConfigDataService.serverNames[factory.details.server];
 
-        $rootScope.changeTitle('Alert #' + factory.details.id + ' (' + serverName + ' - ' + factory.details.winner.toUpperCase() + ')');
+        $rootScope.changeTitle('Alert #' + factory.details.id + ' (' + factory.details.server + ' - ' + factory.details.winner.toUpperCase() + ')');
 
         factory.metrics = data;
 
