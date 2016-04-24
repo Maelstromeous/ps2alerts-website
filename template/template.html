@@ -12,11 +12,11 @@
         {% else %}
             {% set description = "PS2Alerts is a community resource for tracking all metagame events called \"Alerts\" within the video game of Planetside 2." %}
         {% endif %}
-        <meta name="og:image" content="{{ asset_url }}/img/facebook-share.png" />
-        <meta name="og:url" content="{{ base_url ~ current_path }}" />
-        <meta name="description" content="{{ description }}" />
-        <meta name="og:description" content="{{ description }}" />
-        <meta name="og:type" content="website" />
+        <meta property="og:image" content="{{ asset_url }}/img/facebook-share.png" />
+        <meta property="og:url" content="{{ base_url ~ current_path }}" />
+        <meta property="description" content="{{ description }}" />
+        <meta property="og:description" content="{{ description }}" />
+        <meta property="og:type" content="website" />
         {% block meta %}{% endblock %}
 
         <title ng-bind="title">{% block title %}{% endblock %}</title>
