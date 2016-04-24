@@ -22,6 +22,8 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
             alert.ended       = alert.ended * 1000;
             alert.endedDate   = $filter('date')(alert.ended, 'dd-MMM-yyyy HH:mm:ss');
 
+            console.log(alert.timeBracket);
+
             if (alert.timeBracket == 'TES') {
                 alert.timeBracket = 'Testing';
             } else {

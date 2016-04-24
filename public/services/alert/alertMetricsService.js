@@ -161,8 +161,6 @@ app.service('AlertMetricsService', function(
         var formatted = {
             id:        player.player.id,
             name:      player.player.name,
-            outfit:    outfit.name,
-            outfitTag: outfit.tag,
             faction:   player.player.faction,
             kills:     player.metrics.kills,
             deaths:    player.metrics.deaths,
@@ -170,6 +168,14 @@ app.service('AlertMetricsService', function(
             suicides:  player.metrics.suicides,
             headshots: player.metrics.headshots
         };
+
+        if (outfit) {
+            formatted.outfit    = outfit.name;
+            formatted.outfitTag = outfit.tag;
+        } else {
+            formatted.outfit    = 'UNKNOWN',
+            formatted.outfitTag = null;
+        }
 
         // Set faction abrivation
         formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
