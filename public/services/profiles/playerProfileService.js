@@ -17,7 +17,7 @@ app.service('PlayerProfileService', function(
             factory.getConfigData,
             factory.getProfileData(id)
         ]).then(function(result) {
-            console.log('Promise completed', result);
+            //console.log('Promise completed', result);
             factory.configData = result[0];
             // FIRE
             factory.startProcessing(result[1]);
@@ -56,9 +56,6 @@ app.service('PlayerProfileService', function(
 
         factory.parseWeapons();
         factory.parseVehicles();
-
-        console.log(factory);
-
         $rootScope.$broadcast('dataLoaded', 'loaded');
     }
 

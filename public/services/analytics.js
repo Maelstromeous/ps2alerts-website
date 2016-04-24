@@ -11,8 +11,6 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
         $(els).each(function(index, el) {
             factory.registerGAEventSingle(el);
         });
-
-        //console.log('registered', factory.registry);
     };
 
     // Registers a Google Analytics Event with the DOM then adds it to the registry
@@ -20,8 +18,7 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
         var registered = $(el).attr('registered');
 
         // Prevent adding another registration, also checks if the element exists
-        if (registered != 1) {
-            //console.log('Registering single GA', el);
+        if (registered != 1) {;
             var campaign = $(el).attr('ga-campaign');
             var action = $(el).attr('ga-action');
             var label = $(el).attr('ga-label');
@@ -74,7 +71,6 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
 
     // Listener for the event. Supplied with a identifier (e.g. '.ga-event')
     $rootScope.$on('ga-sync', function(event, identifier) {
-        //console.log('Root Scope received ga-sync:', identifier);
         factory.registerGAEventClass(identifier);
     });
 });

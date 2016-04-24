@@ -12,20 +12,13 @@ app.service('SearchService', function(ConfigDataService, $http, $rootScope) {
         factory.searching = true;
         factory.noresults = false;
 
-        console.log('search', ConfigDataService.apiUrl + '/search/' + type + '/' + term);
-
         $http({
             method : 'GET',
             url    : ConfigDataService.apiUrl + '/search/' + type + '/' + term
         }).then(function(returned) {
             var data = returned.data.data;
             factory.searching = false;
-
-            console.log('returned', data);
-
             if (data.length > 0) {
-                console.log('returned', data);
-
                 angular.forEach(data, function(row) {
                     row.server = ConfigDataService.serverNames[row.server];
                     row.factionAbv = ConfigDataService.convertFactionIntToName(row.faction);
@@ -35,7 +28,6 @@ app.service('SearchService', function(ConfigDataService, $http, $rootScope) {
             }
 
             $rootScope.$broadcast('showSearchResults', 'loaded');
-            console.log(factory.results);
         }, function(error) {
             console.log('Error!', error);
             factory.results = [];

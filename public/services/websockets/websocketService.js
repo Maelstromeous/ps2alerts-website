@@ -15,14 +15,11 @@ app.service('WebsocketService', function(
     factory.actives = {};
 
     factory.initWebSocket = function() {
-        console.log('Connecting websocket...');
-
         $("#websocket-status").removeClass().addClass('websocket-connecting');
 
         factory.webSocket = new WebSocket('ws://ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393');
 
         factory.webSocket.onopen = function () {
-            console.log('Websocket Connected');
             factory.authenticate();
             factory.checkMiddleman();
         };
@@ -35,22 +32,18 @@ app.service('WebsocketService', function(
         factory.webSocket.onclose = function() {
             $("#websocket-status").removeClass().addClass('websocket-disconnected');
             setTimeout(function() {
-                console.log("Websocket Connection Lost... Reconnecting");
                 return factory.initWebSocket();
             }, 2500);
         };
     };
 
     factory.authenticate = function () {
-        console.log('Authenticating...');
         factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
         $("#websocket-status").removeClass().addClass('websocket-connected');
     };
 
     factory.checkMiddleman = function () {
-        console.log('Checking middleman...');
         factory.webSocket.send('{"payload":{"action":"middlemanStatus"}}');
-        console.log('Sent middleman...');
     };
 
     factory.parse = function(rawMessage) {
@@ -201,7 +194,6 @@ app.service('WebsocketService', function(
     };
 
     factory.parseMiddleman = function(message) {
-        console.log('middleman value', message);
         if (message.value == '0') {
             $("#websocket-status").removeClass().addClass('websocket-middleman-fail');
 
