@@ -1,4 +1,4 @@
-<section ng-controller="PlayerProfileController">
+<section ng-controller="PlayerProfileController" id="player-profile">
     <div class="sk-three-bounce" ng-show="!loaded">
         <div class="sk-child sk-bounce1"></div>
         <div class="sk-child sk-bounce2"></div>
@@ -56,26 +56,38 @@
                 </p>
                 <a
                     href="http://stats.dasanfall.com/ps2/player/{{ service.data.name }}"
-                    class="waves-effect waves-light btn"
-                    target="_blank">
+                    class="waves-effect waves-light btn ga-event"
+                    target="_blank"
+                    ga-campaign="Profiles - Players"
+                    ga-action="External Links"
+                    ga-label="Dasanfall">
                     Dasanfall <i class="fa fa-link"></i>
                 </a>
                 <a
                     href="http://ps2.fisu.pw/player/?name={{ service.data.name | lowercase }}"
-                    class="waves-effect waves-light btn"
-                    target="_blank">
+                    class="waves-effect waves-light btn ga-event"
+                    target="_blank"
+                    ga-campaign="Profiles - Players"
+                    ga-action="External Links"
+                    ga-label="Fisu">
                     Fisu <i class="fa fa-link"></i>
                 </a>
                 <a
                     href="http://www.voidwell.com/#/ps2/player/{{ service.data.id }}"
-                    class="waves-effect waves-light btn"
-                    target="_blank">
+                    class="waves-effect waves-light btn ga-event"
+                    target="_blank"
+                    ga-campaign="Profiles - Players"
+                    ga-action="External Links"
+                    ga-label="Voidwell">
                     Voidwell <i class="fa fa-link"></i>
                 </a>
                 <a
                     href="https://www.planetside2.com/players/#!/{{ service.data.id }}"
-                    class="waves-effect waves-light btn"
-                    target="_blank">
+                    class="waves-effect waves-light btn ga-event"
+                    target="_blank"
+                    ga-campaign="Profiles - Players"
+                    ga-action="External Links"
+                    ga-label="Planetside 2">
                     PS2 Players <i class="fa fa-link"></i>
                 </a>
             </div>

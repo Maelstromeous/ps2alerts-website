@@ -17,6 +17,8 @@ app.controller('PlayerProfileController', function(
         $scope.loaded = true;
         $scope.$apply();
 
+        $scope.$emit('ga-sync', '#player-profile .ga-event');
+
         $('#alert-list').DataTable({
             data: $scope.service.data.involvement.data,
             columns: [
