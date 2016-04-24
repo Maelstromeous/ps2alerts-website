@@ -58,7 +58,12 @@
             <div ng-repeat="(id, alert) in websocket.actives">
                 <div class="row monitor-row center-align" id="monitor-{{id}}">
                     <div class="col s4 m2">
-                        <a href="{{config.baseUrl}}/alert/{{alert.id}}">
+                        <a
+                            href="{{config.baseUrl}}/alert/{{alert.id}}"
+                            class="ga-event"
+                            ga-campaign="Real Time Monitor"
+        					ga-action="Alert Click"
+                            ga-label="{{id}}">
                             {{config.serverNames[alert.server]}}
                         </a>
                     </div>

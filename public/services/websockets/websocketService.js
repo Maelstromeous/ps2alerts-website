@@ -118,6 +118,7 @@ app.service('WebsocketService', function(
             }, 1);
 
             $rootScope.$apply();
+            $rootScope.$emit('ga-sync', '#alert-monitor #monitor-'+alert.id+' .ga-event');
         });
     };
 
