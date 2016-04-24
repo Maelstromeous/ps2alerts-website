@@ -81,4 +81,21 @@ class MainController implements ConfigAwareInterface, TemplateAwareInterface
 
         return $response;
     }
+
+    /**
+     * Alert Pages
+     *
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface      $response
+     *
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    public function changeLog(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $response->getBody()->write(
+            $this->getTemplateDriver()->render('change-log.html')
+        );
+
+        return $response;
+    }
 }

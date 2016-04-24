@@ -14,5 +14,6 @@ $route->get('/about', 'Ps2alerts\Frontend\Controller\MainController::about');
 $route->get('/alert-history', 'Ps2alerts\Frontend\Controller\MainController::alertHistory');
 $route->get('/alert/{id:number}', 'Ps2alerts\Frontend\Controller\MainController::alert');
 $route->get('/profiles/player/{id:number}', 'Ps2alerts\Frontend\Controller\ProfileController::player');
+$route->get('/change-log', 'Ps2alerts\Frontend\Controller\MainController::changeLog');
 
 return $route;

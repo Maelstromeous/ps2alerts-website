@@ -45,3 +45,13 @@ h4 {
 p {
     font-size: 1em;
 }
+
+// Hackaround for Materalize's disabling of ul list-style-type (god knows why thats there)
+.enable-bullets {
+    list-style-type: disc;
+
+    li {
+        list-style-type: disc;
+        margin-left: @margin-base;
+    }
+}
