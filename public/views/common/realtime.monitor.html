@@ -58,7 +58,9 @@
             <div ng-repeat="(id, alert) in websocket.actives">
                 <div class="row monitor-row center-align" id="monitor-{{id}}">
                     <div class="col s4 m2">
-                        {{config.serverNames[alert.server]}}
+                        <a href="{{config.baseUrl}}/alert/{{alert.id}}">
+                            {{config.serverNames[alert.server]}}
+                        </a>
                     </div>
                     <div class="col s4 m2">
                         {{config.zoneNames[alert.zone]}}
