@@ -55,7 +55,7 @@ app.controller('PlayerProfileController', function(
             searching:      true
         });
 
-        $('#vehicle-list').DataTable({
+        /*$('#vehicle-list').DataTable({
             data: $scope.service.data.vehicles.data,
             columns: [
                 { data: 'name', title: 'Vehicle', className: 'name'},
@@ -72,6 +72,6 @@ app.controller('PlayerProfileController', function(
             scrollCollapse: true,
             scroller:       true,
             searching:      true
-        });
+        });*/
     });
 });

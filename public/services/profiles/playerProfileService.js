@@ -55,7 +55,7 @@ app.service('PlayerProfileService', function(
         factory.metrics.deathsPerAlert = (data.metrics.data.deaths / data.metrics.data.involved).toFixed(2);
 
         factory.parseWeapons();
-        factory.parseVehicles();
+        //factory.parseVehicles();
         $rootScope.$broadcast('dataLoaded', 'loaded');
     };
 
