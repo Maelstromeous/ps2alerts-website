@@ -29,11 +29,15 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/profiles/player/:id', {
             title: 'Player Profile',
-            templateUrl: 'views/profiles/player.html'
+            templateUrl: 'views/profiles/player/index.html'
         })
         .when('/profiles/outfit/:id', {
             title: 'Outfit Profile',
             templateUrl: 'views/profiles/outfit.html'
+        })
+        .when('/change-log', {
+            title: 'Change Log',
+            templateUrl: 'views/change-log/index.html'
         })
         .otherwise({
             title: 'Not found!',

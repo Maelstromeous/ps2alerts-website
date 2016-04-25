@@ -3,6 +3,10 @@
     margin-right: 0.75rem;
 }
 
+#alert-info {
+    background-color: @card-blue-grey;
+}
+
 .tab-container {
     .indicator {
         display: none;
@@ -14,35 +18,6 @@
 
     .leaderboards .card {
         margin-top: 0;
-    }
-
-    table.dataTable .metric {
-        text-align: center;
-    }
-
-    // Careful with this one, will cause lots of positioning issues if incorrect
-    table.dataTable thead td,
-    table.dataTable thead th,
-    table.dataTable td {
-        padding: 5px;
-    }
-
-    table.dataTable tbody tr.even {
-        background-color: @table-striped;
-    }
-
-    table.dataTable tbody .sorting_1 {
-        background-color: lighten(@table-striped, 2%);
-    }
-
-    .dataTables_wrapper .dataTables_filter {
-        float: none;
-        text-align: left;
-    }
-
-    .dataTables_wrapper .dataTables_filter input {
-        margin-left: 0;
-        margin-right: 0.5em;
     }
 
     .times {

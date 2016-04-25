@@ -19,7 +19,7 @@
   "dependencies": {
     "angular-route": "^1.5",
     "SpinKit": "spinkit#~1.2.5",
-    "jquery.countdown": "^2.1",
+    "jquery.countdown": "~2.1.0",
     "highcharts-ng": "^0.0",
     "lodash": "^4",
     "datatables.net": "^1.10.11",

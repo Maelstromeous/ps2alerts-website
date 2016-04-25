@@ -14,14 +14,24 @@ app.controller('SearchController', function($scope, SearchService) {
         }
     };
 
+    $scope.show = function() {
+        if ($scope.service.results.length > 0) {
+            $("#search-results").fadeIn();
+        }
+    };
+
     $scope.hide = function() {
-        $scope.service.results = [];
-        $scope.term = '';
         $("#search-results").fadeOut();
     };
 
+    $scope.clear = function () {
+        $scope.hide();
+        $scope.service.results = [];
+        $scope.term = '';
+    }
+
     $scope.$watch('type', function() {
-        $scope.placeholder = 'Search ' + _.capitalize($scope.type) + 's';
+        $scope.placeholder = 'Search ' + _.capitalize($scope.type) + ' Profiles';
     });
 
     $scope.$on('showSearchResults', function() {

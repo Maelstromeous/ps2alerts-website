@@ -6,3 +6,5 @@ public/assets/css/main.css
 public/assets/js/main.js
 deps.js
 config.js
+vendor/
+composer.lock
