@@ -30,7 +30,7 @@ app.controller('PlayerProfileController', function(
             ],
             order:          [0, 'desc'],
             deferRender:    true,
-            scrollY:        450,
+            scrollY:        532,
             scrollCollapse: true,
             scroller:       true,
             searching:      false,
