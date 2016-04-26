@@ -37,7 +37,7 @@ app.service('PlayerProfileService', function(
         return new Promise(function(resolve, reject) {
             $http({
                 method : 'GET',
-                url    : ConfigDataService.apiUrl + '/profiles/player/' + id + '?embed=census,metrics,outfit,involvement,vehicles,weapons'
+                url    : ConfigDataService.apiUrl + '/profiles/player/' + id + '?embed=census,metrics,outfit,involvement,weapons'
             }).then(function(returned) {
                 return resolve(returned.data.data);
             });
@@ -55,9 +55,9 @@ app.service('PlayerProfileService', function(
         factory.metrics.deathsPerAlert = (data.metrics.data.deaths / data.metrics.data.involved).toFixed(2);
 
         factory.parseWeapons();
-        factory.parseVehicles();
+        //factory.parseVehicles();
         $rootScope.$broadcast('dataLoaded', 'loaded');
-    }
+    };
 
     factory.parseWeapons = function(data) {
         _.forEach(factory.data.weapons.data, function(value, key) {
@@ -72,10 +72,10 @@ app.service('PlayerProfileService', function(
                     value.name = 'UNKNOWN!';
                 }
             } else {
-                value.name = "Unknown Method";
+                value.name = "Roadkill / Fatality";
             }
         });
-    }
+    };
 
     factory.parseVehicles = function(data) {
         var newVehicles = [];
@@ -111,7 +111,7 @@ app.service('PlayerProfileService', function(
 
         // Replace vehicles with new flattened objects for Datatable use
         factory.data.vehicles.data = newVehicles;
-    }
+    };
 
     // Calculate KD
     factory.returnKD = function(data) {
