@@ -45,7 +45,6 @@ app.controller('AlertHistoryController', function(
     };
 
     $scope.toggleFilters = function(type, selection) {
-        console.log(type);
         $scope.initCheck(type);
 
         var index = $scope.filters[type].indexOf(selection);

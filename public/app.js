@@ -46,8 +46,15 @@ app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 });
 
-app.run(function($rootScope, AnalyticsService) {
+app.run(function($rootScope, $templateCache, AnalyticsService) {
     var analytics = AnalyticsService;
+
+    // Disable cache on view files
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        if (typeof(current) !== 'undefined'){
+            $templateCache.remove(current.templateUrl);
+        }
+    });
 
     $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.$$route.title + ' - PS2Alerts';

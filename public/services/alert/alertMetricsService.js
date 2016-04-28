@@ -85,7 +85,6 @@ app.service('AlertMetricsService', function(
             factory.getConfigData,
             factory.getAlertData(alertID)
         ]).then(function(result) {
-            console.log('Promise completed', result);
             factory.configData = result[0];
             // FIRE
             factory.startProcessing(result[1]);
@@ -144,8 +143,7 @@ app.service('AlertMetricsService', function(
         });
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
-
-        console.log(factory);
+        //console.log(factory);
     };
 
     // Function to add new players to various areas, grabbing new data from Census

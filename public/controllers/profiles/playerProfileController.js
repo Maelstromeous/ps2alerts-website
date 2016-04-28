@@ -16,6 +16,7 @@ app.controller('PlayerProfileController', function(
         $scope.loaded = true;
         $scope.$apply();
 
+        $scope.changeTitle('Player Profile - ' + $scope.service.data.name);
         $scope.$emit('ga-sync', '#player-profile .ga-event');
 
         $('#alert-list').DataTable({
@@ -29,7 +30,7 @@ app.controller('PlayerProfileController', function(
             ],
             order:          [0, 'desc'],
             deferRender:    true,
-            scrollY:        450,
+            scrollY:        532,
             scrollCollapse: true,
             scroller:       true,
             searching:      false,
