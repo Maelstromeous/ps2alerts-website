@@ -55,12 +55,10 @@ app.service('PlayerProfileService', function(
         factory.metrics.deathsPerAlert = (data.metrics.data.deaths / data.metrics.data.involved).toFixed(2);
 
         factory.parseWeapons();
-        factory.parseVehicles();
-
-        console.log(factory);
+        //factory.parseVehicles();
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
-    }
+    };
 
     factory.parseWeapons = function(data) {
         _.forEach(factory.data.weapons.data, function(value, key) {
@@ -78,7 +76,7 @@ app.service('PlayerProfileService', function(
                 value.name = "Unknown Method";
             }
         });
-    }
+    };
 
     factory.parseVehicles = function(data) {
         var newVehicles = [];
@@ -114,7 +112,7 @@ app.service('PlayerProfileService', function(
 
         // Replace vehicles with new flattened objects for Datatable use
         factory.data.vehicles.data = newVehicles;
-    }
+    };
 
     // Calculate KD
     factory.returnKD = function(data) {

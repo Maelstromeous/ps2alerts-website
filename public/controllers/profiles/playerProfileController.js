@@ -13,7 +13,6 @@ app.controller('PlayerProfileController', function(
     $scope.service.getProfile($routeParams.id);
 
     $scope.$on('dataLoaded', function() {
-        console.log('event');
         $scope.loaded = true;
         $scope.$apply();
 
@@ -55,6 +54,7 @@ app.controller('PlayerProfileController', function(
             searching:      true
         });
 
+        /* Removed due to crap data
         $('#vehicle-list').DataTable({
             data: $scope.service.data.vehicles.data,
             columns: [
@@ -73,5 +73,6 @@ app.controller('PlayerProfileController', function(
             scroller:       true,
             searching:      true
         });
+        */
     });
 });
