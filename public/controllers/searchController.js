@@ -28,7 +28,7 @@ app.controller('SearchController', function($scope, SearchService) {
         $scope.hide();
         $scope.service.results = [];
         $scope.term = '';
-    }
+    };
 
     $scope.$watch('type', function() {
         $scope.placeholder = 'Search ' + _.capitalize($scope.type) + ' Profiles';
