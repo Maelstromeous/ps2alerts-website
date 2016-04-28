@@ -2,7 +2,9 @@
     <div class="card card-{{ service.data.factionAbv }}">
         <div class="card-content center-align">
             <h2>
-                {{ service.data.outfit.data.name }}
+                <a href="profiles/outfit/{{ service.data.outfit.data.id }}">
+                    {{ service.data.outfit.data.name }}
+                </a>
             </h2>
             <p class="caption">
                 Outfit
