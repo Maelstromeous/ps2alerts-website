@@ -37,7 +37,7 @@ app.service('PlayerProfileService', function(
         return new Promise(function(resolve, reject) {
             $http({
                 method : 'GET',
-                url    : ConfigDataService.apiUrl + '/profiles/player/' + id + '?embed=census,metrics,outfit,involvement,vehicles,weapons'
+                url    : ConfigDataService.apiUrl + '/profiles/player/' + id + '?embed=census,metrics,outfit,involvement,weapons'
             }).then(function(returned) {
                 return resolve(returned.data.data);
             });
