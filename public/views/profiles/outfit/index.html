@@ -24,8 +24,17 @@
                 </a>
             </p>
         </div>
-        <div class="col s12 no-padding">
+        <div class="col m8 s12 no-padding">
             <div ng-include="'views/profiles/outfit/stats.html'"></div>
+        </div>
+        <div class="col m4 s12">
+            <h4 class="center-align">
+                {{ service.data.metrics.data.involved }} Alerts recorded for this outfit
+            </h4>
+            <p class="caption center-align">
+                Please note, some very old alerts (less than ID 5,000) may not be fully compatible with the site, as new data was added since.
+            </p>
+            <table id="alert-list"></table>
         </div>
         <div class="row row-no-margin">
             <div class="col s12 center-align">
@@ -71,47 +80,34 @@
             </div>
         </div>
         <div class="row row-no-margin">
-            <div class="col m4 s12">
+            <div class="col m6 s12">
                 <h2 class="center-align">
                     Players
                 </h2>
                 <h4 class="center-align">
-                    {{ service.data.players.data.length }} Players detected in this outfit
+                    {{ service.data.players.data.length }} players detected playing alerts
                 </h4>
                 <p class="caption center-align">
-                    Only shows current members in the outfit <br /><br />
+                    Only shows current members in the outfit
                 </p>
                 <table id="player-list"></table>
             </div>
-            <div class="col m4 s12">
+            <div class="col m6 s12">
                 <h2 class="center-align">
                     Facility Captures
                 </h2>
                 <h4 class="center-align">
-                    {{ service.data.captures }} captures or defences
+                    {{ service.metrics.captures | number: 0 }} captures and {{ service.metrics.defences | number: 0 }} defences recorded
                 </h4>
                 <p class="caption center-align">
                     Defence values are inflated due to the way the game calculates a defence. <a
                         href="#"
                         class="tooltipped"
                         data-tooltip="To the games API, a defence is counted whenever a facility has no countdown or has all points secured. e.g. 3 point base, enemy flips a single point. Point flips back. Counts as a defence."
-                        data-position="top"
-                    >
+                        data-position="top">
                         Hover for info</a>.
                 </p>
                 <table id="facility-list"></table>
-            </div>
-            <div class="col m4 s12">
-                <h2 class="center-align">
-                    Alerts Involved
-                </h2>
-                <h4 class="center-align">
-                    {{ service.data.metrics.data.involved }} Alerts recorded for this outfit
-                </h4>
-                <p class="caption center-align">
-                    Please note, some very old alerts (less than ID 5,000) may not be fully compatible with the site, as new data was added since.
-                </p>
-                <table id="alert-list"></table>
             </div>
         </div>
     </div>

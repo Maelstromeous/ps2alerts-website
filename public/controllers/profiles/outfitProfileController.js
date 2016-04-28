@@ -46,7 +46,9 @@ app.controller('OutfitProfileController', function(
             columns: [
                 { data: 'name', title: 'Facility', className: 'name' },
                 { data: 'captures', title: 'Captures', className: 'metric center-align' },
-                { data: 'defences', title: 'Defences', className: 'metric center-align' }
+                { data: 'defences', title: 'Defences', className: 'metric center-align' },
+                { data: 'zone', title: 'Continent', className: 'center-align' },
+                { data: 'type', title: 'Type', className: 'center-align' }
             ],
             order:          [1, 'desc'],
             deferRender:    true,
@@ -67,7 +69,7 @@ app.controller('OutfitProfileController', function(
             ],
             order:          [0, 'desc'],
             deferRender:    true,
-            scrollY:        535,
+            scrollY:        355,
             scrollCollapse: true,
             scroller:       true,
             searching:      false,
