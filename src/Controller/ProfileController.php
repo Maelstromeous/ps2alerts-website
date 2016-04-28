@@ -15,7 +15,7 @@ class ProfileController implements ConfigAwareInterface, TemplateAwareInterface
     use TemplateAwareTrait;
 
     /**
-     * Landing Page
+     * Player Profile Page
      *
      * @param  ServerRequestInterface $request
      * @param  ResponseInterface      $response
@@ -26,6 +26,23 @@ class ProfileController implements ConfigAwareInterface, TemplateAwareInterface
     {
         $response->getBody()->write(
             $this->getTemplateDriver()->render('profiles/player.html')
+        );
+
+        return $response;
+    }
+
+    /**
+     * Outfit Profile Page
+     *
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface      $response
+     *
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    public function outfit(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $response->getBody()->write(
+            $this->getTemplateDriver()->render('profiles/outfit.html')
         );
 
         return $response;

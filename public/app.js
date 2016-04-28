@@ -33,7 +33,7 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/profiles/outfit/:id', {
             title: 'Outfit Profile',
-            templateUrl: 'views/profiles/outfit.html'
+            templateUrl: 'views/profiles/outfit/index.html'
         })
         .when('/change-log', {
             title: 'Change Log',
