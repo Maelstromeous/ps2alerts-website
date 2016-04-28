@@ -1,17 +1,53 @@
-<div class="col m4 s12">
-    <div class="card card-{{ service.data.factionAbv }}">
+<div class="col m3 s6">
+    <div class="card blue-grey darken-3">
         <div class="card-content center-align">
             <h2>
-                <a href="{{ config.baseUrl }}/profiles/outfit/{{ service.data.outfit.data.id }}">
-                    {{ service.data.outfit.data.name }}
-                </a>
+                {{ service.data.metrics.data.kills | number: 0 }}
             </h2>
             <p class="caption">
-                Outfit
+                Kills
             </p>
         </div>
     </div>
 </div>
+<div class="col m3 s6">
+    <div class="card blue-grey darken-3">
+        <div class="card-content center-align">
+            <h2>
+                {{ service.data.metrics.data.deaths | number: 0}}
+            </h2>
+            <p class="caption">
+                Deaths
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="col m2 s6">
+    <div class="card blue-grey darken-3">
+        <div class="card-content center-align">
+            <h2>
+                {{ service.data.metrics.data.teamkills | number: 0}}
+            </h2>
+            <p class="caption">
+                Teamkills
+            </p>
+        </div>
+    </div>
+</div>
+<div class="col m2 s6">
+    <div class="card blue-grey darken-3">
+        <div class="card-content center-align">
+            <h2>
+                {{ service.data.metrics.data.suicides | number: 0}}
+            </h2>
+            <p class="caption">
+                Suicides
+            </p>
+        </div>
+    </div>
+</div>
+
 <div class="col m2 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
@@ -20,30 +56,6 @@
             </h2>
             <p class="caption">
                 Server
-            </p>
-        </div>
-    </div>
-</div>
-<div class="col m2 s6">
-    <div class="card blue-grey darken-3">
-        <div class="card-content center-align">
-            <h2>
-                {{ service.data.metrics.data.kills }}
-            </h2>
-            <p class="caption">
-                Kills
-            </p>
-        </div>
-    </div>
-</div>
-<div class="col m2 s6">
-    <div class="card blue-grey darken-3">
-        <div class="card-content center-align">
-            <h2>
-                {{ service.data.metrics.data.deaths }}
-            </h2>
-            <p class="caption">
-                Deaths
             </p>
         </div>
     </div>
@@ -64,10 +76,10 @@
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
             <h2>
-                {{ service.data.metrics.data.teamkills }}
+                {{ service.data.players.data.length | number: 0 }}
             </h2>
             <p class="caption">
-                Teamkills
+                Member Count
             </p>
         </div>
     </div>
@@ -76,35 +88,10 @@
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
             <h2>
-                {{ service.data.metrics.data.suicides }}
+                {{ service.data.involvement.data.length | number: 0 }}
             </h2>
             <p class="caption">
-                Suicides
-            </p>
-        </div>
-    </div>
-</div>
-
-<div class="col m2 s6">
-    <div class="card blue-grey darken-3">
-        <div class="card-content center-align">
-            <h2>
-                {{ service.data.metrics.data.headshots }}
-            </h2>
-            <p class="caption">
-                Headshots
-            </p>
-        </div>
-    </div>
-</div>
-<div class="col m2 s6">
-    <div class="card blue-grey darken-3">
-        <div class="card-content center-align">
-            <h2>
-                {{ service.data.census.data.battleRank.current }}
-            </h2>
-            <p class="caption">
-                Battle Rank
+                # Alerts
             </p>
         </div>
     </div>
@@ -129,6 +116,18 @@
             </h2>
             <p class="caption">
                 Avg Deaths / Alert
+            </p>
+        </div>
+    </div>
+</div>
+<div class="col m2 s6">
+    <div class="card blue-grey darken-3">
+        <div class="card-content center-align">
+            <h2>
+                {{ service.data.captures | number: 0 }}
+            </h2>
+            <p class="caption">
+                Base Captures
             </p>
         </div>
     </div>
