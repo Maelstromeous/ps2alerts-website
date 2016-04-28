@@ -66,12 +66,6 @@ app.service('OutfitProfileService', function(
         factory.metrics.defences = 0;
 
         _.forEach(factory.data.facilities.data, function(value, key) {
-            if (value.defence === 1) {
-
-            } else {
-
-            }
-
             factory.metrics.defences += value.defences;
             factory.metrics.captures += value.captures;
 

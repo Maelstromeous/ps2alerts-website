@@ -69,7 +69,7 @@ app.controller('OutfitProfileController', function(
             ],
             order:          [0, 'desc'],
             deferRender:    true,
-            scrollY:        355,
+            scrollY:        354,
             scrollCollapse: true,
             scroller:       true,
             searching:      false,
