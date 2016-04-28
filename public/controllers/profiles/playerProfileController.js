@@ -25,7 +25,7 @@ app.controller('PlayerProfileController', function(
                 { data: 'id', title: 'ID', className: 'id center-align' },
                 { data: 'kills', title: 'Kills', className: 'metric center-align' },
                 { data: 'deaths', title: 'Deaths', className: 'metric center-align' },
-                { data: 'teamkills' , title: 'TeamKills', className: 'metric center-align' },
+                { data: 'teamkills' , title: 'TKs', className: 'metric center-align' },
                 { data: 'suicides' , title: 'Suicides', className: 'metric center-align' }
             ],
             order:          [0, 'desc'],
@@ -45,7 +45,7 @@ app.controller('PlayerProfileController', function(
                 { data: 'name', title: 'Weapon', className: 'name'},
                 { data: 'kills', title: 'Kills', className: 'metric center-align' },
                 { data: 'headshots', title: 'Headshots', className: 'metric center-align' },
-                { data: 'teamkills' , title: 'Teamkills', className: 'metric center-align' }
+                { data: 'teamkills' , title: 'TKs', className: 'metric center-align' }
             ],
             order:          [1, 'desc'],
             deferRender:    true,

@@ -25,7 +25,7 @@ app.controller('OutfitProfileController', function(
                 { data: 'name', title: 'Player', className: 'player' },
                 { data: 'kills', title: 'Kills', className: 'metric center-align' },
                 { data: 'deaths', title: 'Deaths', className: 'metric center-align' },
-                { data: 'teamkills', title: 'TeamKills', className: 'metric center-align' },
+                { data: 'teamkills', title: 'TKs', className: 'metric center-align' },
                 { data: 'suicides', title: 'Suicides', className: 'metric center-align' },
                 { data: 'headshots', title: 'Headshots', className: 'metric center-align' },
                 { data: 'id', visible: false }
@@ -64,7 +64,7 @@ app.controller('OutfitProfileController', function(
                 { data: 'id', title: 'ID', className: 'id center-align' },
                 { data: 'kills', title: 'Kills', className: 'metric center-align' },
                 { data: 'deaths', title: 'Deaths', className: 'metric center-align' },
-                { data: 'teamkills', title: 'TeamKills', className: 'metric center-align' },
+                { data: 'teamkills', title: 'TKs', className: 'metric center-align' },
                 { data: 'suicides', title: 'Suicides', className: 'metric center-align' }
             ],
             order:          [0, 'desc'],
