@@ -37,7 +37,7 @@ app.service('OutfitProfileService', function(
         return new Promise(function(resolve, reject) {
             $http({
                 method : 'GET',
-                url    : ConfigDataService.apiUrl + '/profiles/outfit/' + id + '?embed=metrics,involvement,players'
+                url    : ConfigDataService.apiUrl + '/profiles/outfit/' + id + '?embed=facilities,metrics,involvement,players'
             }).then(function(returned) {
                 return resolve(returned.data.data);
             });
@@ -54,9 +54,32 @@ app.service('OutfitProfileService', function(
         factory.metrics.killsPerAlert = (data.metrics.data.kills / data.metrics.data.involved).toFixed(2);
         factory.metrics.deathsPerAlert = (data.metrics.data.deaths / data.metrics.data.involved).toFixed(2);
 
+        factory.processCaptures();
+
         console.log(factory);
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
+    };
+
+    factory.processCaptures = function() {
+        _.forEach(factory.data.facilities.data, function(value, key) {
+            if (value.id !== 0) {
+                var ref = _.findIndex(
+                    factory.configData.facilities.data, { 'id' : value.id }
+                );
+
+                if (ref >= 0) {
+                    value.name = factory.configData.facilities.data[ref].name;
+                    value.type = factory.configData.facilities.data[ref].type;
+                } else {
+                    value.name = 'UNKNOWN!';
+                    value.type = null;
+                }
+            } else {
+                value.name = "UNKNOWN!!";
+                value.type = null;
+            }
+        });
     };
 
     // Calculate KD

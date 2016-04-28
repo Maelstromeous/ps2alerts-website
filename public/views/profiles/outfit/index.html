@@ -71,19 +71,7 @@
             </div>
         </div>
         <div class="row row-no-margin">
-            <div class="col m6 s12">
-                <h2 class="center-align">
-                    Alerts Involved
-                </h2>
-                <h4 class="center-align">
-                    {{ service.data.metrics.data.involved }} Alerts recorded for this outfit
-                </h4>
-                <p class="caption center-align">
-                    Please note, some very old alerts (less than ID 5,000) may not be fully compatible with the site, as new data was added since.
-                </p>
-                <table id="alert-list"></table>
-            </div>
-            <div class="col l6 m6 s12">
+            <div class="col m4 s12">
                 <h2 class="center-align">
                     Players
                 </h2>
@@ -94,6 +82,36 @@
                     Only shows current members in the outfit <br /><br />
                 </p>
                 <table id="player-list"></table>
+            </div>
+            <div class="col m4 s12">
+                <h2 class="center-align">
+                    Facility Captures
+                </h2>
+                <h4 class="center-align">
+                    {{ service.data.captures }} captures or defences
+                </h4>
+                <p class="caption center-align">
+                    Defence values are inflated due to the way the game calculates a defence. <a
+                        href="#"
+                        class="tooltipped"
+                        data-tooltip="To the games API, a defence is counted whenever a facility has no countdown or has all points secured. e.g. 3 point base, enemy flips a single point. Point flips back. Counts as a defence."
+                        data-position="top"
+                    >
+                        Hover for info</a>.
+                </p>
+                <table id="facility-list"></table>
+            </div>
+            <div class="col m4 s12">
+                <h2 class="center-align">
+                    Alerts Involved
+                </h2>
+                <h4 class="center-align">
+                    {{ service.data.metrics.data.involved }} Alerts recorded for this outfit
+                </h4>
+                <p class="caption center-align">
+                    Please note, some very old alerts (less than ID 5,000) may not be fully compatible with the site, as new data was added since.
+                </p>
+                <table id="alert-list"></table>
             </div>
         </div>
     </div>

@@ -19,26 +19,6 @@ app.controller('OutfitProfileController', function(
 
         $scope.$emit('ga-sync', '#outfit-profile .ga-event');
 
-        $('#alert-list').DataTable({
-            data: $scope.service.data.involvement.data,
-            columns: [
-                { data: 'id', title: 'ID', className: 'id center-align' },
-                { data: 'kills', title: 'Kills', className: 'metric center-align' },
-                { data: 'deaths', title: 'Deaths', className: 'metric center-align' },
-                { data: 'teamkills', title: 'TeamKills', className: 'metric center-align' },
-                { data: 'suicides', title: 'Suicides', className: 'metric center-align' }
-            ],
-            order:          [0, 'desc'],
-            deferRender:    true,
-            scrollY:        450,
-            scrollCollapse: true,
-            scroller:       true,
-            searching:      false,
-            "rowCallback": function( row, data, index ) {
-                $('.id', row).html('<a href="alert/' + data.id + '">' + data.id + '</a>');
-            }
-        });
-
         $('#player-list').DataTable({
             data: $scope.service.data.players.data,
             columns: [
@@ -60,5 +40,46 @@ app.controller('OutfitProfileController', function(
                 $('.player', row).html('<a href="profiles/player/' + data.id + '">' + data.name + '</a>');
             }
         });
+
+        $('#facility-list').DataTable({
+            data: $scope.service.data.facilities.data,
+            columns: [
+                { data: 'name', title: 'Facility', className: 'name' },
+                { data: 'captures', title: 'Captures', className: 'metric center-align' },
+                { data: 'defences', title: 'Defences', className: 'metric center-align' }
+            ],
+            order:          [1, 'desc'],
+            deferRender:    true,
+            scrollY:        450,
+            scrollCollapse: true,
+            scroller:       true,
+            searching:      true
+        });
+
+        $('#alert-list').DataTable({
+            data: $scope.service.data.involvement.data,
+            columns: [
+                { data: 'id', title: 'ID', className: 'id center-align' },
+                { data: 'kills', title: 'Kills', className: 'metric center-align' },
+                { data: 'deaths', title: 'Deaths', className: 'metric center-align' },
+                { data: 'teamkills', title: 'TeamKills', className: 'metric center-align' },
+                { data: 'suicides', title: 'Suicides', className: 'metric center-align' }
+            ],
+            order:          [0, 'desc'],
+            deferRender:    true,
+            scrollY:        535,
+            scrollCollapse: true,
+            scroller:       true,
+            searching:      false,
+            "rowCallback": function( row, data, index ) {
+                $('.id', row).html('<a href="alert/' + data.id + '">' + data.id + '</a>');
+            }
+        });
+
+        setTimeout(function() {
+            $('.tooltipped').tooltip({
+                delay: 50
+            });
+        },1); // Ewwwww
     });
 });
