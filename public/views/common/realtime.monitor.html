@@ -1,5 +1,5 @@
 <div ng-controller="RealTimeMonitorController" class="row grey darken-3" id="alert-monitor">
-    <div id="websocket-status">
+    <div id="websocket-status" ng-show="websocketDisabled == 0">
         <div
             class="chip tooltipped"
             middlemanDown="{{websocket.middlemanDown}}"
@@ -20,8 +20,19 @@
             </span>
         </div>
     </div>
+    <div id="websocket-status" class="websocket-disconnected" ng-if="websocketDisabled == 1">
+        <div class="chip">
+            <span class="disconnected">
+                <i class="fa fa-ban"></i> Disabled!
+            </span>
+        </div>
+    </div>
 
-    <div class="col s12 m8 offset-m2">
+    <h4 class="message" ng-if="message">
+        DBG API is reporting incorrect territory values. Alert tracking has been disabled until this is resolved.
+    </h4>
+
+    <div class="col s12 m8 offset-m2" ng-if="websocketDisabled == 0">
         <div class="center-align">
             <div class="row sk-three-bounce" ng-show="websocket.loaded == 0 && websocket.middlemanDown == 0">
                 <div class="sk-child sk-bounce1"></div>
@@ -96,7 +107,6 @@
                 </p>
             </div>
         </div>
-        <h4 class="center-align">DBG API is reporting incorrect territory values. Tracking has been disabled until this is resolved.</h4>
     </div>
     <div class="progress">
         <div class="determinate" style="width: 100%"></div>
