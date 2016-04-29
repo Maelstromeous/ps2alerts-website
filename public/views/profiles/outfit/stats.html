@@ -1,7 +1,7 @@
 <div class="col m4 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.serverName }}
             </h2>
             <p class="caption">
@@ -13,7 +13,7 @@
 <div class="col m4 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.metrics.data.kills | number: 0 }}
             </h2>
             <p class="caption">
@@ -25,7 +25,7 @@
 <div class="col m4 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.metrics.data.deaths | number: 0}}
             </h2>
             <p class="caption">
@@ -38,7 +38,7 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.metrics.data.teamkills | number: 0}}
             </h2>
             <p class="caption">
@@ -50,7 +50,7 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.metrics.data.suicides | number: 0}}
             </h2>
             <p class="caption">
@@ -64,7 +64,7 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.metrics.kd }}
             </h2>
             <p class="caption">
@@ -76,7 +76,7 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.metrics.killsPerAlert }}
             </h2>
             <p class="caption">
@@ -88,7 +88,7 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.metrics.deathsPerAlert }}
             </h2>
             <p class="caption">
@@ -100,11 +100,11 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.players.data.length | number: 0 }}
             </h2>
             <p class="caption">
-                Member Count (in alerts)
+                Members <i class="fa fa-info-circle tooltipped" data-tooltip="Member count for alerts only" data-position="bottom"></i>
             </p>
         </div>
     </div>
@@ -112,7 +112,7 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.involvement.data.length | number: 0 }}
             </h2>
             <p class="caption">
@@ -124,11 +124,11 @@
 <div class="col m3 s6">
     <div class="card blue-grey darken-3">
         <div class="card-content center-align">
-            <h2>
+            <h2 class="heading">
                 {{ service.data.captures | number: 0 }}
             </h2>
             <p class="caption">
-                Base Captures / Defences
+                Captures / Defences
             </p>
         </div>
     </div>
