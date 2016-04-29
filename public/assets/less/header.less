@@ -1,54 +1,58 @@
 @import 'variables';
 
-header img {
-    display: block;
-}
-
-.nav-wrapper {
-    @media screen and (max-width: 992px) {
-        margin-left: @margin-base;
+header {
+    margin-bottom: @margin-base;
+    
+    img {
+        display: block;
     }
-}
 
-.progress {
-    margin: 0;
-    background-color: #32363A;
-}
+    .nav-wrapper {
+        @media screen and (max-width: 992px) {
+            margin-left: @margin-base;
+        }
+    }
 
-.progress .determinate,
-.progress .indeterminate {
-    background-color: #A62626;
-}
+    .progress {
+        margin: 0;
+        background-color: #32363A;
+    }
 
-.nav-main {
-    font-size: 2.0rem;
-}
+    .progress .determinate,
+    .progress .indeterminate {
+        background-color: #A62626;
+    }
 
-.nav-seperator {
-    border-left: 1px solid @border-color;
-}
+    .nav-main {
+        font-size: 2.0rem;
+    }
 
-nav ul li:hover {
-    background-color: rgba(210, 0, 0, 0.3);
-}
+    .nav-seperator {
+        border-left: 1px solid @border-color;
+    }
 
-nav ul li a:hover {
-    color: #fff;
-}
+    nav ul li:hover {
+        background-color: rgba(210, 0, 0, 0.3);
+    }
 
-nav ul li .fa {
-    font-size: 1.2em;
-}
+    nav ul li a:hover {
+        color: #fff;
+    }
 
-nav .button-collapse i {
-    font-size: 1.7rem;
-}
+    nav ul li .fa {
+        font-size: 1.2em;
+    }
 
-#under-dev {
-    color: #D22E2E;
-}
+    nav .button-collapse i {
+        font-size: 1.7rem;
+    }
 
-.side-nav li:hover,
-.side-nav li.active {
-    background-color: initial;
+    #under-dev {
+        color: #D22E2E;
+    }
+
+    .side-nav li:hover,
+    .side-nav li.active {
+        background-color: initial;
+    }
 }

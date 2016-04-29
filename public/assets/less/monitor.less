@@ -1,93 +1,93 @@
 @import 'variables';
 
 #alert-monitor {
-    padding-top: @padding-base;
     position: relative;
-}
+    padding: @padding-base 0;
 
-#alert-monitor .caption {
-    margin-bottom: 0;
-}
+    .caption {
+        margin-bottom: 0;
+    }
 
-#alert-monitor #websocket-status {
-    position: absolute;
-    top: @margin-base;
-    right: @margin-base;
-    .chip {
-        color: #fff;
+    #websocket-status {
+        position: absolute;
+        top: @margin-base;
+        right: @margin-base;
+        .chip {
+            color: #fff;
+        }
+        @media screen and (max-width: 767px) {
+            display: none;
+        }
     }
-    @media screen and (max-width: 767px) {
-        display: none;
-    }
-}
 
-.message {
-    margin-bottom: @margin-base * 1.3;
-    text-align: center;
-}
+    .message {
+        text-align: center;
+        color: #FF2121;
+    }
 
-.websocket-disconnected {
-    .chip {
-        background-color: #B90202;
+    .websocket-disconnected {
+        .chip {
+            background-color: #B90202;
+        }
+        span {
+            display: none;
+        }
+        .disconnected {
+            display: block;
+        }
     }
-    span {
-        display: none;
-    }
-    .disconnected {
-        display: block;
-    }
-}
 
-.websocket-middleman-fail {
-    .chip {
-        background-color: #B90202;
+    .websocket-middleman-fail {
+        .chip {
+            background-color: #B90202;
+        }
+        span {
+            display: none;
+        }
+        .middleman-fail {
+            display: block;
+        }
     }
-    span {
-        display: none;
-    }
-    .middleman-fail {
-        display: block;
-    }
-}
 
-.websocket-connecting {
-    .chip {
-        background-color: #FFB100;
+    .websocket-connecting {
+        .chip {
+            background-color: #FFB100;
+        }
+        span {
+            display: none;
+        }
+        .connecting {
+            display: block;
+        }
     }
-    span {
-        display: none;
-    }
-    .connecting {
-        display: block;
-    }
-}
 
-.websocket-connected {
-    .chip {
-        background-color: #279E0A;
+    .websocket-connected {
+        .chip {
+            background-color: #279E0A;
+        }
+        span {
+            display: none;
+        }
+        .connected {
+            display: block;
+        }
     }
-    span {
-        display: none;
-    }
-    .connected {
-        display: block;
-    }
-}
 
-.monitor-labels {
-    margin-bottom: 5px;
-    @media screen and (max-width: 600px) {
-        display: none;
+    .monitor-labels {
+        margin-bottom: 5px;
+        @media screen and (max-width: 600px) {
+            display: none;
+        }
     }
-}
 
-.monitor-labels span {
-    font-size: 1.3em;
-}
+    .monitor-labels span {
+        font-size: 1.3em;
+    }
 
-.monitor-row {
-    margin-bottom: 2px;
-    @media screen and (max-width: 600px) {
-        margin-bottom: 10px;
+    .monitor-row {
+        margin-bottom: 2px;
+        @media screen and (max-width: 600px) {
+            margin-bottom: 10px;
+        }
     }
 }

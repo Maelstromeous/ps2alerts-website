@@ -1,114 +1,109 @@
-<div ng-controller="RealTimeMonitorController" class="row grey darken-3" id="alert-monitor">
-    <div id="websocket-status" ng-show="websocketDisabled == 0">
-        <div
-            class="chip tooltipped"
-            middlemanDown="{{websocket.middlemanDown}}"
-            loaded="{{websocket.loaded}}"
-            data-tooltip="Status of the PS2Alerts collection system. If this is red, please inform Maelstrome26!"
-            data-position="left">
-            <span class="disconnected">
-                <i class="fa fa-arrow-down"></i> Disconnected!
-            </span>
-            <span class="middleman-fail">
-                <i class="fa fa-chain-broken"></i> Middleman API offline!
-            </span>
-            <span class="connecting">
-                <i class="fa fa-refresh fa-spin"></i> Connecting
-            </span>
-            <span class="connected">
-                <i class="fa fa-arrow-up"></i> Online
-            </span>
-        </div>
+<div id="websocket-status" ng-show="websocketDisabled == 0">
+    <div
+        class="chip tooltipped"
+        middlemanDown="{{websocket.middlemanDown}}"
+        loaded="{{websocket.loaded}}"
+        data-tooltip="Status of the PS2Alerts collection system. If this is red, please inform Maelstrome26!"
+        data-position="left">
+        <span class="disconnected">
+            <i class="fa fa-arrow-down"></i> Disconnected!
+        </span>
+        <span class="middleman-fail">
+            <i class="fa fa-chain-broken"></i> Middleman API offline!
+        </span>
+        <span class="connecting">
+            <i class="fa fa-refresh fa-spin"></i> Connecting
+        </span>
+        <span class="connected">
+            <i class="fa fa-arrow-up"></i> Online
+        </span>
     </div>
-    <div id="websocket-status" class="websocket-disconnected" ng-if="websocketDisabled == 1">
-        <div class="chip">
-            <span class="disconnected">
-                <i class="fa fa-ban"></i> Disabled!
-            </span>
-        </div>
+</div>
+<div id="websocket-status" class="websocket-disconnected" ng-if="websocketDisabled == 1">
+    <div class="chip">
+        <span class="disconnected">
+            <i class="fa fa-ban"></i> Disabled!
+        </span>
     </div>
+</div>
 
-    <h4 class="message" ng-if="message">
-        DBG API is reporting incorrect territory values. Alert tracking has been disabled until this is resolved.
-    </h4>
+<h4 class="message" ng-if="message">
+    DBG API is reporting incorrect territory values. Alert tracking has been disabled until this is resolved.
+</h4>
 
-    <div class="col s12 m8 offset-m2" ng-if="websocketDisabled == 0">
-        <div class="center-align">
-            <div class="row sk-three-bounce" ng-show="websocket.loaded == 0 && websocket.middlemanDown == 0">
-                <div class="sk-child sk-bounce1"></div>
-                <div class="sk-child sk-bounce2"></div>
-                <div class="sk-child sk-bounce3"></div>
-            </div>
-            <div ng-show="websocket.count == 0 && websocket.loaded == 1">
-                <h4>There are no alerts currently running</h4>
-                <h6>New alerts will show up here as they start</h6>
-            </div>
-            <div ng-show="websocket.middlemanDown == 1">
-                <h3>Middleman API is currently offline!</h3>
-                <h4>Alert Tracking will not function while this is down. Please contact <a href="http://www.reddit.com/u/jhett12321">/u/jhett12321</a> and let him know urgently!!</h4>
-                <p>
-                    Note: You are still able to view statistics, however new alerts will not be detected until the service returns.
-                </p>
-            </div>
-            <div class="row monitor-labels" ng-show="websocket.count > 0 && websocket.loaded == 1">
-                <div class="col s2">
-                    <span>Server</span>
-                </div>
-                <div class="col s2">
-                    <span>Continent</span>
-                </div>
-                <div class="col s2">
-                    <span>Remaining</span>
-                </div>
-                <div class="col s6">
-                    <span>Territory</span>
-                </div>
-            </div>
+<div class="col s12 m8 offset-m2" ng-if="websocketDisabled == 0">
+    <div class="center-align">
+        <div class="row sk-three-bounce" ng-show="websocket.loaded == 0 && websocket.middlemanDown == 0">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
         </div>
-        <div class="row">
-            <div ng-repeat="(id, alert) in websocket.actives">
-                <div class="row monitor-row center-align" id="monitor-{{id}}">
-                    <div class="col s4 m2">
-                        <a
-                            href="{{config.baseUrl}}/alert/{{alert.id}}"
-                            class="ga-event"
-                            ga-campaign="Real Time Monitor"
-        					ga-action="Alert Click"
-                            ga-label="{{id}}">
-                            {{config.serverNames[alert.server]}}
-                        </a>
-                    </div>
-                    <div class="col s4 m2">
-                        {{config.zoneNames[alert.zone]}}
-                    </div>
-                    <div class="col s4 m2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
-                        00:00:00
-                    </div>
-                    <div class="col s12 m6">
-                        <territory-bar
-                            vs="{{alert.vs}}"
-                            nc="{{alert.nc}}"
-                            tr="{{alert.tr}}"
-                            draw="0"
-                            total="100"
-                            decimal="0">
-                        </territory-bar>
-                    </div>
-                </div>
+        <div ng-show="websocket.count == 0 && websocket.loaded == 1">
+            <h4>There are no alerts currently running</h4>
+            <h6>New alerts will show up here as they start</h6>
+        </div>
+        <div ng-show="websocket.middlemanDown == 1">
+            <h3>Middleman API is currently offline!</h3>
+            <h4>Alert Tracking will not function while this is down. Please contact <a href="http://www.reddit.com/u/jhett12321">/u/jhett12321</a> and let him know urgently!!</h4>
+            <p>
+                Note: You are still able to view statistics, however new alerts will not be detected until the service returns.
+            </p>
+        </div>
+        <div class="row monitor-labels" ng-show="websocket.count > 0 && websocket.loaded == 1">
+            <div class="col s2">
+                <span>Server</span>
             </div>
-            <div class="col s12" ng-show="websocket.middlemanDown == 0">
-                <p class="center-align caption">
-                    Real Time Alert Monitor
-                    <i
-                        class="fa fa-info-circle tooltipped"
-                        data-tooltip="The Real Time Alert Monitor shows all currently running alerts on PS2 and their current status. All the above information is updated in real time."
-                        data-position="bottom">
-                    </i>
-                </p>
+            <div class="col s2">
+                <span>Continent</span>
+            </div>
+            <div class="col s2">
+                <span>Remaining</span>
+            </div>
+            <div class="col s6">
+                <span>Territory</span>
             </div>
         </div>
     </div>
-    <div class="progress">
-        <div class="determinate" style="width: 100%"></div>
+    <div class="row">
+        <div ng-repeat="(id, alert) in websocket.actives">
+            <div class="row monitor-row center-align" id="monitor-{{id}}">
+                <div class="col s4 m2">
+                    <a
+                        href="{{config.baseUrl}}/alert/{{alert.id}}"
+                        class="ga-event"
+                        ga-campaign="Real Time Monitor"
+    					ga-action="Alert Click"
+                        ga-label="{{id}}">
+                        {{config.serverNames[alert.server]}}
+                    </a>
+                </div>
+                <div class="col s4 m2">
+                    {{config.zoneNames[alert.zone]}}
+                </div>
+                <div class="col s4 m2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
+                    00:00:00
+                </div>
+                <div class="col s12 m6">
+                    <territory-bar
+                        vs="{{alert.vs}}"
+                        nc="{{alert.nc}}"
+                        tr="{{alert.tr}}"
+                        draw="0"
+                        total="100"
+                        decimal="0">
+                    </territory-bar>
+                </div>
+            </div>
+        </div>
+        <div class="col s12" ng-show="websocket.middlemanDown == 0">
+            <p class="center-align caption">
+                Real Time Alert Monitor
+                <i
+                    class="fa fa-info-circle tooltipped"
+                    data-tooltip="The Real Time Alert Monitor shows all currently running alerts on PS2 and their current status. All the above information is updated in real time."
+                    data-position="bottom">
+                </i>
+            </p>
+        </div>
     </div>
 </div>
