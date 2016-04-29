@@ -27,9 +27,15 @@
     </div>
 </div>
 
-<h4 class="message" ng-if="message">
-    DBG API is reporting incorrect territory values. Alert tracking has been disabled until this is resolved.
-</h4>
+<div ng-if="message">
+    <h4 class="message">
+        {{ message }}
+    </h4>
+    <p class="caption center-align">
+        {{ messageCaption }}
+    </p>
+</div>
+
 
 <div class="col s12 m8 offset-m2" ng-if="websocketDisabled == 0">
     <div class="center-align">
