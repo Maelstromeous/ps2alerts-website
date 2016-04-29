@@ -65,32 +65,34 @@ app.service('OutfitProfileService', function(
         factory.metrics.captures = 0;
         factory.metrics.defences = 0;
 
-        _.forEach(factory.data.facilities.data, function(value, key) {
-            factory.metrics.defences += value.defences;
-            factory.metrics.captures += value.captures;
+        if (factory.data.facilities.data.length > 0) {
+            _.forEach(factory.data.facilities.data, function(value, key) {
+                factory.metrics.defences += value.defences;
+                factory.metrics.captures += value.captures;
 
-            if (value.id !== 0) {
-                var ref = _.findIndex(
-                    factory.configData.facilities.data, { 'id' : value.id }
-                );
+                if (value.id !== 0) {
+                    var ref = _.findIndex(
+                        factory.configData.facilities.data, { 'id' : value.id }
+                    );
 
-                if (ref >= 0) {
-                    var data = factory.configData.facilities.data[ref];
-                    value.name = data.name;
-                    value.type = data.type;
-                    value.zone = ConfigDataService.zoneNames[data.zone];
-                    value.type = ConfigDataService.facilityTypesSmall[data.type];
+                    if (ref >= 0) {
+                        var data = factory.configData.facilities.data[ref];
+                        value.name = data.name;
+                        value.type = data.type;
+                        value.zone = ConfigDataService.zoneNames[data.zone];
+                        value.type = ConfigDataService.facilityTypesSmall[data.type];
+                    } else {
+                        value.name = 'UNKNOWN!';
+                        value.type = null;
+                        value.zoneName = null;
+                    }
                 } else {
-                    value.name = 'UNKNOWN!';
+                    value.name = "UNKNOWN!!";
                     value.type = null;
                     value.zoneName = null;
                 }
-            } else {
-                value.name = "UNKNOWN!!";
-                value.type = null;
-                value.zoneName = null;
-            }
-        });
+            });
+        }
     };
 
     // Calculate KD
