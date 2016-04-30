@@ -27,17 +27,7 @@
     </div>
 </div>
 
-<div ng-if="message">
-    <h4 class="message">
-        {{ message }}
-    </h4>
-    <p class="caption center-align">
-        {{ messageCaption }}
-    </p>
-</div>
-
-
-<div class="col s12 m8 offset-m2" ng-if="websocketDisabled == 0">
+<div class="col s12 m10 l8 offset-m1 offset-l2" ng-if="websocketDisabled == 0">
     <div class="center-align">
         <div class="row sk-three-bounce" ng-show="websocket.loaded == 0 && websocket.middlemanDown == 0">
             <div class="sk-child sk-bounce1"></div>
@@ -55,7 +45,7 @@
                 Note: You are still able to view statistics, however new alerts will not be detected until the service returns.
             </p>
         </div>
-        <div class="row monitor-labels" ng-show="websocket.count > 0 && websocket.loaded == 1">
+        <div class="monitor-labels" ng-show="websocket.count > 0 && websocket.loaded == 1">
             <div class="col s2">
                 <span>Server</span>
             </div>
@@ -70,46 +60,52 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div ng-repeat="(id, alert) in websocket.actives">
-            <div class="row monitor-row center-align" id="monitor-{{id}}">
-                <div class="col s4 m2">
-                    <a
-                        href="{{config.baseUrl}}/alert/{{alert.id}}"
-                        class="ga-event"
-                        ga-campaign="Real Time Monitor"
-    					ga-action="Alert Click"
-                        ga-label="{{id}}">
-                        {{config.serverNames[alert.server]}}
-                    </a>
-                </div>
-                <div class="col s4 m2">
-                    {{config.zoneNames[alert.zone]}}
-                </div>
-                <div class="col s4 m2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
-                    00:00:00
-                </div>
-                <div class="col s12 m6">
-                    <territory-bar
-                        vs="{{alert.vs}}"
-                        nc="{{alert.nc}}"
-                        tr="{{alert.tr}}"
-                        draw="0"
-                        total="100"
-                        decimal="0">
-                    </territory-bar>
-                </div>
+    <div ng-repeat="(id, alert) in websocket.actives">
+        <div class="row monitor-row center-align" id="monitor-{{id}}">
+            <div class="col s4 m2">
+                <a
+                    href="{{config.baseUrl}}/alert/{{alert.id}}"
+                    class="ga-event"
+                    ga-campaign="Real Time Monitor"
+					ga-action="Alert Click"
+                    ga-label="{{id}}">
+                    {{config.serverNames[alert.server]}}
+                </a>
+            </div>
+            <div class="col s4 m2">
+                {{config.zoneNames[alert.zone]}}
+            </div>
+            <div class="col s4 m2 countdown" todate="{{alert.countdown|date:'yyyy/MM/dd H:mm:ss'}}">
+                00:00:00
+            </div>
+            <div class="col s12 m6">
+                <territory-bar
+                    vs="{{alert.vs}}"
+                    nc="{{alert.nc}}"
+                    tr="{{alert.tr}}"
+                    draw="0"
+                    total="100"
+                    decimal="0">
+                </territory-bar>
             </div>
         </div>
-        <div class="col s12" ng-show="websocket.middlemanDown == 0">
-            <p class="center-align caption">
-                Real Time Alert Monitor
-                <i
-                    class="fa fa-info-circle tooltipped"
-                    data-tooltip="The Real Time Alert Monitor shows all currently running alerts on PS2 and their current status. All the above information is updated in real time."
-                    data-position="bottom">
-                </i>
-            </p>
-        </div>
     </div>
+    <div class="col s12" ng-show="websocket.middlemanDown == 0">
+        <p class="center-align caption">
+            Real Time Alert Monitor
+            <i
+                class="fa fa-info-circle tooltipped"
+                data-tooltip="The Real Time Alert Monitor shows all currently running alerts on PS2 and their current status. All the above information is updated in real time."
+                data-position="bottom">
+            </i>
+        </p>
+    </div>
+</div>
+<div class="col s12" ng-if="message">
+    <h4 class="message">
+        {{ message }}
+    </h4>
+    <p class="caption center-align">
+        {{ messageCaption }}
+    </p>
 </div>
