@@ -4,6 +4,10 @@
     position: relative;
     padding: (@padding-base / 2) @padding-base;
 
+    .caption {
+        margin-bottom: 0;
+    }
+
     #websocket-status {
         position: absolute;
         top: @margin-base;
@@ -70,7 +74,8 @@
     }
 
     .monitor-labels {
-        margin-bottom: 5px;
+        margin-bottom: @margin-base / 4;
+        overflow: hidden;
         @media screen and (max-width: 600px) {
             display: none;
         }
