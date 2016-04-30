@@ -100,12 +100,12 @@
                     {{ service.metrics.captures | number: 0 }} captures and {{ service.metrics.defences | number: 0 }} defences recorded
                 </h4>
                 <p class="caption center-align">
-                    Defence values are inflated due to the way the game calculates a defence. <a
+                    Defence values are inflated due to the way the game calculates a defence <a
                         href="#"
                         class="tooltipped"
-                        data-tooltip="To the games API, a defence is counted whenever a facility has no countdown or has all points secured. e.g. 3 point base, enemy flips a single point. Point flips back. Counts as a defence."
+                        data-tooltip="To the games API, a defence is counted whenever a facility has no countdown or has all points secured. Defences are counted for an outfit only when they own the base. If the base they own gets defended, it counts, regardless who's there."
                         data-position="top">
-                        Hover for info</a>.
+                        <i class="fa fa-info-circle"></i></a>
                 </p>
                 <table id="facility-list"></table>
             </div>
