@@ -45,10 +45,6 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
             'PRI': {
                 label: 'Prime Time',
                 desc: '(17:00 - 23:59)'
-            },
-            'UNK': {
-                label: 'UNKNOWN',
-                desc: ''
             }
         },
         facilityTypes: {
