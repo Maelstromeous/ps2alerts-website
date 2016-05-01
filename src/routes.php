@@ -15,6 +15,15 @@ $route->get('/alert-history', 'Ps2alerts\Frontend\Controller\MainController::ale
 $route->get('/alert/{id:number}', 'Ps2alerts\Frontend\Controller\MainController::alert');
 $route->get('/change-log', 'Ps2alerts\Frontend\Controller\MainController::changeLog');
 
+/* Profiles */
 $route->get('/profiles/player/{id:number}', 'Ps2alerts\Frontend\Controller\ProfileController::player');
 $route->get('/profiles/outfit/{id:number}', 'Ps2alerts\Frontend\Controller\ProfileController::outfit');
+
+/* Leaderboards */
+$route->get('/leaderboards', 'Ps2alerts\Frontend\Controller\LeaderboardController::index');
+$route->get('/leaderboards/players', 'Ps2alerts\Frontend\Controller\LeaderboardController::players');
+$route->get('/leaderboards/outfits', 'Ps2alerts\Frontend\Controller\LeaderboardController::outfits');
+$route->get('/leaderboards/weapons', 'Ps2alerts\Frontend\Controller\LeaderboardController::weapons');
+$route->get('/leaderboards/vehicles', 'Ps2alerts\Frontend\Controller\LeaderboardController::vehicles');
+
 return $route;

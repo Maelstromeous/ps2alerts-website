@@ -19,10 +19,6 @@ app.config(function ($routeProvider, $locationProvider) {
             title: 'About PS2Alerts',
             templateUrl: 'views/about/index.html'
         })
-        .when('/leaderboards', {
-            title: 'Leaderboards',
-            templateUrl: 'views/leaderboard/index.html'
-        })
         .when('/alert/:alert', {
             title: 'Alert',
             templateUrl: 'views/alert/index.html'
@@ -34,6 +30,26 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/profiles/outfit/:id', {
             title: 'Outfit Profile',
             templateUrl: 'views/profiles/outfit/index.html'
+        })
+        .when('/leaderboards', {
+            title: 'Leaderboards - Top 10',
+            templateUrl: 'views/leaderboards/index.html'
+        })
+        .when('/leaderboards/players', {
+            title: 'Leaderboards - Players',
+            templateUrl: 'views/leaderboards/players.html'
+        })
+        .when('/leaderboards/outfits', {
+            title: 'Leaderboards - Outfits',
+            templateUrl: 'views/leaderboards/outfits.html'
+        })
+        .when('/leaderboards/weapons', {
+            title: 'Leaderboards - Weapons',
+            templateUrl: 'views/leaderboards/weapons.html'
+        })
+        .when('/leaderboards/vehicles', {
+            title: 'Leaderboards - Vehicles',
+            templateUrl: 'views/leaderboards/vehicles.html'
         })
         .when('/change-log', {
             title: 'Change Log',
@@ -80,7 +96,12 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
     });
 });
 
-/* Global Javascript */
+app.filter('ucfirst', function() {
+	return function(input,arg) {
+		return input.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+	};
+});
+
 
 $(window).load(function() {
     $(".button-collapse").sideNav({

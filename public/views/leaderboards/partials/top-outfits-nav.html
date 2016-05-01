@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col s12 filters center-align">
+        <button
+            ng-class="outfitsServer != 0 ? 'btn-inactive' : ''"
+            class="btn waves-effect waves-light"
+            ng-click="changeOutfitServer(0)">
+                All
+        </button>
+        <button
+            ng-repeat="server in config.serversAlpha"
+            ng-class="outfitsServer != server ? 'btn-inactive' : ''"
+            class="btn waves-effect waves-light"
+            ng-click="changeOutfitServer(server)">
+                {{::config.serverNames[server]}}
+        </button>
+    </div>
+    <p class="caption center-align">
+        Servers
+    </p>
+    <div class="col s12 filters center-align">
+        <button
+            ng-repeat="sorting in outfitsSortingOptions"
+            ng-class="outfitsSorting.indexOf(sorting) == -1 ? 'btn-inactive' : ''"
+            class="btn waves-effect waves-light"
+            ng-click="changeOutfitSorting(sorting)">
+                {{::sorting }}
+        </button>
+    </div>
+    <p class="caption center-align">
+        Leader Sorting
+    </p>
+</div>

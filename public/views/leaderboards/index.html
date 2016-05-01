@@ -1,0 +1,30 @@
+<section ng-controller="LeaderboardTopController" id="leaderboards-top" class="leaderboards">
+    <h1 class="center-align header-no-margin">Leaderboards - Top {{ limit }}</h1>
+
+    <div ng-include="'views/leaderboards/partials/nav.html'" id="leaderboard-nav"></div>
+    <div ng-include="'views/leaderboards/partials/top-subnav.html'" id="leaderboard-top-subnav"></div>
+
+    <div class="row" id="top-players-container">
+        <h2 class="center-align">
+            Top {{ limit }} Players <i ng-show="!playersLoaded" class="fa fa-spin fa-refresh"></i>
+        </h2>
+        <div ng-include="'views/leaderboards/partials/top-players-nav.html'" id="players-nav"></div>
+            <div class="col s12">
+                <table id="top-players"></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="top-outfits-container">
+        <h2 class="center-align">
+            Top {{ limit }} Outfits <i ng-show="!outfitsLoaded" class="fa fa-spin fa-refresh"></i>
+        </h2>
+        <div ng-include="'views/leaderboards/partials/top-outfits-nav.html'" id="outfits-nav"></div>
+
+        <div class="row">
+            <div class="col s12">
+                <table id="top-outfits"></table>
+            </div>
+        </div>
+    </div>
+</section>
