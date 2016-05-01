@@ -113,18 +113,5 @@ app.service('PlayerProfileService', function(
         factory.data.vehicles.data = newVehicles;
     };
     */
-
-    // Calculate KD
-    factory.returnKD = function(data) {
-        var kd =
-        parseFloat((data.kills / data.deaths).toFixed(2));
-
-        if (kd == 'Infinity' || isNaN(kd)) {
-            kd = data.kills;
-        }
-
-        return kd;
-    };
-
     return factory;
 });
