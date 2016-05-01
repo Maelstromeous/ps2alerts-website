@@ -2,7 +2,8 @@ app.service('PlayerProfileService', function(
     $http,
     $log,
     $rootScope,
-    ConfigDataService
+    ConfigDataService,
+    MetricsProcessingService
 ) {
     var factory = {
         data: {},
@@ -49,7 +50,7 @@ app.service('PlayerProfileService', function(
         factory.data.serverName = ConfigDataService.serverNames[factory.data.server];
         factory.data.factionAbv = ConfigDataService.convertFactionIntToName(factory.data.faction);
 
-        factory.metrics.kd = factory.returnKD(data.metrics.data);
+        factory.metrics.kd = MetricsProcessingService.calcKD(data.metrics.data.kills, data.metrics.data.deaths);
         factory.metrics.killsPerAlert = (data.metrics.data.kills / data.metrics.data.involved).toFixed(2);
         factory.metrics.deathsPerAlert = (data.metrics.data.deaths / data.metrics.data.involved).toFixed(2);
 

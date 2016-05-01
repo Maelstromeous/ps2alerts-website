@@ -2,7 +2,8 @@ app.service('OutfitProfileService', function(
     $http,
     $log,
     $rootScope,
-    ConfigDataService
+    ConfigDataService,
+    MetricsProcessingService
 ) {
     var factory = {
         data: {},
@@ -17,7 +18,6 @@ app.service('OutfitProfileService', function(
             factory.getConfigData,
             factory.getProfileData(id)
         ]).then(function(result) {
-            console.log('Promise completed', result);
             factory.configData = result[0];
             // FIRE
             factory.startProcessing(result[1]);
@@ -46,11 +46,10 @@ app.service('OutfitProfileService', function(
 
     factory.startProcessing = function(data) {
         factory.data = data;
-
         factory.data.serverName = ConfigDataService.serverNames[factory.data.server];
         factory.data.factionAbv = ConfigDataService.convertFactionIntToName(factory.data.faction);
 
-        factory.metrics.kd = factory.returnKD(data.metrics.data);
+        factory.metrics.kd = MetricsProcessingService.calcKD(data.metrics.data.kills, data.metrics.data.deaths);
         factory.metrics.killsPerAlert = (data.metrics.data.kills / data.metrics.data.involved).toFixed(2);
         factory.metrics.deathsPerAlert = (data.metrics.data.deaths / data.metrics.data.involved).toFixed(2);
 
@@ -93,18 +92,6 @@ app.service('OutfitProfileService', function(
                 }
             });
         }
-    };
-
-    // Calculate KD
-    factory.returnKD = function(data) {
-        var kd =
-        parseFloat((data.kills / data.deaths).toFixed(2));
-
-        if (kd == 'Infinity' || isNaN(kd)) {
-            kd = data.kills;
-        }
-
-        return kd;
     };
 
     return factory;

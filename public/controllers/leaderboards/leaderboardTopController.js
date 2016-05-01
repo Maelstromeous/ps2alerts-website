@@ -3,7 +3,8 @@ app.controller('LeaderboardTopController', function(
     $window,
     $routeParams,
     LeaderboardTopService,
-    ConfigDataService
+    ConfigDataService,
+    MetricsProcessingService
 ) {
     $scope.service = LeaderboardTopService;
     $scope.config = ConfigDataService;

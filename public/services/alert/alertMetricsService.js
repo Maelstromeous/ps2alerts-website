@@ -4,7 +4,8 @@ app.service('AlertMetricsService', function(
     $rootScope,
     $filter,
     AlertTransformer,
-    ConfigDataService
+    ConfigDataService,
+    MetricsProcessingService
 ) {
     var factory = {};
 
@@ -191,7 +192,7 @@ app.service('AlertMetricsService', function(
             if (outfit.participants < 6 && factory.details.timeBracket === 'Prime Time') {
                 outfit.kd = 0;
             } else {
-                outfit.kd = factory.returnKD(outfit);
+                outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
                 outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
                 outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
             }
@@ -200,8 +201,8 @@ app.service('AlertMetricsService', function(
             console.log(formatted);
         }
 
-        formatted.kd = factory.returnKD(formatted); // Parse KD
-        formatted.hsr = factory.calcHSR(formatted);
+        formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
+        formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
         formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
         formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
 
@@ -234,7 +235,7 @@ app.service('AlertMetricsService', function(
         }
 
         formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
-        formatted.kd = factory.returnKD(formatted); // Parse KD
+        formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
         formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
         formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
 
@@ -284,7 +285,7 @@ app.service('AlertMetricsService', function(
                         weapons:    [weapon.id]
                     };
 
-                    newGroup.hsr = factory.calcHSR(newGroup);
+                    newGroup.hsr = MetricsProcessingService.calcHSR(newGroup.headshots, newGroup.kills);
                     newGroup.kpm = (newGroup.kills / factory.details.durationMins).toFixed(2);
                     newGroup.dpm = (newGroup.deaths / factory.details.durationMins).toFixed(2);
 
@@ -300,7 +301,7 @@ app.service('AlertMetricsService', function(
                     weaponGroup.headshots += weapon.headshots;
                     weaponGroup.faction    = 0;
 
-                    weaponGroup.hsr = factory.calcHSR(weaponGroup);
+                    weaponGroup.hsr = MetricsProcessingService.calcHSR(weaponGroup.headshots, weaponGroup.kills);
                     weaponGroup.kpm = (weaponGroup.kills / factory.details.durationMins).toFixed(2);
                     weaponGroup.dpm = (weaponGroup.deaths / factory.details.durationMins).toFixed(2);
 
@@ -321,7 +322,7 @@ app.service('AlertMetricsService', function(
                 // Set faction abrivation
                 formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
-                formatted.hsr = factory.calcHSR(formatted);
+                formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
                 formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
                 formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
 
@@ -357,7 +358,7 @@ app.service('AlertMetricsService', function(
 
                 formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
-                formatted.kd = factory.returnKD(formatted); // Parse KD
+                formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
                 formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
                 formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
 
@@ -455,28 +456,6 @@ app.service('AlertMetricsService', function(
         factory.parsed.map.all.push(formatted);
     };
 
-    // Calculate KD
-    factory.returnKD = function(data) {
-        var kd =
-        parseFloat((data.kills / data.deaths).toFixed(2));
-
-        if (kd == 'Infinity' || isNaN(kd)) {
-            kd = data.kills;
-        }
-
-        return kd;
-    };
-
-    // Calculate Headshot Ratio
-    factory.calcHSR = function (weapon) {
-        var hsr = parseFloat((weapon.headshots / weapon.kills * 100).toFixed(2));
-
-        if (hsr == 'Infinity' || isNaN(hsr)) {
-            hsr = weapon.kills;
-        }
-
-        return hsr;
-    };
 
     factory.sortPlayers = function(metric) {
         factory.sortPlayersByMetric(factory.metrics.players.data, metric);
