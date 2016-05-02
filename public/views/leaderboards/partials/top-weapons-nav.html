@@ -3,8 +3,11 @@
         <button
             ng-repeat="sorting in weaponsSortingOptions"
             ng-class="weaponsSorting.indexOf(sorting) == -1 ? 'btn-inactive' : ''"
-            class="btn waves-effect waves-light"
-            ng-click="changeWeaponSorting(sorting)">
+            class="btn waves-effect waves-light ga-event"
+            ng-click="changeWeaponSorting(sorting)"
+            ga-campaign="Leaderboards - Weapons"
+            ga-action="Filters"
+            ga-label="{{::sorting}}">
                 {{::sorting }}
         </button>
     </div>

@@ -12,14 +12,12 @@ app.service('LeaderboardWeaponService', function(
         Promise.all([
             factory.getConfigData
         ]).then(function(result) {
-            console.log('Config Promise completed', result);
             factory.configData = result[0];
             $rootScope.$broadcast('configReady', 'loaded');
         });
     }
 
     factory.getTopWeapons = function(sorting) {
-        console.log('getting weapons off metric', sorting);
         factory.weaponData = {}; // Reset Data
 
         // Fix for indexOf on filters showing up Kills and Teamkills
@@ -36,7 +34,6 @@ app.service('LeaderboardWeaponService', function(
             method : 'GET',
             url    : ConfigDataService.apiUrl + '/leaderboards/weapons?'+fieldQuery +'&limit=100000'
         }).then(function(returned) {
-            console.log('weapons returned', returned);
             factory.weaponData = returned.data.data;
 
             factory.processWeapons(factory.weaponData);

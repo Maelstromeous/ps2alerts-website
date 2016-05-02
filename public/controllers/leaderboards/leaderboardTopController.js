@@ -9,6 +9,7 @@ app.controller('LeaderboardTopController', function(
     $scope.config = ConfigDataService;
 
     $scope.loaded = false;
+    $scope.gaDone = false;
 
     $scope.limit = $scope.service.limit;
     $scope.path = $location.path();
@@ -62,8 +63,6 @@ app.controller('LeaderboardTopController', function(
             var table = $('#top-' + tab).DataTable();
             table.draw();
             table.scroller.measure(); // Fix for rows not rendering bug
-
-            console.log('redraw');
         }, 10);
     };
 
@@ -75,7 +74,6 @@ app.controller('LeaderboardTopController', function(
 
     $scope.$on('players-loaded', function(event) {
         $scope.loaded = true;
-        console.log('Players loaded for server: ' + $scope.playersServer);
         $scope.playersLoaded = true;
 
         if ( $.fn.DataTable.isDataTable('#top-players') ) {
@@ -91,12 +89,11 @@ app.controller('LeaderboardTopController', function(
 
         $('ul.tabs').tabs();
 
-        //$scope.$emit('ga-sync', '#leaderboard-top-10 .ga-event');
+        $scope.$emit('ga-sync', '.leaderboards .ga-event');
     });
 
     $scope.$on('outfits-loaded', function(event) {
         $scope.loaded = true;
-        console.log('Outfits loaded for server: ' + $scope.outfitsServer);
         $scope.outfitsLoaded = true;
 
         if ( $.fn.DataTable.isDataTable('#top-outfits') ) {
@@ -112,7 +109,7 @@ app.controller('LeaderboardTopController', function(
 
         $('ul.tabs').tabs();
 
-        //$scope.$emit('ga-sync', '#leaderboard-top-10 .ga-event');
+        $scope.$emit('ga-sync', '.leaderboards .ga-event');
     });
 
     $scope.initPlayerDataTable = function() {

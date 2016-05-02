@@ -12,14 +12,12 @@ app.service('LeaderboardTopService', function(
         Promise.all([
             factory.getConfigData
         ]).then(function(result) {
-            console.log('Config Promise completed', result);
             factory.configData = result[0];
             $rootScope.$broadcast('configReady', 'loaded');
         });
     }
 
     factory.getTopPlayers = function(server, sorting) {
-        console.log('getting players for server', server);
         factory.playerData = {}; // Reset Data
 
         // Fix for indexOf on filters showing up Kills and Teamkills
@@ -46,7 +44,6 @@ app.service('LeaderboardTopService', function(
     };
 
     factory.getTopOutfits = function(server, sorting) {
-        console.log('getting outfits for server', server);
         factory.outfitData = {}; // Reset Data
 
         // Fix for indexOf on filters showing up Kills and Teamkills

@@ -32,7 +32,6 @@ app.controller('LeaderboardWeaponsController', function(
     });
 
     $scope.$on('weapons-loaded', function(event) {
-        console.log('Weapons loaded');
         $scope.weaponsLoaded = true;
 
         if ( $.fn.DataTable.isDataTable('#top-weapons') ) {
@@ -46,7 +45,7 @@ app.controller('LeaderboardWeaponsController', function(
 
         $('ul.tabs').tabs();
 
-        //$scope.$emit('ga-sync', '#leaderboard-top-10 .ga-event');
+        $scope.$emit('ga-sync', '.leaderboards .ga-event');
     });
 
     $scope.initWeaponDataTable = function() {
