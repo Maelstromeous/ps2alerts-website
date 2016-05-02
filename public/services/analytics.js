@@ -1,4 +1,9 @@
-app.service('AnalyticsService', function($rootScope, $window, $location) {
+app.service('AnalyticsService', function(
+    $rootScope,
+    $window,
+    $location,
+    ConfigDataService
+) {
     // Contains all elements that are currently registered
     var factory = {
         registry: []
@@ -47,12 +52,18 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
                     $(el).on('click', function() {
                         options.eventValue = $(this).attr('ga-value');
                         ga('send', options);
-                        console.log('ga-event sent:', options);
+
+                        if (ConfigDataService.environment === 'development') {
+                            console.log('Dynamic ga-event sent:', options);
+                        }
                     });
                 } else {
                     $(el).on('click', function() {
                         ga('send', options);
-                        console.log('ga-event sent:', options);
+
+                        if (ConfigDataService.environment === 'development') {
+                            console.log('ga-event sent:', options);
+                        }
                     });
                 }
 
