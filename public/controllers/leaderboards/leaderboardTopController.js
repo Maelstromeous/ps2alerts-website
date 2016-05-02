@@ -1,7 +1,6 @@
 app.controller('LeaderboardTopController', function(
     $scope,
-    $window,
-    $routeParams,
+    $location,
     LeaderboardTopService,
     ConfigDataService,
     MetricsProcessingService
@@ -12,6 +11,7 @@ app.controller('LeaderboardTopController', function(
     $scope.loaded = false;
 
     $scope.limit = $scope.service.limit;
+    $scope.path = $location.path();
 
     $scope.playersLoaded = false;
     $scope.playersServer = 0;

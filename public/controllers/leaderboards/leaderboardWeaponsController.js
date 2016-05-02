@@ -1,5 +1,6 @@
 app.controller('LeaderboardWeaponsController', function(
     $scope,
+    $location,
     LeaderboardWeaponService,
     ConfigDataService,
     MetricsProcessingService
@@ -8,6 +9,7 @@ app.controller('LeaderboardWeaponsController', function(
     $scope.config = ConfigDataService;
 
     $scope.limit = $scope.service.limit;
+    $scope.path = $location.path();
 
     $scope.weaponsLoaded = false;
     $scope.weaponsSorting = 'kills';
@@ -57,7 +59,8 @@ app.controller('LeaderboardWeaponsController', function(
                 { data: 'teamkills', title: 'TKs', className: 'center-align' },
                 { data: 'headshots', title: 'Headshots', className: 'center-align' },
                 { data: 'hsr', title: 'HSR %', className: 'center-align' },
-                { data: 'id', visible: false }
+                { data: 'id', visible: false },
+                { data: 'vehicle', visible: false },
             ],
             order:          [3, 'desc'],
             deferRender:    true,
@@ -67,11 +70,18 @@ app.controller('LeaderboardWeaponsController', function(
             searching:      true,
             ordering:       false,
             "rowCallback": function( row, data, index ) {
-                // Format the faction colors
+                var vehicle = ' [I]';
+                // Format the cells
                 if (data.factionAbv !== null) {
-                    $('.pos', row).addClass(data.factionAbv + '-table-text');
                     $('.name', row).addClass(data.factionAbv + '-table-text');
                 }
+
+                if (data.vehicle === 1) {
+                    vehicle = ' [V]';
+                }
+
+                $('.name', row).html(data.name + vehicle);
+                $('.hsr', row).html(data.hsr + '%');
             }
         });
     }

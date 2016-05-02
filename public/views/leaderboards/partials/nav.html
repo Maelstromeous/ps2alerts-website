@@ -3,6 +3,7 @@
         <ul class="fake-tabs">
             <li class="tab col s3">
                 <a
+                    ng-class="path == '/leaderboards' ? 'active' : ''"
                     class="waves-effect waves-light ga-event force-click"
                     href="{{ config.baseUrl }}/leaderboards"
                     ga-campaign="Leaderboards"
@@ -20,6 +21,7 @@
             </li>
             <li class="tab col s3">
                 <a
+                    ng-class="path == '/leaderboards/weapons' ? 'active' : ''"
                     class="waves-effect waves-light ga-event force-click"
                     href="{{ config.baseUrl }}/leaderboards/weapons"
                     ga-campaign="Leaderboards"

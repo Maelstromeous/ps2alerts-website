@@ -32,7 +32,7 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'views/profiles/outfit/index.html'
         })
         .when('/leaderboards', {
-            title: 'Leaderboards - Top 10',
+            title: 'Leaderboards - Top Lists',
             templateUrl: 'views/leaderboards/index.html'
         })
         .when('/leaderboards/players', {

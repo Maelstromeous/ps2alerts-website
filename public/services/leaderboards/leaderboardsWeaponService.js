@@ -140,10 +140,10 @@ app.service('LeaderboardWeaponService', function(
         _.forEach(factory.weaponData, function(weapon, key) {
             weapon.pos = pos;
             weapon.kills = weapon.kills.toLocaleString();
+            weapon.teamkills = weapon.teamkills.toLocaleString();
+            weapon.headshots = weapon.headshots.toLocaleString();
             pos++;
         });
-
-        console.log(factory.weaponData);
     }
 
     factory.getConfigData = new Promise(function(resolve, reject) {
