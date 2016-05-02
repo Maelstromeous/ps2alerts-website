@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col s12 filters center-align">
+        <button
+            ng-repeat="sorting in weaponsSortingOptions"
+            ng-class="weaponsSorting.indexOf(sorting) == -1 ? 'btn-inactive' : ''"
+            class="btn waves-effect waves-light"
+            ng-click="changeWeaponSorting(sorting)">
+                {{::sorting }}
+        </button>
+    </div>
+    <p class="caption center-align">
+        Sorting
+    </p>
+</div>

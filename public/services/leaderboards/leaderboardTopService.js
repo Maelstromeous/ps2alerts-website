@@ -1,11 +1,11 @@
 app.service('LeaderboardTopService', function(
     $http,
-    $log,
     $rootScope,
-    ConfigDataService
+    ConfigDataService,
+    MetricsProcessingService
 ) {
     var factory = {};
-    factory.limit = 50;
+    factory.limit = 100;
 
     factory.getConfig = function() {
         $rootScope.$broadcast('loading', 'blah');
@@ -16,14 +16,16 @@ app.service('LeaderboardTopService', function(
             factory.configData = result[0];
             $rootScope.$broadcast('configReady', 'loaded');
         });
-        console.log('Oh hai');
     }
 
-    factory.getTopPlayers= function(server, sorting) {
+    factory.getTopPlayers = function(server, sorting) {
         console.log('getting players for server', server);
         factory.playerData = {}; // Reset Data
-        factory.playerServer = server;
-        factory.playerSorting = sorting;
+
+        // Fix for indexOf on filters showing up Kills and Teamkills
+        if (sorting === 'tks') {
+            sorting = 'teamkills';
+        }
 
         var serverQuery = '&server='+server;
         var fieldQuery = 'field='+sorting;
@@ -41,17 +43,19 @@ app.service('LeaderboardTopService', function(
             factory.processPlayers(factory.playerData);
             $rootScope.$broadcast('players-loaded', server);
         });
-    }
+    };
 
-    factory.getTopOutfits= function(server, sorting) {
+    factory.getTopOutfits = function(server, sorting) {
         console.log('getting outfits for server', server);
         factory.outfitData = {}; // Reset Data
-        factory.outfitServer = server;
-        factory.outfitSorting = sorting;
+
+        // Fix for indexOf on filters showing up Kills and Teamkills
+        if (sorting === 'tks') {
+            sorting = 'teamkills';
+        }
 
         var serverQuery = '&server='+server;
         var fieldQuery = 'field='+sorting;
-
 
         if (server === 0) {
             serverQuery = '';
@@ -66,7 +70,7 @@ app.service('LeaderboardTopService', function(
             factory.processOutfits(factory.outfitData);
             $rootScope.$broadcast('outfits-loaded', server);
         });
-    }
+    };
 
     factory.processPlayers = function(data) {
         var pos = 1;
@@ -78,7 +82,7 @@ app.service('LeaderboardTopService', function(
             row.outfitName = '';
             row.outfitTag = null;
 
-            if (row.outfit.id > 0) {
+            if (row.outfit && row.outfit.id > 0) {
                 row.outfitId = row.outfit.id;
                 row.outfitName = row.outfit.name;
                 row.outfitTag = null;
@@ -93,8 +97,13 @@ app.service('LeaderboardTopService', function(
             row.suicides  = row.suicides.toLocaleString();
             row.headshots = row.headshots.toLocaleString();
 
+            row.serverName = '???';
+            if (row.server) {
+                row.serverName = ConfigDataService.serverNames[row.server];
+            } else {
+                console.log('MISSING SERVER INFO FOR PLAYER', row.id);
+            }
             row.factionAbv = ConfigDataService.convertFactionIntToName(row.faction);
-            row.serverName = ConfigDataService.serverNames[row.server];
         });
     }
 
@@ -111,7 +120,16 @@ app.service('LeaderboardTopService', function(
             row.captures  = row.captures.toLocaleString();
 
             row.factionAbv = ConfigDataService.convertFactionIntToName(row.faction);
-            row.serverName = ConfigDataService.serverNames[row.server];
+
+            if (row.server) {
+                row.serverName = ConfigDataService.serverNames[row.server];
+            } else {
+                console.log('MISSING SERVER INFO FOR OUTFIT', row.id);
+            }
+
+            if (! row.serverName) {
+                row.serverName = '???';
+            }
         });
     }
 

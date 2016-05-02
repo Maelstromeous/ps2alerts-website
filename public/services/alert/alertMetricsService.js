@@ -252,16 +252,13 @@ app.service('AlertMetricsService', function(
             var weaponData = factory.configData.weapons.data[weaponRef];
 
             if (weaponData) {
-                // Do a check to see if the weapon we have, by name, is
-                // already in the data array. This is to merge the cross faction
-                // vehicle weapons into a singular weapon
+                // Do a check to see if the weapon we have, by name, is already in the data array. This is to merge the
+                // cross faction vehicle weapons into a singular weapon
                 var index = _.findIndex(
                     factory.parsed.weapons, {'name': weaponData.name}
                 );
 
-                // If weapon by name has been found, check if we have a special
-                // fake weapon for the group
-
+                // If weapon by name has been found, check if we have a special fake weapon for the group
                 var groupIndex = _.findIndex(
                     factory.parsed.weapons, {
                         'name'   : weaponData.name + ' (Grouped)'
@@ -274,7 +271,7 @@ app.service('AlertMetricsService', function(
                     var random = Math.floor(Math.random() * 10000);
 
                     var newGroup = {
-                        id:         weapon.id + '00000' + random, // Randomly scrable the ID
+                        id:         weapon.id + '00000' + random, // Scramble the ID
                         name:       weaponData.name + ' (Grouped)',
                         kills:      (weapon.kills + existingWeapon.kills),
                         teamkills:  (weapon.teamkills + existingWeapon.teamkills),

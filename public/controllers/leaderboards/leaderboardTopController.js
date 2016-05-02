@@ -9,17 +9,19 @@ app.controller('LeaderboardTopController', function(
     $scope.service = LeaderboardTopService;
     $scope.config = ConfigDataService;
 
+    $scope.loaded = false;
+
     $scope.limit = $scope.service.limit;
 
     $scope.playersLoaded = false;
     $scope.playersServer = 0;
     $scope.playersSorting = 'kills';
-    $scope.playersSortingOptions = ['kills', 'deaths', 'teamkills', 'suicides', 'headshots'];
+    $scope.playersSortingOptions = ['kills', 'deaths', 'tks', 'suicides', 'headshots'];
 
     $scope.outfitsLoaded = false;
     $scope.outfitsServer = 0;
     $scope.outfitsSorting = 'kills';
-    $scope.outfitsSortingOptions = ['kills', 'deaths', 'teamkills', 'suicides', 'captures'];
+    $scope.outfitsSortingOptions = ['kills', 'deaths', 'tks', 'suicides', 'captures'];
 
     $scope.service.getConfig();
 
@@ -45,11 +47,13 @@ app.controller('LeaderboardTopController', function(
 
     $scope.getTopPlayers = function() {
         $scope.playersLoaded = false;
+        $("#top-players-container").css('opacity', 0.5);
         $scope.service.getTopPlayers($scope.playersServer, $scope.playersSorting);
     };
 
     $scope.getTopOutfits = function() {
         $scope.outfitsLoaded = false;
+        $("#top-outfits-container").css('opacity', 0.5);
         $scope.service.getTopOutfits($scope.outfitsServer, $scope.outfitsSorting);
     };
 
@@ -57,17 +61,20 @@ app.controller('LeaderboardTopController', function(
         setTimeout(function() {
             var table = $('#top-' + tab).DataTable();
             table.draw();
-        }, 200);
-    }
+            table.scroller.measure(); // Fix for rows not rendering bug
+
+            console.log('redraw');
+        }, 10);
+    };
 
     $scope.$on('configReady', function() {
-
         // Houston, We are go.
         $scope.getTopPlayers();
         $scope.getTopOutfits();
     });
 
     $scope.$on('players-loaded', function(event) {
+        $scope.loaded = true;
         console.log('Players loaded for server: ' + $scope.playersServer);
         $scope.playersLoaded = true;
 
@@ -80,10 +87,15 @@ app.controller('LeaderboardTopController', function(
             $scope.initPlayerDataTable();
         }
 
+        $("#top-players-container").css('opacity', 1);
+
+        $('ul.tabs').tabs();
+
         //$scope.$emit('ga-sync', '#leaderboard-top-10 .ga-event');
-    })
+    });
 
     $scope.$on('outfits-loaded', function(event) {
+        $scope.loaded = true;
         console.log('Outfits loaded for server: ' + $scope.outfitsServer);
         $scope.outfitsLoaded = true;
 
@@ -96,10 +108,12 @@ app.controller('LeaderboardTopController', function(
             $scope.initOutfitDataTable();
         }
 
+        $("#top-outfits-container").css('opacity', 1);
+
         $('ul.tabs').tabs();
 
         //$scope.$emit('ga-sync', '#leaderboard-top-10 .ga-event');
-    })
+    });
 
     $scope.initPlayerDataTable = function() {
         $('#top-players').DataTable({
@@ -118,7 +132,7 @@ app.controller('LeaderboardTopController', function(
             ],
             order:          [3, 'desc'],
             deferRender:    true,
-            scrollY:        380,
+            scrollY:        456,
             scrollCollapse: true,
             scroller:       true,
             searching:      true,
@@ -135,7 +149,7 @@ app.controller('LeaderboardTopController', function(
                 }
             }
         });
-    }
+    };
 
     $scope.initOutfitDataTable = function() {
         $('#top-outfits').DataTable({
@@ -154,7 +168,7 @@ app.controller('LeaderboardTopController', function(
             ],
             order:          [3, 'desc'],
             deferRender:    true,
-            scrollY:        380,
+            scrollY:        456,
             scrollCollapse: true,
             scroller:       true,
             searching:      true,
@@ -169,5 +183,5 @@ app.controller('LeaderboardTopController', function(
                 $('.name', row).html('<a href="profiles/outfit/' + data.id + '">' + data.name + '</a>');
             }
         });
-    }
+    };
 });

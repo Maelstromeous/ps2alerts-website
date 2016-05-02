@@ -21,9 +21,9 @@ $route->get('/profiles/outfit/{id:number}', 'Ps2alerts\Frontend\Controller\Profi
 
 /* Leaderboards */
 $route->get('/leaderboards', 'Ps2alerts\Frontend\Controller\LeaderboardController::index');
-$route->get('/leaderboards/players', 'Ps2alerts\Frontend\Controller\LeaderboardController::players');
-$route->get('/leaderboards/outfits', 'Ps2alerts\Frontend\Controller\LeaderboardController::outfits');
+//$route->get('/leaderboards/players', 'Ps2alerts\Frontend\Controller\LeaderboardController::players');
+//$route->get('/leaderboards/outfits', 'Ps2alerts\Frontend\Controller\LeaderboardController::outfits');
 $route->get('/leaderboards/weapons', 'Ps2alerts\Frontend\Controller\LeaderboardController::weapons');
-$route->get('/leaderboards/vehicles', 'Ps2alerts\Frontend\Controller\LeaderboardController::vehicles');
+//$route->get('/leaderboards/vehicles', 'Ps2alerts\Frontend\Controller\LeaderboardController::vehicles');
 
 return $route;

@@ -102,7 +102,6 @@ app.filter('ucfirst', function() {
 	};
 });
 
-
 $(window).load(function() {
     $(".button-collapse").sideNav({
         edge: 'left',

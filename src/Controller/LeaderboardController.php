@@ -17,8 +17,8 @@ class LeaderboardController implements ConfigAwareInterface, TemplateAwareInterf
     /**
      * Leaderboard Index Page
      *
-     * @param  ServerRequestInterface $request
-     * @param  ResponseInterface      $response
+     * @param  Psr\Http\Message\ServerRequestInterface $request
+     * @param  Psr\Http\Message\ResponseInterface      $response
      *
      * @return Psr\Http\Message\ResponseInterface
      */
@@ -32,68 +32,17 @@ class LeaderboardController implements ConfigAwareInterface, TemplateAwareInterf
     }
 
     /**
-     * About Page
+     * Leaderboard Weapons Page
      *
-     * @param  ServerRequestInterface $request
-     * @param  ResponseInterface      $response
-     *
+     * @param  Psr\Http\Message\ServerRequestInterface $request
+     * @param  Psr\Http\Message\ResponseInterface      $response
+     * 
      * @return Psr\Http\Message\ResponseInterface
      */
-    public function about(ServerRequestInterface $request, ResponseInterface $response)
+    public function weapons(ServerRequestInterface $request, ResponseInterface $response)
     {
         $response->getBody()->write(
-            $this->getTemplateDriver()->render('about.html')
-        );
-
-        return $response;
-    }
-
-    /**
-     * Alert History Page
-     *
-     * @param  ServerRequestInterface $request
-     * @param  ResponseInterface      $response
-     *
-     * @return Psr\Http\Message\ResponseInterface
-     */
-    public function alertHistory(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        $response->getBody()->write(
-            $this->getTemplateDriver()->render('alert-history.html')
-        );
-
-        return $response;
-    }
-
-    /**
-     * Alert Pages
-     *
-     * @param  ServerRequestInterface $request
-     * @param  ResponseInterface      $response
-     *
-     * @return Psr\Http\Message\ResponseInterface
-     */
-    public function alert(ServerRequestInterface $request, ResponseInterface $response, array $args)
-    {
-        $response->getBody()->write(
-            $this->getTemplateDriver()->render('alert.html', ['args' => $args])
-        );
-
-        return $response;
-    }
-
-    /**
-     * Alert Pages
-     *
-     * @param  ServerRequestInterface $request
-     * @param  ResponseInterface      $response
-     *
-     * @return Psr\Http\Message\ResponseInterface
-     */
-    public function changeLog(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        $response->getBody()->write(
-            $this->getTemplateDriver()->render('change-log.html')
+            $this->getTemplateDriver()->render('leaderboards/weapons.html')
         );
 
         return $response;
