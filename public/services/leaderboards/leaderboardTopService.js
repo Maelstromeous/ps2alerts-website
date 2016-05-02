@@ -88,6 +88,7 @@ app.service('LeaderboardTopService', function(
                 }
             }
 
+            row.kd        = MetricsProcessingService.calcKD(row.kills, row.deaths);
             row.kills     = row.kills.toLocaleString();
             row.deaths    = row.deaths.toLocaleString();
             row.teamkills = row.teamkills.toLocaleString();
@@ -110,6 +111,7 @@ app.service('LeaderboardTopService', function(
             row.pos = pos;
             pos++;
 
+            row.kd        = MetricsProcessingService.calcKD(row.kills, row.deaths);
             row.kills     = row.kills.toLocaleString();
             row.deaths    = row.deaths.toLocaleString();
             row.teamkills = row.teamkills.toLocaleString();
