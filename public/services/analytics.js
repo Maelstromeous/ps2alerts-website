@@ -15,10 +15,10 @@ app.service('AnalyticsService', function($rootScope, $window, $location) {
 
     // Registers a Google Analytics Event with the DOM then adds it to the registry
     factory.registerGAEventSingle = function(el) {
-        var registered = $(el).attr('registered');
+        var registered = $(el).attr('ga-registered');
 
         // Prevent adding another registration, also checks if the element exists
-        if (registered != 1) {;
+        if (registered != '1') {;
             var campaign = $(el).attr('ga-campaign');
             var action = $(el).attr('ga-action');
             var label = $(el).attr('ga-label');
