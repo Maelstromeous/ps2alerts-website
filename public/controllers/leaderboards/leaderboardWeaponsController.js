@@ -63,7 +63,7 @@ app.controller('LeaderboardWeaponsController', function(
             ],
             order:          [3, 'desc'],
             deferRender:    true,
-            scrollY:        456,
+            scrollY:        380,
             scrollCollapse: true,
             scroller:       true,
             searching:      true,
