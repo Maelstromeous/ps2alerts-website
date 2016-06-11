@@ -8,22 +8,21 @@ app.service('HomeTimelineService', function ($http, $log, ConfigDataService, $ro
         factory.dates[date].total++;
     };
 
-    $log.log(ConfigDataService.apiUrl + '/alerts/counts/daily');
+    factory.init = function() {
+        // Get the data
+        $http({
+            method : 'GET',
+            url    : ConfigDataService.apiUrl + '/alerts/counts/daily',
+        }).then(function(data) {
+            var returned = data.data.data; //#dataception
 
-    // Get the data
-    $http({
-        method : 'GET',
-        url    : ConfigDataService.apiUrl + '/alerts/counts/daily',
-    }).then(function(data) {
-        var returned = data.data.data; //#dataception
+            angular.forEach(returned, function(values, date) {
+                factory.dates[date] = values.data;
+            });
 
-        angular.forEach(returned, function(values, date) {
-            factory.dates[date] = values.data;
+            $rootScope.$broadcast('timeline-loaded', 'loaded');
         });
-
-        $log.log(factory);
-        $rootScope.$broadcast('timeline-loaded', 'loaded');
-    });
+    }
 
     return factory;
 });

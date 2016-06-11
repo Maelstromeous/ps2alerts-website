@@ -1,14 +1,8 @@
-app.controller('HomeVictoryController', function($scope, ConfigDataService, HomeStatisticsService) {
-    $scope.today = new Date();
-    $scope.alertStats = HomeStatisticsService;
-    $scope.config = ConfigDataService;
-
-    $scope.alertStats.init();
-});
-
 app.controller('HomeTimelineController', function ($scope, HomeTimelineService) {
     $scope.timelineStats = HomeTimelineService;
     $scope.loadedTimeline = false;
+
+    $scope.timelineStats.init();
 
     // Once data is loaded, init the timeline
     $scope.$on('timeline-loaded', function() {
@@ -39,7 +33,7 @@ app.controller('HomeTimelineController', function ($scope, HomeTimelineService) 
             drawPoints.push([milliseconds, dates[date].draw]);
         }
 
-        // SET TEH DATAS
+        // Set Data Paths to the chart
         vsData.setData(vsPoints);
         ncData.setData(ncPoints);
         trData.setData(trPoints);
@@ -196,6 +190,3 @@ function initChart() {
         }],
     });
 }
-app.controller('HomeZoneVictoryController', function($scope, HomeZoneStatisticsService) {
-    $scope.zoneStats = HomeZoneStatisticsService;
-});
