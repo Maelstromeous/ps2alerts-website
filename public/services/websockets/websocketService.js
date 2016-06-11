@@ -86,6 +86,11 @@ app.service('WebsocketService', function(
                         factory.parseMiddleman(message);
                         break;
                     }
+                    case 'timeSync':
+                    case 'timeSyncWait': {
+                        factory.returnTimeSync(message)
+                        break;
+                    }
                 }
             }
         }
@@ -248,6 +253,23 @@ app.service('WebsocketService', function(
 
         factory.endActive(testData);
     };
+
+    $rootScope.$on('timesync', function(event, alertID) {
+        console.log('timesync', alertID);
+
+        var time = new Date().getTime();
+
+        var message = {
+            payload: {
+                action: 'timesync',
+                time: time,
+                resultID: alertID,
+                mode: 'end'
+            }
+        };
+
+        factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
+    });
 
     return factory;
 });

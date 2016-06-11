@@ -12,7 +12,7 @@ class ConfigServiceProvider extends AbstractServiceProvider
     protected $provides = ['config'];
 
     /**
-     * {@inheritdoc}
+     * @{inheritDoc}
      */
     public function register()
     {

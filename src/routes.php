@@ -26,4 +26,6 @@ $route->get('/leaderboards', 'Ps2alerts\Frontend\Controller\LeaderboardControlle
 $route->get('/leaderboards/weapons', 'Ps2alerts\Frontend\Controller\LeaderboardController::weapons');
 //$route->get('/leaderboards/vehicles', 'Ps2alerts\Frontend\Controller\LeaderboardController::vehicles');
 
+$route->get('/project-status', 'Ps2alerts\Frontend\Controller\ProjectStatusController::index');
+
 return $route;

@@ -55,6 +55,10 @@ app.config(function ($routeProvider, $locationProvider) {
             title: 'Change Log',
             templateUrl: 'views/change-log/index.html'
         })
+        .when('/project-status', {
+            title: 'Project Status',
+            templateUrl: 'views/project-status/index.html'
+        })
         .otherwise({
             title: 'Not found!',
             templateUrl: 'views/common/404.html'

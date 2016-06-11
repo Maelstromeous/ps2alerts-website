@@ -10,32 +10,6 @@ app.controller('AlertController', function(
         data: false
     };
 
-    $scope.project = {
-        title: 'Project Status: Alert Detail Pages',
-        subtitle: 'Per-alert statistics pages are in the process of being re-written. See below for a summary of the features',
-        updated: 'Sunday 6th March 2016',
-        completed: [
-            'Basic Alert Information (time, server, continent etc)',
-            'Territory Capture Bar',
-            'Basic Combat Metrics (Kills, Deaths, Tks, Suicides)',
-            'Leaderboard system (Players, Outfits, Weapons, Vehicles)',
-            'Basic Facility Statistics',
-            'Outfit Captures'
-        ],
-        inprogress: [
-            'Map Capture Timeline',
-            'Map "who capped whom" display',
-        ],
-        notstarted: [
-            'Faction Kills timeline',
-            'Realtime metrics (live updating)',
-            'Class Combat Statistics',
-            'XP Statistics',
-            'Per-player metrics summaries',
-            'Per-outfit metrics summaries'
-        ]
-    };
-
     $scope.$on('dataLoaded', function() {
         $scope.loaded.data = true;
 
@@ -189,6 +163,8 @@ app.controller('AlertController', function(
                 }
             }
         });
+
+        $scope.$emit('timesync', $routeParams.alert);
 
         $(document).ready(function(){
             $('ul.tabs').tabs();
