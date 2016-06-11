@@ -6,8 +6,6 @@ app.controller('HomeTimelineController', function ($scope, HomeTimelineService) 
 
     // Once data is loaded, init the timeline
     $scope.$on('timeline-loaded', function() {
-        console.log('Timeline loaded');
-
         initChart();
 
         var chart = $('#alert-timeline').highcharts();
