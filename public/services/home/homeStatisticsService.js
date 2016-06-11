@@ -30,21 +30,25 @@ app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
         factory.totals.dominations[faction]++;
     };
 
-    // Instantiate the object properties
-    angular.forEach(ConfigDataService.servers, function (server) {
-        angular.forEach(ConfigDataService.factions, function(faction) {
-            factory.victories[server]   = {};
-            factory.dominations[server] = {};
-
-            factory.victories[server][faction]   = 0;
-            factory.dominations[server][faction] = 0;
-
-            factory.totals.alerts[faction]      = 0;
-            factory.totals.dominations[faction] = 0;
-        });
-    });
-
     factory.init = function() {
+        // Instantiate the object properties
+
+        factory.totals.alerts.total = 0;
+        factory.totals.dominations.total = 0;
+
+        angular.forEach(ConfigDataService.servers, function (server) {
+            angular.forEach(ConfigDataService.factions, function(faction) {
+                factory.victories[server]   = {};
+                factory.dominations[server] = {};
+
+                factory.victories[server][faction]   = 0;
+                factory.dominations[server][faction] = 0;
+
+                factory.totals.alerts[faction]      = 0;
+                factory.totals.dominations[faction] = 0;
+            });
+        });
+
         // Get the data
         $http({
             method : 'GET',
