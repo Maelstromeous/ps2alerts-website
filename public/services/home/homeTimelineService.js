@@ -1,4 +1,4 @@
-app.service('HomeTimelineService', function ($http, $log, ConfigDataService) {
+app.service('HomeTimelineService', function ($http, $log, ConfigDataService, $rootScope) {
     var factory = {
         dates: {}
     };
@@ -22,6 +22,7 @@ app.service('HomeTimelineService', function ($http, $log, ConfigDataService) {
         });
 
         $log.log(factory);
+        $rootScope.$broadcast('timeline-loaded', 'loaded');
     });
 
     return factory;

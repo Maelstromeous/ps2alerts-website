@@ -16,7 +16,8 @@ module.exports = function(grunt) {
                         'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
                         'public/assets/js/jsloader.js',
                         'public/bower_components/lodash/dist/lodash.min.js',
-                        'public/bower_components/datatables.net/js/jquery.dataTables.min.js'
+                        'public/bower_components/datatables.net/js/jquery.dataTables.min.js',
+                        'public/bower_components/highcharts/highstock.js'
                     ]
                 }
             },

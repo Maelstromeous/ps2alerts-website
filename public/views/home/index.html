@@ -3,11 +3,27 @@
         <div homepage-announcement></div>
     </div>
     <div class="row center-align">
-        <h1 class="header-no-margin">Alert Statistics</h1>
-        <h4>Statistics shown from 29-Oct-2014 to {{today | date : 'dd-MMM-yyyy'}}</h4>
+        <h1 class="header-no-margin">
+            Alert Statistics
+        </h1>
+        <h4>
+            Statistics shown from 29-Oct-2014 to {{today | date : 'dd-MMM-yyyy'}}
+        </h4>
     </div>
-    <div class="col s12">
-        <div class="row">
+    <div ng-controller="HomeTimelineController" class="row">
+        <div class="col s12" ng-show="!loadedTimeline">
+            <div class="sk-three-bounce" id="alert-timeline-placeholder">
+                <p class="caption">
+                    <i class="fa fa-refresh fa-spin fa-3x"></i><br />
+                    Loading Alert Timeline...
+                </p>
+            </div>
+        </div>
+
+        <div id="alert-timeline"></div>
+    </div>
+    <div class="row">
+        <div class="col s12">
             <territory-bar
                 vs="{{alertStats.totals.alerts.vs}}"
                 nc="{{alertStats.totals.alerts.nc}}"
@@ -18,6 +34,7 @@
             </territory-bar>
         </div>
     </div>
+
     <div class="row row-no-margin">
         <div class="col s12 m6 no-padding">
             <div
@@ -89,16 +106,7 @@
         </div>
     </div>
 </section>
-<!--<section ng-controller="HomeTimelineController" ng-init="init()">
-    <div class="col s12">
-        <div class="card blue-grey darken-3">
-            <div class="card-content">
-                <div id="victoryTimeline"></div>
-                <h4 class="center-align">Victory Timeline</h4>
-            </div>
-        </div>
-    </div>
-</section>
+<!--
 <section ng-controller="HomeZoneVictoryController">
     <div class="col s12">
         <div class="card blue-grey darken-3">

@@ -23,6 +23,7 @@
     "highcharts-ng": "^0.0",
     "lodash": "^4",
     "datatables.net": "^1.10.11",
-    "datatables.net-dt": "^1.10.11"
+    "datatables.net-dt": "^1.10.11",
+    "highcharts": "~4.2.5"
   }
 }
