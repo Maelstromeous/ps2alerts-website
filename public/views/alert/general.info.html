@@ -3,7 +3,7 @@
         <div class="card-content center-align">
             <div class="row center-align" ng-if="alert.metrics.winner">
                 <div class="col s12">
-                    <h1 class="header-no-margin">{{::alert.details.winnerText}}</h1>
+                    <h1 id="winner">{{::alert.details.winnerText}}</h1>
                     <p class="caption" ng-show="alert.metrics.winnerText != 'Draw'">
                         Winner
                     </p>
@@ -24,43 +24,57 @@
 
             <div class="row row-no-margin">
                 <div class="col no-padding s12 m3" ng-if="alert.details.endedDate">
-                    <h3>{{::alert.details.endedDate}}</h3>
+                    <h3 class="general-metric">
+                        {{::alert.details.endedDate}}
+                    </h3>
                     <p class="caption">
                         Ended
                     </p>
                 </div>
                 <div class="col no-padding s12 m3" ng-if="!alert.details.endedDate">
-                    <h3>{{::alert.details.startedDate}}</h3>
+                    <h3 class="general-metric">
+                        {{::alert.details.startedDate}}
+                    </h3>
                     <p class="caption">
                         Started
                     </p>
                 </div>
                 <div class="col no-padding s4 m2" ng-if="alert.details.durationTime">
-                    <h3>{{::alert.details.durationTime}}</h3>
+                    <h3 class="general-metric">
+                        {{::alert.details.durationTime}}
+                    </h3>
                     <p class="caption">
                         Duration
                     </p>
                 </div>
                 <div class="col no-padding s4 m2" ng-if="!alert.details.durationTime">
-                    <h3>TBD</h3>
+                    <h3 class="general-metric">
+                        TBD
+                    </h3>
                     <p class="caption">
                         Duration
                     </p>
                 </div>
                 <div class="col no-padding s4 m2">
-                    <h3>{{::alert.details.server}}</h3>
+                    <h3 class="general-metric">
+                        {{::alert.details.server}}
+                    </h3>
                     <p class="caption">
                         Server
                     </p>
                 </div>
                 <div class="col no-padding s4 m2">
-                    <h3>{{::alert.details.zone}}</h3>
+                    <h3 class="general-metric">
+                        {{::alert.details.zone}}
+                    </h3>
                     <p class="caption">
                         Continent
                     </p>
                 </div>
                 <div class="col no-padding s4 m3">
-                    <h3>{{::alert.details.timeBracket}}</h3>
+                    <h3 class="general-metric">
+                        {{::alert.details.timeBracket}}
+                    </h3>
                     <p class="caption">
                         Time Bracket
                     </p>
