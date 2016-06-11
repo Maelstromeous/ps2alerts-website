@@ -96,7 +96,7 @@
                             Global Server Victories
                         </h2>
                         <p class="center-align caption">
-                            <i class="fa fa-info-circle"></i> Breakdown of each empire's victories on a per-server basis
+                            <i class="fa fa-info-circle"></i> Breakdown of each faction's victories on a per-server basis
                         </p>
                     </div>
                     <div ng-repeat="(server, metrics) in alertStats.victories">
@@ -130,7 +130,7 @@
                                 Global Continent Victories
                             </h2>
                             <p class="center-align caption">
-                                <i class="fa fa-info-circle"></i> Breakdown of each empire's victories on a per-continent basis
+                                <i class="fa fa-info-circle"></i> Breakdown of each faction's victories on a per-continent basis
                             </p>
                         </div>
 
@@ -164,7 +164,7 @@
                                 Per-Server Continental Victories
                             </h2>
                             <p class="center-align caption">
-                                <i class="fa fa-info-circle"></i> Shows the breakdown of each Server's victories by Continent
+                                <i class="fa fa-info-circle"></i> Shows the breakdown of each Server's victories by Continent. Hover over each segment for exact number of wins.
                             </p>
                         </div>
                         <div class="row row-no-margin">
@@ -173,7 +173,7 @@
                                     {{config.serverNames[server]}}
                                 </div>
                             </div>
-                            <div class="col s10 m11" id="server-zone-breakdown">
+                            <div class="col s10 m11 segments-small" id="server-zone-breakdown">
                                 <div ng-repeat="(zones, servers) in zoneStats.zones" class="col s12 m3">
                                     <div ng-repeat="(key, metrics) in servers">
                                         <territory-bar
@@ -201,21 +201,67 @@
                     <div class="card-content">
                         <div class="row">
                             <h2 class="center-align">
-                                Empire Victory Contribution by Server
+                                Faction Victory Contribution by Server
                             </h2>
                             <p class="center-align caption">
-                                <i class="fa fa-info-circle"></i> Shows the contribution of each server to their empire's victories. Hover over (or tap on mobile) each segment for more detail.
+                                <i class="fa fa-info-circle"></i> Shows the contribution of each server to their factions's victories. Hover over (or tap on mobile) each segment for more detail.
                             </p>
                         </div>
-                        <div class="col s12">
-                            <home-server-victory-bar
-                                vs="{{metrics.vs}}"
-                                nc="{{metrics.nc}}"
-                                tr="{{metrics.tr}}"
-                                draw="{{metrics.draw}}"
-                                total="{{metrics.vs + metrics.nc + metrics.tr + metrics.draw}}"
-                                decimal="1">
-                            </home-server-victory-bar>
+                        <div class="row">
+                            <div class="col s12" id="faction-victory-breakdown">
+                                <div class="territory-bar z-depth-1 grey darken-3">
+                                    <div class="loading" ng-hide="loaded">
+                                        <i class="fa fa-refresh fa-spin"></i>
+                                    </div>
+                                    <div
+                                        ng-repeat="(faction, servers) in zoneStats.serverEmpireStats"
+                                        class="segment {{faction}}-segment segments-small"
+                                        style="width: {{zoneStats.serverEmpireTotals[faction] / zoneStats.serverEmpireTotals.all * 100 | number: 2}}%"
+                                        ng-hide="!loaded">
+                                        <div
+                                            ng-repeat="(server, data) in servers"
+                                            class="faction-contribution-segment segment-metric tooltipped"
+                                            style="width: {{data.value / zoneStats.serverEmpireTotals[faction] * 100 | number: 2}}%"
+                                            data-tooltip="{{config.serverNames[data.server]}} | {{data.value}} | {{data.value / zoneStats.serverEmpireTotals[faction] * 100 | number: 2}}% of faction victories"
+                                            ng-if="server != 'total'">
+                                            <span ng-if="faction != 'draw'">{{data.value}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="faction-victory-tables">
+                            <div class="col s12 m3" ng-repeat="(faction, servers) in zoneStats.serverEmpireStats">
+                                <div class="row header-row">
+                                    <h3 class="center-align">
+                                        {{faction | uppercase}} Contributions
+                                    </h3>
+                                    <div class="col s4">
+                                        Server
+                                    </div>
+                                    <div class="col s4 center-align">
+                                        Wins
+                                    </div>
+                                    <div class="col s4 center-align">
+                                        %
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div
+                                    class="row metric-row"
+                                    ng-repeat="value in servers"
+                                    ng-if="server != 'total'">
+                                    <div class="col s4">
+                                        {{config.serverNames[value.server]}}
+                                    </div>
+                                    <div class="col s4 center-align">
+                                        {{value.value}}
+                                    </div>
+                                    <div class="col s4 center-align">
+                                        {{value.value / zoneStats.serverEmpireTotals[faction] * 100 | number: 1}}%
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -85,15 +85,53 @@
     }
 }
 
-#server-zone-breakdown {
+.segments-small {
     .segment-metric {
-       font-size: 11px;
-       line-height: 15px;
-       display: block;
-       padding-top: 2px;
-   }
+        font-size: 11px;
+        line-height: 15px;
+        display: block;
+        padding-top: 2px;
+    }
+}
 
+#server-zone-breakdown {
    .caption {
        margin-top: @margin-base / 4;
    }
+}
+
+#faction-victory-breakdown {
+    .territory-bar {
+        .faction-contribution-segment {
+            height: 20px;
+            float: left;
+            border-right: 1px solid white;
+
+            span {
+                display: inline-block;
+            }
+        }
+
+        .segment.draw-segment {
+            .faction-contribution-segment {
+                border-right: 0;
+            }
+        }
+    }
+}
+
+#faction-victory-tables {
+    .header-row {
+        margin-bottom: 0;
+    }
+
+    .metric-row {
+        margin-bottom: 5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+        padding-bottom: 4px;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
 }
