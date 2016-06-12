@@ -106,7 +106,7 @@ app.filter('ucfirst', function() {
 	};
 });
 
-$(window).load(function() {
+$(window).on('load', function() {
     $(".button-collapse").sideNav({
         edge: 'left',
         closeOnClick: true
