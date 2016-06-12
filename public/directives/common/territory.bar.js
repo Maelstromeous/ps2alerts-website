@@ -21,7 +21,7 @@ app.directive('territoryBar', function() {
                         $(tips).each(function(index, el) {
                             $(el).tooltip({delay: 50});
                         });
-                    }, 1);
+                    }, 50);
                 }
             }, true);
         }

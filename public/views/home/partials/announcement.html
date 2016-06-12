@@ -1,6 +1,6 @@
 <div class="col m10 s12 offset-m1">
     <div class="card blue-grey darken-3">
-        <div class="card-content">
+        <div class="card-content" id="announcement">
             <div class="row">
                 <h1 class="center-align">
                     Welcome to PS2Alerts!
@@ -30,45 +30,75 @@
                 </div>
             </div>
 
-            <div class="row-seperator"></div>
-            <div id="announcement">
-                <h2 class="center-align">
-                    Project Status Page
-                </h2>
-                <p>
-                    I've gone and consolidated all the project status "cards" into one place, rather than being randomly scattered across the site. There's now a new page called <a href="project-status" class="ga-event" ga-campaign="Homepage Announcement" ga-action="Project Status">Project Status</a> which allows you to see the whole project in it's entirity and it's current state. Check it out below!
-                </p>
-                <p class="center-align">
-                    <a
-                        href="project-status"
-                        class="ga-event btn waves-effect waves-light"
-                        ga-campaign="Homepage Announcement"
-                        ga-action="Project Status">
-                        Project Status
-                    </a>
-                </p>
-            </div>
-            <div class="row-seperator"></div>
-            <div id="announcement">
-                <h2 class="center-align">
-                    Homepage Statistics have been expanded!
-                </h2>
-                <p>
-                    <b>Victory Timeline</b> - One of the big parts that was missing from the homepage (the page you're viewing right now - scroll down!) was the Victory Timeline. This handy graph shows the victories for each faction over time, allowing you to see the trends that are occuring. This graph will be improved over time, with labels detailing when major patches landed so you can see their affect on alerts coming soon.
-                </p>
-                <p>
-                    <b>Continent Victories</b> - This panel shows you the breakdown of empire victories based on a per-continent and per-server basis, allowing you to see which server is dominant on particular continents.
-                </p>
-                <h4 class="center-align">
-                    Updated: 11th June 2016
-                </h4>
+            <div id="announcement-more">
+                <div class="row-seperator"></div>
+
+                <div class="row">
+                    <h4 class="center-align">
+                        Updated: 12th June 2016
+                    </h4>
+                    <h2 class="center-align">
+                        Homepage Statistics have been expanded!
+                    </h2>
+                    <h3 class="center-align">
+                        Victory Timeline
+                    </h3>
+                    <p>
+                        This handy graph shows the victories for each faction over time, allowing you to see the trends that are occuring. This graph will be improved over time, with labels detailing when major patches landed so you can see their affect on alerts coming soon.
+                    </p>
+                    <h3 class="center-align">
+                        Victory Breakdowns
+                    </h3>
+                    <p>
+                        There's now <b><u>4</u></b> new statistics panels which show you how each server's victories are distributed. E.g. You're now able to see which servers the Vanu Soverignity are doing best on Indar. (As of writing, that's Miller and Cobalt!).
+                    </p>
+                    <p>
+                        <b>Global Server Victories</b> - Victories broken down by each server, showing how each faction are doing on each server.
+                    </p>
+                    <p>
+                        <b>Global Continent Victories</b> - Victories broken down by continent, showing which faction is dominating Indar! (As of writing, that's the TR!)
+                    </p>
+                    <p>
+                        <b>Per-Server Continental Victories</b> - Victories broken down by Server and by Continent, which allows you see how each continent fairs for each faction on each server.
+                    </p>
+                    <p>
+                        <b>Faction Victory Contributions</b> - Shows a breakdown of the total number of wins, per faction, and how they contribute to the overall faction percentages. Shown in both a segmented bar chart and in tabular form. Interested to see which servers are pulling their weight? Now you can find out!
+                    </p>
+                    <p class="center-align">
+                        <a
+                            href="#victory-timeline"
+                            class="ga-event btn waves-effect waves-light"
+                            ga-campaign="Homepage Announcement"
+                            ga-action="Victory Timeline Announcement Show Me">
+                            Show me!
+                        </a>
+                    </p>
+                </div>
+
+                <div class="row-seperator"></div>
+
+                <div class="row row-no-margin">
+                    <h2 class="center-align">
+                        Project Status Page
+                    </h2>
+                    <p>
+                        I've gone and consolidated all the project status "cards" into one place, rather than being randomly scattered across the site. There's now a new page called <a href="project-status" class="ga-event" ga-campaign="Homepage Announcement" ga-action="Project Status">Project Status</a> which allows you to see the whole project in it's entirity and it's current state. Check it out below!
+                    </p>
+                    <p class="center-align">
+                        <a
+                            href="project-status"
+                            class="ga-event btn waves-effect waves-light"
+                            ga-campaign="Homepage Announcement"
+                            ga-action="Project Status">
+                            Project Status
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
         <div class="card-action">
             <a
                 href="change-log"
-                id="announcement-view-more"
-                expanded="0"
                 class="ga-event"
                 ga-campaign="Homepage Announcement"
                 ga-action="Change Log">
@@ -81,6 +111,14 @@
                 ga-campaign="Homepage Announcement"
                 ga-action="Github link">
                 <i class="fa fa-github"></i> PS2Alerts on Github
+            </a>
+            <a
+                href="#"
+                class="ga-event pull-right"
+                id="announcement-view-more"
+                ga-campaign="Homepage Announcement"
+                ga-action="Hide">
+                <i class="fa fa-eye-slash"></i> Hide
             </a>
         </div>
     </div>

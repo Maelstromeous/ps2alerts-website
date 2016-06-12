@@ -58,7 +58,6 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
                 _.forEach(factory.serverEmpireStats, function (servers, faction) {
                     sortable[faction] = [];
                     _.forEach(servers, function (value, key) {
-                        console.log(value);
                         sortable[faction].push([key, value]);
                     });
                 });
@@ -89,7 +88,7 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
                         };
                     });
                 });
-                
+
                 $rootScope.$broadcast('zonesLoaded', 'loaded');
             });
         });
