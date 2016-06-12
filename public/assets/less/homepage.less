@@ -95,9 +95,23 @@
 }
 
 #server-zone-breakdown {
-   .caption {
+    @media screen and (max-width: 600px) {
+        margin: 0 -(@margin-base / 2);
+    }
+
+    .breakdown-row {
+        margin-bottom: 2px;
+        p {
+            line-height: 22px;
+        }
+    }
+    .caption {
        margin-top: @margin-base / 4;
-   }
+
+       @media screen and (max-width: 600px) {
+           margin-bottom: @margin-base;
+       }
+    }
 }
 
 #faction-victory-breakdown {
@@ -121,6 +135,10 @@
 }
 
 #faction-victory-tables {
+    @media screen and (max-width: 600px) {
+        margin: 0 -(@margin-base);
+    }
+
     .header-row {
         margin-bottom: 0;
     }
@@ -128,10 +146,16 @@
     .metric-row {
         margin-bottom: 5px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.28);
-        padding-bottom: 4px;
+        padding-bottom: 5px;
 
         &:last-child {
             border-bottom: 0;
+        }
+
+        .metric {
+            @media screen and (min-width: 601px) and (max-width: 1000px) {
+                font-size: 0.8em;
+            }
         }
     }
 }

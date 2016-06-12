@@ -167,15 +167,17 @@
                                 <i class="fa fa-info-circle"></i> Shows the breakdown of each Server's victories by Continent. Hover over each segment for exact number of wins.
                             </p>
                         </div>
-                        <div class="row row-no-margin">
-                            <div class="col s2 m1">
-                                <div ng-repeat="(key, server) in config.servers">
-                                    {{config.serverNames[server]}}
+                        <div class="row row-no-margin" id="server-zone-breakdown">
+                            <div class="col m1 hidden-s">
+                                <div ng-repeat="(key, server) in config.servers" class="breakdown-row">
+                                    <p>
+                                        {{config.serverNames[server]}}
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col s10 m11 segments-small" id="server-zone-breakdown">
+                            <div class="col s12 m11 segments-small">
                                 <div ng-repeat="(zones, servers) in zoneStats.zones" class="col s12 m3">
-                                    <div ng-repeat="(key, metrics) in servers">
+                                    <div ng-repeat="(key, metrics) in servers" class="breakdown-row">
                                         <territory-bar
                                             vs="{{metrics.vs}}"
                                             nc="{{metrics.nc}}"
@@ -224,26 +226,32 @@
                                             style="width: {{data.value / zoneStats.serverEmpireTotals[faction] * 100 | number: 2}}%"
                                             data-tooltip="{{config.serverNames[data.server]}} | {{data.value}} | {{data.value / zoneStats.serverEmpireTotals[faction] * 100 | number: 2}}% of faction victories"
                                             ng-if="server != 'total'">
-                                            <span ng-if="faction != 'draw'">{{data.value}}</span>
+                                            <span ng-if="faction != 'draw'" class="hidden-s">{{data.value}}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row" id="faction-victory-tables">
-                            <div class="col s12 m3" ng-repeat="(faction, servers) in zoneStats.serverEmpireStats">
+                            <div
+                                class="col s12 m4"
+                                ng-repeat="(faction, servers) in zoneStats.serverEmpireStats"
+                                ng-if="faction != 'draw'">
                                 <div class="row header-row">
                                     <h3 class="center-align">
-                                        {{faction | uppercase}} Contributions
+                                        {{faction | uppercase}} Breakdown
                                     </h3>
-                                    <div class="col s4">
+                                    <div class="col s3">
                                         Server
                                     </div>
-                                    <div class="col s4 center-align">
+                                    <div class="col s3 center-align">
                                         Wins
                                     </div>
-                                    <div class="col s4 center-align">
+                                    <div class="col s3 center-align">
                                         %
+                                    </div>
+                                    <div class="col s3 center-align">
+                                        % of all
                                     </div>
                                     <hr />
                                 </div>
@@ -251,14 +259,25 @@
                                     class="row metric-row"
                                     ng-repeat="value in servers"
                                     ng-if="server != 'total'">
-                                    <div class="col s4">
-                                        {{config.serverNames[value.server]}}
+                                    <div class="col s3">
+                                        <span class="metric">
+                                            {{config.serverNames[value.server]}}
+                                        </span>
                                     </div>
-                                    <div class="col s4 center-align">
-                                        {{value.value}}
+                                    <div class="col s3 center-align">
+                                        <span class="metric">
+                                            {{value.value}}
+                                        </span>
                                     </div>
-                                    <div class="col s4 center-align">
-                                        {{value.value / zoneStats.serverEmpireTotals[faction] * 100 | number: 1}}%
+                                    <div class="col s3 center-align">
+                                        <span class="metric">
+                                            {{value.value / zoneStats.serverEmpireTotals[faction] * 100 | number: 1}}%
+                                        </span>
+                                    </div>
+                                    <div class="col s3 center-align">
+                                        <span class="metric">
+                                            {{value.value / zoneStats.serverEmpireTotals.all * 100 | number: 1}}%
+                                        </span>
                                     </div>
                                 </div>
                             </div>
