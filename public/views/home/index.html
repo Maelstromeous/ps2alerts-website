@@ -38,28 +38,28 @@
             </div>
             <div
                 home-faction-card
-                class="col s12 m3"
+                class="col s12 m6 l3"
                 card-class="vs-card"
                 card-title="Vanu Sovereignty"
                 faction="vs">
             </div>
             <div
                 home-faction-card
-                class="col s12 m3"
+                class="col s12 m6 l3"
                 card-class="nc-card"
                 card-title="New Conglomerate"
                 faction="nc">
             </div>
             <div
                 home-faction-card
-                class="col s12 m3"
+                class="col s12 m6 l3"
                 card-class="tr-card"
                 card-title="Terran Republic"
                 faction="tr">
             </div>
             <div
                 home-faction-card
-                class="col s12 m3"
+                class="col s12 m6 l3"
                 card-class="draw-card"
                 card-title="Draws"
                 faction="draw">
@@ -101,12 +101,12 @@
                     </div>
                     <div ng-repeat="(server, metrics) in alertStats.victories">
                         <div class="row breakdown-row">
-                            <div class="col s4 m2">
+                            <div class="col s4 m3 l2">
                                 <p>
                                     {{::config.serverNames[server]}}
                                 </p>
                             </div>
-                            <div class="col s8 m10">
+                            <div class="col s8 m9 l10">
                                 <territory-bar
                                     vs="{{metrics.vs}}"
                                     nc="{{metrics.nc}}"
@@ -138,12 +138,12 @@
 
                         <div ng-repeat="(zone, metrics) in zoneStats.zoneTotals">
                             <div class="row breakdown-row">
-                                <div class="col s4 m2">
+                                <div class="col s4 m3 l2">
                                     <p>
                                         {{::config.zoneNames[zone]}}
                                     </p>
                                 </div>
-                                <div class="col s8 m10">
+                                <div class="col s8 m9 l10">
                                     <territory-bar
                                         vs="{{metrics.vs}}"
                                         nc="{{metrics.nc}}"
@@ -159,7 +159,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s12 m12 no-padding">
+        <div class="col s12 no-padding">
             <div class="col s12">
                 <div class="card blue-grey darken-3">
                     <div class="card-content">
