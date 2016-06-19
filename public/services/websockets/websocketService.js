@@ -20,6 +20,11 @@ app.service('WebsocketService', function(
         factory.webSocket.onopen = function () {
             factory.authenticate();
             factory.checkMiddleman();
+
+            // Sets the sync so that we don't get orphoned alerts
+            factory.sync = setInterval(function() {
+                factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
+            }, 10000);
         };
 
         factory.webSocket.onmessage = function (rawMessage) {
@@ -29,6 +34,7 @@ app.service('WebsocketService', function(
 
         factory.webSocket.onclose = function() {
             $('#websocket-status').removeClass().addClass('websocket-disconnected');
+            clearInterval(factory.sync);
             setTimeout(function() {
                 return factory.initWebSocket();
             }, 2500);
@@ -73,7 +79,7 @@ app.service('WebsocketService', function(
                         break;
                     }
                     case 'alertEnd': {
-                        factory.endActive(message);
+                        factory.endActiveParsed(message);
                         break;
                     }
                     case 'alertStatus': {
@@ -105,16 +111,35 @@ app.service('WebsocketService', function(
 
     factory.addActive = function (messageData) {
         factory.parseAlertDataInitial(messageData, function(alert) {
-            factory.actives[alert.id] = alert;
-            factory.count++;
+            if (typeof factory.actives[alert.id] === 'undefined') {
+                factory.actives[alert.id] = alert;
+                factory.count++;
 
-            // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
-            setTimeout(function() {
-                setMonitorCountdown(alert.id);
-            }, 1);
+                // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
+                setTimeout(function() {
+                    factory.setMonitorCountdown(alert.id);
+                }, 1);
 
-            $rootScope.$apply();
-            $rootScope.$emit('ga-sync', '#alert-monitor #monitor-'+alert.id+' .ga-event');
+                $rootScope.$apply();
+                $rootScope.$emit('ga-sync', '#alert-monitor #monitor-'+alert.id+' .ga-event');
+            } else {
+                // Check if the alert has expired, if so, remove.
+
+                var alert = factory.actives[alert.id];
+                var time = new Date().getTime();
+                time = time / 1000; // Convert to stored time format
+
+                // If the alert has ended, kill it.
+                if (time > alert.ends) {
+                    var alert = {
+                        id: alert.id,
+                        server: alert.server,
+                        forced: true
+                    }
+
+                    factory.endActive(alert);
+                }
+            }
         });
     };
 
@@ -130,11 +155,18 @@ app.service('WebsocketService', function(
         });
     };
 
-    factory.endActive = function (message) {
+    factory.endActiveParsed = function (message) {
         factory.parseAlertDataEnd(message.data, function(alert) {
-            delete factory.actives[alert.id];
-            factory.count--;
+            factory.endActive(alert);
+        });
+    };
 
+    factory.endActive = function (alert) {
+        delete factory.actives[alert.id];
+        factory.count--;
+
+        // Check if the alert wasn't forcibly removed. If it was, we have no winner information.
+        if (typeof alert.forced === 'undefined') {
             HomeStatisticsService.increaseAlertTotal();
             HomeStatisticsService.increaseVictories(alert.server, alert.winner);
 
@@ -144,9 +176,10 @@ app.service('WebsocketService', function(
             }
 
             AlertHistoryService.appendAlert(alert);
+        }
 
-            $rootScope.$apply();
-        });
+
+        $rootScope.$apply();
     };
 
     // Also handles starts as it's the same fields
@@ -268,6 +301,17 @@ app.service('WebsocketService', function(
 
         factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
     });
+
+    factory.setMonitorCountdown = function(alertID) {
+        var elem = $("#monitor-" + alertID).find('.countdown');
+        var time = elem.attr("todate");
+
+        elem.countdown(time, function(event) {
+            $(this).text(
+                event.strftime('%H:%M:%S')
+            );
+        });
+    }
 
     return factory;
 });
