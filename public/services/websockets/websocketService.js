@@ -107,6 +107,7 @@ app.service('WebsocketService', function(
                 factory.addActive(alert);
             });
         });
+        $rootScope.$apply();
     };
 
     factory.addActive = function (messageData) {
@@ -177,7 +178,6 @@ app.service('WebsocketService', function(
 
             AlertHistoryService.appendAlert(alert);
         }
-
 
         $rootScope.$apply();
     };
