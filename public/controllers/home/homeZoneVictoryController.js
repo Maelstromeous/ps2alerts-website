@@ -13,7 +13,7 @@ app.controller('HomeZoneVictoryController', function($scope, HomeZoneVictoryServ
         var tips = $('#faction-victory-breakdowns').find('.tooltipped');
 
         $(tips).each(function(index, el) {
-            $(el).tooltip({delay: 50});
+            $(el).tooltip({delay: 0});
         });
     });
 
