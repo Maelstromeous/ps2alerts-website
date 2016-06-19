@@ -1,11 +1,14 @@
 <div class="col m10 s12 offset-m1">
     <div class="card blue-grey darken-3">
         <div class="card-content" id="announcement">
-            <div class="row">
-                <h1 class="center-align">
+            <div class="row center-align">
+                <h1>
                     Welcome to PS2Alerts!
                 </h1>
-                <div class="center-align">
+                <h3>
+                    <i>The</i> source of Planetside 2 Alert Statistics
+                </h3>
+                <div>
                     <a
                         href="about"
                         class="ga-event btn waves-effect waves-light"
@@ -14,23 +17,23 @@
                         <i class="fa fa-info-circle fa-fw"></i> About PS2Alerts
                     </a>
                     <a
-                        href="leaderboards"
-                        class="ga-event btn waves-effect waves-light"
-                        ga-campaign="Homepage Announcement"
-                        ga-action="Leaderboards">
-                        <i class="fa fa-trophy fa-fw"></i> Leaderboards
-                    </a>
-                    <a
                         href="alert-history"
                         class="ga-event btn waves-effect waves-light"
                         ga-campaign="Homepage Announcement"
                         ga-action="Alert History">
                         <i class="fa fa-tasks fa-fw"></i> Alert History
                     </a>
+                    <a
+                        href="leaderboards"
+                        class="ga-event btn waves-effect waves-light"
+                        ga-campaign="Homepage Announcement"
+                        ga-action="Leaderboards">
+                        <i class="fa fa-trophy fa-fw"></i> Leaderboards
+                    </a>
                 </div>
             </div>
 
-            <div id="announcement-more">
+            <div id="announcement-more" ng-show="!hidden">
                 <div class="row-seperator"></div>
 
                 <div class="row">
@@ -110,15 +113,35 @@
                 class="ga-event"
                 ga-campaign="Homepage Announcement"
                 ga-action="Github link">
-                <i class="fa fa-github"></i> PS2Alerts on Github
+                <i class="fa fa-github"></i> Report issues or request features
+            </a>
+            <a
+                href="project-status"
+                target="_blank"
+                class="ga-event"
+                ga-campaign="Homepage Announcement"
+                ga-action="Project Status">
+                <i class="fa fa-check"></i> Project Status
             </a>
             <a
                 href="#"
                 class="ga-event pull-right"
-                id="announcement-view-more"
                 ga-campaign="Homepage Announcement"
-                ga-action="Hide">
-                <i class="fa fa-eye-slash"></i> Hide
+                ga-action="Hide"
+                ng-click="hide()"
+                ng-show="!hidden"
+                id="announcement-hide">
+                <i class="fa fa-eye-slash"></i> Hide Announcement
+            </a>
+            <a
+                href="#"
+                class="ga-event pull-right"
+                ga-campaign="Homepage Announcement"
+                ga-action="Show"
+                ng-click="show()"
+                ng-show="hidden"
+                id="announcement-show">
+                <i class="fa fa-eye"></i> Show Announcement
             </a>
         </div>
     </div>

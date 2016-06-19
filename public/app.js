@@ -3,6 +3,7 @@
 var app = angular.module('Ps2Alerts', [
     'ngRoute',
     'config',
+    'ngCookies',
     'ngLoadScript'
 ]);
 app.config(function ($routeProvider, $locationProvider) {
