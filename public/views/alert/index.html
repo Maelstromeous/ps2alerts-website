@@ -1,4 +1,4 @@
-<section ng-controller="AlertController" id="alert-details">
+<article id="alert-details" ng-controller="AlertController">
     <div class="sk-three-bounce" ng-show="!loaded.data">
         <div class="sk-child sk-bounce1"></div>
         <div class="sk-child sk-bounce2"></div>
@@ -7,7 +7,7 @@
             Loading
         </p>
     </div>
-    <div ng-show="loaded.data" id="general-info">
+    <section id="general-info" ng-show="loaded.data">
         <div class="row" ng-include="'views/alert/general.info.html'"></div>
         <div alert-fab></div>
         <div class="row">
@@ -23,7 +23,9 @@
                 </territory-bar>
             </div>
         </div>
+    </section>
 
+    <section id="combat-statistics" ng-show="loaded.data">
         <h1 class="center-align">Combat Statistics</h1>
         <p class="caption center-align" ng-if="alert.details.ended == 0">
             Note, Alert Stats are currently <b>not</b> in real time. You will need to refresh to see updates.
@@ -32,5 +34,5 @@
 
         <div alert-leaderboards></div>
         <div alert-map-stats></div>
-    </div>
-</section>
+    </section>
+</article>

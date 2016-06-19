@@ -1,69 +1,30 @@
 @import 'variables';
 
-#history-list .card {
-    margin-bottom: 0.3rem;
-    border: 1px solid darken(@border-color, 55%);
-    border-radius: 0;
-}
-
-#history-list .card-content .row {
-    margin-bottom: 15px;
-}
-
-@line-height: 36px;
-
-#history-list .card-content .row .btn {
-    line-height: @line-height;
-    margin-top: 10px;
-}
-
-.alert-history-label {
-    text-align: center;
-    font-size: 1.5rem;
-}
-
-.btn-inactive {
-    background-color: #626D6C !important;
-}
-
-.dynamic-caption {
-    margin-top: @margin-base !important;
-    text-align: center;
-}
-
-.filters {
-    .btn {
-        margin: 2px;
-        padding: 0;
-        width: 100px;
+#alert-history {
+    #history-list .card {
+        margin-bottom: 0.3rem;
+        border: 1px solid darken(@border-color, 55%);
+        border-radius: 0;
     }
 
-    .apply-btns .btn {
-        width: 150px;
-        padding: 0 15px;
+    #history-list .card-content .row {
+        margin-bottom: 15px;
     }
 
-    .btn-apply {
-        background-color: #17709A;
+    @line-height: 36px;
+
+    #history-list .card-content .row .btn {
+        line-height: @line-height;
+        margin-top: 10px;
     }
 
-    .vs-back {
-        background-color: @background-vs !important;
+    .alert-history-label {
+        text-align: center;
+        font-size: 1.5rem;
     }
 
-    .nc-back {
-        background-color: @background-nc !important;
-    }
-
-    .tr-back {
-        background-color: @background-tr !important;
-    }
-
-    .draw-back {
-        background-color: lighten(@background-draw, 15%) !important;
-    }
-
-    .col {
-        margin-bottom: 10px;
+    .dynamic-caption {
+        margin-top: @margin-base !important;
+        text-align: center;
     }
 }

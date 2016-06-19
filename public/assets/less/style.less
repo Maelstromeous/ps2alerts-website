@@ -149,6 +149,29 @@ table tr:last-child {
     .heading {
         margin-bottom: @margin-base;
     }
+
+    .card-action {
+        @media screen and (max-width: 600px) {
+            text-align: center;
+            overflow: hidden;
+            a {
+                margin: 5px !important;
+                display: block;
+            }
+
+            .pull-right {
+                float: none !important;
+            }
+        }
+    }
+}
+
+.card-mobile {
+    .card-content {
+        @media screen and (max-width: 600px) {
+            padding: @padding-base (@padding-base / 2);
+        }
+    }
 }
 
 .caption {
@@ -293,12 +316,6 @@ table.striped > tbody > tr:nth-child(even) {
     background-color: #465156;
 }
 
-.button-row {
-    .btn {
-        margin: 2px 0;
-    }
-}
-
 .tab a {
     color: #fff !important;
 }
@@ -366,17 +383,4 @@ table.striped > tbody > tr:nth-child(even) {
     @media screen and (max-width: 600px) {
         display: block;
     }
-}
-
-.btn.waves-effect.waves-light:hover {
-    color: #fff;
-}
-
-.btn.waves-effect.waves-light.btn-inactive:hover {
-    background-color: #1f897f !important;
-}
-
-.btn-fixed-width {
-    width: 225px;
-    padding: 0 10px;
 }

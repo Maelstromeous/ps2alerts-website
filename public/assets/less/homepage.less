@@ -1,183 +1,169 @@
 @import 'variables';
 
-#announcement p {
-    margin-bottom: @margin-base;
-}
-
-#announcement h4 {
-    margin-bottom: 0;
-}
-
-#victory-card-container {
-    padding: 0;
-}
-
-.metric .fa-spin {
-    display: inline-block !important;
-    margin-left: 5px;
-}
-
-.victory-card .card-title {
-    font-size: 1.4em;
-}
-
-.victory-counts {
-    font-size: 1.5em;
-}
-
-.victory-card.vs-card {
-    background-color: @background-vs;
-}
-
-.victory-card.nc-card {
-    background-color: @background-nc;
-}
-
-.victory-card.tr-card {
-    background-color: @background-tr;
-}
-
-.victory-card.draw-card {
-    background-color: @background-draw;
-}
-
-#server-victories-table .material-badge {
-    width: 60px;
-    display: inline-block
-}
-
-#serverzone-victories-table {
-    margin-top: @margin-base;
-}
-
-#serverzone-victories-body td,
-#serverzone-victories-body th,
-#serverzone-victories-body thead, {
-    border-radius: 0;
-}
-
-#serverzone-victories-body td {
-    width: 65px;
-}
-
-#serverzone-victories-body .left-align {
-    width: 90px;
-}
-
-#serverzone-victories-body .center-align {
-    text-shadow: 0 0 10px black;
-}
-
-#serverzone-victories-body tr[data-server="totals"] {
-    border-top: 2px solid #FFF;
-}
-
-#alert-timeline-placeholder {
-    height: 400px;
-    line-height: 400px;
-    background-color: #37474f;
-    border-radius: 5px;
-
-    p {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: normal;
-    }
-}
-
-.breakdown-row {
-    margin-bottom: 3px;
-    p {
-        line-height: 22px;
-    }
-}
-
-#server-zone-breakdown {
-    @media screen and (max-width: 600px) {
-        margin: 0 -(@margin-base / 2);
-    }
-
-    .caption {
-       margin-top: @margin-base / 4;
-
-       @media screen and (max-width: 600px) {
-           margin-bottom: @margin-base;
-       }
-    }
-}
-
-#server-zone-victory-breakdown {
-    .group:last-of-type {
-        .caption {
-            margin-bottom: 0;
-        }
-    }
-
-    .caption {
-        @media screen and (max-width: 600px) {
-            margin-top: @margin-base / 3;
+#homepage {
+    #announcement {
+        p {
             margin-bottom: @margin-base;
         }
+        h4 {
+            margin-bottom: 0;
+        }
+
+        #announcement-more {
+            margin-top: @margin-base;
+        }
     }
 
+    #victory-card-container {
+        padding: 0;
+    }
 
-}
+    .metric .fa-spin {
+        display: inline-block !important;
+        margin-left: 5px;
+    }
 
-#faction-victory-breakdowns {
-    .territory-bar {
-        .faction-contribution-segment {
+    .victory-card .card-title {
+        font-size: 1.4em;
+    }
+
+    .victory-counts {
+        font-size: 1.5em;
+    }
+
+    .victory-card.vs-card {
+        background-color: @background-vs;
+    }
+
+    .victory-card.nc-card {
+        background-color: @background-nc;
+    }
+
+    .victory-card.tr-card {
+        background-color: @background-tr;
+    }
+
+    .victory-card.draw-card {
+        background-color: @background-draw;
+    }
+
+    #server-victories-table .material-badge {
+        width: 60px;
+        display: inline-block
+    }
+
+    #serverzone-victories-table {
+        margin-top: @margin-base;
+    }
+
+    #alert-timeline-placeholder {
+        height: 400px;
+        line-height: 400px;
+        background-color: #37474f;
+        border-radius: 5px;
+
+        p {
             display: inline-block;
-            border-right: 1px solid #fff;
+            vertical-align: middle;
+            line-height: normal;
+        }
+    }
 
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.3);
+    .breakdown-row {
+        margin-bottom: 3px;
+        p {
+            line-height: 22px;
+        }
+    }
+
+    #server-zone-breakdown {
+        @media screen and (max-width: 600px) {
+            margin: 0 -(@margin-base / 2);
+        }
+
+        .caption {
+           margin-top: @margin-base / 4;
+
+           @media screen and (max-width: 600px) {
+               margin-bottom: @margin-base;
+           }
+        }
+    }
+
+    #server-zone-victory-breakdown {
+        .group:last-of-type {
+            .caption {
+                margin-bottom: 0;
             }
         }
 
-        .segment.draw-segment {
-            .faction-contribution-segment {
-                border-right: 0;
-            }
-        }
-    }
-}
-
-#faction-victory-tables {
-    @media screen and (max-width: 600px) {
-        margin: 0 -(@margin-base);
-    }
-
-    .header-row {
-        margin-bottom: @margin-base / 2;
-        padding-bottom: @padding-base / 4;
-        border-bottom: 1px solid #fff;
-        font-weight: bold;
-
-        div {
-            padding: 0;
-
+        .caption {
             @media screen and (max-width: 600px) {
+                margin-top: @margin-base / 3;
+                margin-bottom: @margin-base;
+            }
+        }
+    }
+
+    #faction-victory-breakdowns {
+        .territory-bar {
+            .faction-contribution-segment {
+                display: inline-block;
+                border-right: 1px solid #fff;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
+
+                @media screen and (max-width: 600px) {
+                    height: 100%;
+                }
+            }
+
+            .segment.draw-segment {
+                .faction-contribution-segment {
+                    border-right: 0;
+                }
+            }
+        }
+    }
+
+    #faction-victory-tables {
+        @media screen and (max-width: 600px) {
+            font-size: 0.8em;
+        }
+        .header-row {
+            margin-bottom: @margin-base / 2;
+            padding-bottom: @padding-base / 4;
+            border-bottom: 1px solid #fff;
+            font-weight: bold;
+
+            div {
+                padding: 0;
+
+                @media screen and (max-width: 600px) {
+                    padding: 0 @padding-base / 2;
+                }
+            }
+
+            div:first-of-type {
                 padding: 0 @padding-base / 2;
             }
         }
 
-        div:first-of-type {
-            padding: 0 @padding-base / 2;
-        }
-    }
+        .metric-row {
+            margin-bottom: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+            padding-bottom: 5px;
 
-    .metric-row {
-        margin-bottom: 5px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.28);
-        padding-bottom: 5px;
+            &:last-child {
+                border-bottom: 0;
+            }
 
-        &:last-child {
-            border-bottom: 0;
-        }
-
-        .metric {
-            @media screen and (min-width: 601px) and (max-width: 1000px) {
-                font-size: 0.8em;
+            .metric {
+                @media screen and (min-width: 601px) and (max-width: 1000px) {
+                    font-size: 0.8em;
+                }
             }
         }
     }
