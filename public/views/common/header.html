@@ -98,21 +98,63 @@
 		</ul>
 		<ul class="side-nav" id="mobile-nav-tray">
 			<li>
+				<a
+					href="{{::meta.baseUrl}}"
+					class="nav-main ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Homepage Button">
+					PS2Alerts
+				</a>
+			</li>
+			<li>
+			    <a
+					href="{{::meta.baseUrl}}/alert-history"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Alert History">
+					<i class="fa fa-tasks fa-fw"></i>
+					Alert History
+				</a>
+			</li>
+			<li>
+			    <a
+					href="{{::meta.baseUrl}}/leaderboards"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Leaderboards">
+					<i class="fa fa-trophy fa-fw"></i>
+					Leaderboards
+				</a>
+			</li>
+			<li>
 			    <a
 					href="{{::meta.baseUrl}}/about"
 					class="ga-event"
 					ga-campaign="Navigation Links"
-					ga-action="Under development">
+					ga-action="About">
+					<i class="fa fa-info-circle fa-fw"></i>
 					About
 				</a>
 			</li>
 			<li>
-				<a
-					href="{{::meta.baseUrl}}/alert-history"
+			    <a
+					href="{{::meta.baseUrl}}/change-log"
 					class="ga-event"
 					ga-campaign="Navigation Links"
-					ga-action="Under development">
-					Alert History
+					ga-action="Change Log">
+					<i class="fa fa-clock-o fa-fw"></i>
+					Change Log
+				</a>
+			</li>
+
+			<li>
+			    <a
+					href="{{::meta.baseUrl}}/project-status"
+					class="ga-event"
+					ga-campaign="Navigation Links"
+					ga-action="Project Status">
+					<i class="fa fa-check fa-fw"></i>
+					Project Status
 				</a>
 			</li>
 		</ul>
