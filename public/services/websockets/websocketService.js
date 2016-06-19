@@ -15,8 +15,6 @@ app.service('WebsocketService', function(
     factory.actives = {};
 
     factory.initWebSocket = function() {
-        $("#websocket-status").removeClass().addClass('websocket-connecting');
-
         factory.webSocket = new WebSocket('ws://ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393');
 
         factory.webSocket.onopen = function () {
@@ -30,7 +28,7 @@ app.service('WebsocketService', function(
         };
 
         factory.webSocket.onclose = function() {
-            $("#websocket-status").removeClass().addClass('websocket-disconnected');
+            $('#websocket-status').removeClass().addClass('websocket-disconnected');
             setTimeout(function() {
                 return factory.initWebSocket();
             }, 2500);
@@ -39,7 +37,7 @@ app.service('WebsocketService', function(
 
     factory.authenticate = function () {
         factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
-        $("#websocket-status").removeClass().addClass('websocket-connected');
+        $('#websocket-status').removeClass().addClass('websocket-connected');
     };
 
     factory.checkMiddleman = function () {
@@ -200,15 +198,15 @@ app.service('WebsocketService', function(
 
     factory.parseMiddleman = function(message) {
         if (message.value == '0') {
-            $("#websocket-status").removeClass().addClass('websocket-middleman-fail');
+            $('#websocket-status').removeClass().addClass('websocket-middleman-fail');
 
             factory.middlemanDown = 1;
             factory.loaded = 0;
         }
 
         if (message.value == '1') {
-            if ( $("#websocket-status").hasClass('websocket-middleman-fail') ) {
-                $("#websocket-status").removeClass().addClass('websocket-connected');
+            if ( $('#websocket-status').hasClass('websocket-middleman-fail') ) {
+                $('#websocket-status').removeClass().addClass('websocket-connected');
             }
             factory.middlemanDown = 0;
             factory.loaded = 1;
