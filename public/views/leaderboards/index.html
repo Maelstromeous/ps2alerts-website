@@ -1,6 +1,5 @@
 <article id="leaderboards">
     <section ng-controller="LeaderboardTopController" id="leaderboards-top" class="leaderboards">
-
         <h1 class="center-align header-no-margin">Leaderboards - Top {{ limit }}</h1>
 
         <div ng-include="'views/leaderboards/partials/nav.html'" id="leaderboard-nav"></div>
@@ -14,7 +13,7 @@
             </p>
         </div>
 
-        <div ng-show="loaded">
+        <section ng-show="loaded">
             <div id="leaderboard-top-subnav" ng-include="'views/leaderboards/partials/top-subnav.html'"></div>
 
             <div class="row" id="top-players-container">
@@ -25,7 +24,7 @@
                 <div class="col s12">
                     <table id="top-players"></table>
                 </div>
-            </section>
+            </div>
 
             <div class="row" id="top-outfits-container">
                 <h2 class="center-align">
@@ -38,7 +37,7 @@
                         <table id="top-outfits"></table>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </section>
 </article>
