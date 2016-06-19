@@ -7,19 +7,19 @@ app.controller('ProjectStatusController', function(
     $scope.projects = [
         {
             title: 'Homepage',
-            subtitle: 'Shows all major statistics, e.g. # of alerts, alerts per server, empire wins, etc.',
-            updated: '4th March 2016',
+            subtitle: 'Shows all major statistics, e.g. # of alerts, alerts per server, faction wins, etc.',
+            updated: '19th June 2016',
             href: $scope.baseUrl,
             completed: [
                 'Basic Statistics (Total Victories, Dominations, Faction % bar',
                 'Server Victories',
-                'Empire Victories'
+                'Faction Victories',
+                'Continent Victories',
+                'Victory Timeline',
             ],
             inprogress: [
             ],
             notstarted: [
-                'Continent Victories',
-                'Victory Timeline',
                 'Rolling Victory Averages',
                 'Last Week & Last Month metrics'
             ]
@@ -51,7 +51,7 @@ app.controller('ProjectStatusController', function(
                 'Population Timeline',
                 'Per-player metrics summaries',
                 'Per-outfit metrics summaries',
-                'Empire Combat stats (which empire gunned for whom)'
+                'Faction Combat stats (which faction gunned for whom)'
             ]
         },
         {
