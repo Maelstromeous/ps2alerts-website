@@ -38,153 +38,158 @@ app.controller('HomeTimelineController', function ($scope, HomeTimelineService) 
         drawData.setData(drawPoints);
         $scope.loadedTimeline = true;
     });
-});
 
-function initChart() {
-    $('#alert-timeline').highcharts('StockChart', {
-        chart: {
-            backgroundColor: '',
-            style: {
-                color: '#FFF',
-            },
-            events: {
-                redraw: function() {
-                    //alert ('The chart was just redrawn');
+    function initChart() {
+        $('#alert-timeline').highcharts('StockChart', {
+            chart: {
+                backgroundColor: '',
+                style: {
+                    color: '#FFF',
+                },
+                events: {
+                    redraw: function() {
+                        //alert ('The chart was just redrawn');
+                    }
                 }
-            }
-        },
-        credits: {
-            enabled: false
-        },
-        navigation: {
-            buttonOptions: {
+            },
+            credits: {
                 enabled: false
-            }
-        },
-        rangeSelector: {
-            buttons: [{
-                type: 'week',
-                count: 1,
-                index: 1,
-                text: '1w'
-            }, {
-                type: 'week',
-                count: 2,
-                index: 2,
-                text: '2w'
-            }, {
-                type: 'month',
-                count: 1,
-                index: 3,
-                text: '1m'
-            }, {
-                type: 'month',
-                count: 2,
-                index: 4,
-                text: '2m'
-            }, {
-                type: 'month',
-                count: 3,
-                index: 5,
-                text: '3m'
-            }, {
-                type: 'month',
-                count: 6,
-                index: 6,
-                text: '6m'
-            }, {
-                type: 'all',
-                index: 7,
-                text: 'All'
-            }],
-            selected: 3,
-        },
-
-        navigator: {
-            maskFill: 'rgba(12, 88, 144, 0.15)',
-            height: 25,
-            baseSeries: 'vs'
-        },
-
-        yAxis: {
-            min: 0,
-            plotLines: [{
-                color: '#838383',
-                width: 1,
-            }],
-            labels: {
-                style: {
-                    color: '#FFF'
+            },
+            navigation: {
+                buttonOptions: {
+                    enabled: false
                 }
             },
-            minorGridLineWidth: 1,
-            minorGridLineColor: '#5F5F5F',
-            minorGridLineDashStyle: 'Dash',
-            minorTickInterval: 5,
-            minorTickWidth: 3,
-            lineWidth: 1
-        },
-        xAxis: {
-            labels: {
-                style: {
-                    color: '#FFF'
+            rangeSelector: {
+                buttons: [{
+                    type: 'week',
+                    count: 1,
+                    index: 1,
+                    text: '1w'
+                }, {
+                    type: 'week',
+                    count: 2,
+                    index: 2,
+                    text: '2w'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    index: 3,
+                    text: '1m'
+                }, {
+                    type: 'month',
+                    count: 2,
+                    index: 4,
+                    text: '2m'
+                }, {
+                    type: 'month',
+                    count: 3,
+                    index: 5,
+                    text: '3m'
+                }, {
+                    type: 'month',
+                    count: 6,
+                    index: 6,
+                    text: '6m'
+                }, {
+                    type: 'year',
+                    count: 1,
+                    index: 7,
+                    text: '1y'
+                }, {
+                    type: 'all',
+                    index: 7,
+                    text: 'All'
+                }],
+                selected: 3,
+            },
+
+            navigator: {
+                maskFill: 'rgba(12, 88, 144, 0.15)',
+                height: 25,
+                baseSeries: 'vs'
+            },
+
+            yAxis: {
+                min: 0,
+                plotLines: [{
+                    color: '#838383',
+                    width: 1,
+                }],
+                labels: {
+                    style: {
+                        color: '#FFF'
+                    }
+                },
+                minorGridLineWidth: 1,
+                minorGridLineColor: '#5F5F5F',
+                minorGridLineDashStyle: 'Dash',
+                minorTickInterval: 5,
+                minorTickWidth: 3,
+                lineWidth: 1
+            },
+            xAxis: {
+                labels: {
+                    style: {
+                        color: '#FFF'
+                    }
+                },
+                gridLineColor: '#444',
+                gridLineWidth: 0
+            },
+            scrollbar: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillOpacity: 0.2
                 }
             },
-            gridLineColor: '#444',
-            gridLineWidth: 0
-        },
-        scrollbar: {
-            enabled: false
-        },
-        plotOptions: {
-            area: {
-                fillOpacity: 0.2
-            }
-        },
-        series: [{
-            id: 'draw',
-            type: 'line',
-            name: 'Draws',
-            color: 'rgb(80, 80, 80)',
-            marker: {
-                enabled: true,
-                radius: 0
-            },
-            shadow: false,
-            data: []
-        }, {
-            id: 'nc',
-            type: 'area',
-            name: 'New Conglomerate',
-            color: 'rgb(0, 125, 225)',
-            marker: {
-                enabled: true,
-                radius: 2.5
-            },
-            shadow: true,
-            data: []
-        }, {
-            id: 'tr',
-            type: 'area',
-            name: 'Terran Republic',
-            color: 'rgb(250, 0, 0)',
-            marker: {
-                enabled: true,
-                radius: 2.5
-            },
-            shadow: true,
-            data: []
-        }, {
-            id: 'vs',
-            type: 'area',
-            name: 'Vanu Sovereignty',
-            color: '#8000C0',
-            marker: {
-                enabled: true,
-                radius: 2.5
-            },
-            shadow: true,
-            data: []
-        }],
-    });
-}
+            series: [{
+                id: 'draw',
+                type: 'line',
+                name: 'Draws',
+                color: 'rgb(80, 80, 80)',
+                marker: {
+                    enabled: true,
+                    radius: 0
+                },
+                shadow: false,
+                data: []
+            }, {
+                id: 'nc',
+                type: 'area',
+                name: 'New Conglomerate',
+                color: 'rgb(0, 125, 225)',
+                marker: {
+                    enabled: true,
+                    radius: 2.5
+                },
+                shadow: true,
+                data: []
+            }, {
+                id: 'tr',
+                type: 'area',
+                name: 'Terran Republic',
+                color: 'rgb(250, 0, 0)',
+                marker: {
+                    enabled: true,
+                    radius: 2.5
+                },
+                shadow: true,
+                data: []
+            }, {
+                id: 'vs',
+                type: 'area',
+                name: 'Vanu Sovereignty',
+                color: '#8000C0',
+                marker: {
+                    enabled: true,
+                    radius: 2.5
+                },
+                shadow: true,
+                data: []
+            }],
+        });
+    }
+});
