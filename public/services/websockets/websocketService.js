@@ -303,13 +303,19 @@ app.service('WebsocketService', function(
     });
 
     factory.setMonitorCountdown = function(alertID) {
-        var elem = $("#monitor-" + alertID).find('.countdown');
+        var row = $("#monitor-" + alertID);
+        var elem = $(row).find('.countdown');
         var time = elem.attr("todate");
 
         elem.countdown(time, function(event) {
-            $(this).text(
-                event.strftime('%H:%M:%S')
-            );
+            if (event.strftime) {
+                $(this).text(
+                    event.strftime('%H:%M:%S')
+                );
+            }
+        }).on('finish.countdown', function(event) {
+            elem.countdown('stop');
+            elem.html('OVERDUE!');
         });
     }
 
