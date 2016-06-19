@@ -2,10 +2,10 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
     var factory = {
         zones: {},
         zoneTotals: {},
-        serverEmpireStats: {},
-        serverEmpireTotals: {
+        factionTotals: {
             all: 0
-        }
+        },
+        serverTotals: {}
     };
 
     factory.init = function() {
@@ -25,9 +25,13 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
         });
 
         _.forEach(ConfigDataService.factions, function (faction) {
-            factory.serverEmpireStats[faction] = {};
+            factory.factionTotals[faction] = 0;
+            factory.serverTotals[faction] = {};
             _.forEach(ConfigDataService.servers, function (server) {
-                factory.serverEmpireStats[faction][server] = 0;
+                factory.serverTotals[faction][server] = {
+                    count: 0,
+                    per: 0
+                };
             });
         });
 
@@ -43,32 +47,31 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
                 factory.handleZoneData(6, result[2]),
                 factory.handleZoneData(8, result[3])
             ]).then(function(result) {
-                // Generate Server Contribution Totals
-                _.forEach(factory.serverEmpireStats, function (servers, faction) {
-                    var count = 0;
+                // Calculate percentage contributions
+                _.forEach(factory.serverTotals, function (servers, faction) {
                     _.forEach(servers, function(value, server) {
-                        count += value;
+                        var obj = factory.serverTotals[faction][server];
+                        obj.per = (obj.count / factory.factionTotals[faction]) * 100;
                     });
-                    factory.serverEmpireTotals[faction] = count;
-                    factory.serverEmpireTotals.all += count;
                 });
+
 
                 // Sort the object by number of wins
                 var sortable = {};
-                _.forEach(factory.serverEmpireStats, function (servers, faction) {
+                _.forEach(factory.serverTotals, function (servers, faction) {
                     sortable[faction] = [];
-                    _.forEach(servers, function (value, key) {
-                        sortable[faction].push([key, value]);
+                    _.forEach(servers, function (server, key) {
+                        sortable[faction].push([key, server]);
                     });
                 });
 
                 _.forEach(sortable, function (value, faction) {
                     sortable[faction].sort(function(a, b) {
-                        if (a[1] > b[1]) {
+                        if (a[1].count > b[1].count) {
                             return -1;
                         }
 
-                        if (a[1] == b[1]) {
+                        if (a[1].count == b[1].count) {
                             return 0;
                         }
 
@@ -77,14 +80,15 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
                 });
 
                 // Now we're sorted, rebuild the object
-                factory.serverEmpireStats = {};
+                factory.serverTotals = {};
                 _.forEach(sortable, function (servers, faction) {
-                    factory.serverEmpireStats[faction] = {};
+                    factory.serverTotals[faction] = {};
 
                     _.forEach(servers, function (values, key) {
-                        factory.serverEmpireStats[faction][key] = {
+                        factory.serverTotals[faction][key] = {
                             'server': values[0],
-                            'value': values[1]
+                            'value': values[1].count,
+                            'per': values[1].per
                         };
                     });
                 });
@@ -111,8 +115,12 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
                 angular.forEach(ConfigDataService.factions, function(faction) {
                     factory.zones[zone][server][faction] = values.data[faction];
                     factory.zoneTotals[zone][faction] += values.data[faction];
-                    factory.serverEmpireStats[faction][server] += values.data[faction];
+                    factory.serverTotals[faction][server].count += values.data[faction];
+                    factory.factionTotals[faction] += values.data[faction];
+
                 });
+
+                factory.factionTotals.all += values.data.total;
                 factory.zones[zone][server].total = values.data.total;
             });
 

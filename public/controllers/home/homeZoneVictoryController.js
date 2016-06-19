@@ -1,30 +1,40 @@
-app.controller('HomeZoneVictoryController', function($scope, HomeZoneVictoryService, ConfigDataService) {
+app.controller('HomeZoneVictoryController', function($scope, HomeZoneVictoryService, HomeStatisticsService, ConfigDataService) {
     $scope.zoneStats = HomeZoneVictoryService;
+    $scope.alertStats = HomeStatisticsService;
     $scope.config = ConfigDataService;
     $scope.zoneStats.init();
     $scope.loaded = false;
-    $scope.perServerShown = 'percentage'
+    $scope.mode = 'percentage'
 
     $scope.$on('zonesLoaded', function() {
         $scope.loaded = true;
         $scope.$apply(); // Fix for slow loading
-        console.log($scope.zoneStats);
 
-        var tips = $('#faction-victory-breakdown').find('.tooltipped');
+        var tips = $('#faction-victory-breakdowns').find('.tooltipped');
 
         $(tips).each(function(index, el) {
             $(el).tooltip({delay: 50});
         });
     });
 
-    $scope.changePerServerZone = function(mode) {
-        $scope.perServerShown = mode;
-        var elems = $('#server-zone-breakdown').find('.territory-bar .segment-metric');
+    $scope.changeBreakdownMode = function(mode) {
+        $scope.mode = mode;
 
-        $(elems).each(function(index, el) {
-            var newHtml = $(el).attr(mode);
+        var segments = [
+            '#server-victory-breakdown',
+            '#zone-victory-breakdown',
+            '#server-zone-victory-breakdown',
+            '#faction-victory-breakdowns'
+        ];
 
-            $(el).html(newHtml);
+        $(segments).each(function(index, segment) {
+            var elems = $(segment).find('.territory-bar .segment-metric');
+
+            $(elems).each(function(index, el) {
+                var newHtml = $(el).attr(mode);
+
+                $(el).html(newHtml);
+            });
         });
     }
 });

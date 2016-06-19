@@ -3,8 +3,8 @@
 .territory-bar {
     width: 100%;
     height: @territory-bar-height;
-    background-color: #FFF;
-    color: #FFF;
+    background-color: #fff;
+    color: #fff;
     border: 1px solid #ccc;
     line-height: @territory-bar-height - 2;
     display: table;
@@ -36,6 +36,14 @@
 
 .draw-segment {
     background-color: @background-draw;
+}
+
+.segments-small {
+    line-height: @territory-bar-height - 2;
+    .segment {
+        font-size: 11px;
+        line-height: @territory-bar-height - 2;
+    }
 }
 
 @keyframes vsWin {
