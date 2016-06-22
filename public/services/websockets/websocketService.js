@@ -9,13 +9,16 @@ app.service('WebsocketService', function(
 
     factory.webSocket = {};
     factory.loaded = 0;
+    factory.connecting = 0;
     factory.count = 0;
     factory.middlemanDown = 0;
+    factory.middlemanCheck;
 
     factory.actives = {};
 
     factory.initWebSocket = function() {
-        factory.webSocket = new WebSocket('ws://ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393');
+        factory.webSocket = new WebSocket('ws://'+ConfigDataService.websocketUrl);
+        factory.connecting = 1;
 
         factory.webSocket.onopen = function () {
             factory.authenticate();
@@ -33,9 +36,14 @@ app.service('WebsocketService', function(
         };
 
         factory.webSocket.onclose = function() {
-            $('#websocket-status').removeClass().addClass('websocket-disconnected');
+            factory.loaded = 0;
+            factory.connecting = 0;
+            $rootScope.$apply();
             clearInterval(factory.sync);
+
             setTimeout(function() {
+                factory.connecting = 1;
+                $rootScope.$apply();
                 return factory.initWebSocket();
             }, 2500);
         };
@@ -43,7 +51,8 @@ app.service('WebsocketService', function(
 
     factory.authenticate = function () {
         factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
-        $('#websocket-status').removeClass().addClass('websocket-connected');
+        factory.loaded = 1;
+        factory.connecting = 0;
     };
 
     factory.checkMiddleman = function () {
@@ -231,18 +240,21 @@ app.service('WebsocketService', function(
 
     factory.parseMiddleman = function(message) {
         if (message.value == '0') {
-            $('#websocket-status').removeClass().addClass('websocket-middleman-fail');
-
             factory.middlemanDown = 1;
-            factory.loaded = 0;
+
+            if (! factory.middlemanCheck) {
+                factory.middlemanCheck = setInterval(function() {
+                    console.log('checking middleman');
+                    factory.checkMiddleman();
+                }, 2000);
+            }
         }
 
         if (message.value == '1') {
-            if ( $('#websocket-status').hasClass('websocket-middleman-fail') ) {
-                $('#websocket-status').removeClass().addClass('websocket-connected');
-            }
             factory.middlemanDown = 0;
             factory.loaded = 1;
+
+            clearInterval(factory.middlemanCheck);
         }
 
         $rootScope.$apply();
@@ -284,23 +296,6 @@ app.service('WebsocketService', function(
 
         factory.endActive(testData);
     };
-
-    $rootScope.$on('timesync', function(event, alertID) {
-        console.log('timesync', alertID);
-
-        var time = new Date().getTime();
-
-        var message = {
-            payload: {
-                action: 'timesync',
-                time: time,
-                resultID: alertID,
-                mode: 'end'
-            }
-        };
-
-        factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
-    });
 
     factory.setMonitorCountdown = function(alertID) {
         var row = $("#monitor-" + alertID);

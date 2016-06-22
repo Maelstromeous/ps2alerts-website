@@ -1,20 +1,37 @@
-<div id="websocket-status" class="websocket-connecting" ng-show="websocketDisabled == 0">
+<div id="websocket-status" ng-show="websocketDisabled == 0">
     <div
-        class="chip tooltipped"
-        middlemanDown="{{websocket.middlemanDown}}"
-        loaded="{{websocket.loaded}}"
-        data-tooltip="Status of the PS2Alerts collection system. If this is red, please inform Maelstrome26!"
-        data-position="left">
+        class="chip tooltipped websocket-disconnected"
+        data-tooltip="Websocket has been disconnected! Check if your connection has dropped. If this persists, please contact @Maelstrome26!"
+        data-position="left"
+        ng-show="!websocket.loaded && !websocket.connecting">
         <span class="disconnected">
             <i class="fa fa-arrow-down"></i> Disconnected!
         </span>
+    </div>
+    <div
+        class="chip tooltipped websocket-middleman-fail"
+        data-tooltip="The Middleman API is offline! PS2Alerts will not function without it. Please contact @Maelstrome26!"
+        data-position="left"
+        ng-show="websocket.middlemanDown == 1">
         <span class="middleman-fail">
             <i class="fa fa-chain-broken"></i> Middleman API offline!
         </span>
+    </div>
+    <div
+        class="chip tooltipped websocket-connecting"
+        data-tooltip="Websocket is connecting..."
+        data-position="left"
+        ng-show="!websocket.loaded && websocket.connecting">
         <span class="connecting">
             <i class="fa fa-refresh fa-spin"></i> Connecting
         </span>
-        <span class="connected">
+    </div>
+    <div
+        class="chip tooltipped websocket-connected"
+        data-tooltip="Websocket online and functional. All is well :-)"
+        data-position="left"
+        ng-show="websocket.loaded && !websocket.connecting">
+        <span class="connected" ng-show="websocket.loaded">
             <i class="fa fa-arrow-up"></i> Online
         </span>
     </div>
@@ -29,14 +46,14 @@
 
 <div class="col s12 m10 l8 offset-m1 offset-l2" ng-if="websocketDisabled == 0">
     <div class="center-align">
-        <div class="row sk-three-bounce" ng-show="websocket.loaded == 0 && websocket.middlemanDown == 0">
+        <div class="row sk-three-bounce" ng-show="websocket.loaded == 0">
             <div class="sk-child sk-bounce1"></div>
             <div class="sk-child sk-bounce2"></div>
             <div class="sk-child sk-bounce3"></div>
         </div>
         <div ng-show="websocket.count == 0 && websocket.loaded == 1">
-            <h4>There are no alerts currently running</h4>
-            <h6>New alerts will show up here as they start</h6>
+            <h3>There are no alerts currently running</h3>
+            <h4>New alerts will show up here as they start</h4>
         </div>
         <div ng-show="websocket.middlemanDown == 1">
             <h3>Middleman API is currently offline!</h3>

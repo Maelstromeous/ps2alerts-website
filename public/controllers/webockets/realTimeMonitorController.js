@@ -10,4 +10,9 @@ app.controller('RealTimeMonitorController', function($scope, ConfigDataService, 
         // Start the engines
         $scope.websocket.initWebSocket();
     }
+
+    $scope.simMiddlemanDown = function() {
+        $scope.websocket.loaded = 0;
+        $scope.websocket.middlemanDown = 1;
+    }
 });

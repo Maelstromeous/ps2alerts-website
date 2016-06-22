@@ -12,7 +12,6 @@ app.service('AlertMetricsService', function(
     factory.init = function(alertID) {
         $rootScope.changeTitle('Alert #' + alertID);
         factory.details = {};
-        factory.lastMap = {};
         factory.configData  = {};
         factory.metrics = {
             combats: {
@@ -94,18 +93,16 @@ app.service('AlertMetricsService', function(
 
     factory.startProcessing = function(data) {
         factory.details = AlertTransformer.parse(data);
-
-        var serverName = ConfigDataService.serverNames[factory.details.server];
-
-        $rootScope.changeTitle('Alert #' + factory.details.id + ' (' + factory.details.server + ' - ' + factory.details.winner.toUpperCase() + ')');
-
         factory.metrics = data;
 
-        factory.lastMap = _.last(data.maps.data);
+        var serverName = ConfigDataService.serverNames[factory.details.server];
+        var winnerTitle = factory.details.winner.toUpperCase();
 
-        var last = factory.lastMap;
-        last.controlTotal = last.controlVS + last.controlNC + last.controlTR;
-        last.controlNeutral = 100 - last.controlTotal;
+        if (!factory.details.winner) {
+            winnerTitle = 'TBD';
+        }
+
+        $rootScope.changeTitle('Alert #' + factory.details.id + ' (' + factory.details.server + ' - ' + winnerTitle + ')');
 
         // Build player and outfit reference objects so we don't have to do
         // tons of loops on every single kill to get player / outfit info
@@ -144,7 +141,7 @@ app.service('AlertMetricsService', function(
         });
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
-        //console.log(factory);
+        console.log(factory);
     };
 
     // Function to add new players to various areas, grabbing new data from Census
@@ -370,12 +367,15 @@ app.service('AlertMetricsService', function(
         var formatted = {
             timestamp: capture.timestamp * 1000,
             defence:   capture.isDefence,
-            vs:        capture.controlVS,
-            nc:        capture.controlNC,
-            tr:        capture.controlTR,
+            vs:        parseInt(capture.controlVS),
+            nc:        parseInt(capture.controlNC),
+            tr:        parseInt(capture.controlTR),
             captor:    capture.facilityNewFaction,
-            looser:    capture.facilityOldFaction,
+            looser:    capture.facilityOldFaction
         };
+
+        formatted.total = (formatted.vs + formatted.nc + formatted.tr);
+        formatted.neutral = 100 - formatted.total;
 
         var outfitRef = _.findIndex(
             factory.parsed.outfits, {'id' : capture.outfitCaptured}
@@ -451,8 +451,13 @@ app.service('AlertMetricsService', function(
         }
 
         factory.parsed.map.all.push(formatted);
-    };
 
+        // Update territory bar
+        factory.controlVS = formatted.vs;
+        factory.controlNC = formatted.nc;
+        factory.controlTR = formatted.tr;
+        factory.controlNeutral = formatted.neutral;
+    };
 
     factory.sortPlayers = function(metric) {
         factory.sortPlayersByMetric(factory.metrics.players.data, metric);
@@ -532,6 +537,32 @@ app.service('AlertMetricsService', function(
             });
         });
     };
+
+    factory.increaseCombatKills = function(message) {
+        var combatStats = factory.metrics.combats.data;
+        if (message.suicide === true) {
+            combatStats.suicides[message.attackerFactionAbv]++;
+            combatStats.suicides.total++;
+        }
+
+        if (message.teamkill === true) {
+            combatStats.teamkills[message.attackerFactionAbv]++;
+            combatStats.teamkills.total++;
+        }
+
+        // If a suicide or a TK, don't give the attacker credit
+        if (message.suicide === false && message.teamkill === false) {
+            combatStats.kills[message.attackerFactionAbv]++;
+            combatStats.kills.total++;
+        }
+
+        combatStats.deaths[message.victimFactionAbv]++;
+        combatStats.deaths.total++;
+    }
+
+    factory.processMapCapture = function(message) {
+        factory.addNewCapture(message);
+    }
 
     return factory;
 });
