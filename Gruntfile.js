@@ -144,9 +144,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['css', 'js']);
-    grunt.registerTask('envDev', ['ngconstant:development']);
-    grunt.registerTask('envStaging', ['ngconstant:staging']);
-    grunt.registerTask('envProduction', ['ngconstant:production']);
+    grunt.registerTask('envDev', ['ngconstant:development', 'js']);
+    grunt.registerTask('envStaging', ['ngconstant:staging', 'js']);
+    grunt.registerTask('envProduction', ['ngconstant:production', 'js']);
     grunt.registerTask('css', ['less', 'cssmin']);
     grunt.registerTask('js', ['uglify:jsDeps', 'uglify:jsApp']);
     grunt.registerTask('jsApp', ['uglify:jsApp']);
