@@ -2,9 +2,11 @@ app.controller('AlertController', function(
     $scope,
     $window,
     $routeParams,
-    AlertMetricsService
+    AlertMetricsService,
+    AlertWebsocketService
 ) {
     $scope.alert = AlertMetricsService;
+    $scope.alertWebsocket = AlertWebsocketService;
 
     $scope.loaded = {
         data: false
@@ -16,16 +18,10 @@ app.controller('AlertController', function(
         // It seems promises causes some issues with Angular. Need to apply the scope to kick it in the nuts.
         $scope.$apply();
 
-        // Alert Countdown
+        // Alert Countdown && websocket subscription
         if ($scope.alert.details.ended == 0) {
-            var started = $scope.alert.details.started / 1000; // Start time in seconds
-            var end = (started + 5400) * 1000; // Plus 90 minutes, * 1000 for milliseconds
-
-            setTimeout(function() {
-                $('#alert-countdown').countdown(end, function(event) {
-                    $(this).html(event.strftime('%H:%M:%S'));
-                });
-            }, 1000);
+            // Subscribe to alert websocket
+            $scope.alertWebsocket.initAndSubscribe($scope.alert.details.id);
         }
 
         $('#player-leaderboard').DataTable({
@@ -164,8 +160,6 @@ app.controller('AlertController', function(
             }
         });
 
-        $scope.$emit('timesync', $routeParams.alert);
-
         $(document).ready(function(){
             $('ul.tabs').tabs();
         });
@@ -191,7 +185,6 @@ app.controller('AlertController', function(
 
     $scope.getTopFacilityOutfit = function() {
         var obj = _.orderBy($scope.alert.parsed.facilities, ['captures'], ['desc']);
-        console.log(obj[0]);
     };
 
     // Instantiate the service
@@ -202,4 +195,104 @@ app.controller('AlertController', function(
             return item[prop] > val;
         };
     };
+
+    // Once we have the correct time, set the clock
+    $scope.$on('timeSync', function(event, data) {
+        console.log(data);
+        data.correctTime++; // To match RTM
+        $('#alert-countdown').countdown(data.correctTime * 1000, function(event) {
+            $(this).html(event.strftime('%H:%M:%S'));
+        });
+
+        // Calculate remaining duration for KPM / DPM
+        var startedTime = $scope.alert.details.started / 1000;
+        var duration = (data.correctTime - data.remaining - startedTime); // Elapsed time in seconds
+
+        $scope.$apply(function() {
+            $scope.alert.metrics.durationMins = duration / 60;
+        });
+
+        console.log(duration);
+    });
+
+    $scope.$on('combatMessage', function(event, data) {
+        $scope.parseCombatMessage($scope.transformCombatMessage(data.data));
+    });
+
+    $scope.$on('facilityMessage', function(event, data) {
+        $scope.parseFacilityMessage($scope.transformFacilityMessage(data.data));
+    });
+
+    $scope.transformCombatMessage = function(data) {
+        var obj = {
+            resultID: parseInt(data.resultID),
+            headshot: (data.headshot == 1 ? true : false),
+            suicide: (data.suicide == 1 ? true : false),
+            teamkill: (data.teamkill == 1 ? true : false),
+            weaponID: parseInt(data.weaponID),
+            attackerID: data.attackerID, // String on purpuse because of BIGINT issue
+            attackerOutfit: data.aOutfit,
+            attackerName: data.attackerName,
+            attackerFaction: parseInt(data.attackerFaction),
+            attackerLoadout: parseInt(data.attackerLoadout),
+            victimID: data.victimID,
+            victimOutfit: data.vOutfit,
+            victimName: data.victimName,
+            victimFaction: parseInt(data.victimFaction),
+            victimLoadout: parseInt(data.victimLoadout)
+        };
+
+        obj.attackerFactionAbv = $scope.parseFaction(obj.attackerFaction);
+        obj.victimFactionAbv = $scope.parseFaction(obj.victimFaction);
+
+        return obj;
+    }
+
+    $scope.transformFacilityMessage = function(data) {
+        var obj = {
+            facilityID: parseInt(data.facilityID),
+            timestamp: parseInt(data.timestamp),
+            isDefence: (data.defence == 1 ? true : false),
+            controlVS: parseInt(data.controlVS),
+            controlNC: parseInt(data.controlNC),
+            controlTR: parseInt(data.controlTR),
+            facilityOldFaction: parseInt(data.facilityOldOwner),
+            facilityNewFaction: parseInt(data.facilityOwner),
+            outfit: (data.outfitCaptured != "0" ? data.outfitCaptured : null),
+            server: parseInt(data.world),
+            zone: parseInt(data.zone),
+            durationHeld: parseInt(data.durationHeld)
+        };
+
+        obj.controlTotal = obj.controlVS + obj.controlNC + obj.controlTR;
+        obj.controlNeutral = 100 - obj.controlTotal;
+
+        return obj;
+    }
+
+    $scope.parseFaction = function(factionID) {
+        if (factionID === 1) {
+            return 'vs';
+        }
+        if (factionID === 2) {
+            return 'nc';
+        }
+        if (factionID === 3) {
+            return 'tr';
+        }
+        return null;
+    }
+
+    /* PARSING FUNCTIONS */
+    $scope.parseCombatMessage = function(message) {
+        $scope.$apply(function() {
+            $scope.alert.increaseCombatKills(message);
+        });
+    }
+
+    $scope.parseFacilityMessage = function(message) {
+        $scope.$apply(function() {
+            $scope.alert.processMapCapture(message);
+        });
+    }
 });
