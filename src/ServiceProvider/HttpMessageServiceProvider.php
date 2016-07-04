@@ -31,13 +31,7 @@ class HttpMessageServiceProvider extends AbstractServiceProvider
                 $_SERVER['REQUEST_URI'] = str_replace('/ps2alerts/public', '', $_SERVER['REQUEST_URI']);
             }
 
-            return ServerRequestFactory::fromGlobals(
-                $_SERVER,
-                $_GET,
-                $_POST,
-                $_COOKIE,
-                $_FILES
-            );
+            return ServerRequestFactory::fromGlobals();
         });
     }
 }
