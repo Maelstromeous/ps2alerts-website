@@ -27,7 +27,8 @@ class TemplateServiceProvider extends AbstractServiceProvider
             'base_url'  => $config['base_url'],
             'asset_url' => $config['base_url'] . '/assets',
             'base_path' => $config['base_path'],
-            'env'       => $config['environment']
+            'env'       => $config['environment'],
+            'revision'  => $config['revision']
         ];
 
         $this->getContainer()->share('Twig_Environment', function () use ($globals, $config) {

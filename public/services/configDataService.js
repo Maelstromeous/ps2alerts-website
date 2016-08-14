@@ -3,6 +3,7 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
         environment: ENV.environment,
         baseUrl: ENV.baseUrl,
         apiUrl: ENV.apiUrl,
+        websocketUrl: ENV.websocketUrl,
         factions: ['vs','nc','tr','draw'],
         factionsAlpha: {
             'vs': 'Vanu Sovereignty',
