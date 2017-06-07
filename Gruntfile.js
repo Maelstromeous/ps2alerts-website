@@ -58,7 +58,7 @@ module.exports = function(grunt) {
         less: {
             development: {
                 files: {
-                    "public/assets/css/compiled/main.css" : "public/assets/less/main.less"
+                    'public/assets/css/compiled/main.css': 'public/assets/less/main.less'
                 }
             }
         },
@@ -101,8 +101,8 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         environment: 'development',
-                        baseUrl: 'http://192.168.33.10/ps2alerts/public',
-                        apiUrl: 'http://192.168.33.10/ps2alerts-api/public/v2',
+                        baseUrl: 'http://dev.ps2alerts.com',
+                        apiUrl: 'http://dev.api.ps2alerts.com/v2',
                         //websocketUrl: '192.168.0.3:1337?apikey=692e01b167f4c5c28cdc95389f038393'
                         websocketUrl: 'ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
                     }
