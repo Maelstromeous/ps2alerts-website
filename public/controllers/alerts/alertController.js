@@ -3,6 +3,7 @@ app.controller('AlertController', function(
     $window,
     $routeParams,
     AlertMetricsService,
+    AlertTransformer,
     AlertWebsocketService
 ) {
     $scope.alert = AlertMetricsService;
@@ -63,6 +64,7 @@ app.controller('AlertController', function(
         });
 
         // Mother of all hacks to add position numbers on
+        // Fucked - very VERY messy!
         /*pl.on('draw order.dt', function() {
             pl.column(0).nodes().each(function(cell, i) {
                 var pos = i + 1;
@@ -230,73 +232,18 @@ app.controller('AlertController', function(
         console.log(duration);
     });
 
+    // Listen for broadcasts from the AlertMetricsService and change the DOM based upon those messages
     $scope.$on('combatMessage', function(event, data) {
-        $scope.parseCombatMessage($scope.transformCombatMessage(data.data));
+        $scope.parseCombatMessage(AlertTransformer.transformCombatMessage(data.data));
     });
 
     $scope.$on('facilityMessage', function(event, data) {
-        $scope.parseFacilityMessage($scope.transformFacilityMessage(data.data));
+        $scope.parseFacilityMessage(AlertTransformer.transformFacilityMessage(data.data));
     });
 
-    $scope.transformCombatMessage = function(data) {
-        var obj = {
-            resultID: parseInt(data.resultID),
-            headshot: (data.headshot == 1 ? true : false),
-            suicide: (data.suicide == 1 ? true : false),
-            teamkill: (data.teamkill == 1 ? true : false),
-            weaponID: parseInt(data.weaponID),
-            attackerID: data.attackerID, // String on purpuse because of BIGINT issue
-            attackerOutfit: data.aOutfit,
-            attackerName: data.attackerName,
-            attackerFaction: parseInt(data.attackerFaction),
-            attackerLoadout: parseInt(data.attackerLoadout),
-            victimID: data.victimID,
-            victimOutfit: data.vOutfit,
-            victimName: data.victimName,
-            victimFaction: parseInt(data.victimFaction),
-            victimLoadout: parseInt(data.victimLoadout)
-        };
-
-        obj.attackerFactionAbv = $scope.parseFaction(obj.attackerFaction);
-        obj.victimFactionAbv = $scope.parseFaction(obj.victimFaction);
-
-        return obj;
-    };
-
-    $scope.transformFacilityMessage = function(data) {
-        var obj = {
-            facilityID: parseInt(data.facilityID),
-            timestamp: parseInt(data.timestamp),
-            isDefence: (data.defence == 1 ? true : false),
-            controlVS: parseInt(data.controlVS),
-            controlNC: parseInt(data.controlNC),
-            controlTR: parseInt(data.controlTR),
-            facilityOldFaction: parseInt(data.facilityOldOwner),
-            facilityNewFaction: parseInt(data.facilityOwner),
-            outfit: (data.outfitCaptured != '0' ? data.outfitCaptured : null),
-            server: parseInt(data.world),
-            zone: parseInt(data.zone),
-            durationHeld: parseInt(data.durationHeld)
-        };
-
-        obj.controlTotal = obj.controlVS + obj.controlNC + obj.controlTR;
-        obj.controlNeutral = 100 - obj.controlTotal;
-
-        return obj;
-    };
-
-    $scope.parseFaction = function(factionID) {
-        if (factionID === 1) {
-            return 'vs';
-        }
-        if (factionID === 2) {
-            return 'nc';
-        }
-        if (factionID === 3) {
-            return 'tr';
-        }
-        return null;
-    };
+    $scope.$on('alertEnd', function(event, data) {
+        $scope.parseAlertEndMessage(AlertTransformer.transformAlertEndMessage(data.data));
+    });
 
     /* PARSING FUNCTIONS */
     $scope.parseCombatMessage = function(message) {

@@ -86,15 +86,18 @@ app.service('AlertMetricsService', function(
             factory.getAlertData(alertID)
         ]).then(function(result) {
             factory.configData = result[0];
+            factory.details = AlertTransformer.parse(result[1]);
+            console.log(factory.details);
+            factory.metrics = result[1];
             // FIRE
-            factory.startProcessing(result[1]);
+
+            setTimeout(function() {
+                factory.startProcessing();
+            }, 5);
         });
     };
 
-    factory.startProcessing = function(data) {
-        factory.details = AlertTransformer.parse(data);
-        factory.metrics = data;
-
+    factory.startProcessing = function() {
         var serverName = ConfigDataService.serverNames[factory.details.server];
         var winnerTitle = factory.details.winner.toUpperCase();
 
@@ -142,6 +145,15 @@ app.service('AlertMetricsService', function(
 
         $rootScope.$broadcast('dataLoaded', 'loaded');
         console.log(factory);
+
+        // Set off the KPM / DPM interval
+        if (factory.details.inProgress) {
+            var kpmInterval = setInterval(function() {
+                factory.processKpms().then(function() {
+                    $('player-leaderboard').DataTable().rows().invalidate().draw();
+                });
+            }, 5000);
+        }
     };
 
     // Function to add new players to various areas, grabbing new data from Census
@@ -611,6 +623,7 @@ app.service('AlertMetricsService', function(
                 // Send to addNewPlayer
                 promises.push(factory.addNewPlayer(newPlayer));
                 newAttacker = true;
+                console.log('New Attacker');
             }
 
             if (!victim && message.attackerID !== message.victimID) {
@@ -634,6 +647,7 @@ app.service('AlertMetricsService', function(
                 // Send to addNewPlayer
                 promises.push(factory.addNewPlayer(newPlayer));
                 newVictim = true;
+                console.log('New Victim');
             }
 
             if (promises.length > 0) {
@@ -653,7 +667,9 @@ app.service('AlertMetricsService', function(
                     }
                     resolve({
                         attacker: attacker,
-                        victim: victim
+                        victim: victim,
+                        newAttacker: newAttacker,
+                        newVictim: newVictim
                     });
                 });
             } else {
@@ -684,6 +700,8 @@ app.service('AlertMetricsService', function(
 
                 //console.log('Post promise attacker', attacker);
                 //console.log('Post promise victim', victim);
+                //
+                console.log(result);
 
                 // Now we're sure that their stats are in place, increase them!
                 attacker.kills++;
@@ -711,7 +729,16 @@ app.service('AlertMetricsService', function(
                     return false;
                 }).invalidate();
 
-                // If we have new rows to add
+                // If we have new data, we have to add them to the data table directly
+                if (newAttacker) {
+                    console.log('Added new attacker to leaderboard datatable');
+                    $('#player-leaderboard').DataTable().row.add(attacker);
+                }
+
+                if (newVictim) {
+                    console.log('Added new victim to leaderboard datatable');
+                    $('#player-leaderboard').DataTable().row.add(victim);
+                }
 
                 // Redraw as we may have invalidated some rows
                 $('#player-leaderboard').DataTable().draw('full-hold');
@@ -723,6 +750,20 @@ app.service('AlertMetricsService', function(
 
     factory.processMapCapture = function(message) {
         factory.addNewCapture(message);
+    };
+
+    // Fires every 5 secs to update the KPMs / DPMs of every player, otherwise until they get a kill
+    // they will always have the same. Promised so we're not redrawing on EVERY player
+    factory.processKpms = function() {
+        return new Promise(function(resolve) {
+            console.log('Running KPMs');
+            angular.forEach(factory.metrics.players.data, function(player) {
+                player.kpm = (player.kills / factory.details.durationMins).toFixed(2);
+                player.dpm = (player.deaths / factory.details.durationMins).toFixed(2);
+            });
+
+            resolve();
+        });
     };
 
     return factory;

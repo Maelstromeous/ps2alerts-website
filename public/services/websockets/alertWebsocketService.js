@@ -9,15 +9,19 @@ app.service('AlertWebsocketService', function(
     factory.webSocket = {};
     factory.config = ConfigDataService;
 
+    // If the user navigates away from the page, close the websocket
+    $rootScope.$on('$routeChangeStart', function() {
+        if (factory.webSocket) {
+            factory.disconnect();
+        }
+    });
+
     factory.initAndSubscribe = function(resultID) {
         factory.webSocket = new WebSocket('ws://' + ConfigDataService.websocketUrl);
 
-        console.log('websocket', factory.webSocket);
         factory.id = resultID;
 
         factory.webSocket.onopen = function() {
-            console.log('sending sub message');
-
             var message = {
                 payload: {
                     action: 'subscribe',
@@ -73,6 +77,10 @@ app.service('AlertWebsocketService', function(
                         $rootScope.$broadcast('facilityMessage', message);
                         break;
                     }
+                    case 'alertEnd': {
+                        $rootScope.$broadcast('alertEnd', message);
+                        break;
+                    }
                 }
             }
         }
@@ -91,6 +99,11 @@ app.service('AlertWebsocketService', function(
         };
 
         factory.webSocket.send(JSON.stringify(message));
+    };
+
+    factory.disconnect = function() {
+        factory.webSocket.close();
+        factory.webSocket = {};
     };
 
     return factory;

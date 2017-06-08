@@ -43,5 +43,81 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
         return alert;
     };
 
+    factory.transformCombatMessage = function(data) {
+        var obj = {
+            resultID: parseInt(data.resultID),
+            headshot: (data.headshot == 1 ? true : false),
+            suicide: (data.suicide == 1 ? true : false),
+            teamkill: (data.teamkill == 1 ? true : false),
+            weaponID: parseInt(data.weaponID),
+            attackerID: data.attackerID, // String on purpuse because of BIGINT issue
+            attackerOutfit: data.aOutfit,
+            attackerName: data.attackerName,
+            attackerFaction: parseInt(data.attackerFaction),
+            attackerLoadout: parseInt(data.attackerLoadout),
+            victimID: data.victimID,
+            victimOutfit: data.vOutfit,
+            victimName: data.victimName,
+            victimFaction: parseInt(data.victimFaction),
+            victimLoadout: parseInt(data.victimLoadout)
+        };
+
+        obj.attackerFactionAbv = factory.parseFaction(obj.attackerFaction);
+        obj.victimFactionAbv = factory.parseFaction(obj.victimFaction);
+
+        return obj;
+    };
+
+    factory.transformFacilityMessage = function(data) {
+        var obj = {
+            facilityID: parseInt(data.facilityID),
+            timestamp: parseInt(data.timestamp),
+            isDefence: (data.defence == 1 ? true : false),
+            controlVS: parseInt(data.controlVS),
+            controlNC: parseInt(data.controlNC),
+            controlTR: parseInt(data.controlTR),
+            facilityOldFaction: parseInt(data.facilityOldOwner),
+            facilityNewFaction: parseInt(data.facilityOwner),
+            outfit: (data.outfitCaptured != '0' ? data.outfitCaptured : null),
+            server: parseInt(data.world),
+            zone: parseInt(data.zone),
+            durationHeld: parseInt(data.durationHeld)
+        };
+
+        obj.controlTotal = obj.controlVS + obj.controlNC + obj.controlTR;
+        obj.controlNeutral = 100 - obj.controlTotal;
+
+        return obj;
+    };
+
+    factory.transformAlertEndMessage = function(data) {
+        var obj = {
+            resultID: parseInt(data.resultID),
+            endTime: parseInt(data.endTime),
+            winner: parseInt(data.winner),
+            controlVS: parseInt(data.controlVS),
+            controlNC: parseInt(data.controlNC),
+            controlTR: parseInt(data.controlTR),
+            domination: parseInt(data.domination),
+            world: parseInt(data.world),
+            zone: parseInt(data.zone)
+        };
+
+        return obj;
+    };
+
+    factory.parseFaction = function(factionID) {
+        if (factionID === 1) {
+            return 'vs';
+        }
+        if (factionID === 2) {
+            return 'nc';
+        }
+        if (factionID === 3) {
+            return 'tr';
+        }
+        return null;
+    };
+
     return factory;
 });
