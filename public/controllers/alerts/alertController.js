@@ -24,29 +24,30 @@ app.controller('AlertController', function(
             $scope.alertWebsocket.initAndSubscribe($scope.alert.details.id);
         }
 
-        $('#player-leaderboard').DataTable({
+        var pl = $('#player-leaderboard').DataTable({
             data: $scope.alert.parsed.players,
             columns: [
-                { data: 'name', title: 'Player', className: 'name' },
-                { data: 'outfit', title: 'Outfit', className: 'outfit' },
-                { data: 'kills', title: 'Kills', className: 'metric' },
-                { data: 'deaths' , title: 'Deaths', className: 'metric' },
-                { data: 'kd' , title: 'K/D', className: 'metric' },
-                { data: 'teamkills', title: 'TKs', className: 'metric' },
-                { data: 'suicides', title: 'Suicides', className: 'metric' },
-                { data: 'headshots', title: 'Headshots', className: 'metric' },
-                { data: 'hsr', title: 'HS %', className: 'metric hsr' },
-                { data: 'kpm', title: 'KPM', className: 'metric kpm' },
-                { data: 'dpm', title: 'DPM', className: 'metric dpm' },
-                { data: 'factionAbv', visible: false },
-                { data: 'outfitTag', visible: false }
+                {data: 'name', title: 'Player', className: 'name'},
+                {data: 'outfit', title: 'Outfit', className: 'outfit'},
+                {data: 'kills', title: 'Kills', className: 'metric'},
+                {data: 'deaths' , title: 'Deaths', className: 'metric'},
+                {data: 'kd' , title: 'K/D', className: 'metric'},
+                {data: 'teamkills', title: 'TKs', className: 'metric'},
+                {data: 'suicides', title: 'Suicides', className: 'metric'},
+                {data: 'headshots', title: 'Headshots', className: 'metric'},
+                {data: 'hsr', title: 'HS %', className: 'metric hsr'},
+                {data: 'kpm', title: 'KPM', className: 'metric kpm'},
+                {data: 'dpm', title: 'DPM', className: 'metric dpm'},
+                {data: 'factionAbv', visible: false},
+                {data: 'outfitTag', visible: false},
+                {data: 'id', visible: false}
             ],
             order:          [2, 'desc'],
             deferRender:    true,
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
-            "rowCallback": function( row, data, index ) {
+            rowCallback: function(row, data) {
                 // Format the faction colors
                 if (data.factionAbv !== null) {
                     $('.name', row).addClass(data.factionAbv + '-table-text');
@@ -55,36 +56,50 @@ app.controller('AlertController', function(
 
                 // Add outfit tags
                 if (data.outfitTag !== null) {
-                    $('.outfit', row).html('['+data.outfitTag+'] '+data.outfit);
+                    $('.outfit', row).html('[' + data.outfitTag + '] ' + data.outfit);
                 }
                 $('.hsr', row).html(data.hsr + '%');
             }
         });
 
-        $('#outfit-leaderboard').DataTable({
+        // Mother of all hacks to add position numbers on
+        /*pl.on('draw order.dt', function() {
+            pl.column(0).nodes().each(function(cell, i) {
+                var pos = i + 1;
+                if (!_.startsWith(cell.innerHTML, '#')) {
+                    // If doesn't have a hash, just add it with the number
+                    cell.innerHTML = '#' + pos + ' ' + cell.innerHTML;
+                } else {
+                    // Otherwise, we need to regex out the trailing numbers
+                    _.replace(cell.innerHTML, '/(?:#)[0-9]+\s/g', '#' + pos);
+                }
+            });
+        }).draw('full-hold');*/
+
+        var ol = $('#outfit-leaderboard').DataTable({
             data: $scope.alert.parsed.outfits,
             columns: [
-                { data: 'name', title: 'Outfit', className: 'name' },
-                { data: 'participants', title: 'Players', className: 'metric'},
-                { data: 'kills', title: 'Kills', className: 'metric' },
-                { data: 'deaths', title: 'Deaths', className: 'metric' },
-                { data: 'kd', title: 'K/D *', className: 'metric kd' },
-                { data: 'teamkills', title: 'TKs', className: 'metric' },
-                { data: 'suicides', title: 'Suicides', className: 'metric' },
-                { data: 'killsPerParticipant', title: 'Kills PP', className: 'metric killsPP' },
-                { data: 'deathsPerParticipant', title: 'Deaths PP', className: 'metric deathsPP' },
-                { data: 'kpm', title: 'KPM', className: 'metric kpm' },
-                { data: 'dpm', title: 'DPM', className: 'metric dpm' },
-                { data: 'captures', title: 'Caps', className: 'metric caps' },
-                { data: 'tag', title: 'Tag', className: 'metric', visible: false },
-                { data: 'factionAbv', visible: false }
+                {data: 'name', title: 'Outfit', className: 'name'},
+                {data: 'participants', title: 'Players', className: 'metric'},
+                {data: 'kills', title: 'Kills', className: 'metric'},
+                {data: 'deaths', title: 'Deaths', className: 'metric'},
+                {data: 'kd', title: 'K/D *', className: 'metric kd'},
+                {data: 'teamkills', title: 'TKs', className: 'metric'},
+                {data: 'suicides', title: 'Suicides', className: 'metric'},
+                {data: 'killsPerParticipant', title: 'Kills PP', className: 'metric killsPP'},
+                {data: 'deathsPerParticipant', title: 'Deaths PP', className: 'metric deathsPP'},
+                {data: 'kpm', title: 'KPM', className: 'metric kpm'},
+                {data: 'dpm', title: 'DPM', className: 'metric dpm'},
+                {data: 'captures', title: 'Caps', className: 'metric caps'},
+                {data: 'tag', title: 'Tag', className: 'metric', visible: false},
+                {data: 'factionAbv', visible: false}
             ],
             order:          [2, 'desc'],
             deferRender:    true,
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
-            "rowCallback": function( row, data, index ) {
+            rowCallback: function(row, data) {
                 // Format the faction colors
                 if (data.factionAbv !== null) {
                     $('.name', row).addClass(data.factionAbv + '-table-text');
@@ -92,29 +107,29 @@ app.controller('AlertController', function(
 
                 // Add outfit tags
                 if (data.tag !== null) {
-                    $('.name', row).html('['+data.tag+'] '+data.name);
+                    $('.name', row).html('[' + data.tag + '] ' + data.name);
                 }
             }
         });
 
-        $('#weapon-leaderboard').DataTable({
+        var wl = $('#weapon-leaderboard').DataTable({
             data: $scope.alert.parsed.weapons,
             columns: [
-                { data: 'name', title: 'Weapon', className: 'name' },
-                { data: 'kills', title: 'Kills', className: 'metric'},
-                { data: 'teamkills', title: 'TKs', className: 'metric' },
-                { data: 'headshots' , title: 'Headshots', className: 'metric' },
-                { data: 'hsr' , title: 'HS %', className: 'metric hsr' },
-                { data: 'kpm', title: 'KPM', className: 'metric kpm' },
-                { data: 'vehicle', visible: false },
-                { data: 'faction' , visible: false }
+                {data: 'name', title: 'Weapon', className: 'name'},
+                {data: 'kills', title: 'Kills', className: 'metric'},
+                {data: 'teamkills', title: 'TKs', className: 'metric'},
+                {data: 'headshots' , title: 'Headshots', className: 'metric'},
+                {data: 'hsr' , title: 'HS %', className: 'metric hsr'},
+                {data: 'kpm', title: 'KPM', className: 'metric kpm'},
+                {data: 'vehicle', visible: false},
+                {data: 'faction' , visible: false}
             ],
             order:          [1, 'desc'],
             deferRender:    true,
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
-            "rowCallback": function( row, data, index ) {
+            rowCallback: function(row, data) {
                 var vehicle = ' [I]';
                 // Format the cells
                 if (data.factionAbv !== null) {
@@ -130,29 +145,29 @@ app.controller('AlertController', function(
             }
         });
 
-        $('#vehicle-leaderboard').DataTable({
+        var vl = $('#vehicle-leaderboard').DataTable({
             data: $scope.alert.parsed.vehicles,
             columns: [
-                { data: 'name', title: 'Vehicle', className: 'name' },
-                { data: 'kills', title: 'Kills', className: 'metric' },
-                { data: 'kd', title: 'K/D (total)', className: 'metric kd' },
-                { data: 'killsI', title: 'Inf Kills', className: 'metric' },
-                { data: 'killsV', title: 'Veh Kills', className: 'metric' },
-                { data: 'deaths', title: 'Deaths', className: 'metric' },
-                { data: 'deathsI', title: 'Inf Deaths *', className: 'metric' },
-                { data: 'deathsV', title: 'Veh Deaths', className: 'metric' },
-                { data: 'bails', title: 'Ejections', className: 'metric' },
-                { data: 'kpm', title: 'KPM', className: 'metric kpm' },
-                { data: 'dpm', title: 'DPM', className: 'metric dpm' },
-                { data: 'factionAbv', visible: false },
-                { data: 'type', visible: false }
+                {data: 'name', title: 'Vehicle', className: 'name'},
+                {data: 'kills', title: 'Kills', className: 'metric'},
+                {data: 'kd', title: 'K/D (total)', className: 'metric kd'},
+                {data: 'killsI', title: 'Inf Kills', className: 'metric'},
+                {data: 'killsV', title: 'Veh Kills', className: 'metric'},
+                {data: 'deaths', title: 'Deaths', className: 'metric'},
+                {data: 'deathsI', title: 'Inf Deaths *', className: 'metric'},
+                {data: 'deathsV', title: 'Veh Deaths', className: 'metric'},
+                {data: 'bails', title: 'Ejections', className: 'metric'},
+                {data: 'kpm', title: 'KPM', className: 'metric kpm'},
+                {data: 'dpm', title: 'DPM', className: 'metric dpm'},
+                {data: 'factionAbv', visible: false},
+                {data: 'type', visible: false}
             ],
             order:          [1, 'desc'],
             deferRender:    true,
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
-            "rowCallback": function( row, data, index ) {
+            rowCallback: function(row, data) {
                 // Format the cells
                 if (data.factionAbv !== null) {
                     $('.name', row).addClass(data.factionAbv + '-table-text');
@@ -160,7 +175,7 @@ app.controller('AlertController', function(
             }
         });
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('ul.tabs').tabs();
         });
 
@@ -246,7 +261,7 @@ app.controller('AlertController', function(
         obj.victimFactionAbv = $scope.parseFaction(obj.victimFaction);
 
         return obj;
-    }
+    };
 
     $scope.transformFacilityMessage = function(data) {
         var obj = {
@@ -258,7 +273,7 @@ app.controller('AlertController', function(
             controlTR: parseInt(data.controlTR),
             facilityOldFaction: parseInt(data.facilityOldOwner),
             facilityNewFaction: parseInt(data.facilityOwner),
-            outfit: (data.outfitCaptured != "0" ? data.outfitCaptured : null),
+            outfit: (data.outfitCaptured != '0' ? data.outfitCaptured : null),
             server: parseInt(data.world),
             zone: parseInt(data.zone),
             durationHeld: parseInt(data.durationHeld)
@@ -268,7 +283,7 @@ app.controller('AlertController', function(
         obj.controlNeutral = 100 - obj.controlTotal;
 
         return obj;
-    }
+    };
 
     $scope.parseFaction = function(factionID) {
         if (factionID === 1) {
@@ -281,18 +296,20 @@ app.controller('AlertController', function(
             return 'tr';
         }
         return null;
-    }
+    };
 
     /* PARSING FUNCTIONS */
     $scope.parseCombatMessage = function(message) {
         $scope.$apply(function() {
             $scope.alert.increaseCombatKills(message);
+            $scope.alert.processPlayerMetrics(message).then(function() {
+            });
         });
-    }
+    };
 
     $scope.parseFacilityMessage = function(message) {
         $scope.$apply(function() {
             $scope.alert.processMapCapture(message);
         });
-    }
+    };
 });

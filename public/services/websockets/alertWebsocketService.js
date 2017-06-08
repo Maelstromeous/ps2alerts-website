@@ -10,10 +10,12 @@ app.service('AlertWebsocketService', function(
     factory.config = ConfigDataService;
 
     factory.initAndSubscribe = function(resultID) {
-        factory.webSocket = new WebSocket('ws://'+ConfigDataService.websocketUrl);
+        factory.webSocket = new WebSocket('ws://' + ConfigDataService.websocketUrl);
+
+        console.log('websocket', factory.webSocket);
         factory.id = resultID;
 
-        factory.webSocket.onopen = function () {
+        factory.webSocket.onopen = function() {
             console.log('sending sub message');
 
             var message = {
@@ -25,7 +27,7 @@ app.service('AlertWebsocketService', function(
             factory.webSocket.send(JSON.stringify(message));
         };
 
-        factory.webSocket.onmessage = function (rawMessage) {
+        factory.webSocket.onmessage = function(rawMessage) {
             factory.handleWebsocketMessage(factory.parse(rawMessage));
         };
 
@@ -39,7 +41,7 @@ app.service('AlertWebsocketService', function(
 
         try {
             message = JSON.parse(rawMessage.data);
-        } catch(e) {
+        } catch (e) {
             console.log('Websocket JSON parse fail!', e);
         }
 
@@ -50,9 +52,10 @@ app.service('AlertWebsocketService', function(
         return message;
     };
 
-    factory.handleWebsocketMessage = function (message) {
+    factory.handleWebsocketMessage = function(message) {
         if (message !== null) {
             if (typeof message.messageType !== 'undefined') {
+                console.log('messageType', message.messageType);
                 switch (message.messageType) {
                     case 'subscribed':
                         factory.timeSync();
@@ -88,7 +91,7 @@ app.service('AlertWebsocketService', function(
         };
 
         factory.webSocket.send(JSON.stringify(message));
-    }
+    };
 
     return factory;
 });

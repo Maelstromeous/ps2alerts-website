@@ -1,20 +1,20 @@
 <div id="websocket-status" ng-show="websocketDisabled == 0">
     <div
         class="chip tooltipped websocket-disconnected"
-        data-tooltip="Websocket has been disconnected! Check if your connection has dropped. If this persists, please contact @Maelstrome26!"
+        data-tooltip="Websocket has been disconnected! Check if your connection has dropped. If this persists, please contact @Maelstromeous!"
         data-position="left"
         ng-show="!websocket.loaded && !websocket.connecting">
         <span class="disconnected">
-            <i class="fa fa-arrow-down"></i> Disconnected!
+            <i class="fa fa-chain-broken"></i> Disconnected!
         </span>
     </div>
     <div
         class="chip tooltipped websocket-middleman-fail"
-        data-tooltip="The Middleman API is offline! PS2Alerts will not function without it. Please contact @Maelstrome26!"
+        data-tooltip="The Middleman API or Census is offline! PS2Alerts will not function without it. Please contact @Maelstromeous!"
         data-position="left"
         ng-show="websocket.middlemanDown == 1">
         <span class="middleman-fail">
-            <i class="fa fa-chain-broken"></i> Middleman API offline!
+            <i class="fa fa-exclamation-circle"></i> Middleman API offline!
         </span>
     </div>
     <div
@@ -28,7 +28,7 @@
     </div>
     <div
         class="chip tooltipped websocket-connected"
-        data-tooltip="Websocket online and functional. All is well :-)"
+        data-tooltip="Data collection fully functional. All is well :-)"
         data-position="left"
         ng-show="websocket.loaded && !websocket.connecting">
         <span class="connected" ng-show="websocket.loaded">

@@ -56,21 +56,21 @@ app.service('AlertMetricsService', function(
             },
             facilities: [],
             factions: {
-                'vs': {
+                vs: {
                     kills:     0,
                     deaths:    0,
                     suicides:  0,
                     teamkills: 0,
                     players:   0
                 },
-                'nc': {
+                nc: {
                     kills:     0,
                     deaths:    0,
                     suicides:  0,
                     teamkills: 0,
                     players:   0
                 },
-                'tr': {
+                tr: {
                     kills:     0,
                     deaths:    0,
                     suicides:  0,
@@ -112,7 +112,7 @@ app.service('AlertMetricsService', function(
         });
 
         angular.forEach(factory.metrics.players.data, function(player) {
-            factory.addNewPlayer(player);
+            factory.addNewPlayer(player).then();
         });
 
         angular.forEach(factory.metrics.weapons.data, function(weapon) {
@@ -147,67 +147,71 @@ app.service('AlertMetricsService', function(
     // Function to add new players to various areas, grabbing new data from Census
     // or our API should we need to
     factory.addNewPlayer = function(player) {
-        // Find the array key for the outfit by ID
-        var outfitRef = _.findIndex(
-            factory.parsed.outfits, { 'id' : player.player.outfitID }
-        );
+        return new Promise(function(resolve) {
+            // Find the array key for the outfit by ID
+            var outfitRef = _.findIndex(
+                factory.parsed.outfits, {'id': player.player.outfitID}
+            );
 
-        var outfit = factory.parsed.outfits[outfitRef];
+            var outfit = factory.parsed.outfits[outfitRef];
 
-        var formatted = {
-            id:        player.player.id,
-            name:      player.player.name,
-            faction:   player.player.faction,
-            kills:     player.metrics.kills,
-            deaths:    player.metrics.deaths,
-            teamkills: player.metrics.teamkills,
-            suicides:  player.metrics.suicides,
-            headshots: player.metrics.headshots
-        };
+            var formatted = {
+                id:        player.player.id,
+                name:      player.player.name,
+                faction:   player.player.faction,
+                kills:     player.metrics.kills,
+                deaths:    player.metrics.deaths,
+                teamkills: player.metrics.teamkills,
+                suicides:  player.metrics.suicides,
+                headshots: player.metrics.headshots
+            };
 
-        if (outfit) {
-            formatted.outfit    = outfit.name;
-            formatted.outfitTag = outfit.tag;
-        } else {
-            formatted.outfit    = 'UNKNOWN',
-            formatted.outfitTag = null;
-        }
-
-        // Set faction abrivation
-        formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
-
-        // Attach players to outfits. All players should have outfit IDs,
-        // even -1, -2, -3 to denote different faction no outfits
-        //
-        // WILL NEED TO HANDLE IN THE FUTURE WHEN WE ADD NEW PLAYERS TO ADD THEIR OUTFIT INFO
-        if (outfit) {
-            // Store a reference that this player is part of the outfit
-            outfit.players.push(formatted.id);
-            outfit.participants = outfit.players.length;
-
-            // Nullify participants if less than 6 people so that K/D ratios are more accurate
-            if (outfit.participants < 6 && factory.details.timeBracket === 'Prime Time') {
-                outfit.kd = 0;
+            if (outfit) {
+                formatted.outfit    = outfit.name;
+                formatted.outfitTag = outfit.tag;
             } else {
-                outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
-                outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
-                outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+                formatted.outfit    = 'UNKNOWN',
+                formatted.outfitTag = null;
             }
-        } else {
-            console.log('Missing outfit ID for player: ' + formatted.id);
-            console.log(formatted);
-        }
 
-        formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
-        formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
-        formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
-        formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+            // Set faction abrivation
+            formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
-        if (formatted.factionAbv !== null) {
-            factory.parsed.factions[formatted.factionAbv].players++;
-        }
+            // Attach players to outfits. All players should have outfit IDs,
+            // even -1, -2, -3 to denote different faction no outfits
+            //
+            // WILL NEED TO HANDLE IN THE FUTURE WHEN WE ADD NEW PLAYERS TO ADD THEIR OUTFIT INFO
+            if (outfit) {
+                // Store a reference that this player is part of the outfit
+                outfit.players.push(formatted.id);
+                outfit.participants = outfit.players.length;
 
-        factory.parsed.players.push(formatted);
+                // Nullify participants if less than 6 people so that K/D ratios are more accurate
+                if (outfit.participants < 6 && factory.details.timeBracket === 'Prime Time') {
+                    outfit.kd = 0;
+                } else {
+                    outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
+                    outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
+                    outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+                }
+            } else {
+                console.log('Missing outfit ID for player: ' + formatted.id);
+                console.log(formatted);
+            }
+
+            formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
+            formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
+            formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
+            formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+
+            if (formatted.factionAbv !== null) {
+                factory.parsed.factions[formatted.factionAbv].players++;
+            }
+
+            factory.parsed.players.push(formatted);
+
+            return resolve();
+        });
     };
 
     factory.addNewOutfit = function(outfit) {
@@ -243,7 +247,7 @@ app.service('AlertMetricsService', function(
         if (weapon.id > 0) {
             // Find the array key for the weapon by ID
             var weaponRef = _.findIndex(
-                factory.configData.weapons.data, {'id' : weapon.id}
+                factory.configData.weapons.data, {'id': weapon.id}
             );
 
             var weaponData = factory.configData.weapons.data[weaponRef];
@@ -258,7 +262,7 @@ app.service('AlertMetricsService', function(
                 // If weapon by name has been found, check if we have a special fake weapon for the group
                 var groupIndex = _.findIndex(
                     factory.parsed.weapons, {
-                        'name'   : weaponData.name + ' (Grouped)'
+                        name: weaponData.name + ' (Grouped)'
                     }
                 );
 
@@ -322,7 +326,7 @@ app.service('AlertMetricsService', function(
 
                 factory.parsed.weapons.push(formatted);
             } else {
-                console.log("Invalid Weapon ID: ", weapon.id);
+                console.log('Invalid Weapon ID: ', weapon.id);
             }
         }
     };
@@ -330,7 +334,7 @@ app.service('AlertMetricsService', function(
     factory.addNewVehicle = function(vehicle) {
         if (vehicle.id > 0) {
             var vehicleRef = _.findIndex(
-                factory.configData.vehicles.data, {'id' : vehicle.id}
+                factory.configData.vehicles.data, {'id': vehicle.id}
             );
 
             if (vehicleRef !== -1) {
@@ -358,7 +362,7 @@ app.service('AlertMetricsService', function(
 
                 factory.parsed.vehicles.push(formatted);
             } else {
-                console.log("Invalid Vehicle ID: ", vehicle.id);
+                console.log('Invalid Vehicle ID: ', vehicle.id);
             }
         }
     };
@@ -378,15 +382,15 @@ app.service('AlertMetricsService', function(
         formatted.neutral = 100 - formatted.total;
 
         var outfitRef = _.findIndex(
-            factory.parsed.outfits, {'id' : capture.outfitCaptured}
+            factory.parsed.outfits, {'id': capture.outfitCaptured}
         );
 
         var facilityConfRef = _.findIndex(
-            factory.configData.facilities.data, {'id' : capture.facilityID}
+            factory.configData.facilities.data, {'id': capture.facilityID}
         );
 
         var facilityStatsRef = _.findIndex(
-            factory.parsed.facilities, {'id' : capture.facilityID}
+            factory.parsed.facilities, {'id': capture.facilityID}
         );
 
         if (outfitRef !== -1) {
@@ -398,7 +402,7 @@ app.service('AlertMetricsService', function(
             if (formatted.defence === true) {
                 outfitData.defences++;
             } else {
-            outfitData.captures++;
+                outfitData.captures++;
             }
         } else {
             console.log('Outfit info missing!', capture.outfitCaptured);
@@ -520,20 +524,26 @@ app.service('AlertMetricsService', function(
 
     factory.getConfigData = new Promise(function(resolve, reject) {
         $http({
-            method : 'GET',
-            url    : ConfigDataService.apiUrl + '/data?embed=facilities,vehicles,weapons,xps'
+            method: 'GET',
+            url: ConfigDataService.apiUrl + '/data?embed=facilities,vehicles,weapons,xps'
         }).then(function(returned) {
             return resolve(returned.data.data);
+        }, function(error) {
+            alert('Was unable to load the page correctly (config data). Please refresh.');
+            return reject(error);
         });
     });
 
     factory.getAlertData = function(alertID) {
         return new Promise(function(resolve, reject) {
             $http({
-                method : 'GET',
-                url    : ConfigDataService.apiUrl + '/alerts/' + alertID + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
+                method: 'GET',
+                url: ConfigDataService.apiUrl + '/alerts/' + alertID + '?embed=classes,combats,combatHistorys,mapInitials,maps,outfits,players,populations,vehicles,weapons'
             }).then(function(returned) {
                 return resolve(returned.data.data);
+            }, function(error) {
+                alert('Was unable to load the page correctly (config data). Please refresh.');
+                return reject(error);
             });
         });
     };
@@ -558,11 +568,162 @@ app.service('AlertMetricsService', function(
 
         combatStats.deaths[message.victimFactionAbv]++;
         combatStats.deaths.total++;
-    }
+    };
+
+    // Goes off and finds the references, and adds players if required
+    factory.populateCombatPlayers = function(message) {
+        return new Promise(function(resolve, reject) {
+            // PROCESS ATTACKER
+            // Find player records
+            var attackerRef = _.findIndex(
+                factory.parsed.players, {'id': message.attackerID}
+            );
+            var victimRef = _.findIndex(
+                factory.parsed.players, {'id': message.victimID}
+            );
+
+            var attacker = factory.parsed.players[attackerRef];
+            var victim = factory.parsed.players[victimRef];
+
+            var promises = []; // Build an array of promises to execute
+            var newAttacker = false;
+            var newVictim = false;
+
+            // If NOT found, supply the data to addNewPlayer
+            if (!attacker) {
+                var newPlayer = {};
+                newPlayer.player = {
+                    faction: message.attackerFaction,
+                    id: message.attackerID,
+                    name: message.attackerName,
+                    outfitID: message.attackerOutfit.id
+                };
+
+                // Build metrics based on our new message
+                newPlayer.metrics = {
+                    kills: 1, // Attacker always gets this
+                    deaths: 0, // Ditto
+                    suicides: message.suicide === true ? 1 : 0, // Ditto
+                    teamkills: message.teamkill === true ? 1 : 0,
+                    headshots: message.headshot === true ? 1 : 0
+                };
+
+                // Send to addNewPlayer
+                promises.push(factory.addNewPlayer(newPlayer));
+                newAttacker = true;
+            }
+
+            if (!victim && message.attackerID !== message.victimID) {
+                var newPlayer = {};
+                newPlayer.player = {
+                    faction: message.victimFaction,
+                    id: message.victimID,
+                    name: message.victimName,
+                    outfitID: message.victimOutfit.id
+                };
+
+                // Build metrics based on our new message
+                newPlayer.metrics = {
+                    kills: 0, // Victim always gets this
+                    deaths: 1, // Ditto
+                    suicides: 0,
+                    teamkills: 0,
+                    headshots: 0
+                };
+
+                // Send to addNewPlayer
+                promises.push(factory.addNewPlayer(newPlayer));
+                newVictim = true;
+            }
+
+            if (promises.length > 0) {
+                // If we've had to make changes, update the data we send back
+                Promise.all(promises).then(function() {
+                    attackerRef = _.findIndex(
+                        factory.parsed.players, {'id': message.attackerID}
+                    );
+                    attacker = factory.parsed.players[attackerRef];
+                    victimRef = _.findIndex(
+                        factory.parsed.players, {'id': message.victimID}
+                    );
+                    victim = factory.parsed.players[victimRef];
+
+                    if (!attacker || !victim) {
+                        reject('Attacker or Victim could not be determined, EVEN AFTER PROMISE!');
+                    }
+                    resolve({
+                        attacker: attacker,
+                        victim: victim
+                    });
+                });
+            } else {
+                if (!attacker || !victim) {
+                    reject('Attacker or Victim could not be determined!');
+                }
+                resolve({
+                    attacker: attacker,
+                    victim: victim,
+                    newAttacker: newAttacker,
+                    newVictim: newVictim
+                });
+            }
+        });
+    };
+
+    factory.processPlayerMetrics = function(message) {
+        console.log(message);
+        return new Promise(function(resolve) {
+            // Run promise to ENSURE that we get the correct player data, even if we have to insert it at this point
+            Promise.all([
+                factory.populateCombatPlayers(message)
+            ]).then(function(result) {
+                var attacker = result[0].attacker;
+                var victim = result[0].victim;
+                var newAttacker = result[0].newAttacker;
+                var newVictim = result[0].newVictim;
+
+                //console.log('Post promise attacker', attacker);
+                //console.log('Post promise victim', victim);
+
+                // Now we're sure that their stats are in place, increase them!
+                attacker.kills++;
+                message.headshot === true ? attacker.kills++ : false;
+                message.teamkill === true ? attacker.teamkills++ : false;
+
+                attacker.kd = MetricsProcessingService.calcKD(attacker.kills, attacker.deaths); // Parse KD
+                attacker.hsr = MetricsProcessingService.calcHSR(attacker.headshots, attacker.kills);
+                attacker.kpm = (attacker.kills / factory.details.durationMins).toFixed(2);
+
+                // Victim
+                victim.deaths++;
+                message.suicide === true ? victim.suicides++ : false;
+
+                victim.kd = MetricsProcessingService.calcKD(victim.kills, victim.deaths); // Parse KD
+                victim.dpm = (victim.deaths / factory.details.durationMins).toFixed(2);
+
+                // Scan the table for the rows and invalidate only them (saves full redraws)
+                var table = $('#player-leaderboard').DataTable();
+
+                var row = table.rows(function(idx, data) {
+                    if (data.id == attacker.id || data.id == victim.id) {
+                        return true;
+                    }
+                    return false;
+                }).invalidate();
+
+                // If we have new rows to add
+
+                // Redraw as we may have invalidated some rows
+                $('#player-leaderboard').DataTable().draw('full-hold');
+
+                resolve();
+            });
+        });
+    };
 
     factory.processMapCapture = function(message) {
         factory.addNewCapture(message);
-    }
+    };
 
     return factory;
 });
