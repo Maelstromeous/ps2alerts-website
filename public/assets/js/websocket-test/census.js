@@ -11,7 +11,7 @@ function initCensus() {
 }
 
 function onOpenCensus() {
-    writeToScreen('CONNECTED - Census(', 'census');
+    writeToScreen('CONNECTED - Census', 'census');
     doSendCensus('{"action":"subscribe","event":"MetagameEvent","all":"true"}');
 }
 function onCloseCensus() {
