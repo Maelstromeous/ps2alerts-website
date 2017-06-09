@@ -86,14 +86,14 @@ app.service('AlertMetricsService', function(
             factory.getAlertData(alertID)
         ]).then(function(result) {
             factory.configData = result[0];
-            factory.details = AlertTransformer.parse(result[1]);
-            console.log(factory.details);
             factory.metrics = result[1];
-            // FIRE
+            AlertTransformer.parse(result[1]).then(function(alert) {
+                factory.details = alert;
+                console.log('details', factory.details);
 
-            setTimeout(function() {
+                // FIRE!!!
                 factory.startProcessing();
-            }, 5);
+            });
         });
     };
 
@@ -150,9 +150,12 @@ app.service('AlertMetricsService', function(
         if (factory.details.inProgress) {
             var kpmInterval = setInterval(function() {
                 factory.processKpms().then(function() {
-                    $('player-leaderboard').DataTable().rows().invalidate().draw();
+                    console.log('KPMs processed');
+                    $('#player-leaderboard').DataTable().rows().invalidate().draw();
+                    $('#outfit-leaderboard').DataTable().rows().invalidate().draw();
+                    $('#weapon-leaderboard').DataTable().rows().invalidate().draw();
                 });
-            }, 5000);
+            }, 30000);
         }
     };
 
@@ -160,13 +163,6 @@ app.service('AlertMetricsService', function(
     // or our API should we need to
     factory.addNewPlayer = function(player) {
         return new Promise(function(resolve) {
-            // Find the array key for the outfit by ID
-            var outfitRef = _.findIndex(
-                factory.parsed.outfits, {'id': player.player.outfitID}
-            );
-
-            var outfit = factory.parsed.outfits[outfitRef];
-
             var formatted = {
                 id:        player.player.id,
                 name:      player.player.name,
@@ -178,51 +174,51 @@ app.service('AlertMetricsService', function(
                 headshots: player.metrics.headshots
             };
 
-            if (outfit) {
-                formatted.outfit    = outfit.name;
-                formatted.outfitTag = outfit.tag;
-            } else {
-                formatted.outfit    = 'UNKNOWN',
-                formatted.outfitTag = null;
-            }
-
-            // Set faction abrivation
-            formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
-
-            // Attach players to outfits. All players should have outfit IDs,
-            // even -1, -2, -3 to denote different faction no outfits
-            //
-            // WILL NEED TO HANDLE IN THE FUTURE WHEN WE ADD NEW PLAYERS TO ADD THEIR OUTFIT INFO
-            if (outfit) {
-                // Store a reference that this player is part of the outfit
-                outfit.players.push(formatted.id);
-                outfit.participants = outfit.players.length;
-
-                // Nullify participants if less than 6 people so that K/D ratios are more accurate
-                if (outfit.participants < 6 && factory.details.timeBracket === 'Prime Time') {
-                    outfit.kd = 0;
+            factory.getOutfit(player.player.outfitID).then(function(outfit) {
+                if (outfit) {
+                    formatted.outfit    = outfit.name;
+                    formatted.outfitTag = outfit.tag;
                 } else {
-                    outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
-                    outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
-                    outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+                    console.log('Missing outfit ID "' + player.player.outfitID + '" for player: ' + formatted.id);
+                    console.log(formatted);
+
+                    formatted.outfit    = 'UNKNOWN',
+                    formatted.outfitTag = null;
                 }
-            } else {
-                console.log('Missing outfit ID for player: ' + formatted.id);
-                console.log(formatted);
-            }
 
-            formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
-            formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
-            formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
-            formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+                // Set faction abrivation
+                formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
-            if (formatted.factionAbv !== null) {
-                factory.parsed.factions[formatted.factionAbv].players++;
-            }
+                // Attach players to outfits. All players should have outfit IDs,
+                // even -1, -2, -3 to denote different faction no outfits
+                if (outfit) {
+                    // Store a reference that this player is part of the outfit
+                    outfit.players.push(formatted.id);
+                    outfit.participants = outfit.players.length;
 
-            factory.parsed.players.push(formatted);
+                    // Nullify participants if less than 6 people so that K/D ratios are more accurate
+                    if (outfit.participants < 6 && factory.details.timeBracket === 'Prime Time') {
+                        outfit.kd = 0;
+                    } else {
+                        outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
+                        outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
+                        outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+                    }
+                }
 
-            return resolve();
+                formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
+                formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
+                console.log('duration', factory.details.durationMins);
+                formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
+                formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+
+                if (formatted.factionAbv !== null) {
+                    factory.parsed.factions[formatted.factionAbv].players++;
+                }
+
+                factory.parsed.players.push(formatted);
+                return resolve();
+            });
         });
     };
 
@@ -243,7 +239,7 @@ app.service('AlertMetricsService', function(
             captures: 0
         };
 
-        if (formatted.tag.length === 0) {
+        if (!formatted.tag || formatted.tag.length === 0) {
             formatted.tag = null;
         }
 
@@ -393,10 +389,6 @@ app.service('AlertMetricsService', function(
         formatted.total = (formatted.vs + formatted.nc + formatted.tr);
         formatted.neutral = 100 - formatted.total;
 
-        var outfitRef = _.findIndex(
-            factory.parsed.outfits, {'id': capture.outfitCaptured}
-        );
-
         var facilityConfRef = _.findIndex(
             factory.configData.facilities.data, {'id': capture.facilityID}
         );
@@ -405,21 +397,24 @@ app.service('AlertMetricsService', function(
             factory.parsed.facilities, {'id': capture.facilityID}
         );
 
-        if (outfitRef !== -1) {
-            var outfitData = factory.parsed.outfits[outfitRef];
-            formatted.outfitName = outfitData.name;
-            formatted.outfitTag  = outfitData.tag;
+        if (capture.outfitCaptured && capture.outfitCaptured > 0) {
+            console.log('capture.outfitCapured', capture.outfitCaptured);
+            var outfitData = factory.getOutfit(capture.outfitCaptured);
 
-            // Update outfit metrics
-            if (formatted.defence === true) {
-                outfitData.defences++;
+            if (outfitData) {
+                formatted.outfitName = outfitData.name;
+                formatted.outfitTag  = outfitData.tag;
+
+                // Update outfit metrics
+                if (formatted.defence === true) {
+                    outfitData.defences++;
+                } else {
+                    outfitData.captures++;
+                }
             } else {
-                outfitData.captures++;
+                console.log('=== Outfit data could not be determined! ===');
             }
-        } else {
-            console.log('Outfit info missing!', capture.outfitCaptured);
         }
-
         if (facilityConfRef !== -1) {
             var facility = factory.configData.facilities.data[facilityConfRef];
             formatted.facilityId    = facility.id;
@@ -623,7 +618,6 @@ app.service('AlertMetricsService', function(
                 // Send to addNewPlayer
                 promises.push(factory.addNewPlayer(newPlayer));
                 newAttacker = true;
-                console.log('New Attacker');
             }
 
             if (!victim && message.attackerID !== message.victimID) {
@@ -647,7 +641,6 @@ app.service('AlertMetricsService', function(
                 // Send to addNewPlayer
                 promises.push(factory.addNewPlayer(newPlayer));
                 newVictim = true;
-                console.log('New Victim');
             }
 
             if (promises.length > 0) {
@@ -687,7 +680,6 @@ app.service('AlertMetricsService', function(
     };
 
     factory.processPlayerMetrics = function(message) {
-        console.log(message);
         return new Promise(function(resolve) {
             // Run promise to ENSURE that we get the correct player data, even if we have to insert it at this point
             Promise.all([
@@ -701,7 +693,6 @@ app.service('AlertMetricsService', function(
                 //console.log('Post promise attacker', attacker);
                 //console.log('Post promise victim', victim);
                 //
-                console.log(result);
 
                 // Now we're sure that their stats are in place, increase them!
                 attacker.kills++;
@@ -757,13 +748,109 @@ app.service('AlertMetricsService', function(
     factory.processKpms = function() {
         return new Promise(function(resolve) {
             console.log('Running KPMs');
-            angular.forEach(factory.metrics.players.data, function(player) {
+            angular.forEach(factory.parsed.players, function(player) {
                 player.kpm = (player.kills / factory.details.durationMins).toFixed(2);
                 player.dpm = (player.deaths / factory.details.durationMins).toFixed(2);
+            });
+            angular.forEach(factory.parsed.outfits, function(outfit) {
+                outfit.kpm = (outfit.kills / factory.details.durationMins).toFixed(2);
+                outfit.dpm = (outfit.deaths / factory.details.durationMins).toFixed(2);
             });
 
             resolve();
         });
+    };
+
+    // Promise to get outfit details, either from current data or API
+    factory.getOutfit = function(outfitID) {
+        return new Promise(function(resolve, reject) {
+            // Find the array key for the outfit by ID
+            var outfitRef = _.findIndex(
+                factory.parsed.outfits, {'id': outfitID}
+            );
+
+            // Pull the outfit data
+            var outfit = factory.parsed.outfits[outfitRef];
+
+            if (outfit) {
+                resolve(outfit);
+            } else {
+                // Attempt to get data from API
+                console.log('Local outfit #' + outfitID + ' not found... pulling from API');
+                factory.getOutfitFromAPI(outfitID).then(function(data) {
+                    console.log(outfitID);
+                    if (!outfitID || outfitID == '0') {
+                        console.log('Chucking out invalid ID');
+                        reject('Invalid Outfit ID');
+                    }
+                    console.log('Got outfit #' + outfitID + ' from API', data);
+
+                    // Add the outfit to the factory
+                    var newOutfit = {
+                        outfit: {
+                            faction: data.faction,
+                            id: data.id,
+                            name: data.name,
+                            tag: data.tag
+                        },
+                        metrics: {
+                            deaths: 0,
+                            kills: 0,
+                            suicides: 0,
+                            teamkills: 0
+                        }
+                    };
+
+                    factory.addNewOutfit(newOutfit);
+                    var outfitRef = _.findIndex(
+                        factory.parsed.outfits, {'id': outfitID}
+                    );
+                    console.log('Added new outfit #' + outfitID + ' to factory', factory.parsed.outfits[outfitRef]);
+
+                    if (!outfitRef) {
+                        console.log('UNABLE TO GET OUTFITREF!');
+                        reject('Unable to get Outfit REF');
+                    }
+
+                    resolve(factory.parsed.outfits[outfitRef]);
+                });
+            }
+        });
+    };
+
+    factory.getOutfitFromAPI = function(outfitID) {
+        return new Promise(function(resolve, reject) {
+            console.log('Pulling outfit #' + outfitID + ' from PS2Alerts API');
+            $http({
+                method: 'GET',
+                url: ConfigDataService.apiUrl + '/data/outfit/' + outfitID
+            }).then(function(returned) {
+                resolve(returned.data.data);
+            }, function(error) {
+                console.log('Was unable to aquire outfit data from the API!');
+                reject(error);
+            });
+        });
+    };
+
+    factory.processEndAlert = function(message) {
+        console.log('Ending alert', message);
+
+        factory.details.winner = message.winner.toLowerCase();
+        factory.details.winnerText = ConfigDataService.factionsAlpha[message.winner.toLowerCase()];
+        factory.details.ended = 1;
+        factory.details.inProgress = false;
+        factory.details.endedDate = $filter('date')(message.endTime, 'dd-MMM-yyyy HH:mm:ss');
+        factory.details.duration = message.endTime - factory.details.started;
+        factory.details.durationTime = $filter('date')(
+            factory.details.duration,
+            'HH:mm:ss',
+            'UTC'
+        );
+        factory.details.durationMins = Math.round((factory.details.duration / 1000) / 60);
+
+        // Cancel KPM calculations
+        clearInterval(kpmInterval);
     };
 
     return factory;

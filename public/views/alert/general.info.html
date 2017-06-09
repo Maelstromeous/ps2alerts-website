@@ -41,9 +41,12 @@
                         Started
                     </p>
                 </div>
-                <div class="col no-padding s4 m2" ng-if="alert.details.durationTime">
-                    <h3 class="general-metric heading-caption">
-                        {{::alert.details.durationTime}}
+                <div class="col no-padding s4 m2" ng-if="alert.details.durationTime" alertended="{{ alert.details.ended }}">
+                    <h3 class="general-metric heading-caption" ng-if="alert.details.ended != 0">
+                        {{alert.details.durationTime}}
+                    </h3>
+                    <h3 class="general-metric heading-caption" ng-if="alert.details.ended == 0">
+                        TBC
                     </h3>
                     <p class="caption">
                         Duration

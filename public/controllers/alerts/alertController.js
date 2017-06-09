@@ -25,6 +25,7 @@ app.controller('AlertController', function(
             $scope.alertWebsocket.initAndSubscribe($scope.alert.details.id);
         }
 
+        console.log($scope.alert.parsed.players);
         var pl = $('#player-leaderboard').DataTable({
             data: $scope.alert.parsed.players,
             columns: [
@@ -228,8 +229,6 @@ app.controller('AlertController', function(
         $scope.$apply(function() {
             $scope.alert.metrics.durationMins = duration / 60;
         });
-
-        console.log(duration);
     });
 
     // Listen for broadcasts from the AlertMetricsService and change the DOM based upon those messages
@@ -257,6 +256,12 @@ app.controller('AlertController', function(
     $scope.parseFacilityMessage = function(message) {
         $scope.$apply(function() {
             $scope.alert.processMapCapture(message);
+        });
+    };
+
+    $scope.parseAlertEndMessage = function(message) {
+        $scope.$apply(function() {
+            $scope.alert.processEndAlert(message);
         });
     };
 });
