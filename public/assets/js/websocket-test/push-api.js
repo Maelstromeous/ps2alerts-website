@@ -3,10 +3,6 @@ var pushWebsocket;
 
 function initPushAPI() {
     console.log('Connecting to Push API...');
-    testWebSocket();
-}
-
-function testWebSocket() {
     pushWebsocket = new WebSocket(wsUri);
     pushWebsocket.onopen = function(evt) { onOpenPushAPI(evt); };
     pushWebsocket.onclose = function(evt) { onClosePushAPI(evt); };

@@ -3,6 +3,8 @@ function writeToScreen(message, universe) {
     var color = '#00af00';
     if (universe === 'ps2alerts') {
         color = '#0000ff';
+    } else if (universe === 'census') {
+        color = '#ef9f07';
     }
     var pre = document.createElement('p');
     var timestamp = moment().format('HH:mm:ss:SSS');
@@ -23,6 +25,7 @@ function subscribeToWorld(id) {
 
     doSendPS2Alerts(JSON.stringify(message));
     doSendPushAPI('{"action":"subscribe", "event": "Combat", "worlds": "' + id + '"}');
+    doSendCensus('{"service":"event","action":"subscribe","characters":["all"],"eventNames":["Death"],"worlds":["' + id + '"],"logicalAndCharactersWithWorlds":true}');
 }
 
 $(document).ready(function() {
