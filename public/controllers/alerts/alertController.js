@@ -248,8 +248,9 @@ app.controller('AlertController', function(
     $scope.parseCombatMessage = function(message) {
         $scope.$apply(function() {
             $scope.alert.increaseCombatKills(message);
-            $scope.alert.processPlayerMetrics(message).then(function() {
-            });
+            $scope.alert.updatePlayerMetrics(message).then();
+            $scope.alert.updateOutfitMetrics(message).then();
+            $scope.alert.updateWeaponMetrics(message).then();
         });
     };
 

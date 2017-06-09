@@ -118,7 +118,6 @@ app.service('AlertMetricsService', function(
                             });
                         }, 5000);
                         var durationInterval = setInterval(function() {
-                            console.log('durationInterval');
                             var now = new Date().getTime();
                             factory.details.duration = now - factory.details.started;
                             factory.details.durationTime = $filter('date')(
@@ -731,7 +730,7 @@ app.service('AlertMetricsService', function(
         });
     };
 
-    factory.processPlayerMetrics = function(message) {
+    factory.updatePlayerMetrics = function(message) {
         return new Promise(function(resolve) {
             // Run promise to ENSURE that we get the correct player data, even if we have to insert it at this point
             Promise.all([
@@ -791,6 +790,60 @@ app.service('AlertMetricsService', function(
         });
     };
 
+    factory.updateOutfitMetrics = function(message) {
+        return new Promise(function(resolve, reject) {
+            console.log('updateOutfitMetrics');
+            console.log(message);
+            if (message.attackerOutfit.id) {
+                factory.getOutfit(message.attackerOutfit.id).then(function(outfit) {
+                    console.log('Attacker Outfit found', outfit);
+
+                    // Increment kills / deaths based on message
+                    // Suicides will be handled at victim level
+                    if (message.attackerID !== message.victimID) {
+                        outfit.kills++;
+                    }
+
+                    if (message.teamkill === true) {
+                        outfit.teamkills++;
+                    }
+
+                    // Update outfit metrics
+                    outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
+                    outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
+                    outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+                });
+            }
+
+            if (message.victimOutfit.id) {
+                factory.getOutfit(message.victimOutfit.id).then(function(outfit) {
+                    console.log('Victim Outfit found', outfit);
+
+                    // Increment kills / deaths based on message
+                    // Suicides will be handled at victim level
+                    outfit.deaths++;
+
+                    if (message.suicide === true) {
+                        outfit.deaths++;
+                        outfit.suicides++;
+                    }
+
+                    // Update outfit metrics
+                    outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
+                    outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
+                    outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+                });
+            }
+        });
+    };
+
+    factory.updateWeaponMetrics = function(message) {
+        return new Promise(function(resolve, reject) {
+            console.log('updateWeaponMetrics');
+            //console.log(message);
+        });
+    };
+
     factory.processMapCapture = function(message) {
         factory.addNewCapture(message);
     };
@@ -831,6 +884,10 @@ app.service('AlertMetricsService', function(
     // Promise to get outfit details, either from current data or API
     factory.getOutfit = function(outfitID) {
         return new Promise(function(resolve, reject) {
+            if (outfitID == '0') {
+                console.log('Found 0 outfit ID');
+                return resolve(null);
+            }
             // Find the array key for the outfit by ID
             var outfitRef = _.findIndex(
                 factory.parsed.outfits, {'id': outfitID}
