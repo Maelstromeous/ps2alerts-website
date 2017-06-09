@@ -98,4 +98,13 @@ class MainController implements ConfigAwareInterface, TemplateAwareInterface
 
         return $response;
     }
+
+    public function websocketTest(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $response->getBody()->write(
+            $this->getTemplateDriver()->render('push-test.html')
+        );
+
+        return $response;
+    }
 }
