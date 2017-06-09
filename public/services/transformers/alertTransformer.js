@@ -3,7 +3,7 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
 
     // Parse alert information into a standardized format
     factory.parse = function(alert) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve) {
             alert.id           = alert.id;
             alert.started      = alert.started * 1000;
             alert.server       = ConfigDataService.serverNames[alert.server];

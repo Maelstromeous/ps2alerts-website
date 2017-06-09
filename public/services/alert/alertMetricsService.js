@@ -40,6 +40,18 @@ app.service('AlertMetricsService', function(
             },
             weapons: {
                 data: []
+            },
+            kpms: {
+                total: 0,
+                vs: 0,
+                nc: 0,
+                tr: 0
+            },
+            dpms: {
+                total: 0,
+                vs: 0,
+                nc: 0,
+                tr: 0
             }
         };
 
@@ -99,13 +111,24 @@ app.service('AlertMetricsService', function(
                     // Set off the KPM / DPM interval
                     if (factory.details.inProgress) {
                         var kpmInterval = setInterval(function() {
-                            factory.processKpms().then(function() {
-                                console.log('KPMs processed');
+                            factory.processLeaderboardKpms().then(function() {
                                 $('#player-leaderboard').DataTable().rows().invalidate().draw();
                                 $('#outfit-leaderboard').DataTable().rows().invalidate().draw();
                                 $('#weapon-leaderboard').DataTable().rows().invalidate().draw();
                             });
-                        }, 30000);
+                        }, 5000);
+                        var durationInterval = setInterval(function() {
+                            console.log('durationInterval');
+                            var now = new Date().getTime();
+                            factory.details.duration = now - factory.details.started;
+                            factory.details.durationTime = $filter('date')(
+                                factory.details.duration - 1, // -1 second due to Census lag
+                                'HH:mm:ss',
+                                'UTC'
+                            );
+                            factory.details.durationMins = Math.round((factory.details.duration / 1000) / 60);
+                            factory.recalculateMetricKpms();
+                        }, 1000);
                     }
                 });
             });
@@ -168,6 +191,8 @@ app.service('AlertMetricsService', function(
                     factory.parsed.factions[faction].suicides  = factory.metrics.combats.data.suicides[faction];
                 }
             });
+
+            factory.recalculateMetricKpms();
 
             resolve();
         });
@@ -770,11 +795,26 @@ app.service('AlertMetricsService', function(
         factory.addNewCapture(message);
     };
 
+    factory.recalculateMetricKpms = function() {
+        factory.metrics.kpms = {
+            total: (factory.metrics.combats.data.kills.total / factory.details.duration) * 1000 * 60,
+            vs: (factory.metrics.combats.data.kills.vs / factory.details.duration) * 1000 * 60,
+            nc: (factory.metrics.combats.data.kills.nc / factory.details.duration) * 1000 * 60,
+            tr: (factory.metrics.combats.data.kills.tr / factory.details.duration) * 1000 * 60,
+        };
+
+        factory.metrics.dpms = {
+            total: (factory.metrics.combats.data.deaths.total / factory.details.duration) * 1000 * 60,
+            vs: (factory.metrics.combats.data.deaths.vs / factory.details.duration) * 1000 * 60,
+            nc: (factory.metrics.combats.data.deaths.nc / factory.details.duration) * 1000 * 60,
+            tr: (factory.metrics.combats.data.deaths.tr / factory.details.duration) * 1000 * 60,
+        };
+    };
+
     // Fires every 5 secs to update the KPMs / DPMs of every player, otherwise until they get a kill
     // they will always have the same. Promised so we're not redrawing on EVERY player
-    factory.processKpms = function() {
+    factory.processLeaderboardKpms = function() {
         return new Promise(function(resolve) {
-            console.log('Running KPMs');
             angular.forEach(factory.parsed.players, function(player) {
                 player.kpm = (player.kills / factory.details.durationMins).toFixed(2);
                 player.dpm = (player.deaths / factory.details.durationMins).toFixed(2);
@@ -879,6 +919,7 @@ app.service('AlertMetricsService', function(
 
         // Cancel KPM calculations
         clearInterval(kpmInterval);
+        clearInterval(durationInterval);
     };
 
     return factory;
