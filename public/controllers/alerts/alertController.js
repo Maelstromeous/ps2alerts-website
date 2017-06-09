@@ -49,6 +49,10 @@ app.controller('AlertController', function(
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
+            language: {
+                search: '_INPUT_',
+                searchPlaceholder: 'Search Players'
+            },
             rowCallback: function(row, data) {
                 // Format the faction colors
                 if (data.factionAbv !== null) {
@@ -102,6 +106,10 @@ app.controller('AlertController', function(
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
+            language: {
+                search: '_INPUT_',
+                searchPlaceholder: 'Search Outfits'
+            },
             rowCallback: function(row, data) {
                 // Format the faction colors
                 if (data.factionAbv !== null) {
@@ -132,6 +140,10 @@ app.controller('AlertController', function(
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
+            language: {
+                search: '_INPUT_',
+                searchPlaceholder: 'Search Weapons'
+            },
             rowCallback: function(row, data) {
                 var vehicle = ' [I]';
                 // Format the cells
@@ -170,6 +182,10 @@ app.controller('AlertController', function(
             scrollY:        450,
             scrollCollapse: true,
             scroller:       true,
+            language: {
+                search: '_INPUT_',
+                searchPlaceholder: 'Search Vehicles'
+            },
             rowCallback: function(row, data) {
                 // Format the cells
                 if (data.factionAbv !== null) {
