@@ -92,71 +92,85 @@ app.service('AlertMetricsService', function(
                 console.log('details', factory.details);
 
                 // FIRE!!!
-                factory.startProcessing();
+                factory.startProcessing().then(function() {
+                    $rootScope.$broadcast('dataLoaded', 'loaded');
+                    console.log(factory);
+
+                    // Set off the KPM / DPM interval
+                    if (factory.details.inProgress) {
+                        var kpmInterval = setInterval(function() {
+                            factory.processKpms().then(function() {
+                                console.log('KPMs processed');
+                                $('#player-leaderboard').DataTable().rows().invalidate().draw();
+                                $('#outfit-leaderboard').DataTable().rows().invalidate().draw();
+                                $('#weapon-leaderboard').DataTable().rows().invalidate().draw();
+                            });
+                        }, 30000);
+                    }
+                });
             });
         });
     };
 
     factory.startProcessing = function() {
-        var serverName = ConfigDataService.serverNames[factory.details.server];
-        var winnerTitle = factory.details.winner.toUpperCase();
+        return new Promise(function(resolve) {
+            var serverName = ConfigDataService.serverNames[factory.details.server];
+            var winnerTitle = factory.details.winner.toUpperCase();
 
-        if (!factory.details.winner) {
-            winnerTitle = 'TBD';
-        }
-
-        $rootScope.changeTitle('Alert #' + factory.details.id + ' (' + factory.details.server + ' - ' + winnerTitle + ')');
-
-        // Build player and outfit reference objects so we don't have to do
-        // tons of loops on every single kill to get player / outfit info
-
-        angular.forEach(factory.metrics.outfits.data, function(outfit) {
-            factory.addNewOutfit(outfit);
-        });
-
-        angular.forEach(factory.metrics.players.data, function(player) {
-            factory.addNewPlayer(player).then();
-        });
-
-        angular.forEach(factory.metrics.weapons.data, function(weapon) {
-            factory.addNewWeapon(weapon);
-        });
-
-        angular.forEach(factory.metrics.vehicles.data, function(vehicle) {
-            factory.addNewVehicle(vehicle);
-        });
-
-        angular.forEach(factory.metrics.maps.data, function(capture) {
-            factory.addNewCapture(capture);
-        });
-
-        // Sort the data
-        factory.sortPlayers('kills');
-        factory.sortFacilities('captures');
-
-        angular.forEach(ConfigDataService.factions, function(faction) {
-            if (faction !== 'draw') {
-                factory.parsed.factions[faction].kills     = factory.metrics.combats.data.kills[faction];
-                factory.parsed.factions[faction].deaths    = factory.metrics.combats.data.deaths[faction];
-                factory.parsed.factions[faction].teamkills = factory.metrics.combats.data.teamkills[faction];
-                factory.parsed.factions[faction].suicides  = factory.metrics.combats.data.suicides[faction];
+            if (!factory.details.winner) {
+                winnerTitle = 'TBD';
             }
-        });
 
-        $rootScope.$broadcast('dataLoaded', 'loaded');
-        console.log(factory);
+            $rootScope.changeTitle('Alert #' + factory.details.id + ' (' + factory.details.server + ' - ' + winnerTitle + ')');
 
-        // Set off the KPM / DPM interval
-        if (factory.details.inProgress) {
-            var kpmInterval = setInterval(function() {
-                factory.processKpms().then(function() {
-                    console.log('KPMs processed');
-                    $('#player-leaderboard').DataTable().rows().invalidate().draw();
-                    $('#outfit-leaderboard').DataTable().rows().invalidate().draw();
-                    $('#weapon-leaderboard').DataTable().rows().invalidate().draw();
+            // Build player and outfit reference objects so we don't have to do
+            // tons of loops on every single kill to get player / outfit info
+
+            angular.forEach(factory.metrics.outfits.data, function(outfit) {
+                factory.addNewOutfit(outfit).then(function() {
+                    console.log('Initial Outfits Processed');
                 });
-            }, 30000);
-        }
+            });
+
+            angular.forEach(factory.metrics.players.data, function(player) {
+                factory.addNewPlayer(player).then(function() {
+                    console.log('Initial Players Processed');
+                });
+            });
+
+            angular.forEach(factory.metrics.weapons.data, function(weapon) {
+                factory.addNewWeapon(weapon).then(function() {
+                    console.log('Initial Weapons Processed');
+                });
+            });
+
+            angular.forEach(factory.metrics.vehicles.data, function(vehicle) {
+                factory.addNewVehicle(vehicle).then(function() {
+                    console.log('Initial Vehicles Processed');
+                });;
+            });
+
+            angular.forEach(factory.metrics.maps.data, function(capture) {
+                factory.addNewCapture(capture).then(function() {
+                    console.log('Initial Map Captures Processed');
+                });;
+            });
+
+            // Sort the data
+            factory.sortPlayers('kills');
+            factory.sortFacilities('captures');
+
+            angular.forEach(ConfigDataService.factions, function(faction) {
+                if (faction !== 'draw') {
+                    factory.parsed.factions[faction].kills     = factory.metrics.combats.data.kills[faction];
+                    factory.parsed.factions[faction].deaths    = factory.metrics.combats.data.deaths[faction];
+                    factory.parsed.factions[faction].teamkills = factory.metrics.combats.data.teamkills[faction];
+                    factory.parsed.factions[faction].suicides  = factory.metrics.combats.data.suicides[faction];
+                }
+            });
+
+            resolve();
+        });
     };
 
     // Function to add new players to various areas, grabbing new data from Census
@@ -208,7 +222,6 @@ app.service('AlertMetricsService', function(
 
                 formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
                 formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
-                console.log('duration', factory.details.durationMins);
                 formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
                 formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
 
@@ -223,251 +236,265 @@ app.service('AlertMetricsService', function(
     };
 
     factory.addNewOutfit = function(outfit) {
-        var formatted = {
-            id:           outfit.outfit.id,
-            name:         outfit.outfit.name,
-            tag:          outfit.outfit.tag,
-            faction:      outfit.outfit.faction,
-            kills:        outfit.metrics.kills,
-            deaths:       outfit.metrics.deaths,
-            teamkills:    outfit.metrics.teamkills,
-            suicides:     outfit.metrics.suicides,
-            players:      [], // Will store all playerIDs for reference
-            participants: 0,
-            killsPerParticipant: 0,
-            deathsPerParticipant: 0,
-            captures: 0
-        };
+        return new Promise(function(resolve) {
+            var formatted = {
+                id:           outfit.outfit.id,
+                name:         outfit.outfit.name,
+                tag:          outfit.outfit.tag,
+                faction:      outfit.outfit.faction,
+                kills:        outfit.metrics.kills,
+                deaths:       outfit.metrics.deaths,
+                teamkills:    outfit.metrics.teamkills,
+                suicides:     outfit.metrics.suicides,
+                players:      [], // Will store all playerIDs for reference
+                participants: 0,
+                killsPerParticipant: 0,
+                deathsPerParticipant: 0,
+                captures: 0
+            };
 
-        if (!formatted.tag || formatted.tag.length === 0) {
-            formatted.tag = null;
-        }
+            if (!formatted.tag || formatted.tag.length === 0) {
+                formatted.tag = null;
+            }
 
-        formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
-        formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
-        formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
-        formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+            formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
+            formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
+            formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
+            formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
 
-        factory.parsed.outfits.push(formatted);
+            factory.parsed.outfits.push(formatted);
+            resolve();
+        });
     };
 
     factory.addNewWeapon = function(weapon) {
-        if (weapon.id > 0) {
-            // Find the array key for the weapon by ID
-            var weaponRef = _.findIndex(
-                factory.configData.weapons.data, {'id': weapon.id}
-            );
-
-            var weaponData = factory.configData.weapons.data[weaponRef];
-
-            if (weaponData) {
-                // Do a check to see if the weapon we have, by name, is already in the data array. This is to merge the
-                // cross faction vehicle weapons into a singular weapon
-                var index = _.findIndex(
-                    factory.parsed.weapons, {'name': weaponData.name}
+        return new Promise(function(resolve) {
+            if (weapon.id > 0) {
+                // Find the array key for the weapon by ID
+                var weaponRef = _.findIndex(
+                    factory.configData.weapons.data, {'id': weapon.id}
                 );
 
-                // If weapon by name has been found, check if we have a special fake weapon for the group
-                var groupIndex = _.findIndex(
-                    factory.parsed.weapons, {
-                        name: weaponData.name + ' (Grouped)'
+                var weaponData = factory.configData.weapons.data[weaponRef];
+
+                if (weaponData) {
+                    // Do a check to see if the weapon we have, by name, is already in the data array. This is to merge the
+                    // cross faction vehicle weapons into a singular weapon
+                    var index = _.findIndex(
+                        factory.parsed.weapons, {'name': weaponData.name}
+                    );
+
+                    // If weapon by name has been found, check if we have a special fake weapon for the group
+                    var groupIndex = _.findIndex(
+                        factory.parsed.weapons, {
+                            name: weaponData.name + ' (Grouped)'
+                        }
+                    );
+
+                    // If there is no faked "group" weapon
+                    if (groupIndex === -1 && index !== -1) {
+                        var existingWeapon = factory.parsed.weapons[index];
+                        var random = Math.floor(Math.random() * 10000);
+
+                        var newGroup = {
+                            id:         weapon.id + '00000' + random, // Scramble the ID
+                            name:       weaponData.name + ' (Grouped)',
+                            kills:      (weapon.kills + existingWeapon.kills),
+                            teamkills:  (weapon.teamkills + existingWeapon.teamkills),
+                            headshots:  (weapon.headshots + existingWeapon.headshots),
+                            vehicle:    weaponData.isVehicle,
+                            faction:    0,
+                            factionAbv: 'grouped',
+                            weapons:    [weapon.id]
+                        };
+
+                        newGroup.hsr = MetricsProcessingService.calcHSR(newGroup.headshots, newGroup.kills);
+                        newGroup.kpm = (newGroup.kills / factory.details.durationMins).toFixed(2);
+                        newGroup.dpm = (newGroup.deaths / factory.details.durationMins).toFixed(2);
+
+                        factory.parsed.weapons.push(newGroup);
                     }
-                );
 
-                // If there is no faked "group" weapon
-                if (groupIndex === -1 && index !== -1) {
-                    var existingWeapon = factory.parsed.weapons[index];
-                    var random = Math.floor(Math.random() * 10000);
+                    // Else, if the grouped weapon was indeed found, increase it's stats
+                    if (groupIndex !== -1) {
+                        var weaponGroup = factory.parsed.weapons[groupIndex];
 
-                    var newGroup = {
-                        id:         weapon.id + '00000' + random, // Scramble the ID
-                        name:       weaponData.name + ' (Grouped)',
-                        kills:      (weapon.kills + existingWeapon.kills),
-                        teamkills:  (weapon.teamkills + existingWeapon.teamkills),
-                        headshots:  (weapon.headshots + existingWeapon.headshots),
-                        vehicle:    weaponData.isVehicle,
-                        faction:    0,
-                        factionAbv: 'grouped',
-                        weapons:    [weapon.id]
+                        weaponGroup.kills     += weapon.kills;
+                        weaponGroup.teamkills += weapon.teamkills;
+                        weaponGroup.headshots += weapon.headshots;
+                        weaponGroup.faction    = 0;
+
+                        weaponGroup.hsr = MetricsProcessingService.calcHSR(weaponGroup.headshots, weaponGroup.kills);
+                        weaponGroup.kpm = (weaponGroup.kills / factory.details.durationMins).toFixed(2);
+                        weaponGroup.dpm = (weaponGroup.deaths / factory.details.durationMins).toFixed(2);
+
+                        weaponGroup.weapons.push(weapon.id); // Push this weapon to the group
+                    }
+
+                    // Continue adding the weapon as a single entity
+                    var formatted = {
+                        id:        weapon.id,
+                        name:      weaponData.name,
+                        kills:     weapon.kills,
+                        teamkills: weapon.teamkills,
+                        headshots: weapon.headshots,
+                        vehicle:   weaponData.isVehicle,
+                        faction:   weaponData.faction
                     };
 
-                    newGroup.hsr = MetricsProcessingService.calcHSR(newGroup.headshots, newGroup.kills);
-                    newGroup.kpm = (newGroup.kills / factory.details.durationMins).toFixed(2);
-                    newGroup.dpm = (newGroup.deaths / factory.details.durationMins).toFixed(2);
+                    // Set faction abrivation
+                    formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
-                    factory.parsed.weapons.push(newGroup);
+                    formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
+                    formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
+                    formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+
+                    factory.parsed.weapons.push(formatted);
+                    resolve();
+                } else {
+                    console.log('Invalid / Not found Weapon Data: ', weapon.id);
                 }
-
-                // Else, if the grouped weapon was indeed found, increase it's stats
-                if (groupIndex !== -1) {
-                    var weaponGroup = factory.parsed.weapons[groupIndex];
-
-                    weaponGroup.kills     += weapon.kills;
-                    weaponGroup.teamkills += weapon.teamkills;
-                    weaponGroup.headshots += weapon.headshots;
-                    weaponGroup.faction    = 0;
-
-                    weaponGroup.hsr = MetricsProcessingService.calcHSR(weaponGroup.headshots, weaponGroup.kills);
-                    weaponGroup.kpm = (weaponGroup.kills / factory.details.durationMins).toFixed(2);
-                    weaponGroup.dpm = (weaponGroup.deaths / factory.details.durationMins).toFixed(2);
-
-                    weaponGroup.weapons.push(weapon.id); // Push this weapon to the group
-                }
-
-                // Continue adding the weapon as a single entity
-                var formatted = {
-                    id:        weapon.id,
-                    name:      weaponData.name,
-                    kills:     weapon.kills,
-                    teamkills: weapon.teamkills,
-                    headshots: weapon.headshots,
-                    vehicle:   weaponData.isVehicle,
-                    faction:   weaponData.faction
-                };
-
-                // Set faction abrivation
-                formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
-
-                formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
-                formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
-                formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
-
-                factory.parsed.weapons.push(formatted);
             } else {
                 console.log('Invalid Weapon ID: ', weapon.id);
             }
-        }
+        });
     };
 
     factory.addNewVehicle = function(vehicle) {
-        if (vehicle.id > 0) {
-            var vehicleRef = _.findIndex(
-                factory.configData.vehicles.data, {'id': vehicle.id}
-            );
+        return new Promise(function(resolve) {
+            if (vehicle.id > 0) {
+                var vehicleRef = _.findIndex(
+                    factory.configData.vehicles.data, {'id': vehicle.id}
+                );
 
-            if (vehicleRef !== -1) {
-                var vehicleData = factory.configData.vehicles.data[vehicleRef];
+                if (vehicleRef !== -1) {
+                    var vehicleData = factory.configData.vehicles.data[vehicleRef];
 
-                var formatted = {
-                    id:      vehicle.id,
-                    name:    vehicleData.name,
-                    type:    vehicleData.type,
-                    faction: vehicleData.faction,
-                    kills:   vehicle.kills.total,
-                    killsI:  vehicle.kills.infantry,
-                    killsV:  vehicle.kills.vehicle,
-                    deaths:  vehicle.deaths.total,
-                    deathsI: vehicle.deaths.infantry,
-                    deathsV: vehicle.deaths.vehicle,
-                    bails:   vehicle.bails
-                };
+                    var formatted = {
+                        id:      vehicle.id,
+                        name:    vehicleData.name,
+                        type:    vehicleData.type,
+                        faction: vehicleData.faction,
+                        kills:   vehicle.kills.total,
+                        killsI:  vehicle.kills.infantry,
+                        killsV:  vehicle.kills.vehicle,
+                        deaths:  vehicle.deaths.total,
+                        deathsI: vehicle.deaths.infantry,
+                        deathsV: vehicle.deaths.vehicle,
+                        bails:   vehicle.bails
+                    };
 
-                formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
+                    formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
-                formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
-                formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
-                formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
+                    formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
+                    formatted.kpm = (formatted.kills / factory.details.durationMins).toFixed(2);
+                    formatted.dpm = (formatted.deaths / factory.details.durationMins).toFixed(2);
 
-                factory.parsed.vehicles.push(formatted);
-            } else {
-                console.log('Invalid Vehicle ID: ', vehicle.id);
+                    factory.parsed.vehicles.push(formatted);
+                    resolve();
+                } else {
+                    console.log('Invalid Vehicle ID: ', vehicle.id);
+                }
             }
-        }
+        });
     };
 
     factory.addNewCapture = function(capture) {
-        var formatted = {
-            timestamp: capture.timestamp * 1000,
-            defence:   capture.isDefence,
-            vs:        parseInt(capture.controlVS),
-            nc:        parseInt(capture.controlNC),
-            tr:        parseInt(capture.controlTR),
-            captor:    capture.facilityNewFaction,
-            looser:    capture.facilityOldFaction
-        };
+        return new Promise(function(resolve) {
+            var formatted = {
+                timestamp: capture.timestamp * 1000,
+                defence:   capture.isDefence,
+                vs:        parseInt(capture.controlVS),
+                nc:        parseInt(capture.controlNC),
+                tr:        parseInt(capture.controlTR),
+                captor:    capture.facilityNewFaction,
+                looser:    capture.facilityOldFaction
+            };
 
-        formatted.total = (formatted.vs + formatted.nc + formatted.tr);
-        formatted.neutral = 100 - formatted.total;
+            formatted.total = (formatted.vs + formatted.nc + formatted.tr);
+            formatted.neutral = 100 - formatted.total;
 
-        var facilityConfRef = _.findIndex(
-            factory.configData.facilities.data, {'id': capture.facilityID}
-        );
+            var facilityConfRef = _.findIndex(
+                factory.configData.facilities.data, {'id': capture.facilityID}
+            );
 
-        var facilityStatsRef = _.findIndex(
-            factory.parsed.facilities, {'id': capture.facilityID}
-        );
+            var facilityStatsRef = _.findIndex(
+                factory.parsed.facilities, {'id': capture.facilityID}
+            );
 
-        if (capture.outfitCaptured && capture.outfitCaptured > 0) {
-            console.log('capture.outfitCapured', capture.outfitCaptured);
-            var outfitData = factory.getOutfit(capture.outfitCaptured);
+            if (capture.outfitCaptured && capture.outfitCaptured > 0) {
+                console.log('capture.outfitCapured', capture.outfitCaptured);
+                var outfitData = factory.getOutfit(capture.outfitCaptured);
 
-            if (outfitData) {
-                formatted.outfitName = outfitData.name;
-                formatted.outfitTag  = outfitData.tag;
+                if (outfitData) {
+                    formatted.outfitName = outfitData.name;
+                    formatted.outfitTag  = outfitData.tag;
 
-                // Update outfit metrics
-                if (formatted.defence === true) {
-                    outfitData.defences++;
+                    // Update outfit metrics
+                    if (formatted.defence === true) {
+                        outfitData.defences++;
+                    } else {
+                        outfitData.captures++;
+                    }
                 } else {
-                    outfitData.captures++;
+                    console.log('=== Outfit data could not be determined! ===');
                 }
+            }
+            if (facilityConfRef !== -1) {
+                var facility = factory.configData.facilities.data[facilityConfRef];
+                formatted.facilityId    = facility.id;
+                formatted.facilityName  = facility.name;
+                formatted.facilityType  = facility.type;
+                formatted.facilityMapId = facility.mapId;
+
+                // Create new facility stats entry
+                if (facilityStatsRef === -1) {
+                    var newFacility = {
+                        id: facility.id,
+                        name: facility.name,
+                        type: ConfigDataService.facilityTypes[facility.type],
+                        typeSmall: ConfigDataService.facilityTypesSmall[facility.type],
+                        captures: 0,
+                        defences: 0,
+                    };
+
+                    if (formatted.defence === true) {
+                        newFacility.defences = 1;
+                    } else {
+                        newFacility.captures = 1;
+                    }
+
+                    factory.parsed.facilities.push(newFacility);
+                } else { // Update facility stats entry
+                    var entry = factory.parsed.facilities[facilityStatsRef];
+                    if (formatted.defence === true) {
+                        entry.defences++;
+                    } else {
+                        entry.captures++;
+                    }
+                }
+            }
+
+            formatted.dateTime = $filter('date')(formatted.timestamp, 'HH:mm:ss');
+
+            formatted.captorFactionAbv = ConfigDataService.convertFactionIntToName(formatted.captor);
+            formatted.looserFactionAbv = ConfigDataService.convertFactionIntToName(formatted.looser);
+
+            if (formatted.defence === true) {
+                factory.parsed.map.defences.push(formatted);
             } else {
-                console.log('=== Outfit data could not be determined! ===');
+                factory.parsed.map.captures.push(formatted);
             }
-        }
-        if (facilityConfRef !== -1) {
-            var facility = factory.configData.facilities.data[facilityConfRef];
-            formatted.facilityId    = facility.id;
-            formatted.facilityName  = facility.name;
-            formatted.facilityType  = facility.type;
-            formatted.facilityMapId = facility.mapId;
 
-            // Create new facility stats entry
-            if (facilityStatsRef === -1) {
-                var newFacility = {
-                    id: facility.id,
-                    name: facility.name,
-                    type: ConfigDataService.facilityTypes[facility.type],
-                    typeSmall: ConfigDataService.facilityTypesSmall[facility.type],
-                    captures: 0,
-                    defences: 0,
-                };
+            factory.parsed.map.all.push(formatted);
 
-                if (formatted.defence === true) {
-                    newFacility.defences = 1;
-                } else {
-                    newFacility.captures = 1;
-                }
-
-                factory.parsed.facilities.push(newFacility);
-            } else { // Update facility stats entry
-                var entry = factory.parsed.facilities[facilityStatsRef];
-                if (formatted.defence === true) {
-                    entry.defences++;
-                } else {
-                    entry.captures++;
-                }
-            }
-        }
-
-        formatted.dateTime = $filter('date')(formatted.timestamp, 'HH:mm:ss');
-
-        formatted.captorFactionAbv = ConfigDataService.convertFactionIntToName(formatted.captor);
-        formatted.looserFactionAbv = ConfigDataService.convertFactionIntToName(formatted.looser);
-
-        if (formatted.defence === true) {
-            factory.parsed.map.defences.push(formatted);
-        } else {
-            factory.parsed.map.captures.push(formatted);
-        }
-
-        factory.parsed.map.all.push(formatted);
-
-        // Update territory bar
-        factory.controlVS = formatted.vs;
-        factory.controlNC = formatted.nc;
-        factory.controlTR = formatted.tr;
-        factory.controlNeutral = formatted.neutral;
+            // Update territory bar
+            factory.controlVS = formatted.vs;
+            factory.controlNC = formatted.nc;
+            factory.controlTR = formatted.tr;
+            factory.controlNeutral = formatted.neutral;
+            resolve();
+        });
     };
 
     factory.sortPlayers = function(metric) {
@@ -801,18 +828,19 @@ app.service('AlertMetricsService', function(
                         }
                     };
 
-                    factory.addNewOutfit(newOutfit);
-                    var outfitRef = _.findIndex(
-                        factory.parsed.outfits, {'id': outfitID}
-                    );
-                    console.log('Added new outfit #' + outfitID + ' to factory', factory.parsed.outfits[outfitRef]);
+                    factory.addNewOutfit(newOutfit).then(function() {
+                        var outfitRef = _.findIndex(
+                            factory.parsed.outfits, {'id': outfitID}
+                        );
+                        console.log('Added new outfit #' + outfitID + ' to factory', factory.parsed.outfits[outfitRef]);
 
-                    if (!outfitRef) {
-                        console.log('UNABLE TO GET OUTFITREF!');
-                        reject('Unable to get Outfit REF');
-                    }
+                        if (!outfitRef) {
+                            console.log('UNABLE TO GET OUTFITREF!');
+                            reject('Unable to get Outfit REF');
+                        }
 
-                    resolve(factory.parsed.outfits[outfitRef]);
+                        resolve(factory.parsed.outfits[outfitRef]);
+                    });
                 });
             }
         });
