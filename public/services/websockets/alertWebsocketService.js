@@ -6,12 +6,13 @@ app.service('AlertWebsocketService', function(
     var factory = {};
     factory.id = 0;
 
-    factory.webSocket = {};
+    factory.webSocket = null;
     factory.config = ConfigDataService;
 
     // If the user navigates away from the page, close the websocket
     $rootScope.$on('$routeChangeStart', function() {
-        if (factory.webSocket) {
+        if (typeof factory.webSocket === 'object' && factory.webSocket !== null) {
+            console.log('Sending Alert Websocket disconnect');
             factory.disconnect();
         }
     });
@@ -103,7 +104,8 @@ app.service('AlertWebsocketService', function(
 
     factory.disconnect = function() {
         factory.webSocket.close();
-        factory.webSocket = {};
+        factory.webSocket = null;
+        console.log('Alert Websocket Closed');
     };
 
     return factory;
