@@ -16,15 +16,15 @@ app.controller('SearchController', function($scope, SearchService) {
 
     $scope.show = function() {
         if ($scope.service.results.length > 0) {
-            $("#search-results").fadeIn();
+            $('#search-results').fadeIn();
         }
     };
 
     $scope.hide = function() {
-        $("#search-results").fadeOut();
+        $('#search-results').fadeOut();
     };
 
-    $scope.clear = function () {
+    $scope.clear = function() {
         $scope.hide();
         $scope.service.results = [];
         $scope.term = '';
@@ -35,7 +35,7 @@ app.controller('SearchController', function($scope, SearchService) {
     });
 
     $scope.$on('showSearchResults', function() {
-        $("#search-results").fadeIn();
+        $('#search-results').fadeIn();
         var options = {
             hitType: 'event',
             eventCategory: 'Search',
@@ -45,8 +45,8 @@ app.controller('SearchController', function($scope, SearchService) {
         ga('send', options);
     });
 
-    $(document).on('click', function (e) {
-        if ($(e.target).closest("#site-search").length === 0) {
+    $(document).on('click', function(e) {
+        if ($(e.target).closest('#site-search').length === 0) {
             $scope.hide();
         }
     });
