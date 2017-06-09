@@ -14,5 +14,5 @@ app.controller('RealTimeMonitorController', function($scope, ConfigDataService, 
     $scope.simMiddlemanDown = function() {
         $scope.websocket.loaded = 0;
         $scope.websocket.middlemanDown = 1;
-    }
+    };
 });
