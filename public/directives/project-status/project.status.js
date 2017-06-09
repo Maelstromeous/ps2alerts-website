@@ -1,15 +1,15 @@
 app.directive('projectStatus', function() {
     return {
         restrict: 'A',
-        scope : {
+        scope: {
             cardTitle:    '@',
             cardSubtitle: '@',
             sizing:       '@',
             project:      '='
         },
         templateUrl: 'views/project-status/project.status.html',
-        link: function( $scope, elem, attrs ) {
-            elem.ready(function(){
+        link: function($scope, elem) {
+            elem.ready(function() {
                 $scope.$emit('project-status');
             });
         }

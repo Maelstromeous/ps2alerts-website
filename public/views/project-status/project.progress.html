@@ -12,6 +12,11 @@
             {{inprogress}} ({{inprogress / total * 100 | number:decimal}}%)
         </span>
     </div>
+    <div class="segment started" style="width:{{started / total * 100 | number: 2}}%" ng-show="started > 0">
+        <span class="segment-metric" ng-show="(started / total * 100) > 5" numerical="{{started}}">
+            {{started}} ({{started / total * 100 | number:decimal}}%)
+        </span>
+    </div>
     <div class="segment notstarted" style="width:{{notstarted / total * 100 | number: 2}}%" ng-show="notstarted > 0">
         <span class="segment-menotstartedic" ng-show="(notstarted / total * 100) > 5" numerical="{{notstarted}}">
             {{notstarted}} ({{notstarted / total * 100 | number:decimal}}%)

@@ -2,9 +2,10 @@ app.directive('projectProgressBar', function() {
     return {
         restrict: 'E',
         replace: true,
-        scope : {
+        scope: {
             completed: '@',
             inprogress: '@',
+            started: '@',
             notstarted: '@',
             total: '@',
             decimal: '@'

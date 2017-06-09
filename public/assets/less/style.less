@@ -240,60 +240,11 @@ table.highlight > tbody > tr:hover {
     background-color: lighten(@table-striped, 15%);
 }
 
-.project-status {
-    h3 {
-        margin-top: 10px;
-    }
-
-    .completed {
-        background-color: #218409;
-    }
-
-    .inprogress {
-        background-color: #AD7C0F;
-    }
-
-    .notstarted {
-        background-color: #920404;
-    }
-}
-
 .border-right-m {
     border-right: 1px solid @border-color;
     @media screen {
         @media (max-width: 420px) {
             border-right: 0;
-        }
-    }
-}
-
-.project-status {
-    .card-content {
-        padding: @padding-base;
-    }
-    .collapsible {
-        margin-top: @margin-base;
-        border-top: 0;
-        border-right: 0;
-        border-left: 0;
-    }
-
-    .collapsible-body {
-        background-color: lighten(#37474F, 10%);
-    }
-
-    .collapsible-body li {
-        list-style-type: initial;
-        margin-left: @margin-base;
-    }
-
-    .collapsible-header, .collapsible-body {
-        border-bottom: 1px solid #263238;
-    }
-
-    .collapsible-header .right {
-        @media screen and (max-width: 420px) {
-            display: none;
         }
     }
 }
@@ -393,8 +344,22 @@ table.striped > tbody > tr:nth-child(even) {
     }
 }
 
-#site-warning {
+#site-notice {
     padding: 20px;
     text-align: center;
-    background-color: red;
+    font-weight: bold;
+
+    small {
+        font-weight: normal;
+    }
+
+    &.critical {
+        background-color: #FF0000;
+    }
+    &.warning {
+        background-color: #c57600;
+    }
+    &.notice {
+        background-color: #096ec5;
+    }
 }
