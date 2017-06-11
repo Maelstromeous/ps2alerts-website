@@ -236,7 +236,7 @@ app.service('RealtimeMetricsService', function(
                 // Calculate -3, -2, -1 etc for players without outfits
                 message.attackerOutfit.id = MetricsProcessingService.getNoOutfitID(message.attackerFaction);
 
-                alertFactory.getOutfit(message.attackerOutfit.id).then(function(outfit, new) {
+                alertFactory.getOutfit(message.attackerOutfit.id).then(function(outfit) {
                     if (!outfit) {
                         console.log('getOutfit returned nothing for Attacker Outfit');
                         return false;
@@ -257,11 +257,11 @@ app.service('RealtimeMetricsService', function(
                     outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
                     outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
 
-                    if (new) {
+                    /*if (new) {
                         console.log('Adding outfit attacker to leaderboard');
                         $('#outfit-leaderboard').DataTable().row.add(outfit);
                         $('#outfit-leaderboard').DataTable().draw();
-                    }
+                    }*/
                 });
             }
 
@@ -269,7 +269,7 @@ app.service('RealtimeMetricsService', function(
                 // Calculate -3, -2, -1 etc for players without outfits
                 message.victimOutfit.id = MetricsProcessingService.getNoOutfitID(message.victimFaction);
 
-                alertFactory.getOutfit(message.victimOutfit.id).then(function(outfit, new) {
+                alertFactory.getOutfit(message.victimOutfit.id).then(function(outfit) {
                     if (!outfit) {
                         console.log('getOutfit returned nothing for Victim Outfit');
                         return false;
@@ -287,10 +287,10 @@ app.service('RealtimeMetricsService', function(
                     outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
                     outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
                     outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
-                    if (new) {
+                    /*if (new) {
                         console.log('Adding outfit victim to leaderboard');
                         $('#outfit-leaderboard').DataTable().row.add(outfit);
-                    }
+                    }*/
                 });
             }
 
