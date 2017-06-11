@@ -100,7 +100,7 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
         var obj = {
             resultID: parseInt(data.resultID),
             endTime: parseInt(data.endTime),
-            winner: parseInt(data.winner),
+            winner: data.winner,
             controlVS: parseInt(data.controlVS),
             controlNC: parseInt(data.controlNC),
             controlTR: parseInt(data.controlTR),

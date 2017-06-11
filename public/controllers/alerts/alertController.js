@@ -3,31 +3,26 @@ app.controller('AlertController', function(
     $window,
     $routeParams,
     AlertMetricsService,
-    AlertTransformer,
-    AlertWebsocketService
+    AlertTransformer
 ) {
     $scope.alert = AlertMetricsService;
-    $scope.alertWebsocket = AlertWebsocketService;
 
     $scope.loaded = {
         data: false
     };
 
+    // Instantiate the metrics service and load everything!
+    $scope.alert.init($routeParams.alert);
+
     $scope.$on('dataLoaded', function() {
         $scope.loaded.data = true;
+        console.log('LOADED');
 
         // It seems promises causes some issues with Angular. Need to apply the scope to kick it in the nuts.
         $scope.$apply();
 
-        // Alert Countdown && websocket subscription
-        if ($scope.alert.details.ended == 0) {
-            // Subscribe to alert websocket
-            $scope.alertWebsocket.initAndSubscribe($scope.alert.details.id);
-        }
-
-        console.log($scope.alert.parsed.players);
         var pl = $('#player-leaderboard').DataTable({
-            data: $scope.alert.parsed.players,
+            data: $scope.alert.metrics.players,
             columns: [
                 {data: 'name', title: 'Player', className: 'name'},
                 {data: 'outfit', title: 'Outfit', className: 'outfit'},
@@ -84,7 +79,7 @@ app.controller('AlertController', function(
         }).draw('full-hold');*/
 
         var ol = $('#outfit-leaderboard').DataTable({
-            data: $scope.alert.parsed.outfits,
+            data: $scope.alert.metrics.outfits,
             columns: [
                 {data: 'name', title: 'Outfit', className: 'name'},
                 {data: 'participants', title: 'Players', className: 'metric'},
@@ -124,7 +119,7 @@ app.controller('AlertController', function(
         });
 
         var wl = $('#weapon-leaderboard').DataTable({
-            data: $scope.alert.parsed.weapons,
+            data: $scope.alert.metrics.weapons,
             columns: [
                 {data: 'name', title: 'Weapon', className: 'name'},
                 {data: 'kills', title: 'Kills', className: 'metric'},
@@ -161,7 +156,7 @@ app.controller('AlertController', function(
         });
 
         var vl = $('#vehicle-leaderboard').DataTable({
-            data: $scope.alert.parsed.vehicles,
+            data: $scope.alert.metrics.vehicles,
             columns: [
                 {data: 'name', title: 'Vehicle', className: 'name'},
                 {data: 'kills', title: 'Kills', className: 'metric'},
@@ -218,11 +213,8 @@ app.controller('AlertController', function(
     });
 
     $scope.getTopFacilityOutfit = function() {
-        var obj = _.orderBy($scope.alert.parsed.facilities, ['captures'], ['desc']);
+        var obj = _.orderBy($scope.alert.metrics.facilities, ['captures'], ['desc']);
     };
-
-    // Instantiate the service
-    $scope.alert.init($routeParams.alert);
 
     $scope.filterByProp = function(prop, val) {
         return function(item) {
@@ -239,7 +231,7 @@ app.controller('AlertController', function(
         });
 
         // Calculate remaining duration for KPM / DPM
-        var startedTime = $scope.alert.details.started / 1000;
+        var startedTime = $scope.alert.alert.started / 1000;
         var duration = (data.correctTime - data.remaining - startedTime); // Elapsed time in seconds
 
         $scope.$apply(function() {
@@ -263,10 +255,7 @@ app.controller('AlertController', function(
     /* PARSING FUNCTIONS */
     $scope.parseCombatMessage = function(message) {
         $scope.$apply(function() {
-            $scope.alert.increaseCombatKills(message);
-            $scope.alert.updatePlayerMetrics(message).then();
-            $scope.alert.updateOutfitMetrics(message).then();
-            $scope.alert.updateWeaponMetrics(message).then();
+            $scope.alert.processCombatMessage(message);
         });
     };
 

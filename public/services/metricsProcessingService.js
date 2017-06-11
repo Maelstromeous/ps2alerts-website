@@ -14,7 +14,7 @@ app.service('MetricsProcessingService', function() {
     };
 
     // Calculate Headshot Ratio
-    factory.calcHSR = function (headshots, kills) {
+    factory.calcHSR = function(headshots, kills) {
         var hsr = parseFloat((headshots / kills * 100).toFixed(2));
 
         if (hsr == 'Infinity' || isNaN(hsr)) {
