@@ -24,5 +24,32 @@ app.service('MetricsProcessingService', function() {
         return hsr;
     };
 
+    factory.getNoOutfitID = function(faction) {
+        if (!faction) {
+            console.log('Unable to calculate NoOutfitID due to lack of faction');
+            return 0;
+        }
+        // Calculate -3, -2, -1 etc for players without outfits
+        switch (faction) {
+            case 1: {
+                return '-1';
+                break;
+            }
+            case 2: {
+                return '-2';
+                break;
+            }
+            case 3: {
+                return '-3';
+                break;
+            }
+        }
+    };
+
+    factory.getKpm = function(metric, time) {
+        var kpm = (metric / time) * 1000 * 60;
+        return kpm.toFixed(2);
+    };
+
     return factory;
 });

@@ -85,7 +85,6 @@ app.service('AlertMetricsService', function(
                 factory.startProcessing(factory.alert).then(function() {
                     console.log('Processing completed!');
                     $rootScope.$broadcast('dataLoaded', 'loaded');
-                    // Discard unparsed data to save memory
                     console.log('Factory', factory);
                 });
             });
@@ -195,19 +194,19 @@ app.service('AlertMetricsService', function(
     factory.getOutfit = function(outfitID) {
         return new Promise(function(resolve, reject) {
             // console.log('Looking for outfit #' + outfitID);
-            if (outfitID == '0') {
-                console.log('Found 0 outfit ID');
+            if (!outfitID || outfitID == 0) {
+                console.log('Invalid outfit ID');
                 resolve(null);
             }
 
             factory.findOutfitFromParsed(outfitID).then(function(outfit) {
                 // console.log('Found outfit #' + outfitID + ' from PARSED data');
-                resolve(outfit);
+                resolve(outfit, false);
             }, function() {
                 // console.log('findOutfitFromParsed returned nothing for outfit #' + outfitID);
                 factory.findOutfitFromAPI(outfitID).then(function(outfit) {
                     console.log('Found outfit #' + outfitID + ' from API data');
-                    resolve(outfit);
+                    resolve(outfit, true);
                 }, function() {
                     console.log('UNABLE TO DETERMINE OUTFIT!!!');
                     reject();
@@ -238,11 +237,12 @@ app.service('AlertMetricsService', function(
         return new Promise(function(resolve, reject) {
             // Attempt to get data from API
             console.log('Local outfit #' + outfitID + ' not found... pulling from API');
+            if (!outfitID || outfitID <= 0) {
+                console.log('Chucking out invalid ID');
+                reject('Invalid Outfit ID');
+            }
+
             PS2AlertsAPIService.getOutfitFromAPI(outfitID).then(function(data) {
-                if (!outfitID || outfitID == '0') {
-                    console.log('Chucking out invalid ID');
-                    reject('Invalid Outfit ID');
-                }
                 console.log('Found outfit #' + outfitID + ' from API data', data);
 
                 // Add the outfit to the factory
@@ -292,7 +292,7 @@ app.service('AlertMetricsService', function(
     factory.processEndAlert = function(message) {
         console.log('Ending alert', message);
 
-        if (meesage.resultID != factory.alert.id) {
+        if (message.resultID != factory.alert.id) {
             console.log('Ignoring alert end message');
         }
 
@@ -312,9 +312,7 @@ app.service('AlertMetricsService', function(
         );
         factory.alert.durationMins = Math.round((factory.alert.duration / 1000) / 60);
 
-        // Cancel KPM calculations
-        clearInterval(kpmInterval);
-        clearInterval(durationInterval);
+        RealtimeMetricsService.endAlert();
     };
 
     return factory;

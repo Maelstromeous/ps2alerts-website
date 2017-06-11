@@ -11,6 +11,10 @@ app.service('RealtimeMetricsService', function(
     var alertFactory = {};
     var factory = {};
 
+    var kpmInterval;
+    var durationInterval;
+    var redrawInterval;
+
     factory.init = function(alertFactoryData) {
         alertFactory = alertFactoryData;
 
@@ -20,15 +24,16 @@ app.service('RealtimeMetricsService', function(
                 // Subscribe to alert websocket
                 AlertWebsocketService.initAndSubscribe(alertFactory.alert.id);
 
+                // Set the initial values
+                factory.recalculateMetricKpms();
+                factory.processLeaderboardKpms().then();
+
                 // Set off the KPM / DPM interval
-                var kpmInterval = setInterval(function() {
-                    factory.processLeaderboardKpms().then(function() {
-                        $('#player-leaderboard').DataTable().rows().invalidate().draw();
-                        $('#outfit-leaderboard').DataTable().rows().invalidate().draw();
-                        $('#weapon-leaderboard').DataTable().rows().invalidate().draw();
-                    });
+                kpmInterval = setInterval(function() {
+                    factory.processLeaderboardKpms().then();
                 }, 5000);
-                var durationInterval = setInterval(function() {
+
+                durationInterval = setInterval(function() {
                     var now = new Date().getTime();
                     alertFactory.alert.duration = now - alertFactory.alert.started;
                     alertFactory.alert.durationTime = $filter('date')(
@@ -39,6 +44,13 @@ app.service('RealtimeMetricsService', function(
                     alertFactory.alert.durationMins = Math.round((alertFactory.alert.duration / 1000) / 60);
                     factory.recalculateMetricKpms();
                 }, 1000);
+
+                redrawInterval = setInterval(function() {
+                    $('#player-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+                    $('#outfit-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+                    $('#weapon-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+                    $('#vehicle-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+                }, 500);
             }
         }
     };
@@ -126,7 +138,7 @@ app.service('RealtimeMetricsService', function(
                 };
 
                 // Send to addNewPlayer
-                promises.push(alertFactory.addNewPlayer(newPlayer));
+                promises.push(AlertMetricsProcessingService.addNewPlayer(newPlayer));
                 newVictim = true;
             }
 
@@ -186,39 +198,30 @@ app.service('RealtimeMetricsService', function(
                 message.headshot === true ? attacker.kills++ : false;
                 message.teamkill === true ? attacker.teamkills++ : false;
 
-                attacker.kd = MetricsProcessingService.calcKD(attacker.kills, attacker.deaths); // Parse KD
-                attacker.hsr = MetricsProcessingService.calcHSR(attacker.headshots, attacker.kills);
-                attacker.kpm = (attacker.kills / alertFactory.alert.durationMins).toFixed(2);
+                attacker.kd = MetricsProcessingService.calcKD(attacker.kills, attacker.deaths).toFixed(2); // Parse KD
+                attacker.hsr = MetricsProcessingService.calcHSR(attacker.headshots, attacker.kills).toFixed(2);
+                attacker.kpm = MetricsProcessingService.getKpm(attacker.kills, alertFactory.alert.duration);
 
                 // Victim
                 victim.deaths++;
                 message.suicide === true ? victim.suicides++ : false;
 
                 victim.kd = MetricsProcessingService.calcKD(victim.kills, victim.deaths); // Parse KD
-                victim.dpm = (victim.deaths / alertFactory.alert.durationMins).toFixed(2);
+                victim.dpm = MetricsProcessingService.getKpm(victim.deaths, alertFactory.alert.duration);
 
-                // Scan the table for the rows and invalidate only them (saves full redraws)
-                var table = $('#player-leaderboard').DataTable();
-
-                var row = table.rows(function(idx, data) {
-                    if (data.id == attacker.id || data.id == victim.id) {
-                        return true;
-                    }
-                    return false;
-                }).invalidate();
-
-                // If we have new data, we have to add them to the data table directly
                 if (newAttacker) {
+                    console.log('Added new attacker to leaderboard');
                     $('#player-leaderboard').DataTable().row.add(attacker);
+                    $('#player-leaderboard').DataTable().draw();
                 }
 
                 if (newVictim) {
+                    console.log('Added new victim to leaderboard');
                     $('#player-leaderboard').DataTable().row.add(victim);
+                    $('#player-leaderboard').DataTable().draw();
                 }
 
-                // Redraw as we may have invalidated some rows
-                $('#player-leaderboard').DataTable().draw('full-hold');
-
+                // Redraw will be handled by global redraw interval
                 resolve();
             });
         });
@@ -226,8 +229,14 @@ app.service('RealtimeMetricsService', function(
 
     factory.updateOutfitMetrics = function(message) {
         return new Promise(function(resolve) {
-            if (message.attackerOutfit.id && message.attackerOutfit.id != 0) {
-                alertFactory.getOutfit(message.attackerOutfit.id).then(function(outfit) {
+            var newAttacker = false;
+            var newVictim = false;
+
+            if (message.attackerOutfit.id !== null && message.attackerOutfit.id != 0) {
+                // Calculate -3, -2, -1 etc for players without outfits
+                message.attackerOutfit.id = MetricsProcessingService.getNoOutfitID(message.attackerFaction);
+
+                alertFactory.getOutfit(message.attackerOutfit.id).then(function(outfit, new) {
                     if (!outfit) {
                         console.log('getOutfit returned nothing for Attacker Outfit');
                         return false;
@@ -247,11 +256,20 @@ app.service('RealtimeMetricsService', function(
                     outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
                     outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
                     outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+
+                    if (new) {
+                        console.log('Adding outfit attacker to leaderboard');
+                        $('#outfit-leaderboard').DataTable().row.add(outfit);
+                        $('#outfit-leaderboard').DataTable().draw();
+                    }
                 });
             }
 
-            if (message.victimOutfit.id && message.victimOutfit.id != 0) {
-                alertFactory.getOutfit(message.victimOutfit.id).then(function(outfit) {
+            if (message.victimOutfit.id !== null && message.victimOutfit.id != 0) {
+                // Calculate -3, -2, -1 etc for players without outfits
+                message.victimOutfit.id = MetricsProcessingService.getNoOutfitID(message.victimFaction);
+
+                alertFactory.getOutfit(message.victimOutfit.id).then(function(outfit, new) {
                     if (!outfit) {
                         console.log('getOutfit returned nothing for Victim Outfit');
                         return false;
@@ -269,18 +287,79 @@ app.service('RealtimeMetricsService', function(
                     outfit.kd = MetricsProcessingService.calcKD(outfit.kills, outfit.deaths);
                     outfit.killsPerParticipant = (outfit.kills / outfit.participants).toFixed(2);
                     outfit.deathsPerParticipant = (outfit.deaths / outfit.participants).toFixed(2);
+                    if (new) {
+                        console.log('Adding outfit victim to leaderboard');
+                        $('#outfit-leaderboard').DataTable().row.add(outfit);
+                    }
                 });
             }
 
-            $('#outfit-leaderboard').DataTable().rows().invalidate().draw();
+            // Redraws handled by global redraw interval
             resolve();
         });
     };
 
     factory.updateWeaponMetrics = function(message) {
-        return new Promise(function(resolve, reject) {
-            console.log('updateWeaponMetrics');
-            console.log(message);
+        return new Promise(function(resolve) {
+            if (!message.weaponID || message.weaponID == 0) {
+                console.log('Invalid weapon ID found, ignoring');
+                resolve();
+            }
+
+            var weaponRef = _.findIndex(
+                alertFactory.metrics.weapons, {'id': message.weaponID}
+            );
+
+            if (weaponRef > 0) {
+                var weapon = alertFactory.metrics.weapons[weaponRef];
+
+                weapon.kills++;
+                message.teamkill ? weapon.teamkills++ : false;
+                message.headshot ? weapon.headshots++ : false;
+                weapon.hsr = MetricsProcessingService.calcHSR(weapon.headshots, weapon.kills);
+                weapon.kpm = MetricsProcessingService.getKpm(weapon.kills, alertFactory.alert.duration);
+
+                var weaponRef = _.findIndex(
+                    alertFactory.configData.weapons.data, {'id': weapon.id}
+                );
+
+                var weaponData = alertFactory.configData.weapons.data[weaponRef];
+
+                // Update weapon groups
+                var groupIndex = _.findIndex(
+                    alertFactory.metrics.weapons, {
+                        name: weaponData.name + ' (Grouped)'
+                    }
+                );
+
+                var weaponGroup = {};
+
+                if (groupIndex > 0) {
+                    var weaponGroup = alertFactory.metrics.weapons[groupIndex];
+
+                    weaponGroup.kills++;
+                    message.teamkill ? weaponGroup.teamkills++ : false;
+                    message.headshot ? weaponGroup.headshots++ : false;
+                    weaponGroup.hsr = MetricsProcessingService.calcHSR(weaponGroup.headshots, weaponGroup.kills);
+                    weaponGroup.kpm = MetricsProcessingService.getKpm(weaponGroup.kills, alertFactory.alert.duration);
+
+                    // console.log('Updated weaponGroup', weaponGroup);
+                }
+
+                // Redraws handled by global redraw interval
+                resolve();
+            } else {
+                var newWeapon = {
+                    id: message.weaponID,
+                    kills: 1,
+                    teamkills: message.teamkill ? 1 : 0,
+                    headshots: message.headshot ? 1 : 0
+                };
+
+                AlertMetricsProcessingService.addNewWeapon(newWeapon).then(function() {
+                    resolve();
+                });
+            };
         });
     };
 
@@ -289,18 +368,19 @@ app.service('RealtimeMetricsService', function(
     };
 
     factory.recalculateMetricKpms = function() {
+        var combatMetrics = alertFactory.metrics.combat;
         alertFactory.metrics.kpms = {
-            total: (alertFactory.metrics.combat.kills.total / alertFactory.alert.duration) * 1000 * 60,
-            vs: (alertFactory.metrics.combat.kills.vs / alertFactory.alert.duration) * 1000 * 60,
-            nc: (alertFactory.metrics.combat.kills.nc / alertFactory.alert.duration) * 1000 * 60,
-            tr: (alertFactory.metrics.combat.kills.tr / alertFactory.alert.duration) * 1000 * 60,
+            total: MetricsProcessingService.getKpm(combatMetrics.kills.total, alertFactory.alert.duration),
+            vs: MetricsProcessingService.getKpm(combatMetrics.kills.vs, alertFactory.alert.duration),
+            nc: MetricsProcessingService.getKpm(combatMetrics.kills.nc, alertFactory.alert.duration),
+            tr: MetricsProcessingService.getKpm(combatMetrics.kills.tr, alertFactory.alert.duration),
         };
 
         alertFactory.metrics.dpms = {
-            total: (alertFactory.metrics.combat.deaths.total / alertFactory.alert.duration) * 1000 * 60,
-            vs: (alertFactory.metrics.combat.deaths.vs / alertFactory.alert.duration) * 1000 * 60,
-            nc: (alertFactory.metrics.combat.deaths.nc / alertFactory.alert.duration) * 1000 * 60,
-            tr: (alertFactory.metrics.combat.deaths.tr / alertFactory.alert.duration) * 1000 * 60,
+            total: MetricsProcessingService.getKpm(combatMetrics.deaths.total, alertFactory.alert.duration),
+            vs: MetricsProcessingService.getKpm(combatMetrics.deaths.vs, alertFactory.alert.duration),
+            nc: MetricsProcessingService.getKpm(combatMetrics.deaths.nc, alertFactory.alert.duration),
+            tr: MetricsProcessingService.getKpm(combatMetrics.deaths.tr, alertFactory.alert.duration),
         };
     };
 
@@ -309,16 +389,27 @@ app.service('RealtimeMetricsService', function(
     factory.processLeaderboardKpms = function() {
         return new Promise(function(resolve) {
             angular.forEach(alertFactory.metrics.players, function(player) {
-                player.kpm = (player.kills / alertFactory.alert.durationMins).toFixed(2);
-                player.dpm = (player.deaths / alertFactory.alert.durationMins).toFixed(2);
+                player.kpm = MetricsProcessingService.getKpm(player.kills, alertFactory.alert.duration);
+                player.dpm = MetricsProcessingService.getKpm(player.deaths, alertFactory.alert.duration);
             });
             angular.forEach(alertFactory.metrics.outfits, function(outfit) {
-                outfit.kpm = (outfit.kills / alertFactory.alert.durationMins).toFixed(2);
-                outfit.dpm = (outfit.deaths / alertFactory.alert.durationMins).toFixed(2);
+                outfit.kpm = MetricsProcessingService.getKpm(outfit.kills, alertFactory.alert.duration);
+                outfit.dpm = MetricsProcessingService.getKpm(outfit.deaths, alertFactory.alert.duration);
+            });
+            angular.forEach(alertFactory.metrics.weapons, function(weapon) {
+                weapon.kpm = MetricsProcessingService.getKpm(weapon.kills, alertFactory.alert.duration);
             });
 
             resolve();
         });
+    };
+
+    factory.endAlert = function() {
+        console.log('Clearing Intervals');
+        // Cancel KPM calculations
+        clearInterval(kpmInterval);
+        clearInterval(durationInterval);
+        clearInterval(redrawInterval);
     };
 
     return factory;

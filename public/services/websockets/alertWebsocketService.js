@@ -61,7 +61,7 @@ app.service('AlertWebsocketService', function(
     factory.handleWebsocketMessage = function(message) {
         if (message !== null) {
             if (typeof message.messageType !== 'undefined') {
-                console.log('messageType', message.messageType);
+                //console.log('messageType', message.messageType);
                 switch (message.messageType) {
                     case 'subscribed':
                         factory.timeSync();

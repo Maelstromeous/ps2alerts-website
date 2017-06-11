@@ -99,7 +99,8 @@ app.controller('AlertController', function(
                 {data: 'dpm', title: 'DPM', className: 'metric dpm'},
                 {data: 'captures', title: 'Caps', className: 'metric caps'},
                 {data: 'tag', title: 'Tag', className: 'metric', visible: false},
-                {data: 'factionAbv', visible: false}
+                {data: 'factionAbv', visible: false},
+                {data: 'id', visible: false}
             ],
             order:          [2, 'desc'],
             deferRender:    true,
@@ -133,7 +134,8 @@ app.controller('AlertController', function(
                 {data: 'hsr' , title: 'HS %', className: 'metric hsr'},
                 {data: 'kpm', title: 'KPM', className: 'metric kpm'},
                 {data: 'vehicle', visible: false},
-                {data: 'faction' , visible: false}
+                {data: 'faction' , visible: false},
+                {data: 'id', visible: false}
             ],
             order:          [1, 'desc'],
             deferRender:    true,
@@ -175,7 +177,8 @@ app.controller('AlertController', function(
                 {data: 'kpm', title: 'KPM', className: 'metric kpm'},
                 {data: 'dpm', title: 'DPM', className: 'metric dpm'},
                 {data: 'factionAbv', visible: false},
-                {data: 'type', visible: false}
+                {data: 'type', visible: false},
+                {data: 'id', visible: false}
             ],
             order:          [1, 'desc'],
             deferRender:    true,

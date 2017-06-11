@@ -75,13 +75,18 @@ app.service('AlertMetricsProcessingService', function(
                 headshots: player.metrics.headshots
             };
 
+            // Calculate -3, -2, -1 etc for players without outfits
+            if (player.player.outfitID == 0) {
+                player.player.outfitID = MetricsProcessingService.getNoOutfitID(player.player.faction);
+            }
+
             alertFactory.getOutfit(player.player.outfitID).then(function(outfit) {
                 if (outfit) {
                     formatted.outfit    = outfit.name;
                     formatted.outfitTag = outfit.tag;
                 } else {
                     console.log('Missing outfit ID "' + player.player.outfitID + '" for player: ' + formatted.id);
-                    console.log(formatted);
+                    console.log(player);
 
                     formatted.outfit    = 'UNKNOWN',
                     formatted.outfitTag = null;
@@ -110,8 +115,8 @@ app.service('AlertMetricsProcessingService', function(
 
                 formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
                 formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
-                formatted.kpm = (formatted.kills / alertFactory.alert.durationMins).toFixed(2);
-                formatted.dpm = (formatted.deaths / alertFactory.alert.durationMins).toFixed(2);
+                formatted.kpm = MetricsProcessingService.getKpm(formatted.kills, alertFactory.alert.duration);
+                formatted.dpm = MetricsProcessingService.getKpm(formatted.deaths, alertFactory.alert.duration);
 
                 if (formatted.factionAbv !== null) {
                     alertFactory.metrics.factions[formatted.factionAbv].players++;
@@ -157,6 +162,7 @@ app.service('AlertMetricsProcessingService', function(
 
     factory.addNewWeapon = function(weapon) {
         return new Promise(function(resolve) {
+            var newWeaponGroupFlag = false;
             if (weapon.id > 0) {
                 // Find the array key for the weapon by ID
                 var weaponRef = _.findIndex(
@@ -197,10 +203,10 @@ app.service('AlertMetricsProcessingService', function(
                         };
 
                         newGroup.hsr = MetricsProcessingService.calcHSR(newGroup.headshots, newGroup.kills);
-                        newGroup.kpm = (newGroup.kills / alertFactory.alert.durationMins).toFixed(2);
-                        newGroup.dpm = (newGroup.deaths / alertFactory.alert.durationMins).toFixed(2);
+                        newGroup.kpm = MetricsProcessingService.getKpm(newGroup.kills, alertFactory.alert.duration);
 
                         alertFactory.metrics.weapons.push(newGroup);
+                        newWeaponGroupFlag = true;
                     }
 
                     // Else, if the grouped weapon was indeed found, increase it's stats
@@ -213,8 +219,7 @@ app.service('AlertMetricsProcessingService', function(
                         weaponGroup.faction    = 0;
 
                         weaponGroup.hsr = MetricsProcessingService.calcHSR(weaponGroup.headshots, weaponGroup.kills);
-                        weaponGroup.kpm = (weaponGroup.kills / alertFactory.alert.durationMins).toFixed(2);
-                        weaponGroup.dpm = (weaponGroup.deaths / alertFactory.alert.durationMins).toFixed(2);
+                        weaponGroup.kpm = MetricsProcessingService.getKpm(weaponGroup.kills, alertFactory.alert.duration);
 
                         weaponGroup.weapons.push(weapon.id); // Push this weapon to the group
                     }
@@ -234,11 +239,11 @@ app.service('AlertMetricsProcessingService', function(
                     formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
                     formatted.hsr = MetricsProcessingService.calcHSR(formatted.headshots, formatted.kills);
-                    formatted.kpm = (formatted.kills / alertFactory.alert.durationMins).toFixed(2);
-                    formatted.dpm = (formatted.deaths / alertFactory.alert.durationMins).toFixed(2);
+                    formatted.kpm = MetricsProcessingService.getKpm(formatted.kills, alertFactory.alert.duration);
+                    formatted.dpm = MetricsProcessingService.getKpm(formatted.deaths, alertFactory.alert.duration);
 
                     alertFactory.metrics.weapons.push(formatted);
-                    resolve();
+                    resolve(newWeaponGroupFlag);
                 } else {
                     console.log('Invalid / Not found Weapon Data: ', weapon.id);
                 }
@@ -275,8 +280,8 @@ app.service('AlertMetricsProcessingService', function(
                     formatted.factionAbv = ConfigDataService.convertFactionIntToName(formatted.faction);
 
                     formatted.kd = MetricsProcessingService.calcKD(formatted.kills, formatted.deaths); // Parse KD
-                    formatted.kpm = (formatted.kills / alertFactory.alert.durationMins).toFixed(2);
-                    formatted.dpm = (formatted.deaths / alertFactory.alert.durationMins).toFixed(2);
+                    formatted.kpm = MetricsProcessingService.getKpm(formatted.kills, alertFactory.alert.duration);
+                    formatted.dpm = MetricsProcessingService.getKpm(formatted.deaths, alertFactory.alert.duration);
 
                     alertFactory.metrics.vehicles.push(formatted);
                     resolve();
