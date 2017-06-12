@@ -1,13 +1,13 @@
 <section id="leaderboards-weapons" ng-controller="LeaderboardWeaponsController"  class="leaderboards">
     <h1 class="center-align header-no-margin">Weapon Leaderboards</h1>
 
-    <div id="leaderboard-nav" ng-include="'views/leaderboards/partials/nav.html{{ version }}'"></div>
+    <div id="leaderboard-nav" ng-include="'views/leaderboards/partials/nav.html'"></div>
 
     <div class="row" id="top-weapons-container">
         <h2 class="center-align">
             Top Weapons <i ng-show="!weaponsLoaded" class="fa fa-spin fa-refresh"></i>
         </h2>
-        <div id="weapons-nav" ng-include="'views/leaderboards/partials/top-weapons-nav.html{{ version }}'"></div>
+        <div id="weapons-nav" ng-include="'views/leaderboards/partials/top-weapons-nav.html'"></div>
 
         <p class="caption center-align">
             <i class="fa fa-info-circle"></i> Cross-faction weapons of the same name have their stats represented by "(Grouped)" next to their names. Individual weapons are still shown with their own stats.
