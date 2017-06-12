@@ -50,6 +50,24 @@
                 </li>
                 <li>
                     <div
+                        class="collapsible-header started ga-event"
+                        ga-campaign="Project Status - {{::project.title}}"
+                        ga-action="Toggled On Hold">
+                        <i class="fa fa-refresh"></i> Started but on hold
+                        <span class="right">
+                            {{::project.started.length}} items
+                        </span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li ng-repeat="item in project.started">
+                                {{::item}}
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div
                         class="collapsible-header notstarted ga-event"
                         ga-campaign="Project Status - {{::project.title}}"
                         ga-action="Toggled Not Started">

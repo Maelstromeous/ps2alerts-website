@@ -20,9 +20,11 @@ app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
         factory.totals.dominations.total++;
     };
 
-    factory.increaseVictories = function (server, faction) {
-        factory.victories[server][faction]++;
-        factory.totals.alerts[faction]++;
+    factory.increaseVictories = function(server, faction) {
+        if (factory.victories && factory.totals) {
+            factory.victories[server][faction]++;
+            factory.totals.alerts[faction]++;
+        }
     };
 
     factory.increaseDominations = function (server, faction) {

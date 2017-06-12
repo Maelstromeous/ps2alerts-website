@@ -18,6 +18,10 @@ app.controller('ProjectStatusController', function(
                 'Victory Timeline',
             ],
             inprogress: [
+
+            ],
+            started: [
+
             ],
             notstarted: [
                 'Rolling Victory Averages',
@@ -27,7 +31,7 @@ app.controller('ProjectStatusController', function(
         {
             title: 'Alert Statistics Pages',
             subtitle: 'Per-alert statistics pages are in the process of being re-written. See below for a summary of the features',
-            updated: '6th March 2016',
+            updated: '9th June 2017',
             href: $scope.baseUrl + '/alert/20000',
             completed: [
                 'Basic Alert Information (time, server, continent etc)',
@@ -35,20 +39,23 @@ app.controller('ProjectStatusController', function(
                 'Basic Combat Metrics (Kills, Deaths, Tks, Suicides)',
                 'Leaderboard system (Players, Outfits, Weapons, Vehicles)',
                 'Basic Facility Statistics',
-                'Outfit Captures'
+                'Outfit Captures',
+                'Realtime metrics (live updating)',
             ],
             inprogress: [
+                'Population Metrics',
+                'Population Timeline',
+            ],
+            started: [
+
             ],
             notstarted: [
                 'Map Capture Timeline',
                 'Map "who capped whom" display',
                 'Continental Map',
-                'Realtime metrics (live updating)',
                 'Faction Kills timeline',
                 'Class Combat Statistics',
                 'XP Statistics',
-                'Population Metrics',
-                'Population Timeline',
                 'Per-player metrics summaries',
                 'Per-outfit metrics summaries',
                 'Faction Combat stats (which faction gunned for whom)'
@@ -64,6 +71,9 @@ app.controller('ProjectStatusController', function(
                 'Basic metrics such as Date ended, Server, Continent, Time bracket and Territory info.'
             ],
             inprogress: [
+
+            ],
+            started: [
 
             ],
             notstarted: [
@@ -84,7 +94,10 @@ app.controller('ProjectStatusController', function(
                 'Top Weapons'
             ],
             inprogress: [
-                'Leaderboard ladders',
+
+            ],
+            started: [
+                'Leaderboard Ladders',
                 'Player Profile Updates - You\'ll be able to see your position on the leaderboard within your profile'
             ],
             notstarted: [
@@ -104,6 +117,9 @@ app.controller('ProjectStatusController', function(
                 'Links to other statistics sites for the player'
             ],
             inprogress: [
+
+            ],
+            started: [
                 'Leaderboard Ladder Rankings'
             ],
             notstarted: [
@@ -125,6 +141,9 @@ app.controller('ProjectStatusController', function(
                 'Links to other stats sites regarding the outfit'
             ],
             inprogress: [
+
+            ],
+            started: [
                 'Leaderboard Ladder Rankings'
             ],
             notstarted: [
@@ -136,14 +155,16 @@ app.controller('ProjectStatusController', function(
 
     $scope.completed = 0;
     $scope.inprogress = 0;
+    $scope.started = 0;
     $scope.notstarted = 0;
     $scope.total = 0;
 
-    _.forEach($scope.projects, function(value, key) {
+    _.forEach($scope.projects, function(value) {
         $scope.completed += value.completed.length;
         $scope.inprogress += value.inprogress.length;
+        $scope.started += value.started.length;
         $scope.notstarted += value.notstarted.length;
-        $scope.total = $scope.completed + $scope.inprogress + $scope.notstarted;
+        $scope.total = $scope.completed + $scope.inprogress + $scope.started + $scope.notstarted;
     });
 
     setTimeout(function() {

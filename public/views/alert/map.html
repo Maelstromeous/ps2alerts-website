@@ -5,13 +5,13 @@
             metric-card
             class="col s12 m3 push-m3"
             card-title="Captures"
-            metric="{{alert.parsed.map.captures.length}}">
+            metric="{{alert.metrics.map.captures.length}}">
         </div>
         <div
             metric-card
             class="col s12 m3 push-m3"
             card-title="Defences"
-            metric="{{alert.parsed.map.defences.length}}">
+            metric="{{alert.metrics.map.defences.length}}">
         </div>
     </div>
     <div class="row">
@@ -67,7 +67,7 @@
                             Map %
                         </th>
                     </tr>
-                    <tr ng-repeat="(key, capture) in alert.parsed.map.captures">
+                    <tr ng-repeat="(key, capture) in alert.metrics.map.captures">
                         <td class="times">
                             {{::capture.dateTime}}
                         </td>
@@ -120,7 +120,7 @@
                                     Defended
                                 </th>
                             </tr>
-                            <tr ng-repeat="(key, facility) in alert.parsed.facilities">
+                            <tr ng-repeat="(key, facility) in alert.metrics.facilities">
                                 <td>
                                     {{::facility.name}}
                                 </td>
@@ -148,7 +148,7 @@
                                 </th>
                             </tr>
                             <tr
-                                ng-repeat="(key, outfit) in alert.parsed.outfits | filter: filterByProp('captures', 0) | orderBy: '-captures'"
+                                ng-repeat="(key, outfit) in alert.metrics.outfits | filter: filterByProp('captures', 0) | orderBy: '-captures'"
                                 ng-if="outfit.id > 0">
                                 <td class="{{::outfit.factionAbv}}-table-text">
                                     <span ng-if="outfit.tag.length > 0">[{{::outfit.tag}}]</span>

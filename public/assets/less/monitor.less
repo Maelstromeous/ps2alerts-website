@@ -3,6 +3,7 @@
 #alert-monitor {
     position: relative;
     padding: (@padding-base / 2) 0;
+    padding-top: @padding-base / 4;
 
     #websocket-status {
         position: absolute;
@@ -21,6 +22,10 @@
         color: #FF2121;
     }
 
+    .websocket-disabled.chip {
+        background-color: #676767;
+    }
+
     .websocket-disconnected.chip {
         background-color: #B90202;
     }
@@ -37,21 +42,28 @@
         background-color: #279E0A;
     }
 
-    .monitor-labels {
-        margin-bottom: 5px;
-        @media screen and (max-width: 600px) {
-            display: none;
+    #websocket-body {
+        .disabled {
+            h3 {
+                color: #ff9900;
+            }
         }
-    }
+        .monitor-labels {
+            margin-bottom: 5px;
+            @media screen and (max-width: 600px) {
+                display: none;
+            }
+        }
 
-    .monitor-labels span {
-        font-size: 1.3em;
-    }
+        .monitor-labels span {
+            font-size: 1.3em;
+        }
 
-    .monitor-row {
-        margin-bottom: 2px;
-        @media screen and (max-width: 600px) {
-            margin-bottom: 10px;
+        .monitor-row {
+            margin-bottom: 2px;
+            @media screen and (max-width: 600px) {
+                margin-bottom: 10px;
+            }
         }
     }
 }

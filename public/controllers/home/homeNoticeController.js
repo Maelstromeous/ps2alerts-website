@@ -20,11 +20,11 @@ app.controller('homeNoticeController', function($cookies, $scope) {
             path: '/',
             expires: expires
         });
-    }
+    };
 
     $scope.show = function() {
         $cookies.remove(cookieKey);
         $('#announcement-more').show();
         $scope.hidden = false;
-    }
+    };
 });
