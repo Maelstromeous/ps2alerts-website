@@ -70,13 +70,6 @@ app.config(function($routeProvider, $locationProvider) {
 app.run(function($rootScope, $templateCache, AnalyticsService) {
     var analytics = AnalyticsService;
 
-    // Disable cache on view files
-    $rootScope.$on('$routeChangeStart', function(event, next, current) {
-        if (typeof(current) !== 'undefined') {
-            $templateCache.remove(current.templateUrl);
-        }
-    });
-
     $rootScope.$on('$routeChangeSuccess', function(event, current) {
         $rootScope.title = current.$$route.title + ' - PS2Alerts';
     });
@@ -86,6 +79,7 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
     };
 
     $rootScope.$on('$viewContentLoaded', function() {
+        $templateCache.removeAll();
         setTimeout(function() {
             $('.tooltipped').tooltip({
                 delay: 50
@@ -96,7 +90,8 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
     $rootScope.$on('project-status', function() {
         console.log('Rendering project-status');
         $('.collapsible').collapsible({
-            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            accordion: false
         });
     });
 });
