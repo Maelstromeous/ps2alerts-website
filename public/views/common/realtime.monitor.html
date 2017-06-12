@@ -1,9 +1,9 @@
-<div id="websocket-status" ng-show="websocketDisabled == 0">
+<div id="websocket-status">
     <div
         class="chip tooltipped websocket-disconnected"
         data-tooltip="Websocket has been disconnected! Check if your connection has dropped. If this persists, please contact @Maelstromeous!"
         data-position="left"
-        ng-show="!websocket.loaded && !websocket.connecting">
+        ng-show="!websocket.loaded && !websocket.connecting && !websocket.disabled">
         <span class="disconnected">
             <i class="fa fa-chain-broken"></i> Disconnected!
         </span>
@@ -35,18 +35,24 @@
             <i class="fa fa-arrow-up"></i> Online
         </span>
     </div>
-</div>
-<div id="websocket-status" class="websocket-disconnected" ng-if="websocketDisabled == 1">
-    <div class="chip">
-        <span class="disconnected">
+    <div
+        class="chip tooltipped websocket-disabled"
+        data-tooltip="Collection has been disabled."
+        data-position="left"
+        ng-show="websocket.disabled">
+        <span class="disabled" ng-show="websocket.disabled">
             <i class="fa fa-ban"></i> Disabled!
         </span>
     </div>
 </div>
 
-<div class="col s12 m10 l8 offset-m1 offset-l2" ng-if="websocketDisabled == 0">
+<div id="websocket-body" class="col s12 m10 l8 offset-m1 offset-l2">
     <div class="center-align">
-        <div class="row sk-three-bounce" ng-show="websocket.loaded == 0">
+        <div class="disabled" ng-show="websocket.disabled == 1">
+            <h3>{{ message }}</h3>
+            <p>{{ messageCaption }}</p>
+        </div>
+        <div class="row sk-three-bounce" ng-show="websocket.loaded == 0 && websocket.disabled == 0">
             <h4>Connecting to Real Time monitor...</h4>
             <div class="sk-child sk-bounce1"></div>
             <div class="sk-child sk-bounce2"></div>
