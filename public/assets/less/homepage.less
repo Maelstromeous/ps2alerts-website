@@ -2,6 +2,9 @@
 
 #homepage {
     #announcement {
+        h1 {
+            margin-top: @margin-base / 2;
+        }
         p {
             margin-bottom: @margin-base;
         }
@@ -23,28 +26,31 @@
         margin-left: 5px;
     }
 
-    .victory-card .card-title {
-        font-size: 1.4em;
+    .victory-card {
+        .card-title {
+            font-size: 1.4em;
+        }
+
+        &.vs-card {
+            background-color: @background-vs;
+        }
+        &.nc-card {
+            background-color: @background-nc;
+        }
+        &.tr-card {
+            background-color: @background-tr;
+        }
+        &.draw-card {
+            background-color: @background-draw;
+        }
+
+        .collection {
+            margin-top: 0;
+        }
     }
 
     .victory-counts {
         font-size: 1.5em;
-    }
-
-    .victory-card.vs-card {
-        background-color: @background-vs;
-    }
-
-    .victory-card.nc-card {
-        background-color: @background-nc;
-    }
-
-    .victory-card.tr-card {
-        background-color: @background-tr;
-    }
-
-    .victory-card.draw-card {
-        background-color: @background-draw;
     }
 
     #server-victories-table .material-badge {

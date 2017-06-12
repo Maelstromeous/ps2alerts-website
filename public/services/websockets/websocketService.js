@@ -17,10 +17,10 @@ app.service('WebsocketService', function(
     factory.actives = {};
 
     factory.initWebSocket = function() {
-        factory.webSocket = new WebSocket('ws://'+ConfigDataService.websocketUrl);
+        factory.webSocket = new WebSocket('ws://' + ConfigDataService.websocketUrl);
         factory.connecting = 1;
 
-        factory.webSocket.onopen = function () {
+        factory.webSocket.onopen = function() {
             factory.authenticate();
             factory.checkMiddleman();
 
@@ -30,7 +30,7 @@ app.service('WebsocketService', function(
             }, 10000);
         };
 
-        factory.webSocket.onmessage = function (rawMessage) {
+        factory.webSocket.onmessage = function(rawMessage) {
             var message = factory.parse(rawMessage);
             factory.handleWebsocketMessage(message);
         };
@@ -49,13 +49,13 @@ app.service('WebsocketService', function(
         };
     };
 
-    factory.authenticate = function () {
+    factory.authenticate = function() {
         factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
         factory.loaded = 1;
         factory.connecting = 0;
     };
 
-    factory.checkMiddleman = function () {
+    factory.checkMiddleman = function() {
         factory.webSocket.send('{"payload":{"action":"middlemanStatus"}}');
     };
 
@@ -64,7 +64,7 @@ app.service('WebsocketService', function(
 
         try {
             message = JSON.parse(rawMessage.data);
-        } catch(e) {
+        } catch (e) {
             console.log('Websocket JSON parse fail!', e);
         }
 
@@ -75,7 +75,7 @@ app.service('WebsocketService', function(
         return message;
     };
 
-    factory.handleWebsocketMessage = function (message) {
+    factory.handleWebsocketMessage = function(message) {
         if (message !== null) {
             if (typeof message.messageType !== 'undefined') {
                 switch (message.messageType) {
@@ -101,7 +101,7 @@ app.service('WebsocketService', function(
                     }
                     case 'timeSync':
                     case 'timeSyncWait': {
-                        factory.returnTimeSync(message)
+                        factory.returnTimeSync(message);
                         break;
                     }
                 }
@@ -109,7 +109,7 @@ app.service('WebsocketService', function(
         }
     };
 
-    factory.initActives = function (message) {
+    factory.initActives = function(message) {
         factory.loaded = 1;
         angular.forEach(message.data, function(server) {
             angular.forEach(server, function(alert) {
@@ -119,7 +119,7 @@ app.service('WebsocketService', function(
         $rootScope.$apply();
     };
 
-    factory.addActive = function (messageData) {
+    factory.addActive = function(messageData) {
         factory.parseAlertDataInitial(messageData, function(alert) {
             if (typeof factory.actives[alert.id] === 'undefined') {
                 factory.actives[alert.id] = alert;
@@ -131,7 +131,7 @@ app.service('WebsocketService', function(
                 }, 1);
 
                 $rootScope.$apply();
-                $rootScope.$emit('ga-sync', '#alert-monitor #monitor-'+alert.id+' .ga-event');
+                $rootScope.$emit('ga-sync', '#alert-monitor #monitor-' + alert.id + ' .ga-event');
             } else {
                 // Check if the alert has expired, if so, remove.
 
@@ -145,7 +145,7 @@ app.service('WebsocketService', function(
                         id: alert.id,
                         server: alert.server,
                         forced: true
-                    }
+                    };
 
                     factory.endActive(alert);
                 }
@@ -153,7 +153,7 @@ app.service('WebsocketService', function(
         });
     };
 
-    factory.updateActives = function (message) {
+    factory.updateActives = function(message) {
         factory.parseAlertDataUpdate(message.data, function(alert) {
             if (alert.defence === 0) {
                 factory.actives[alert.id].vs = alert.vs;
@@ -165,13 +165,13 @@ app.service('WebsocketService', function(
         });
     };
 
-    factory.endActiveParsed = function (message) {
+    factory.endActiveParsed = function(message) {
         factory.parseAlertDataEnd(message.data, function(alert) {
             factory.endActive(alert);
         });
     };
 
-    factory.endActive = function (alert) {
+    factory.endActive = function(alert) {
         delete factory.actives[alert.id];
         factory.count--;
 
@@ -192,7 +192,7 @@ app.service('WebsocketService', function(
     };
 
     // Also handles starts as it's the same fields
-    factory.parseAlertDataInitial = function (alert, callback) {
+    factory.parseAlertDataInitial = function(alert, callback) {
         var time = new Date().getTime();
         var remainingJS = (parseInt(alert.remaining) * 1000);
         var realEnd = (time + remainingJS) - 1; // - 1 because of setTimeout
@@ -212,7 +212,7 @@ app.service('WebsocketService', function(
         callback(obj);
     };
 
-    factory.parseAlertDataUpdate = function (alert, callback) {
+    factory.parseAlertDataUpdate = function(alert, callback) {
         callback({
             id:      parseInt(alert.resultID),
             vs:      parseInt(alert.controlVS),
@@ -224,7 +224,7 @@ app.service('WebsocketService', function(
         });
     };
 
-    factory.parseAlertDataEnd = function (alert, callback) {
+    factory.parseAlertDataEnd = function(alert, callback) {
         callback({
             id:         parseInt(alert.resultID),
             ended:      parseInt(alert.endTime),
@@ -242,7 +242,7 @@ app.service('WebsocketService', function(
         if (message.value == '0') {
             factory.middlemanDown = 1;
 
-            if (! factory.middlemanCheck) {
+            if (!factory.middlemanCheck) {
                 factory.middlemanCheck = setInterval(function() {
                     console.log('checking middleman');
                     factory.checkMiddleman();
@@ -282,15 +282,15 @@ app.service('WebsocketService', function(
         console.log('End alert test');
         var testData = {
             data: {
-                controlNC: "37",
-                controlTR: "27",
-                controlVS: "35",
+                controlNC: '37',
+                controlTR: '27',
+                controlVS: '35',
                 domination: 0,
-                endTime: "1453570024",
+                endTime: '1453570024',
                 resultID: 12345,
-                winner: "NC",
-                world: "10",
-                zone: "2"
+                winner: 'NC',
+                world: '10',
+                zone: '2'
             }
         };
 
@@ -298,9 +298,9 @@ app.service('WebsocketService', function(
     };
 
     factory.setMonitorCountdown = function(alertID) {
-        var row = $("#monitor-" + alertID);
+        var row = $('#monitor-' + alertID);
         var elem = $(row).find('.countdown');
-        var time = elem.attr("todate");
+        var time = elem.attr('todate');
 
         elem.countdown(time, function(event) {
             if (event.strftime) {
@@ -308,11 +308,11 @@ app.service('WebsocketService', function(
                     event.strftime('%H:%M:%S')
                 );
             }
-        }).on('finish.countdown', function(event) {
+        }).on('finish.countdown', function() {
             elem.countdown('stop');
             elem.html('OVERDUE!');
         });
-    }
+    };
 
     return factory;
 });

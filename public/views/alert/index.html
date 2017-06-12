@@ -27,9 +27,6 @@
 
     <section id="combat-statistics" ng-show="loaded.data">
         <h1 class="center-align">Combat Statistics</h1>
-        <p class="caption center-align" ng-if="alert.details.ended == 0">
-            Note, Alert Stats are currently <b>not</b> in real time. You will need to refresh to see updates.
-        </p>
         <div ng-include="'views/alert/combat.metrics.html'"></div>
 
         <div alert-leaderboards></div>

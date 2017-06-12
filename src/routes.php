@@ -28,4 +28,6 @@ $route->get('/leaderboards/weapons', 'Ps2alerts\Frontend\Controller\LeaderboardC
 
 $route->get('/project-status', 'Ps2alerts\Frontend\Controller\ProjectStatusController::index');
 
+$route->get('/websocket-test', 'Ps2alerts\Frontend\Controller\MainController::websocketTest');
+
 return $route;

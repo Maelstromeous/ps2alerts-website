@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-route": "^1.5",
+    "angular-route": "~1.5",
     "angular-cookies": "~1.5.7",
     "SpinKit": "spinkit#~1.2.5",
     "jquery.countdown": "~2.1.0",

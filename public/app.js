@@ -6,7 +6,7 @@ var app = angular.module('Ps2Alerts', [
     'ngCookies',
     'ngLoadScript'
 ]);
-app.config(function ($routeProvider, $locationProvider) {
+app.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
             title: 'Home',
@@ -70,14 +70,8 @@ app.config(function ($routeProvider, $locationProvider) {
 app.run(function($rootScope, $templateCache, AnalyticsService) {
     var analytics = AnalyticsService;
 
-    // Disable cache on view files
-    $rootScope.$on('$routeChangeStart', function(event, next, current) {
-        if (typeof(current) !== 'undefined'){
-            $templateCache.remove(current.templateUrl);
-        }
-    });
-
-    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+    $rootScope.$on('$routeChangeSuccess', function(event, current) {
+        $templateCache.removeAll();
         $rootScope.title = current.$$route.title + ' - PS2Alerts';
     });
 
@@ -86,33 +80,58 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
     };
 
     $rootScope.$on('$viewContentLoaded', function() {
+        $templateCache.removeAll();
         setTimeout(function() {
             $('.tooltipped').tooltip({
                 delay: 50
             });
-        },1); // Ewwwww
+        }, 1); // Ewwwww
     });
 
     $rootScope.$on('project-status', function() {
         console.log('Rendering project-status');
         $('.collapsible').collapsible({
-            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            accordion: false
         });
     });
 });
 
 app.filter('ucfirst', function() {
-	return function(input,arg) {
-		return input.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-	};
+    return function(input) {
+        return input.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+    };
 });
 
 $(window).on('load', function() {
-    $(".button-collapse").sideNav({
+    $('.button-collapse').sideNav({
         edge: 'left',
         closeOnClick: true
     });
-    $(".tooltipped").tooltip({
+    $('.tooltipped').tooltip({
         delay: 50
+    });
+    $('#search-tab .btn').click(function() {
+        var tab = $('#search-tab');
+        var opened = tab.attr('data-opened');
+
+        tab.find('i').fadeOut();
+
+        if (opened == 'open') {
+            tab.attr('data-opened', 'closed');
+            $('#site-search-container').slideUp(function() {
+                tab.find('i').removeClass('fa-arrow-up');
+                tab.find('i').addClass('fa-search');
+                tab.find('i').fadeIn();
+            });
+        } else {
+            tab.attr('data-opened', 'open');
+
+            $('#site-search-container').slideDown(function() {
+                tab.find('i').removeClass('fa-search');
+                tab.find('i').addClass('fa-arrow-up');
+                tab.find('i').fadeIn();
+            });
+        }
     });
 });

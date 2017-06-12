@@ -15,7 +15,7 @@ app.service('AlertHistoryService', function (
         factory.metrics = {
             caps: 0,
             defs: 0,
-            wins : {
+            wins: {
                 vs: 0,
                 nc: 0,
                 tr: 0,
@@ -64,8 +64,8 @@ app.service('AlertHistoryService', function (
 
             // Get the data
             $http({
-                method : 'GET',
-                url    : url,
+                method: 'GET',
+                url: url,
             }).then(function(data) {
                 var returned = data.data.data; // #Dataception
 
@@ -95,24 +95,24 @@ app.service('AlertHistoryService', function (
             alert.lastMap.controlNC +
             alert.lastMap.controlTR;
 
-        alert = AlertTransformer.parse(alert);
+        AlertTransformer.parse(alert).then(function(alert) {
+            // Update factory metrics
+            factory.metrics.wins[alert.winner.toLowerCase()]++;
+            factory.metrics.brackets[alert.timeBracket.toLowerCase()]++;
+            factory.metrics.zones[alert.zone]++;
 
-        // Update factory metrics
-        factory.metrics.wins[alert.winner.toLowerCase()]++;
-        factory.metrics.brackets[alert.timeBracket.toLowerCase()]++;
-        factory.metrics.zones[alert.zone]++;
+            if (alert.maps.data) {
+                angular.forEach(alert.maps.data, function(map) {
+                    if (map.isDefence === false) {
+                        factory.metrics.caps++;
+                    } else {
+                        factory.metrics.defs++;
+                    }
+                });
+            }
 
-        if (alert.maps.data) {
-            angular.forEach(alert.maps.data, function(map) {
-                if (map.isDefence === false) {
-                    factory.metrics.caps++;
-                } else {
-                    factory.metrics.defs++;
-                }
-            });
-        }
-
-        return alert;
+            return alert;
+        });
     };
 
     // Called by WebsocketService when an alert is declared as ended
