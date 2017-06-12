@@ -71,6 +71,7 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
     var analytics = AnalyticsService;
 
     $rootScope.$on('$routeChangeSuccess', function(event, current) {
+        $templateCache.removeAll();
         $rootScope.title = current.$$route.title + ' - PS2Alerts';
     });
 
