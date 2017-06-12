@@ -212,13 +212,13 @@ app.service('RealtimeMetricsService', function(
                 if (newAttacker) {
                     console.log('Added new attacker to leaderboard');
                     $('#player-leaderboard').DataTable().row.add(attacker);
-                    $('#player-leaderboard').DataTable().draw();
+                    $('#player-leaderboard').DataTable().draw('full-hold');
                 }
 
                 if (newVictim) {
                     console.log('Added new victim to leaderboard');
                     $('#player-leaderboard').DataTable().row.add(victim);
-                    $('#player-leaderboard').DataTable().draw();
+                    $('#player-leaderboard').DataTable().draw('full-hold');
                 }
 
                 // Redraw will be handled by global redraw interval

@@ -14,11 +14,6 @@ app.controller('AlertController', function(
     // Instantiate the metrics service and load everything!
     $scope.alert.init($routeParams.alert);
 
-    $('#player-leaderboard').DataTable().destroy();
-    $('#outfit-leaderboard').DataTable().destroy();
-    $('#weapon-leaderboard').DataTable().destroy();
-    $('#vehicle-leaderboard').DataTable().destroy();
-
     $scope.$on('dataLoaded', function() {
         $scope.loaded.data = true;
         console.log('LOADED');
