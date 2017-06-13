@@ -7,7 +7,7 @@ app.service('HomeCombatStatisticsService', function($http, $log, ConfigDataServi
     factory.init = function() {
         var metrics = ['kills', 'deaths', 'teamkills', 'suicides', 'headshots'];
 
-        var servers = ConfigDataService.servers;
+        var servers = _.clone(ConfigDataService.servers);
         servers.push('all');
 
         angular.forEach(servers, function(server) {
@@ -36,8 +36,6 @@ app.service('HomeCombatStatisticsService', function($http, $log, ConfigDataServi
             url: ConfigDataService.apiUrl + '/alerts/combat/totals',
         }).then(function(data) {
             factory.metrics = data.data;
-
-            console.log('new Factory', factory.metrics);
         });
     };
 

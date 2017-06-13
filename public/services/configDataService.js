@@ -12,8 +12,8 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
             'draw': 'Draw'
         },
         factionsNumeric: [1,2,3,-1],
-        servers: [1,10,13,17,25,1000,2000],
-        serversAlpha: [25,13,1,17,10,1000,2000],
+        servers: [1, 10, 13, 17, 25, 1000, 2000],
+        serversAlpha: [25, 13, 1, 2000, 17, 10, 1000],
         serverNames: {
             1:    'Connery',
             10:   'Miller',
@@ -74,7 +74,7 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
 
     factory.convertFactionNameToInt = function(name) {
         name = name.toLowerCase();
-        switch(name) {
+        switch (name) {
             case 'VS':
                 return 1;
             case 'NC':
@@ -87,7 +87,7 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location, $document)
     };
 
     factory.convertFactionIntToName = function(int) {
-        switch(int) {
+        switch (int) {
             case 1:
                 return 'vs';
             case 2:

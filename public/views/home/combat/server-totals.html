@@ -1,0 +1,29 @@
+<div class="row">
+    <h2 class="center-align heading-caption">Server Metrics</h2>
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-3">
+            <div class="card-content">
+                <h3 class="center-align">Kills by Server</h3>
+
+                <div ng-repeat="(server, metrics) in combatStats.metrics" ng-if="server != 'all'">
+                    <div class="row breakdown-row" data-server="{{server}}">
+                        <div class="col s4 m3 l2">
+                            <p>
+                                {{::config.serverNames[server]}}
+                            </p>
+                        </div>
+                        <div class="col s8 m9 l10">
+                            <territory-bar-numerical
+                                vs="{{metrics.kills.vs}}"
+                                nc="{{metrics.kills.nc}}"
+                                tr="{{metrics.kills.tr}}"
+                                total="{{metrics.totals.kills}}"
+                                decimal="1">
+                            </territory-bar-numerical>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,26 +2,24 @@
 
 .territory-bar {
     width: 100%;
-    height: @territory-bar-height;
     background-color: #fff;
     color: #fff;
     border: 1px solid #ccc;
     line-height: @territory-bar-height - 2;
     display: table;
-}
 
-.territory-bar .loading {
-    display: block;
-    text-align: center;
-}
+    .loading {
+        display: block;
+        text-align: center;
+    }
 
-.territory-bar .segment {
-    height: 100%;
-    text-align: center;
-    display: table-cell;
-    transition: width 0.5s;
+    .segment {
+        height: 100%;
+        text-align: center;
+        display: table-cell;
+        transition: width 0.5s;
+    }
 }
-
 .vs-segment {
     background-color: @background-vs;
 }
