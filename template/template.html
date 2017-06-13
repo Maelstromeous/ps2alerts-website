@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Orbitron:400,700" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
-        <link rel="stylesheet" href="{{ asset_url }}/css/main.css?revision={{ revision }}">
+        <link rel="stylesheet" href="{{ asset_url }}/css/main.css{{ version }}">
         <link rel="icon" href="{{ asset_url }}/img/favicon.ico">
 
         <!--[if lt IE 9]>
@@ -37,7 +37,6 @@
         <header>
             <div site-header></div>
             <div
-                id="alert-monitor"
                 ng-include="'views/common/realtime.monitor.html'"
                 class="grey darken-3 row row-no-margin"
                 ng-controller="RealTimeMonitorController">

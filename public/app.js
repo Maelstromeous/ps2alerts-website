@@ -71,6 +71,7 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
     var analytics = AnalyticsService;
 
     $rootScope.$on('$routeChangeSuccess', function(event, current) {
+        $templateCache.removeAll();
         $rootScope.title = current.$$route.title + ' - PS2Alerts';
     });
 
@@ -99,6 +100,28 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
 app.filter('ucfirst', function() {
     return function(input) {
         return input.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+    };
+});
+
+app.filter('shortNumber', function() {
+    return function(number) {
+        if (number) {
+            var abs = Math.abs(number);
+            if (abs >= Math.pow(10, 12)) {
+                // trillion
+                number = (number / Math.pow(10, 12)).toFixed(2) + 'T';
+            } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9)) {
+                // billion
+                number = (number / Math.pow(10, 9)).toFixed(2) + 'B';
+            } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6)) {
+                // million
+                number = (number / Math.pow(10, 6)).toFixed(2) + 'M';
+            } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3)) {
+                // thousand
+                number = (number / Math.pow(10, 3)).toFixed(2) + 'K';
+            }
+            return number;
+        }
     };
 });
 

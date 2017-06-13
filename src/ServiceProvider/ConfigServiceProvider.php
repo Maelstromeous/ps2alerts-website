@@ -17,7 +17,12 @@ class ConfigServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->getContainer()->share('config', function () {
-            return include __DIR__ . '/../config.php';
+            return [
+                'environment' => $_ENV['ENVIRONMENT'],
+                'base_url'    => $_ENV['BASE_URL'],
+                'base_path'   => $_ENV['BASE_PATH'],
+                'version'     => $_ENV['REVISION']
+            ];
         });
     }
 }

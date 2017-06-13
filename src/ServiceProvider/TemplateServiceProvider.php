@@ -28,8 +28,12 @@ class TemplateServiceProvider extends AbstractServiceProvider
             'asset_url' => $config['base_url'] . '/assets',
             'base_path' => $config['base_path'],
             'env'       => $config['environment'],
-            'revision'  => $config['revision']
+            'version'   => '?v=' . $config['version']
         ];
+
+        if ($globals['env'] !== 'production') {
+            $globals['version'] = '?v=' . date('U');
+        }
 
         $this->getContainer()->share('Twig_Environment', function () use ($globals, $config) {
             $cache = false;

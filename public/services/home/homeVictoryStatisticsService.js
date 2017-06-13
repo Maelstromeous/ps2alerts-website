@@ -1,4 +1,4 @@
-app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
+app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataService) {
     var factory = {
         victories: {},
         dominations: {},
@@ -27,7 +27,7 @@ app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
         }
     };
 
-    factory.increaseDominations = function (server, faction) {
+    factory.increaseDominations = function(server, faction) {
         factory.dominations[server][faction]++;
         factory.totals.dominations[faction]++;
     };
@@ -38,7 +38,7 @@ app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
         factory.totals.alerts.total = 0;
         factory.totals.dominations.total = 0;
 
-        angular.forEach(ConfigDataService.servers, function (server) {
+        angular.forEach(ConfigDataService.servers, function(server) {
             angular.forEach(ConfigDataService.factions, function(faction) {
                 factory.victories[server]   = {};
                 factory.dominations[server] = {};
@@ -53,8 +53,8 @@ app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
 
         // Get the data
         $http({
-            method : 'GET',
-            url    : ConfigDataService.apiUrl + '/alerts/counts/victories',
+            method: 'GET',
+            url: ConfigDataService.apiUrl + '/alerts/counts/victories',
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
             angular.forEach(returned, function(values, server) {
@@ -68,8 +68,8 @@ app.service('HomeStatisticsService', function ($http, $log, ConfigDataService) {
         });
 
         $http({
-            method : 'GET',
-            url    : ConfigDataService.apiUrl + '/alerts/counts/dominations',
+            method: 'GET',
+            url: ConfigDataService.apiUrl + '/alerts/counts/dominations',
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
             angular.forEach(returned, function(values, server) {

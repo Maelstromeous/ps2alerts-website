@@ -1,4 +1,4 @@
-app.controller('homeNoticeController', function($cookies, $scope) {
+app.controller('HomeNoticeController', function($cookies, $scope) {
     $scope.hidden = false;
 
     var announcementName = '2016-06-19';
