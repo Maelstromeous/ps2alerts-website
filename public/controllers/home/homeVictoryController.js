@@ -4,8 +4,4 @@ app.controller('HomeVictoryController', function($scope, ConfigDataService, Home
     $scope.config = ConfigDataService;
 
     $scope.alertStats.init();
-
-    $(document).ready(function(){
-        $('ul.tabs').tabs();
-    });
 });
