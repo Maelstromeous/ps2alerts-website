@@ -1,85 +1,43 @@
 app.service('HomeCombatStatisticsService', function($http, $log, ConfigDataService) {
     var factory = {
-        victories: {},
-        dominations: {},
-        totals: {
-            alerts: {
-                total: 0
-            },
-            dominations: {
-                total: 0
-            }
-        }
+        metrics: {}
     };
 
-    factory.increaseAlertTotal = function() {
-        factory.totals.alerts.total++;
-    };
-
-    factory.increaseDominationTotal = function() {
-        factory.totals.dominations.total++;
-    };
-
-    factory.increaseVictories = function(server, faction) {
-        if (factory.victories && factory.totals) {
-            factory.victories[server][faction]++;
-            factory.totals.alerts[faction]++;
-        }
-    };
-
-    factory.increaseDominations = function(server, faction) {
-        factory.dominations[server][faction]++;
-        factory.totals.dominations[faction]++;
-    };
-
+    // Instantiate the object properties
     factory.init = function() {
-        // Instantiate the object properties
+        var metrics = ['kills', 'deaths', 'teamkills', 'suicides', 'headshots'];
 
-        factory.totals.alerts.total = 0;
-        factory.totals.dominations.total = 0;
+        var servers = ConfigDataService.servers;
+        servers.push('all');
 
-        angular.forEach(ConfigDataService.servers, function(server) {
-            angular.forEach(ConfigDataService.factions, function(faction) {
-                factory.victories[server]   = {};
-                factory.dominations[server] = {};
+        angular.forEach(servers, function(server) {
+            factory.metrics[server] = {};
+            factory.metrics[server].totals = {
+                kills: 0,
+                deaths: 0,
+                teamkills: 0,
+                suicides: 0,
+                headshots: 0
+            };
+            angular.forEach(metrics, function(metric) {
+                factory.metrics[server][metric] = {};
 
-                factory.victories[server][faction]   = 0;
-                factory.dominations[server][faction] = 0;
-
-                factory.totals.alerts[faction]      = 0;
-                factory.totals.dominations[faction] = 0;
+                angular.forEach(ConfigDataService.factions, function(faction) {
+                    if (faction !== 'draw') {
+                        factory.metrics[server][metric][faction] = 0;
+                    }
+                });
             });
         });
 
         // Get the data
         $http({
             method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/counts/victories',
+            url: ConfigDataService.apiUrl + '/alerts/combat/totals',
         }).then(function(data) {
-            var returned = data.data.data; // #Dataception
-            angular.forEach(returned, function(values, server) {
-                angular.forEach(ConfigDataService.factions, function(faction) {
-                    factory.victories[server][faction] = values.data[faction];
-                    factory.totals.alerts[faction]    += values.data[faction];
-                });
+            factory.metrics = data.data;
 
-                factory.totals.alerts.total += values.data.total;
-            });
-        });
-
-        $http({
-            method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/counts/dominations',
-        }).then(function(data) {
-            var returned = data.data.data; // #Dataception
-            angular.forEach(returned, function(values, server) {
-                angular.forEach(ConfigDataService.factions, function(faction) {
-                    factory.dominations[server][faction] = values.data[faction];
-                    factory.totals.dominations[faction] += values.data[faction];
-                });
-
-                factory.totals.dominations.total += values.data.total;
-            });
+            console.log('new Factory', factory.metrics);
         });
     };
 

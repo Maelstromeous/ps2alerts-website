@@ -1,3 +1,3 @@
-app.controller('homeVehicleController', function($scope) {
+app.controller('HomeVehicleController', function($scope) {
     $scope.today = new Date();
 });
