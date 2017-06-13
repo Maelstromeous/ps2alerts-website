@@ -1,7 +1,7 @@
 app.service('WebsocketService', function(
     $rootScope,
     $document,
-    HomeStatisticsService,
+    HomeVictoryStatisticsService,
     AlertHistoryService,
     ConfigDataService
 ) {
@@ -177,12 +177,12 @@ app.service('WebsocketService', function(
 
         // Check if the alert wasn't forcibly removed. If it was, we have no winner information.
         if (typeof alert.forced === 'undefined') {
-            HomeStatisticsService.increaseAlertTotal();
-            HomeStatisticsService.increaseVictories(alert.server, alert.winner);
+            HomeVictoryStatisticsService.increaseAlertTotal();
+            HomeVictoryStatisticsService.increaseVictories(alert.server, alert.winner);
 
             if (alert.domination === 1) {
-                HomeStatisticsService.increaseDominationTotal();
-                HomeStatisticsService.increaseDominations(alert.server, alert.winner);
+                HomeVictoryStatisticsService.increaseDominationTotal();
+                HomeVictoryStatisticsService.increaseDominations(alert.server, alert.winner);
             }
 
             AlertHistoryService.appendAlert(alert);

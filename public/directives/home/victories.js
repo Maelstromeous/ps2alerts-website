@@ -17,7 +17,7 @@ app.directive('homeVictoryBreakdowns', function() {
     };
 });
 
-app.directive('homeFactionCard', function(HomeStatisticsService) {
+app.directive('homeFactionCard', function(HomeVictoryStatisticsService) {
     return {
         restrict: 'A',
         scope : {
@@ -26,7 +26,7 @@ app.directive('homeFactionCard', function(HomeStatisticsService) {
             faction:   '@',
         },
         link:function(scope) {
-            scope.stats = HomeStatisticsService.totals;
+            scope.stats = HomeVictoryStatisticsService.totals;
         },
         templateUrl: 'views/home/partials/faction.card.html',
     };

@@ -1,10 +1,15 @@
-app.controller('HomeZoneVictoryController', function($scope, HomeZoneVictoryService, HomeStatisticsService, ConfigDataService) {
+app.controller('HomeZoneVictoryController', function(
+    $scope,
+    HomeZoneVictoryService,
+    HomeVictoryStatisticsService,
+    ConfigDataService
+) {
     $scope.zoneStats = HomeZoneVictoryService;
-    $scope.alertStats = HomeStatisticsService;
+    $scope.victoryStats = HomeVictoryStatisticsService;
     $scope.config = ConfigDataService;
     $scope.zoneStats.init();
     $scope.loaded = false;
-    $scope.mode = 'percentage'
+    $scope.mode = 'percentage';
 
     $scope.$on('zonesLoaded', function() {
         $scope.loaded = true;

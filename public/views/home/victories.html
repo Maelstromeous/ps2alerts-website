@@ -11,11 +11,11 @@
     <div class="row">
         <div class="col s12">
             <territory-bar
-                vs="{{alertStats.totals.alerts.vs}}"
-                nc="{{alertStats.totals.alerts.nc}}"
-                tr="{{alertStats.totals.alerts.tr}}"
-                draw="{{alertStats.totals.alerts.draw}}"
-                total="{{alertStats.totals.alerts.total}}"
+                vs="{{victoryStats.totals.alerts.vs}}"
+                nc="{{victoryStats.totals.alerts.nc}}"
+                tr="{{victoryStats.totals.alerts.tr}}"
+                draw="{{victoryStats.totals.alerts.draw}}"
+                total="{{victoryStats.totals.alerts.total}}"
                 decimal="1">
             </territory-bar>
         </div>
@@ -26,13 +26,13 @@
                 metric-card
                 class="col s12 m6"
                 card-title="Total Alerts"
-                metric="{{alertStats.totals.alerts.total}}">
+                metric="{{victoryStats.totals.alerts.total}}">
             </div>
             <div
                 metric-card
                 class="col s12 m6"
                 card-title="Total Dominations"
-                metric="{{alertStats.totals.dominations.total}}">
+                metric="{{victoryStats.totals.dominations.total}}">
             </div>
             <div
                 home-faction-card
