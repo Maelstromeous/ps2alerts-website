@@ -8,4 +8,6 @@ app.controller('HomeCombatController', function(
     $scope.combatStats = HomeCombatStatisticsService;
 
     $scope.combatStats.init();
+
+    $scope.factions = ['vs', 'nc', 'tr'];
 });

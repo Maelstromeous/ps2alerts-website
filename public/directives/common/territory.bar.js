@@ -8,7 +8,8 @@ app.directive('territoryBar', function() {
             tr: '@',
             draw: '@',
             total: '@',
-            decimal: '@'
+            decimal: '@',
+            showsplitbars: '@'
         },
         templateUrl: 'views/common/territory.bar.html',
         link: function($scope, elem) {
@@ -38,7 +39,8 @@ app.directive('territoryBarNumerical', function() {
             tr: '@',
             draw: '@',
             total: '@',
-            decimal: '@'
+            decimal: '@',
+            showsplitbars: '@'
         },
         templateUrl: 'views/common/territory.bar.numerical.html',
         link: function($scope, elem) {
