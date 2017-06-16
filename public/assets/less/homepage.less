@@ -173,4 +173,103 @@
             }
         }
     }
+
+    #home-combat {
+        .card-action {
+            h5 {
+                margin: 5px 0;
+            }
+        }
+
+        .combat-breakdowns {
+            border-top: 1px solid rgba(160,160,160,0.2);
+            padding-top: @padding-base / 2;
+            margin-top: @padding-base / 4;
+
+            .breakdown-row {
+                display: table;
+                width: 100%;
+                margin-bottom: 5px;
+
+                p {
+                    line-height: 18px;
+                    font-size: 14px;
+                    margin: 0;
+                }
+
+                span {
+                    line-height: 18px;
+                }
+
+                .label {
+                    float: left;
+                    width: 30px;
+                    vertical-align: middle;
+
+                    img {
+                        vertical-align: middle;
+                        height: 22px;
+                        display: inherit; // Wat
+                    }
+                }
+
+                .bar {
+                    float: left;
+                    width: calc(~"100% - 30px");
+                    vertical-align: middle;
+
+                    .territory-bar-container {
+                        max-width: calc(~"100% - 50px");
+                        float: left;
+
+                        .territory-bar {
+                            line-height: 15px;
+                            float: left;
+                            width: 100%;
+                        }
+                    }
+                }
+
+                .total {
+                    float: right;
+                    vertical-align: middle;
+                    width: 50px;
+                    text-align: right;
+                }
+            }
+
+            &.kdr {
+                .breakdown-row {
+                    .bar {
+                        .territory-bar-container {
+                            max-width: calc(~"100% - 35px");
+                        }
+
+                        .total {
+                            width: 35px;
+                        }
+                    }
+                }
+            }
+
+            // Combat Globals Overrides
+            &.combat-globals {
+                padding: 15px;
+
+                .breakdown-row {
+                    .label {
+                        width: 35px;
+                    }
+
+                    .bar {
+                        width: calc(~"100% - 35px");
+
+                        .territory-bar-container {
+                            width: calc(~"100% - 55px");
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

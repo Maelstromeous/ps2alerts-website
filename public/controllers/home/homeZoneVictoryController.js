@@ -41,5 +41,5 @@ app.controller('HomeZoneVictoryController', function(
                 $(el).html(newHtml);
             });
         });
-    }
+    };
 });

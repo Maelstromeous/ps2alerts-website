@@ -1,27 +1,51 @@
 @import 'variables';
 
+.territory-bar-container {
+    position: relative;
+    overflow: hidden;
+
+    .percentmark {
+        position: absolute;
+        width: 1px;
+        border-left: 1px dashed #fff;
+        top: 0;
+        height: 100%;
+
+        &.per33 {
+            left: 33.3%;
+        }
+
+        &.per66 {
+            left: 66.6%;
+        }
+    }
+}
+
 .territory-bar {
     width: 100%;
-    height: @territory-bar-height;
+    min-height: @territory-bar-height - 2;
     background-color: #fff;
     color: #fff;
     border: 1px solid #ccc;
     line-height: @territory-bar-height - 2;
     display: table;
-}
 
-.territory-bar .loading {
-    display: block;
-    text-align: center;
-}
+    .loading {
+        display: block;
+        text-align: center;
+    }
 
-.territory-bar .segment {
-    height: 100%;
-    text-align: center;
-    display: table-cell;
-    transition: width 0.5s;
-}
+    .segment {
+        height: 100%;
+        text-align: center;
+        display: table-cell;
+        transition: width 0.5s;
 
+        @media @sm-down {
+            font-size: 0.8em;
+        }
+    }
+}
 .vs-segment {
     background-color: @background-vs;
 }

@@ -6,18 +6,18 @@
         <i class="fa fa-refresh fa-spin"></i>
     </div>
     <div class="segment vs-segment" style="width:{{vs / total * 100 | number: 2}}%" ng-show="vs > 0">
-        <span class="segment-metric" ng-show="(vs / total * 100) > 5" numerical="{{vs}}" percentage="{{vs / total * 100 | number:decimal}}%">
-            {{vs / total * 100 | number:decimal}}%
+        <span class="segment-metric" ng-show="(vs / total * 100) > 5" decimal="{{vs}}" percentage="{{vs / total * 100 | number:decimal}}%">
+            {{vs | shortNumber:decimal}}
         </span>
     </div>
     <div class="segment nc-segment" style="width:{{nc / total * 100 | number: 2}}%" ng-show="nc > 0">
-        <span class="segment-metric" ng-show="(nc / total * 100) > 5" numerical="{{nc}}" percentage="{{nc / total * 100 | number:decimal}}%">
-            {{nc / total * 100 | number:decimal}}%
+        <span class="segment-metric" ng-show="(nc / total * 100) > 5" decimal="{{nc}}" percentage="{{nc / total * 100 | number:decimal}}%">
+            {{nc | shortNumber:decimal}}
         </span>
     </div>
     <div class="segment tr-segment" style="width:{{tr / total * 100 | number: 2}}%" ng-show="tr > 0">
-        <span class="segment-metric" ng-show="(tr / total * 100) > 5" numerical="{{tr}}" percentage="{{tr / total * 100 | number:decimal}}%">
-            {{tr / total * 100 | number:decimal}}%
+        <span class="segment-metric" ng-show="(tr / total * 100) > 5" decimal="{{tr}}" percentage="{{tr / total * 100 | number:decimal}}%">
+            {{tr | shortNumber:decimal}}
         </span>
     </div>
     <div
@@ -28,8 +28,8 @@
         ng-if="draw"
         data-tooltip="Draws ({{draw / total * 100 | number:decimal}}%)"
         data-position="top">
-        <span class="segment-metric" ng-show="draw / total * 100 > 5" numerical="{{draw}}" percentage="{{draw / total * 100 | number:decimal}}%">
-            {{draw / total * 100 | number:decimal}}%
+        <span class="segment-metric" ng-show="draw / total * 100 > 5" decimal="{{draw}}" percentage="{{draw / total * 100 | number:decimal}}%">
+            {{vs | shortNumber:decimal}}
         </span>
     </div>
 </div>

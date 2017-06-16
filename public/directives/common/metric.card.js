@@ -1,7 +1,7 @@
 app.directive('metricCard', function() {
     return {
         restrict: 'A',
-        scope : {
+        scope: {
             cardTitle: '@',
             metric:    '@'
         },

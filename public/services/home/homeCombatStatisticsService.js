@@ -1,13 +1,17 @@
 app.service('HomeCombatStatisticsService', function($http, $log, ConfigDataService) {
     var factory = {
-        metrics: {}
+        metrics: {},
+        classMetrics: {}
     };
+
+    factory.metricsLoaded = 0;
+    factory.classMetricsLoaded = 0;
 
     // Instantiate the object properties
     factory.init = function() {
         var metrics = ['kills', 'deaths', 'teamkills', 'suicides', 'headshots'];
-
-        var servers = ConfigDataService.servers;
+        var factions = ['vs', 'nc', 'tr'];
+        var servers = _.clone(ConfigDataService.servers);
         servers.push('all');
 
         angular.forEach(servers, function(server) {
@@ -36,8 +40,27 @@ app.service('HomeCombatStatisticsService', function($http, $log, ConfigDataServi
             url: ConfigDataService.apiUrl + '/alerts/combat/totals',
         }).then(function(data) {
             factory.metrics = data.data;
+            factory.metricsLoaded = 1;
 
-            console.log('new Factory', factory.metrics);
+            setTimeout(function() {
+                $('#home-combat-metrics .tooltipped').tooltip({
+                    delay: 50
+                });
+            }, 250); // Ewwwww
+        });
+
+        $http({
+            method: 'GET',
+            url: ConfigDataService.apiUrl + '/alerts/combat/classTotals',
+        }).then(function(data) {
+            factory.classMetrics = data.data;
+            factory.classMetricsLoaded = 1;
+
+            setTimeout(function() {
+                $('#home-class-metrics .tooltipped').tooltip({
+                    delay: 50
+                });
+            }, 250); // Ewwwww
         });
     };
 
