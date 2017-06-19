@@ -13,8 +13,8 @@ app.service('SearchService', function(ConfigDataService, $http, $rootScope) {
         factory.noresults = false;
 
         $http({
-            method : 'GET',
-            url    : ConfigDataService.apiUrl + '/search/' + type + '/' + term
+            method: 'GET',
+            url: ConfigDataService.apiUrl + '/search/' + type + '/' + term
         }).then(function(returned) {
             var data = returned.data.data;
             factory.searching = false;

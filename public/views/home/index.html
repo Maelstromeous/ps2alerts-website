@@ -3,21 +3,33 @@
         <div homepage-announcement></div>
     </div>
 
-    <div class="row">
+    <div class="row" id="home-nav">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s4">
-                    <a href="#home-combat" class="active">
-                        <i class="fa fa-fighter-jet"></i> Combat
-                    </a>
-                </li>
-                <li class="tab col s4">
-                    <a href="#home-victories">
+                <li class="tab col s12 m4">
+                    <a
+                        href="#home-victories"
+                        class="ga-event active"
+                        ga-campaign="Home Nav Buttons"
+                        ga-action="Victories">
                         <i class="fa fa-trophy"></i> Victories
                     </a>
                 </li>
-                <li class="tab col s4">
-                    <a href="#home-vehicles">
+                <li class="tab col s12 m4">
+                    <a
+                        href="#home-combat"
+                        class="ga-event"
+                        ga-campaign="Home Nav Buttons"
+                        ga-action="Combat">
+                        <i class="fa fa-fighter-jet"></i> Combat
+                    </a>
+                </li>
+                <li class="tab col s12 m4">
+                    <a
+                        href="#home-vehicles"
+                        class="ga-event"
+                        ga-campaign="Home Nav Buttons"
+                        ga-action="Vehicles">
                         <i class="fa fa-truck"></i> Vehicles
                     </a>
                 </li>
@@ -25,7 +37,7 @@
         </div>
     </div>
 
-    <main home-combat id="home-combat"></main>
     <main home-victories id="home-victories"></main>
+    <main home-combat id="home-combat"></main>
     <main home-vehicles id="home-vehicles"></main>
 </article>

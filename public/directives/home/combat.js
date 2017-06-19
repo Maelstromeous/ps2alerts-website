@@ -31,6 +31,13 @@ app.directive('homeClassMetrics', function() {
     };
 });
 
+app.directive('homeWeaponMetrics', function() {
+    return {
+        restrict: 'A',
+        templateUrl: 'views/home/combat/weapon.metrics.html'
+    };
+});
+
 app.directive('homeCombatClassMetrics', function() {
     return {
         restrict: 'E',
