@@ -48,21 +48,24 @@ app.service('AnalyticsService', function(
                 // If we have dynamic values, set up a click event that checks
                 // the value of the element every time, otherwise statically
                 if (dynamicValue == '1') {
-                    console.log('Dynamic');
                     $(el).on('click', function() {
                         options.eventValue = $(this).attr('ga-value');
-                        ga('send', options);
+                        if (ConfigDataService.environment === 'production') {
+                            ga('send', options);
+                        }
 
                         if (ConfigDataService.environment === 'development') {
-                            console.log('Dynamic ga-event sent:', options);
+                            console.log('Dynamic ga-event:', options);
                         }
                     });
                 } else {
                     $(el).on('click', function() {
-                        ga('send', options);
+                        if (ConfigDataService.environment === 'production') {
+                            ga('send', options);
+                        }
 
                         if (ConfigDataService.environment === 'development') {
-                            console.log('ga-event sent:', options);
+                            console.log('ga-event:', options);
                         }
                     });
                 }
@@ -76,7 +79,9 @@ app.service('AnalyticsService', function(
     };
 
     var track = function() {
-        $window.ga('send', 'pageview', { page: $location.url() });
+        $window.ga('send', 'pageview', {
+            page: $location.url()
+        });
     };
     $rootScope.$on('$viewContentLoaded', track);
 
