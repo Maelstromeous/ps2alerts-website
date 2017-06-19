@@ -8,7 +8,7 @@ app.controller('ProjectStatusController', function(
         {
             title: 'Homepage',
             subtitle: 'Shows all major statistics, e.g. # of alerts, alerts per server, faction wins, etc.',
-            updated: '19th June 2016',
+            updated: '19th June 2017',
             href: $scope.baseUrl,
             completed: [
                 'Basic Statistics (Total Victories, Dominations, Faction % bar',
@@ -16,22 +16,24 @@ app.controller('ProjectStatusController', function(
                 'Faction Victories',
                 'Continent Victories',
                 'Victory Timeline',
+                'Combat Statistics',
             ],
             inprogress: [
-
+                'Vehicle Statistics',
             ],
             started: [
 
             ],
             notstarted: [
                 'Rolling Victory Averages',
-                'Last Week & Last Month metrics'
+                'Last Week & Last Month metrics',
+                'Date Range Filtering',
             ]
         },
         {
             title: 'Alert Statistics Pages',
             subtitle: 'Per-alert statistics pages are in the process of being re-written. See below for a summary of the features',
-            updated: '9th June 2017',
+            updated: '19th June 2017',
             href: $scope.baseUrl + '/alert/20000',
             completed: [
                 'Basic Alert Information (time, server, continent etc)',
@@ -43,11 +45,10 @@ app.controller('ProjectStatusController', function(
                 'Realtime metrics (live updating)',
             ],
             inprogress: [
-                'Population Metrics',
-                'Population Timeline',
             ],
             started: [
-
+                'Population Metrics',
+                'Population Timeline',
             ],
             notstarted: [
                 'Map Capture Timeline',
