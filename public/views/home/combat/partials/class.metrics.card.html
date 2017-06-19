@@ -4,7 +4,7 @@
             {{ metric | ucfirst}}
         </h3>
         <p class="center-align caption">
-            Total {{metric}} by all classes: {{ stats.classMetrics.byMetric[metric].total | shortNumber }}
+            Total {{metric}} by all classes: <b>{{ stats.classMetrics.byMetric[metric].total | shortNumber }}</b>
         </p>
         <div class="combat-breakdowns class-combat {{metric}}">
             <div class="row breakdown-row" ng-repeat="(class, faction) in stats.classMetrics.classGroupFactionMetric">

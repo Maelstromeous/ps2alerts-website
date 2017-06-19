@@ -4,7 +4,7 @@
             {{ metric | uppercase }}
         </h3>
         <p class="center-align caption">
-            Avg {{metric | uppercase }} by all classes: {{ stats.classMetrics.byMetric[metric].total | number:2 }} - Showing distribution across average, not makeup of total.
+            Avg {{metric | uppercase }} by all classes: <b>{{ stats.classMetrics.byMetric[metric].total | number:2 }}</b><br> Bars showing averages per faction, not total makeup.
         </p>
         <div class="combat-breakdowns class-combat {{ metric }}">
             <div class="row breakdown-row" ng-repeat="(class, faction) in stats.classMetrics.classGroupFactionMetric"  data-class="{{class}}">

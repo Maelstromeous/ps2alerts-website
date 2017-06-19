@@ -42,10 +42,9 @@
         <div ng-repeat="(server, metrics) in stats.metrics" ng-if="server != 'all'">
             <div class="row breakdown-row">
                 <div class="label">
-                    <p class="server">
+                    <p class="server tooltipped" data-tooltip="{{::config.serverNames[server]}}">
                         {{::config.shortServerNames[server]}}
                     </p>
-
                 </div>
                 <div class="bar">
                     <territory-bar-numerical
