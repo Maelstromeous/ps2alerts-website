@@ -1,4 +1,4 @@
-app.service('AlertHistoryService', function (
+app.service('AlertHistoryService', function(
     $http,
     $log,
     $filter,
@@ -39,7 +39,7 @@ app.service('AlertHistoryService', function (
         if (factory.inProgress === false) {
             factory.resetData();
             factory.inProgress = true;
-            var url = ConfigDataService.apiUrl + '/alerts/history?embed=maps';
+            var url = ConfigDataService.apiUrl + '/alerts/history/latest?embed=maps';
 
             // Servers = [1,10,13,17,25,1000,2000];
             if (filters.servers && filters.servers.length > 0) {
@@ -119,8 +119,8 @@ app.service('AlertHistoryService', function (
     factory.appendAlert = function(alert) {
         // Get the info we need from the API then add to the list
         $http({
-            method : 'GET',
-            url    : ConfigDataService.apiUrl + '/alerts/' + alert.id +'?embed=maps',
+            method: 'GET',
+            url: ConfigDataService.apiUrl + '/alerts/' + alert.id + '?embed=maps',
         }).then(function(data) {
             var alert = factory.parseAlert(data.data.data);
             alert.dynamic = true;
