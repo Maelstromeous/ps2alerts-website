@@ -12,6 +12,10 @@ app.config(function($routeProvider, $locationProvider) {
             title: 'Home',
             templateUrl: 'views/home/index.html'
         })
+        .when('/home', {
+            title: 'Home',
+            templateUrl: 'views/home/index.html'
+        })
         .when('/alert-history', {
             title: 'Alert History',
             templateUrl: 'views/alert-history/index.html'
@@ -67,7 +71,12 @@ app.config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 });
 
-app.run(function($rootScope, $templateCache, AnalyticsService) {
+app.run(function(
+    $rootScope,
+    $templateCache,
+    $location,
+    AnalyticsService
+) {
     var analytics = AnalyticsService;
 
     $rootScope.$on('$routeChangeSuccess', function(event, current) {
@@ -86,6 +95,13 @@ app.run(function($rootScope, $templateCache, AnalyticsService) {
                 delay: 50
             });
         }, 1); // Ewwwww
+    });
+
+    // Allow for hash ID scrolling, e.g. for home combat
+    $rootScope.$on('$routeChangeSuccess', function() {
+        if ($location.hash()) {
+            $anchorScroll();
+        }
     });
 
     $rootScope.$on('project-status', function() {
