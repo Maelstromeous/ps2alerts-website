@@ -11,6 +11,7 @@
     ga('create', 'UA-15631800-10', 'auto');
 </script>
 
+{% if environment == 'production' %}
 <script type="text/javascript">
     window.smartlook||(function(d) {
     var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
@@ -19,3 +20,4 @@
     })(document);
     smartlook('init', 'b8f0999663fdd878141336169ee587389e10f2b5');
 </script>
+{% endif %}
