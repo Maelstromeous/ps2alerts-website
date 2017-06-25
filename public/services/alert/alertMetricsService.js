@@ -294,6 +294,7 @@ app.service('AlertMetricsService', function(
 
         if (message.resultID != factory.alert.id) {
             console.log('Ignoring alert end message');
+            return false;
         }
 
         // Change end time to be JS format

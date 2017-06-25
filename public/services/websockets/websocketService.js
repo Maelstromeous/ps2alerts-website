@@ -10,11 +10,10 @@ app.service('WebsocketService', function(
     factory.webSocket = {};
     factory.loaded = 0;
     factory.connecting = 0;
-    factory.count = 0;
     factory.middlemanDown = 0;
     factory.middlemanCheck;
 
-    factory.actives = {};
+    factory.actives = null;
 
     factory.initWebSocket = function() {
         factory.webSocket = new WebSocket('ws://' + ConfigDataService.websocketUrl);
@@ -31,8 +30,7 @@ app.service('WebsocketService', function(
         };
 
         factory.webSocket.onmessage = function(rawMessage) {
-            var message = factory.parse(rawMessage);
-            factory.handleWebsocketMessage(message);
+            factory.handleWebsocketMessage(factory.parse(rawMessage));
         };
 
         factory.webSocket.onclose = function() {
@@ -110,7 +108,6 @@ app.service('WebsocketService', function(
     };
 
     factory.initActives = function(message) {
-        factory.loaded = 1;
         angular.forEach(message.data, function(server) {
             angular.forEach(server, function(alert) {
                 factory.addActive(alert);
@@ -121,9 +118,11 @@ app.service('WebsocketService', function(
 
     factory.addActive = function(messageData) {
         factory.parseAlertDataInitial(messageData, function(alert) {
+            if (factory.actives === null) {
+                factory.actives = {};
+            }
             if (typeof factory.actives[alert.id] === 'undefined') {
                 factory.actives[alert.id] = alert;
-                factory.count++;
 
                 // @todo Look into seeing if we can do this via an event upon element render. Timer will do for now.
                 setTimeout(function() {
@@ -135,13 +134,13 @@ app.service('WebsocketService', function(
             } else {
                 // Check if the alert has expired, if so, remove.
 
-                var alert = factory.actives[alert.id];
+                alert = factory.actives[alert.id];
                 var time = new Date().getTime();
                 time = time / 1000; // Convert to stored time format
 
                 // If the alert has ended, kill it.
                 if (time > alert.ends) {
-                    var alert = {
+                    alert = {
                         id: alert.id,
                         server: alert.server,
                         forced: true
@@ -173,8 +172,17 @@ app.service('WebsocketService', function(
 
     factory.endActive = function(alert) {
         delete factory.actives[alert.id];
-        factory.count--;
 
+        let size = 0;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                size++;
+            }
+        }
+
+        if (size === 0) {
+            factory.actives = null;
+        }
         // Check if the alert wasn't forcibly removed. If it was, we have no winner information.
         if (typeof alert.forced === 'undefined') {
             HomeVictoryStatisticsService.increaseAlertTotal();
