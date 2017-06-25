@@ -50,7 +50,7 @@ app.service('RealtimeMetricsService', function(
                     $('#outfit-leaderboard').DataTable().rows().invalidate().draw('full-hold');
                     $('#weapon-leaderboard').DataTable().rows().invalidate().draw('full-hold');
                     $('#vehicle-leaderboard').DataTable().rows().invalidate().draw('full-hold');
-                }, 500);
+                }, 2000);
             }
         }
     };
