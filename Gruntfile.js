@@ -115,7 +115,7 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         environment: 'staging',
-                        baseUrl: 'http://staging.ps2alerts.com',
+                        baseUrl: 'https://staging.ps2alerts.com',
                         apiUrl: 'https://staging.api.ps2alerts.com/v2',
                         websocketUrl: 'ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
                     }
@@ -128,7 +128,7 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         environment: 'production',
-                        baseUrl: 'http://www.ps2alerts.com',
+                        baseUrl: 'https://www.ps2alerts.com',
                         apiUrl: 'https://api.ps2alerts.com/v2',
                         websocketUrl: 'ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
                     }
