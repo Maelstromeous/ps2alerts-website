@@ -41,7 +41,7 @@ app.service('AlertWebsocketService', function(
             console.log('Websocket closed');
             setTimeout(function() {
                 console.log('Websocket reconnecting...');
-                return factory.initAndSubscribe();
+                return factory.initAndSubscribe(resultID);
             }, 2500);
         };
     };
