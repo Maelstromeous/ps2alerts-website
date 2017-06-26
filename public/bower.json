@@ -17,8 +17,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular-route": "~1.5",
-    "angular-cookies": "~1.5.7",
+    "angular": "~1.6.4",
+    "angular-route": "~1.6.4",
+    "angular-cookies": "~1.6.4",
     "SpinKit": "spinkit#~1.2.5",
     "jquery.countdown": "~2.1.0",
     "highcharts-ng": "^0.0",
