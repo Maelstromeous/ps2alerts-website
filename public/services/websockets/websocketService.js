@@ -38,6 +38,7 @@ app.service('WebsocketService', function(
             factory.connecting = 0;
             $rootScope.$apply();
             clearInterval(factory.sync);
+            $('#alert-monitor .monitor-row').addClass('phased');
 
             setTimeout(function() {
                 factory.connecting = 1;
@@ -51,6 +52,7 @@ app.service('WebsocketService', function(
         factory.webSocket.send('{"payload":{"action":"alertStatus"}}');
         factory.loaded = 1;
         factory.connecting = 0;
+        $('#alert-monitor .monitor-row').removeClass('phased');
     };
 
     factory.checkMiddleman = function() {
