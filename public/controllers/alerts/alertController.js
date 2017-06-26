@@ -46,7 +46,7 @@ app.controller('AlertController', function(
             scroller:       true,
             language: {
                 search: '_INPUT_',
-                searchPlaceholder: 'Search Players'
+                searchPlaceholder: 'Search Player name OR Outfit name / TAG'
             },
             rowCallback: function(row, data) {
                 // Format the faction colors
@@ -104,7 +104,7 @@ app.controller('AlertController', function(
             scroller:       true,
             language: {
                 search: '_INPUT_',
-                searchPlaceholder: 'Search Outfits'
+                searchPlaceholder: 'Search Outfit name / TAG'
             },
             rowCallback: function(row, data) {
                 // Format the faction colors
@@ -194,6 +194,9 @@ app.controller('AlertController', function(
 
         $(document).ready(function() {
             $('ul.tabs').tabs();
+            $('ul.tabs').on('click', function(event) {
+                $scope.alert.changeTab($(event.target).attr('data-tab'));
+            });
         });
 
         $(document).ready(function() {
@@ -271,6 +274,12 @@ app.controller('AlertController', function(
     $scope.parseAlertEndMessage = function(message) {
         $scope.$apply(function() {
             $scope.alert.processEndAlert(message);
+        });
+    };
+
+    $scope.changeTab = function(tab) {
+        $scope.$apply(function() {
+            $scope.alert.changeTab(tab);
         });
     };
 });

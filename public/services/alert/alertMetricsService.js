@@ -316,5 +316,9 @@ app.service('AlertMetricsService', function(
         RealtimeMetricsService.endAlert();
     };
 
+    factory.changeTab = function(tab) {
+        RealtimeMetricsService.changeTab(tab);
+    };
+
     return factory;
 });

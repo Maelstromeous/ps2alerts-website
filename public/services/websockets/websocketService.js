@@ -173,7 +173,7 @@ app.service('WebsocketService', function(
     factory.endActive = function(alert) {
         delete factory.actives[alert.id];
 
-        let size = 0;
+        var size = 0;
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
                 size++;

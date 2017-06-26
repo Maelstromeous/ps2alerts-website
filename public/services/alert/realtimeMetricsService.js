@@ -14,6 +14,7 @@ app.service('RealtimeMetricsService', function(
     var kpmInterval;
     var durationInterval;
     var redrawInterval;
+    factory.selectedTab = 'players';
 
     factory.init = function(alertFactoryData) {
         alertFactory = alertFactoryData;
@@ -46,13 +47,30 @@ app.service('RealtimeMetricsService', function(
                 }, 1000);
 
                 redrawInterval = setInterval(function() {
-                    $('#player-leaderboard').DataTable().rows().invalidate().draw('full-hold');
-                    $('#outfit-leaderboard').DataTable().rows().invalidate().draw('full-hold');
-                    $('#weapon-leaderboard').DataTable().rows().invalidate().draw('full-hold');
-                    $('#vehicle-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+                    factory.refreshLeaderboards();
                 }, 2000);
             }
         }
+    };
+
+    factory.refreshLeaderboards = function() {
+        if (factory.selectedTab === 'players') {
+            $('#player-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+        }
+        if (factory.selectedTab === 'outfits') {
+            $('#outfit-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+        }
+        if (factory.selectedTab === 'weapons') {
+            $('#weapon-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+        }
+        if (factory.selectedTab === 'vehicles') {
+            $('#vehicle-leaderboard').DataTable().rows().invalidate().draw('full-hold');
+        }
+    };
+
+    factory.changeTab = function(tab) {
+        factory.selectedTab = tab;
+        factory.refreshLeaderboards();
     };
 
     factory.increaseCombatKills = function(message) {
@@ -395,6 +413,11 @@ app.service('RealtimeMetricsService', function(
             angular.forEach(alertFactory.metrics.outfits, function(outfit) {
                 outfit.kpm = MetricsProcessingService.getKpm(outfit.kills, alertFactory.alert.duration);
                 outfit.dpm = MetricsProcessingService.getKpm(outfit.deaths, alertFactory.alert.duration);
+
+                // Zero the KPMs / DPMs so that tiny outfits cannot pollute the KD metric during primetime
+                if (alertFactory.alert.timeBracket === 'PRI' && outfit.players.length < 5) {
+                    outfit.kd = 0;
+                }
             });
             angular.forEach(alertFactory.metrics.weapons, function(weapon) {
                 weapon.kpm = MetricsProcessingService.getKpm(weapon.kills, alertFactory.alert.duration);

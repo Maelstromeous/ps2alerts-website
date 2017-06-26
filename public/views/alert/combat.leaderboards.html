@@ -9,6 +9,7 @@
                     ga-campaign="Alert"
                     ga-action="Leaderboards - Players"
                     ga-label="Opened"
+                    data-tab="players"
                 >
                     Players ({{alert.metrics.players.length}})
                 </a>
@@ -20,6 +21,7 @@
                     ga-campaign="Alert"
                     ga-action="Leaderboards - Outfits"
                     ga-label="Opened"
+                    data-tab="outfits"
                 >
                     Outfits ({{alert.metrics.outfits.length}})
                 </a>
@@ -31,6 +33,7 @@
                     ga-campaign="Alert"
                     ga-action="Leaderboards - Weapons"
                     ga-label="Opened"
+                    data-tab="weapons"
                 >
                     Weapons ({{alert.metrics.weapons.length}})
                 </a>
@@ -42,6 +45,7 @@
                     ga-campaign="Alert"
                     ga-action="Leaderboards - Vehicles"
                     ga-label="Opened"
+                    data-tab="vehicles"
                 >
                     Vehicles ({{alert.metrics.vehicles.length}})
                 </a>
@@ -56,6 +60,9 @@
                     <ul>
                         <li>
                             <small>There is a small chance that headshots get miscalculated in a way where you have more headshots than kills. This is a bug that's been plauging the system for years, and there's no known fix at this time. It's pretty rare.</small>
+                        </li>
+                        <li>
+                            <small><b>KPM / DPM</b> = Kills / Deaths Per Minute - this figure is updated every second</small>
                         </li>
                         <li>
                             <small><b>KPM</b> time is based off total alert duration, not session duration.</small>
@@ -75,7 +82,10 @@
                             <small>* Outfits that have less than 5 players in an alert <b>during "Prime Time"</b> will have their K/Ds zeroed, in order to prevent one player from having a high K/D and polluting the outfit stats. This won't affect sitewide metrics, this is purely for visual representation on a per-alert basis. Make your voice heard! <a href="http://strawpoll.me/6936968" target="_blank">Let us know what the limit should be set to!</a></small>
                         </li>
                         <li>
-                            <small><b>PP</b> = Per Participant</small><br />
+                            <small><b>PP</b> = Per Participant</small>
+                        </li>
+                        <li>
+                            <small><b>KPM / DPM</b> = Kills / Deaths Per Minute - this figure is updated every second</small>
                         </li>
                         <li>
                             <small><b>KPM</b> time is based off total alert duration, not session duration.</small>
