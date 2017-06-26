@@ -250,6 +250,11 @@ app.controller('AlertController', function(
         $scope.parseCombatMessage(AlertTransformer.transformCombatMessage(data.data));
     });
 
+    $scope.$on('vehicleCombatMessage', function(event, data) {
+        console.log('data', data.data);
+        $scope.parseVehicleCombatMessage(AlertTransformer.transformVehicleCombatMessage(data.data));
+    });
+
     $scope.$on('facilityMessage', function(event, data) {
         $scope.parseFacilityMessage(AlertTransformer.transformFacilityMessage(data.data));
     });
@@ -262,6 +267,12 @@ app.controller('AlertController', function(
     $scope.parseCombatMessage = function(message) {
         $scope.$apply(function() {
             $scope.alert.processCombatMessage(message);
+        });
+    };
+
+    $scope.parseVehicleCombatMessage = function(message) {
+        $scope.$apply(function() {
+            $scope.alert.processVehicleCombatMessage(message);
         });
     };
 

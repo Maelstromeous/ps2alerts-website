@@ -27,11 +27,10 @@ app.service('RealtimeMetricsService', function(
 
                 // Set the initial values
                 factory.recalculateMetricKpms();
-                factory.processLeaderboardKpms().then();
+                factory.processLeaderboardMetrics().then();
 
                 // Set off the KPM / DPM interval
                 kpmInterval = setInterval(function() {
-                    factory.processLeaderboardKpms().then();
                 }, 5000);
 
                 durationInterval = setInterval(function() {
@@ -47,7 +46,9 @@ app.service('RealtimeMetricsService', function(
                 }, 1000);
 
                 redrawInterval = setInterval(function() {
-                    factory.refreshLeaderboards();
+                    factory.processLeaderboardMetrics().then(function() {
+                        factory.refreshLeaderboards();
+                    });
                 }, 2000);
             }
         }
@@ -381,6 +382,71 @@ app.service('RealtimeMetricsService', function(
         });
     };
 
+    factory.updateVehicleMetrics = function(message) {
+        return new Promise(function(resolve) {
+            console.log(message);
+            /*if (!message.weaponID || message.weaponID == 0) {
+                console.log('Invalid weapon ID found, ignoring');
+                resolve();
+            }
+
+            var weaponRef = _.findIndex(
+                alertFactory.metrics.weapons, {'id': message.weaponID}
+            );
+
+            if (weaponRef > 0) {
+                var weapon = alertFactory.metrics.weapons[weaponRef];
+
+                weapon.kills++;
+                message.teamkill ? weapon.teamkills++ : false;
+                message.headshot ? weapon.headshots++ : false;
+                weapon.hsr = MetricsProcessingService.calcHSR(weapon.headshots, weapon.kills);
+                weapon.kpm = MetricsProcessingService.getKpm(weapon.kills, alertFactory.alert.duration);
+
+                var weaponRef = _.findIndex(
+                    alertFactory.configData.weapons.data, {'id': weapon.id}
+                );
+
+                var weaponData = alertFactory.configData.weapons.data[weaponRef];
+
+                // Update weapon groups
+                var groupIndex = _.findIndex(
+                    alertFactory.metrics.weapons, {
+                        name: weaponData.name + ' (Grouped)'
+                    }
+                );
+
+                var weaponGroup = {};
+
+                if (groupIndex > 0) {
+                    var weaponGroup = alertFactory.metrics.weapons[groupIndex];
+
+                    weaponGroup.kills++;
+                    message.teamkill ? weaponGroup.teamkills++ : false;
+                    message.headshot ? weaponGroup.headshots++ : false;
+                    weaponGroup.hsr = MetricsProcessingService.calcHSR(weaponGroup.headshots, weaponGroup.kills);
+                    weaponGroup.kpm = MetricsProcessingService.getKpm(weaponGroup.kills, alertFactory.alert.duration);
+
+                    // console.log('Updated weaponGroup', weaponGroup);
+                }
+
+                // Redraws handled by global redraw interval
+                resolve();
+            } else {
+                var newWeapon = {
+                    id: message.weaponID,
+                    kills: 1,
+                    teamkills: message.teamkill ? 1 : 0,
+                    headshots: message.headshot ? 1 : 0
+                };
+
+                AlertMetricsProcessingService.addNewWeapon(newWeapon).then(function() {
+                    resolve();
+                });
+            };*/
+        });
+    };
+
     factory.processMapCapture = function(message) {
         AlertMetricsProcessingService.addNewCapture(message);
     };
@@ -404,7 +470,7 @@ app.service('RealtimeMetricsService', function(
 
     // Fires every 5 secs to update the KPMs / DPMs of every player, otherwise until they get a kill
     // they will always have the same. Promised so we're not redrawing on EVERY player
-    factory.processLeaderboardKpms = function() {
+    factory.processLeaderboardMetrics = function() {
         return new Promise(function(resolve) {
             angular.forEach(alertFactory.metrics.players, function(player) {
                 player.kpm = MetricsProcessingService.getKpm(player.kills, alertFactory.alert.duration);
@@ -421,6 +487,11 @@ app.service('RealtimeMetricsService', function(
             });
             angular.forEach(alertFactory.metrics.weapons, function(weapon) {
                 weapon.kpm = MetricsProcessingService.getKpm(weapon.kills, alertFactory.alert.duration);
+            });
+
+            angular.forEach(alertFactory.metrics.vehicles, function(vehicle) {
+                vehicle.kpm = MetricsProcessingService.getKpm(vehicle.kills, alertFactory.alert.duration);
+                vehicle.dpm = MetricsProcessingService.getKpm(vehicle.deaths, alertFactory.alert.duration);
             });
 
             resolve();

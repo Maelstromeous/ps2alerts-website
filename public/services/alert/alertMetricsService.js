@@ -285,6 +285,10 @@ app.service('AlertMetricsService', function(
         RealtimeMetricsService.updateWeaponMetrics(message).then();
     };
 
+    factory.processVehicleCombatMessage = function(message) {
+        RealtimeMetricsService.updateVehicleMetrics(message).then();
+    };
+
     factory.processMapCapture = function(message) {
         AlertMetricsProcessingService.addNewCapture(message).then();
     };

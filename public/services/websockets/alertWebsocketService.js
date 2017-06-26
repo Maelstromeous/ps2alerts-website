@@ -39,6 +39,10 @@ app.service('AlertWebsocketService', function(
 
         factory.webSocket.onclose = function() {
             console.log('Websocket closed');
+            setTimeout(function() {
+                console.log('Websocket reconnecting...');
+                return factory.initAndSubscribe();
+            }, 2500);
         };
     };
 
@@ -66,13 +70,16 @@ app.service('AlertWebsocketService', function(
                     case 'subscribed':
                         factory.timeSync();
                         break;
-                    case 'timeSync':
-                    case 'timeSyncWait': {
+                    case 'timeSync': {
                         $rootScope.$broadcast('timeSync', message);
                         break;
                     }
                     case 'combat': {
                         $rootScope.$broadcast('combatMessage', message);
+                        break;
+                    }
+                    case 'vehicleCombat': {
+                        $rootScope.$broadcast('vehicleCombatMessage', message);
                         break;
                     }
                     case 'facility': {

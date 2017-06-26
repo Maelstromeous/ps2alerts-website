@@ -74,6 +74,26 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
         return obj;
     };
 
+    factory.transformVehicleCombatMessage = function(data) {
+        var obj = {
+            resultID: parseInt(data.resultID),
+            vehicleID: parseInt(data.vehicleID),
+            type: data.type,
+            iMetric: parseInt(data.iMetric),
+            vMetric: parseInt(data.vMetric),
+            nanites: parseInt(data.nanites),
+        };
+
+        if (obj.type === 'death') {
+            if (data.bail) {
+                obj.bail = parseInt(data.bail);
+            }
+            obj.nanites = parseInt(data.nanites);
+        }
+
+        return obj;
+    };
+
     factory.transformFacilityMessage = function(data) {
         var obj = {
             facilityID: parseInt(data.facilityID),

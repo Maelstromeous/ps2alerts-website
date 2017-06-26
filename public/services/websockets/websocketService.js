@@ -97,11 +97,6 @@ app.service('WebsocketService', function(
                         factory.parseMiddleman(message);
                         break;
                     }
-                    case 'timeSync':
-                    case 'timeSyncWait': {
-                        factory.returnTimeSync(message);
-                        break;
-                    }
                 }
             }
         }
