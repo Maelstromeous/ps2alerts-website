@@ -104,7 +104,7 @@ module.exports = function(grunt) {
                         baseUrl: 'http://dev.ps2alerts.com',
                         apiUrl: 'http://dev.api.ps2alerts.com/v2',
                         //websocketUrl: '192.168.0.3:1337?apikey=692e01b167f4c5c28cdc95389f038393'
-                        websocketUrl: 'ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
+                        websocketUrl: 'wss.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
                     }
                 }
             },
@@ -117,7 +117,7 @@ module.exports = function(grunt) {
                         environment: 'staging',
                         baseUrl: 'https://staging.ps2alerts.com',
                         apiUrl: 'https://staging.api.ps2alerts.com/v2',
-                        websocketUrl: 'ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
+                        websocketUrl: 'wss.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
                     }
                 }
             },
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
                         environment: 'production',
                         baseUrl: 'https://www.ps2alerts.com',
                         apiUrl: 'https://api.ps2alerts.com/v2',
-                        websocketUrl: 'ws.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
+                        websocketUrl: 'wss.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
                     }
                 }
             },
