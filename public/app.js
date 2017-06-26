@@ -74,8 +74,11 @@ app.config(function($routeProvider, $locationProvider) {
 app.run(function(
     $rootScope,
     $templateCache,
-    $location
+    $location,
+    AnalyticsService
 ) {
+    var analytics = AnalyticsService;
+
     $rootScope.$on('$routeChangeSuccess', function(event, current) {
         $templateCache.removeAll();
         $rootScope.title = current.$$route.title + ' - PS2Alerts';
