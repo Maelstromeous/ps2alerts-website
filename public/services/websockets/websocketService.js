@@ -16,7 +16,7 @@ app.service('WebsocketService', function(
     factory.actives = null;
 
     factory.initWebSocket = function() {
-        factory.webSocket = new WebSocket('ws://' + ConfigDataService.websocketUrl);
+        factory.webSocket = new WebSocket('wss://' + ConfigDataService.websocketUrl);
         factory.connecting = 1;
 
         factory.webSocket.onopen = function() {
