@@ -117,7 +117,7 @@ module.exports = function(grunt) {
                         environment: 'staging',
                         baseUrl: 'https://staging.ps2alerts.com',
                         apiUrl: 'https://staging.api.ps2alerts.com/v2',
-                        websocketUrl: 'wss.ps2alerts.com:1337?apikey=692e01b167f4c5c28cdc95389f038393'
+                        websocketUrl: 'wss.ps2alerts.com:1338?apikey=692e01b167f4c5c28cdc95389f038393'
                     }
                 }
             },
