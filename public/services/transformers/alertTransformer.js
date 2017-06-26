@@ -25,6 +25,8 @@ app.service('AlertTransformer', function($filter, ConfigDataService) {
 
                 if (alert.timeBracket == 'TES') {
                     alert.timeBracket = 'Testing';
+                } else if (alert.timeBracket == 'UNK') {
+                    alert.timeBracket == 'UNKNOWN';
                 } else {
                     alert.timeBracket = ConfigDataService.timeBrackets[alert.timeBracket].label;
                 }
