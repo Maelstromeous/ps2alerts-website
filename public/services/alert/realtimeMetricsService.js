@@ -210,7 +210,7 @@ app.service('RealtimeMetricsService', function(
                 // Don't add kills etc if they are a suicide
                 if (attacker.id != victim.id && message.suicide === false) {
                     attacker.kills++;
-                    message.headshot === true ? attacker.kills++ : false;
+                    message.headshot === true ? attacker.headshots++ : false;
                     message.teamkill === true ? attacker.teamkills++ : false;
 
                     attacker.hsr = MetricsProcessingService.calcHSR(attacker.headshots, attacker.kills).toFixed(2);
