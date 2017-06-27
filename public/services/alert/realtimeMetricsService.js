@@ -98,6 +98,9 @@ app.service('RealtimeMetricsService', function(
     // Goes off and finds the references, and adds players if required
     factory.populateCombatPlayers = function(message) {
         return new Promise(function(resolve, reject) {
+            if (message.attackerID == '5428010618035323201' || message.victimID == '5428010618035323201') {
+                console.log('Maelstrome26 found!', message);
+            }
             // PROCESS ATTACKER
             // Find player records
             var attackerRef = _.findIndex(
@@ -196,14 +199,16 @@ app.service('RealtimeMetricsService', function(
                 var newAttacker = result[0].newAttacker;
                 var newVictim = result[0].newVictim;
 
-                //console.log('Post promise attacker', attacker);
-                //console.log('Post promise victim', victim);
-                //
+                if (result[0].attacker.id == '5428010618035323201' || result[0].victim.id == '5428010618035323201') {
+                    console.log('Maelstrome26 found in UpdatePlayerMetrics');
+                    console.log(result[0]).attacker;
+                    console.log(result[0]).victim;
+                }
 
                 // Now we're sure that their stats are in place, increase them!
 
                 // Don't add kills etc if they are a suicide
-                if (attacker.id !== victim.id || message.suicide === true) {
+                if (attacker.id != victim.id || message.suicide === true) {
                     attacker.kills++;
                     message.headshot === true ? attacker.kills++ : false;
                     message.teamkill === true ? attacker.teamkills++ : false;
@@ -375,7 +380,7 @@ app.service('RealtimeMetricsService', function(
 
     factory.updateVehicleMetrics = function(message) {
         return new Promise(function(resolve) {
-            console.log(message);
+            // console.log(message);
             /*if (!message.weaponID || message.weaponID == 0) {
                 console.log('Invalid weapon ID found, ignoring');
                 resolve();
