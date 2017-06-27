@@ -142,6 +142,7 @@ app.service('RealtimeMetricsService', function(
             }
 
             if (!victim && message.attackerID !== message.victimID) {
+                console.log('Victim not found... adding');
                 newVictim.id = message.victimID;
                 newVictim.faction = message.victimFaction;
                 newVictim.name = message.victimName;
