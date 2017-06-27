@@ -123,13 +123,13 @@ app.service('RealtimeMetricsService', function(
                     faction: message.attackerFaction,
                     name: message.attackerName,
                     outfitID: message.attackerOutfit.id,
-                    metrics: {
-                        kills: 0, // 0 as kills etc are added later pn
-                        deaths: 0, // Ditto
-                        suicides: 0,
-                        teamkills: 0,
-                        headshots: 0
-                    }
+                },
+                metrics: {
+                    kills: 0, // 0 as kills etc are added later pn
+                    deaths: 0, // Ditto
+                    suicides: 0,
+                    teamkills: 0,
+                    headshots: 0
                 }
             };
 
