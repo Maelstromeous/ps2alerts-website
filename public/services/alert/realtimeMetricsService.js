@@ -163,6 +163,8 @@ app.service('RealtimeMetricsService', function(
                     victim = alertFactory.metrics.players[victimRef];
 
                     if (!attacker || !victim) {
+                        console.log('attackerID', message.attackerID);
+                        console.log('victimID', message.victimID);
                         reject('Attacker or Victim could not be determined, EVEN AFTER PROMISE!');
                     }
                     resolve({

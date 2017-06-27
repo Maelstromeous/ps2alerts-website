@@ -265,10 +265,10 @@ app.service('AlertMetricsService', function(
                     var outfitRef = _.findIndex(
                         factory.metrics.outfits, {'id': outfitID}
                     );
-                    console.log('Added new outfit #' + outfitID + ' to factory', factory.metrics.outfits[outfitRef]);
+                    // console.log('Added new outfit #' + outfitID + ' to factory', factory.metrics.outfits[outfitRef]);
 
                     if (!outfitRef) {
-                        console.log('UNABLE TO GET OUTFITREF!');
+                        console.log('UNABLE TO GET OUTFITREF!', outfitID);
                         reject('Unable to get Outfit REF');
                     }
 
