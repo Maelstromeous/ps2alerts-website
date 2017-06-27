@@ -108,14 +108,21 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location) {
             20: 'VS Heavy Assault',
             21: 'VS MAX'
         },
-        'classRefNames': {
-            'infiltrator': 'Infiltrator',
-            'la': 'Light Assault',
-            'medic': 'Medic',
-            'engineer': 'Engineer',
-            'ha': 'Heavy Assault',
-            'max': 'MAX'
+        classRefNames: {
+            infiltrator: 'Infiltrator',
+            la: 'Light Assault',
+            medic: 'Medic',
+            engineer: 'Engineer',
+            ha: 'Heavy Assault',
+            max: 'MAX'
         },
+        maelChars: [
+            '5428010618035323201', // Maelstrome26
+            '7697549730244565425', // PS2AlertsBriggs
+            '8262937017478455425', // PS2AlertsCobalt
+            '5428226580942190801', // PS2AlertsConnery
+            '5428366106637502001', // FarmerOfTheCrops (Emerald)
+        ]
     };
 
     factory.convertFactionNameToInt = function(name) {
@@ -147,6 +154,13 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location) {
 
     factory.update = function() {
         factory.location = factory.baseUrl + '/#' + $location.url();
+    };
+
+    factory.maelChar = function(id) {
+        if (configData.maelChars.indexOf(id) !== -1) {
+            return true;
+        }
+        return false;
     };
 
     $rootScope.$on('$routeChangeSuccess', factory.update);

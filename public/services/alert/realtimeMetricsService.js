@@ -199,8 +199,11 @@ app.service('RealtimeMetricsService', function(
                 var newAttacker = result[0].newAttacker;
                 var newVictim = result[0].newVictim;
 
-                if (result[0].attacker.id == '5428010618035323201' || result[0].victim.id == '5428010618035323201') {
-                    console.log('Maelstrome26 found in UpdatePlayerMetrics');
+                if (
+                    configData.maelChar(result[0].attacker.id) ||
+                    configData.maelChar(result[0].victim.id)
+                ) {
+                    console.log('Developer character found in UpdatePlayerMetrics');
                     console.log('attacker', attacker);
                     console.log('victim', victim);
                 }
