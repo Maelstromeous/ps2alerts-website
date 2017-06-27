@@ -206,7 +206,7 @@ app.service('RealtimeMetricsService', function(
                 // Now we're sure that their stats are in place, increase them!
 
                 // Don't add kills etc if they are a suicide
-                if (attacker.id != victim.id || message.suicide === true) {
+                if (attacker.id != victim.id && message.suicide === false) {
                     attacker.kills++;
                     message.headshot === true ? attacker.kills++ : false;
                     message.teamkill === true ? attacker.teamkills++ : false;
