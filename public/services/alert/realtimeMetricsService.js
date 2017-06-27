@@ -98,9 +98,13 @@ app.service('RealtimeMetricsService', function(
     // Goes off and finds the references, and adds players if required
     factory.populateCombatPlayers = function(message) {
         return new Promise(function(resolve, reject) {
-            if (message.attackerID == '5428010618035323201' || message.victimID == '5428010618035323201') {
-                console.log('Maelstrome26 found!', message);
+            if (
+                ConfigDataService.maelChar(result[0].attacker.id) ||
+                ConfigDataService.maelChar(result[0].victim.id)
+            ) {
+                console.log('Developer charater found in populateCombatPlayers!', message);
             }
+
             // PROCESS ATTACKER
             // Find player records
             var attackerRef = _.findIndex(
