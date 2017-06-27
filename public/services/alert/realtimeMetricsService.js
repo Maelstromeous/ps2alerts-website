@@ -151,6 +151,7 @@ app.service('RealtimeMetricsService', function(
             }
 
             if (promises.length > 0) {
+                console.log('Promises', promises);
                 // If we've had to make changes, update the data we send back
                 Promise.all(promises).then(function() {
                     attackerRef = _.findIndex(
