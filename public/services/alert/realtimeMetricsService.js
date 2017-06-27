@@ -111,54 +111,42 @@ app.service('RealtimeMetricsService', function(
             var victim = alertFactory.metrics.players[victimRef];
 
             var promises = []; // Build an array of promises to execute
-            var newAttacker = false;
-            var newVictim = false;
+            var newAttackerSet = false;
+            var newVictimSet = false;
+
+            var newAttacker = {
+                player: {
+                    id: message.attackerID,
+                    faction: message.attackerFaction,
+                    name: message.attackerName,
+                    outfitID: message.attackerOutfit.id,
+                    metrics: {
+                        kills: 0, // 0 as kills etc are added later pn
+                        deaths: 0, // Ditto
+                        suicides: 0,
+                        teamkills: 0,
+                        headshots: 0
+                    }
+                }
+            };
+
+            var newVictim = _.clone(newAttacker);
 
             // If NOT found, supply the data to addNewPlayer
             if (!attacker) {
-                var newPlayer = {};
-                newPlayer.player = {
-                    faction: message.attackerFaction,
-                    id: message.attackerID,
-                    name: message.attackerName,
-                    outfitID: message.attackerOutfit.id
-                };
-
-                // Build metrics based on our new message
-                newPlayer.metrics = {
-                    kills: 1, // Attacker always gets this
-                    deaths: 0, // Ditto
-                    suicides: message.suicide === true ? 1 : 0, // Ditto
-                    teamkills: message.teamkill === true ? 1 : 0,
-                    headshots: message.headshot === true ? 1 : 0
-                };
-
                 // Send to addNewPlayer
-                promises.push(AlertMetricsProcessingService.addNewPlayer(newPlayer));
-                newAttacker = true;
+                promises.push(AlertMetricsProcessingService.addNewPlayer(newAttacker));
+                newAttackerSet = true;
             }
 
             if (!victim && message.attackerID !== message.victimID) {
-                var newPlayer = {};
-                newPlayer.player = {
-                    faction: message.victimFaction,
-                    id: message.victimID,
-                    name: message.victimName,
-                    outfitID: message.victimOutfit.id
-                };
-
-                // Build metrics based on our new message
-                newPlayer.metrics = {
-                    kills: 0, // Victim always gets this
-                    deaths: 1, // Ditto
-                    suicides: 0,
-                    teamkills: 0,
-                    headshots: 0
-                };
-
+                newVictim.id = message.victimID;
+                newVictim.faction = message.victimFaction;
+                newVictim.name = message.victimName;
+                newVictim.outfitID = message.victimOutfit.id;
                 // Send to addNewPlayer
-                promises.push(AlertMetricsProcessingService.addNewPlayer(newPlayer));
-                newVictim = true;
+                promises.push(AlertMetricsProcessingService.addNewPlayer(newVictim));
+                newVictimSet = true;
             }
 
             if (promises.length > 0) {
@@ -190,8 +178,8 @@ app.service('RealtimeMetricsService', function(
                 resolve({
                     attacker: attacker,
                     victim: victim,
-                    newAttacker: newAttacker,
-                    newVictim: newVictim
+                    newAttacker: newAttackerSet,
+                    newVictim: newVictimSet
                 });
             }
         });
@@ -213,12 +201,17 @@ app.service('RealtimeMetricsService', function(
                 //
 
                 // Now we're sure that their stats are in place, increase them!
-                attacker.kills++;
-                message.headshot === true ? attacker.kills++ : false;
-                message.teamkill === true ? attacker.teamkills++ : false;
 
-                attacker.kd = MetricsProcessingService.calcKD(attacker.kills, attacker.deaths).toFixed(2); // Parse KD
-                attacker.hsr = MetricsProcessingService.calcHSR(attacker.headshots, attacker.kills).toFixed(2);
+                // Don't add kills etc if they are a suicide
+                if (attacker.id !== victim.id || message.suicide === true) {
+                    attacker.kills++;
+                    message.headshot === true ? attacker.kills++ : false;
+                    message.teamkill === true ? attacker.teamkills++ : false;
+
+                    attacker.hsr = MetricsProcessingService.calcHSR(attacker.headshots, attacker.kills).toFixed(2);
+                    attacker.kd = MetricsProcessingService.calcKD(attacker.kills, attacker.deaths).toFixed(2); // Parse KD
+                }
+
                 attacker.kpm = MetricsProcessingService.getKpm(attacker.kills, alertFactory.alert.duration);
 
                 // Victim
@@ -229,13 +222,11 @@ app.service('RealtimeMetricsService', function(
                 victim.dpm = MetricsProcessingService.getKpm(victim.deaths, alertFactory.alert.duration);
 
                 if (newAttacker) {
-                    console.log('Added new attacker to leaderboard');
                     $('#player-leaderboard').DataTable().row.add(attacker);
                     $('#player-leaderboard').DataTable().draw('full-hold');
                 }
 
                 if (newVictim) {
-                    console.log('Added new victim to leaderboard');
                     $('#player-leaderboard').DataTable().row.add(victim);
                     $('#player-leaderboard').DataTable().draw('full-hold');
                 }
