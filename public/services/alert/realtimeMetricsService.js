@@ -209,7 +209,9 @@ app.service('RealtimeMetricsService', function(
 
                 // Don't add kills etc if they are a suicide
                 if (attacker.id != victim.id && message.suicide === false) {
-                    attacker.kills++;
+                    if (message.teamkill === false) {
+                        attacker.kills++;
+                    }
                     message.headshot === true ? attacker.headshots++ : false;
                     message.teamkill === true ? attacker.teamkills++ : false;
 
@@ -223,7 +225,7 @@ app.service('RealtimeMetricsService', function(
                 victim.deaths++;
                 message.suicide === true ? victim.suicides++ : false;
 
-                victim.kd = MetricsProcessingService.calcKD(victim.kills, victim.deaths); // Parse KD
+                victim.kd = MetricsProcessingService.calcKD(victim.kills, victim.deaths).toFixed(2); // Parse KD
                 victim.dpm = MetricsProcessingService.getKpm(victim.deaths, alertFactory.alert.duration);
 
                 if (newAttacker) {
