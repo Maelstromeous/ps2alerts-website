@@ -251,7 +251,6 @@ app.controller('AlertController', function(
     });
 
     $scope.$on('vehicleCombatMessage', function(event, data) {
-        console.log('data', data.data);
         $scope.parseVehicleCombatMessage(AlertTransformer.transformVehicleCombatMessage(data.data));
     });
 
