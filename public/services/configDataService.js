@@ -157,7 +157,7 @@ app.service('ConfigDataService', function(ENV, $rootScope, $location) {
     };
 
     factory.maelChar = function(id) {
-        if (configData.maelChars.indexOf(id) !== -1) {
+        if (factory.maelChars.indexOf(id) !== -1) {
             return true;
         }
         return false;
