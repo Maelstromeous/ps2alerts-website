@@ -200,8 +200,8 @@ app.service('RealtimeMetricsService', function(
                 var newVictim = result[0].newVictim;
 
                 if (
-                    configData.maelChar(result[0].attacker.id) ||
-                    configData.maelChar(result[0].victim.id)
+                    ConfigDataService.maelChar(result[0].attacker.id) ||
+                    ConfigDataService.maelChar(result[0].victim.id)
                 ) {
                     console.log('Developer character found in UpdatePlayerMetrics');
                     console.log('attacker', attacker);
