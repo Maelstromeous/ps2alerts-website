@@ -137,7 +137,6 @@ app.service('RealtimeMetricsService', function(
 
             // If NOT found, supply the data to addNewPlayer
             if (!attacker) {
-                // Send to addNewPlayer
                 promises.push(AlertMetricsProcessingService.addNewPlayer(newAttacker));
                 newAttackerSet = true;
             }
@@ -147,7 +146,6 @@ app.service('RealtimeMetricsService', function(
                 newVictim.faction = message.victimFaction;
                 newVictim.name = message.victimName;
                 newVictim.outfitID = message.victimOutfit.id;
-                // Send to addNewPlayer
                 promises.push(AlertMetricsProcessingService.addNewPlayer(newVictim));
                 newVictimSet = true;
             }
@@ -170,8 +168,8 @@ app.service('RealtimeMetricsService', function(
                     resolve({
                         attacker: attacker,
                         victim: victim,
-                        newAttacker: newAttacker,
-                        newVictim: newVictim
+                        newAttacker: newAttackerSet,
+                        newVictim: newVictimSet
                     });
                 });
             } else {
@@ -201,8 +199,8 @@ app.service('RealtimeMetricsService', function(
 
                 if (result[0].attacker.id == '5428010618035323201' || result[0].victim.id == '5428010618035323201') {
                     console.log('Maelstrome26 found in UpdatePlayerMetrics');
-                    console.log(result[0]).attacker;
-                    console.log(result[0]).victim;
+                    console.log('attacker', attacker);
+                    console.log('victim', victim);
                 }
 
                 // Now we're sure that their stats are in place, increase them!
