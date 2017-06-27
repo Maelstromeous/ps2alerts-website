@@ -99,8 +99,8 @@ app.service('RealtimeMetricsService', function(
     factory.populateCombatPlayers = function(message) {
         return new Promise(function(resolve, reject) {
             if (
-                ConfigDataService.maelChar(result[0].attacker.id) ||
-                ConfigDataService.maelChar(result[0].victim.id)
+                ConfigDataService.maelChar(message.attackerID) ||
+                ConfigDataService.maelChar(message.victimID)
             ) {
                 console.log('Developer charater found in populateCombatPlayers!', message);
             }
