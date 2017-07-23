@@ -34,8 +34,7 @@ module.exports = function(grunt) {
                         'public/controllers/**/*.js',
                         'public/directives/**/*.js',
                         'public/services/**/*.js',
-                        'public/assets/js/common.js',
-                        'public/assets/js/websocketMonitor.js',
+                        'public/assets/js/change-log.js',
                     ]
                 }
             }
@@ -77,8 +76,7 @@ module.exports = function(grunt) {
                     'public/controllers/**/*.js',
                     'public/directives/**/*.js',
                     'public/services/**/*.js',
-                    'public/assets/js/common.js',
-                    'public/assets/js/websocketMonitor.js'
+                    'public/assets/js/change-log.js'
                 ],
                 tasks: ['jsApp'],
                 options: {

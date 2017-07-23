@@ -32,28 +32,73 @@ header {
         border-left: 1px solid @border-color;
     }
 
-    nav ul li:hover {
-        background-color: rgba(210, 0, 0, 0.3);
-    }
+    nav {
+        .button-collapse i {
+            font-size: 1.7rem;
+        }
 
-    nav ul li a:hover {
-        color: #fff;
-    }
+        ul {
+            li {
+                a {
+                    padding: 0 10px;
+                }
 
-    nav ul li .fa {
-        font-size: 1.2em;
-    }
+                &:hover {
+                    background-color: rgba(210, 0, 0, 0.3);
+                }
 
-    nav .button-collapse i {
-        font-size: 1.7rem;
-    }
+                a:hover {
+                    color: #fff;
+                }
 
-    #under-dev {
-        color: #D22E2E;
+                .fa {
+                    font-size: 1.2em;
+                }
+            }
+        }
     }
 
     .side-nav li:hover,
     .side-nav li.active {
         background-color: initial;
+    }
+
+    #changelog-badge {
+        strong {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+            vertical-align: middle;
+            margin-top: -2px;
+            // Default style
+            border-radius: 20px;
+            background-color: #fff;
+            transform: scale(0.5);
+            transition: all 0.5s ease-out;
+
+            &.hasCount {
+                background-color: #c70000;
+                transform: scale(1);
+            }
+
+            &.clearCount {
+                animation: ~"changelogclear" ease-out 0.5s forwards;
+            }
+        }
+    }
+
+    @keyframes changelogclear {
+        0% {
+            background-color: rgb(189, 4, 4);
+            transform: scale(1);
+
+        }
+        100% {
+            background-color: #fff;
+            transform: scale(0.5);
+        }
     }
 }

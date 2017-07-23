@@ -89,6 +89,7 @@ app.run(function(
     };
 
     $rootScope.$on('$viewContentLoaded', function() {
+        $(window).trigger('viewLoaded');
         $templateCache.removeAll();
         setTimeout(function() {
             $('.tooltipped').tooltip({

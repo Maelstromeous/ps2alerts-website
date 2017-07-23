@@ -78,15 +78,17 @@ app.service('AnalyticsService', function(
         }
     };
 
-    var track = function() {
-        $window.ga('send', 'pageview', {
-            page: $location.url()
-        });
-    };
-    $rootScope.$on('$viewContentLoaded', track);
+    if (ConfigDataService.environment === 'production') {
+        var track = function() {
+            $window.ga('send', 'pageview', {
+                page: $location.url()
+            });
+        };
+        $rootScope.$on('$viewContentLoaded', track);
 
-    // Listener for the event. Supplied with a identifier (e.g. '.ga-event')
-    $rootScope.$on('ga-sync', function(event, identifier) {
-        factory.registerGAEventClass(identifier);
-    });
+        // Listener for the event. Supplied with a identifier (e.g. '.ga-event')
+        $rootScope.$on('ga-sync', function(event, identifier) {
+            factory.registerGAEventClass(identifier);
+        });
+    }
 });
