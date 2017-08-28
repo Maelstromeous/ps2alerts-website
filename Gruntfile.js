@@ -15,10 +15,10 @@ module.exports = function(grunt) {
                         'public/bower_components/angular-cookies/angular-cookies.min.js',
                         'public/bower_components/angular-route/angular-route.min.js',
                         'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
-                        'public/assets/js/jsloader.js',
                         'public/bower_components/lodash/dist/lodash.min.js',
                         'public/bower_components/datatables.net/js/jquery.dataTables.min.js',
-                        'public/bower_components/highcharts/highstock.js'
+                        'public/bower_components/highcharts/highstock.js',
+                        'public/bower_components/date-format/dateformat.min.js'
                     ]
                 }
             },

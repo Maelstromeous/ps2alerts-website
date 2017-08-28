@@ -49,39 +49,19 @@ select:focus {
   pointer-events: none;
 }
 
-filters {
-  text-align: center;
+.filter-wrapper {
+  margin-bottom: 0;
 
-  .filter-wrapper {
-    margin-bottom: 0;
+  input {
+    height: 2rem;
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid #26a69a;
+    text-align: center;
+  }
 
-    input,
-    select {
-      margin-bottom: 0 !important;
-      border-bottom: 1px solid #26a69a;
-    }
-
-    select {
-      height: 129px;
-      color: #fff;
-
-      option {
-        color: #fff;
-
-        &:disabled {
-          color: #ccc;
-        }
-      }
-
-      @media @md-down {
-        height: 124px;
-      }
-    }
-
-    label {
-      margin: @padding-base * 0.5 0;
-      display: block;
-    }
+  label {
+    margin: @padding-base * 0.25 0;
+    display: block;
   }
 }
 

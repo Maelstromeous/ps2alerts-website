@@ -63,24 +63,6 @@ app.controller('AlertHistoryController', function(
         }
     };
 
-    $scope.started = new Date('2014-10-30');
-    $scope.today   = new Date();
-
-    $scope.minDate = new Date(
-        $scope.started.getFullYear(),
-        $scope.started.getMonth(),
-        $scope.started.getDate()
-    );
-
-    $scope.maxDate = new Date(
-        $scope.started.getFullYear(),
-        $scope.started.getMonth(),
-        $scope.started.getDate()
-    );
-
-    $scope.dateFrom = new Date();
-    $scope.dateTo   = new Date();
-
     // Show initial data
     $scope.showAll();
 });

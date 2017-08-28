@@ -7,7 +7,7 @@ app.controller('HomeVictoryController', function(
     $scope.victoryStats = HomeVictoryStatisticsService;
     $scope.config = ConfigDataService;
 
-    $scope.victoryStats.init();
+    // Init is now controlled by homeFilterController.js
 
     // For some reason tabs don't init correctly, we have to do it here
     $(document).ready(function() {

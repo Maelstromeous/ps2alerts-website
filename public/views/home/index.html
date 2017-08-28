@@ -1,16 +1,25 @@
-<article id="homepage" ng-controller="HomeDateFilterController">
+<article id="homepage" ng-controller="HomeFilterController">
     <div class="row row-no-margin" ng-controller="HomeNoticeController">
         <div homepage-announcement></div>
     </div>
 
     <div class="row">
-        <div class="col s12 no-margin">
-            <filters
-                    class="filters"
-                    id="home-date-filters"
-                    filters="filters"
-                    config="config"
-            ></filters>
+        <div class="col s12 no-margin pos-rel">
+            <home-filters
+                class="filters"
+                id="home-date-filters"
+                filters="filters"
+                config="config"
+                show="show"
+            ></home-filters>
+            <div id="filter-control">
+                <button class="btn waves-light" ng-click="show = true" ng-show="!show">
+                    <i class="fa fa-eye"></i> Show Filters
+                </button>
+                <button class="btn btn-inactive waves-dark" ng-click="show = false" ng-show="show">
+                    <i class="fa fa-eye-slash"></i> Hide Filters
+                </button>
+            </div>
         </div>
     </div>
 

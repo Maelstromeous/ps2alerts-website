@@ -13,6 +13,10 @@ main {
     margin-right: auto;
 }
 
+.pos-rel {
+    position: relative;
+}
+
 // Global class to generally apply to Rows to apply uniform padding
 .padding {
     padding: @padding-base;
@@ -116,19 +120,6 @@ table tr:last-child {
     overflow: hidden;
 }
 
-.no-padding {
-    padding: 0;
-}
-
-.no-margin {
-    margin: 0 !important;
-}
-
-.no-bottom {
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
 .fade.ng-hide {
   opacity: 0;
 }
@@ -164,6 +155,9 @@ table tr:last-child {
 }
 
 .card {
+    margin-top: 0;
+    margin-bottom: 20px;
+
     .heading {
         margin-top: @margin-base / 2;
         margin-bottom: @margin-base;
@@ -383,4 +377,17 @@ table.striped > tbody > tr:nth-child(even) {
     &.success {
         background-color: #279e0a;
     }
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-bottom {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }

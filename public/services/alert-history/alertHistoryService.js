@@ -36,54 +36,55 @@ app.service('AlertHistoryService', function(
     };
 
     factory.applyFilter = function(filters) {
-        if (factory.inProgress === false) {
-            factory.resetData();
-            factory.inProgress = true;
-            var url = ConfigDataService.apiUrl + '/alerts/history/latest?embed=maps';
-
-            // Servers = [1,10,13,17,25,1000,2000];
-            if (filters.servers && filters.servers.length > 0) {
-                url += '&servers=' + filters.servers.toString();
-            }
-            // Zones = [2,4,6,8];
-            if (filters.zones && filters.zones.length > 0) {
-                url += '&zones=' + filters.zones.toString();
-            }
-
-            // Factions = ['vs','nc','tr','draw'];
-            if (filters.factions && filters.factions.length > 0) {
-                url += '&factions=' + filters.factions.toString();
-            }
-
-            // Brackets = ['MOR','AFT','PRI'];
-            if (filters.brackets && filters.brackets.length > 0) {
-                url += '&brackets=' + filters.brackets.toString();
-            }
-
-            factory.empty = false;
-
-            // Get the data
-            $http({
-                method: 'GET',
-                url: url,
-            }).then(function(data) {
-                var returned = data.data.data; // #Dataception
-
-                if (returned.length === 0) {
-                    // Stop here and return
-                    factory.empty = true;
-                    return false;
-                }
-
-                // Generate metrics and transform timestamps
-                angular.forEach(returned, function(alert) {
-                    alert = factory.parseAlert(alert); // Parse the alert and return
-                });
-
-                factory.history = returned;
-                factory.inProgress = false;
-            });
+        if (factory.inProgress === true) {
+            return;
         }
+        factory.resetData();
+        factory.inProgress = true;
+        var url = ConfigDataService.apiUrl + '/alerts/history/latest?embed=maps';
+
+        // Servers = [1,10,13,17,25,1000,2000];
+        if (filters.servers && filters.servers.length > 0) {
+            url += '&servers=' + filters.servers.toString();
+        }
+        // Zones = [2,4,6,8];
+        if (filters.zones && filters.zones.length > 0) {
+            url += '&zones=' + filters.zones.toString();
+        }
+
+        // Factions = ['vs','nc','tr','draw'];
+        if (filters.factions && filters.factions.length > 0) {
+            url += '&factions=' + filters.factions.toString();
+        }
+
+        // Brackets = ['MOR','AFT','PRI'];
+        if (filters.brackets && filters.brackets.length > 0) {
+            url += '&brackets=' + filters.brackets.toString();
+        }
+
+        factory.empty = false;
+
+        // Get the data
+        $http({
+            method: 'GET',
+            url: url,
+        }).then(function(data) {
+            var returned = data.data.data; // #Dataception
+
+            if (returned.length === 0) {
+                // Stop here and return
+                factory.empty = true;
+                return false;
+            }
+
+            // Generate metrics and transform timestamps
+            angular.forEach(returned, function(alert) {
+                alert = factory.parseAlert(alert); // Parse the alert and return
+            });
+
+            factory.history = returned;
+            factory.inProgress = false;
+        });
     };
 
     // Parses alerts to add to the list

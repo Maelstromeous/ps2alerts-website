@@ -1,4 +1,8 @@
-app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataService) {
+app.service('HomeVictoryStatisticsService', function(
+    $http,
+    $filter,
+    ConfigDataService
+) {
     var factory = {
         victories: {},
         dominations: {},
@@ -9,7 +13,8 @@ app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataServ
             dominations: {
                 total: 0
             }
-        }
+        },
+        inProgress: false
     };
 
     factory.increaseAlertTotal = function() {
@@ -32,7 +37,7 @@ app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataServ
         factory.totals.dominations[faction]++;
     };
 
-    factory.init = function() {
+    factory.resetData = function() {
         // Instantiate the object properties
 
         factory.totals.alerts.total = 0;
@@ -50,11 +55,41 @@ app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataServ
                 factory.totals.dominations[faction] = 0;
             });
         });
+    };
+
+    factory.applyFilter = function(filters) {
+        console.log('bewbs');
+        console.log('filters', filters);
+
+        if (factory.inProgress === true) {
+            return;
+        }
+        factory.resetData();
+        factory.inProgress = true;
+
+        // Date From / To
+        var params = '?dateFrom=' + $filter('date')(filters.dateFrom, 'yyyy-MM-dd');
+        params += '&dateTo=' + $filter('date')(filters.dateTo, 'yyyy-MM-dd');
+
+        // Servers = [1,10,13,17,25,1000,2000];
+        if (filters.servers && filters.servers.length > 0) {
+            params += '&servers=' + filters.servers.toString();
+        }
+
+        // Zones = [2,4,6,8];
+        if (filters.zones && filters.zones.length > 0) {
+            params += '&zones=' + filters.zones.toString();
+        }
+
+        // Brackets = ['MOR','AFT','PRI'];
+        if (filters.brackets && filters.brackets.length > 0) {
+            params += '&brackets=' + filters.brackets.toString();
+        }
 
         // Get the data
         $http({
             method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/counts/victories',
+            url: ConfigDataService.apiUrl + '/alerts/counts/victories' + params
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
             angular.forEach(returned, function(values, server) {
@@ -69,7 +104,7 @@ app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataServ
 
         $http({
             method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/counts/dominations',
+            url: ConfigDataService.apiUrl + '/alerts/counts/dominations' + params
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
             angular.forEach(returned, function(values, server) {
