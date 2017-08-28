@@ -1,4 +1,7 @@
-app.controller('HomeTimelineController', function ($scope, HomeTimelineService) {
+app.controller('HomeTimelineController', function (
+    $scope,
+    HomeTimelineService
+) {
     $scope.timelineStats = HomeTimelineService;
     $scope.loadedTimeline = false;
 

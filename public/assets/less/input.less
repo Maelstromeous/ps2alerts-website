@@ -48,3 +48,44 @@ select:focus {
   border-top: 0.375em solid #26a69a;
   pointer-events: none;
 }
+
+filters {
+  text-align: center;
+
+  .filter-wrapper {
+    margin-bottom: 0;
+
+    input,
+    select {
+      margin-bottom: 0 !important;
+      border-bottom: 1px solid #26a69a;
+    }
+
+    select {
+      height: 129px;
+      color: #fff;
+
+      option {
+        color: #fff;
+
+        &:disabled {
+          color: #ccc;
+        }
+      }
+
+      @media @md-down {
+        height: 124px;
+      }
+    }
+
+    label {
+      margin: @padding-base * 0.5 0;
+      display: block;
+    }
+  }
+}
+
+.picker__select--month.browser-default,
+.picker__select--year.browser-default {
+  color: #222;
+}

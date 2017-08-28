@@ -1,6 +1,17 @@
-<article id="homepage">
-    <div class="row" ng-controller="HomeNoticeController">
+<article id="homepage" ng-controller="HomeDateFilterController">
+    <div class="row row-no-margin" ng-controller="HomeNoticeController">
         <div homepage-announcement></div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 no-margin">
+            <filters
+                    class="filters"
+                    id="home-date-filters"
+                    filters="filters"
+                    config="config"
+            ></filters>
+        </div>
     </div>
 
     <div class="row" id="home-nav">
@@ -36,8 +47,7 @@
             </ul>
         </div>
     </div>
-
-    <main home-victories id="home-victories"></main>
-    <main home-combat id="home-combat"></main>
-    <main home-vehicles id="home-vehicles"></main>
+    <section home-victories id="home-victories"></section>
+    <section home-combat id="home-combat"></section>
+    <section home-vehicles id="home-vehicles"></section>
 </article>
