@@ -102,7 +102,7 @@ app.service('RealtimeMetricsService', function(
                 ConfigDataService.maelChar(message.attackerID) ||
                 ConfigDataService.maelChar(message.victimID)
             ) {
-                console.log('Developer charater found in populateCombatPlayers!', message);
+                console.log('Developer character found in populateCombatPlayers!', message);
             }
 
             // PROCESS ATTACKER
@@ -146,7 +146,7 @@ app.service('RealtimeMetricsService', function(
             }
 
             if (!victim && message.attackerID !== message.victimID) {
-                console.log('Victim not found... adding');
+                // console.log('Victim not found... adding');
                 newVictim.id = message.victimID;
                 newVictim.faction = message.victimFaction;
                 newVictim.name = message.victimName;
@@ -156,7 +156,7 @@ app.service('RealtimeMetricsService', function(
             }
 
             if (promises.length > 0) {
-                console.log('Promises', promises);
+                // console.log('Promises', promises);
                 // If we've had to make changes, update the data we send back
                 Promise.all(promises).then(function() {
                     attackerRef = _.findIndex(
@@ -178,8 +178,8 @@ app.service('RealtimeMetricsService', function(
                         if (!attacker && !victim) {
                             which = 'Both';
                         }
-                        console.log('attackerID', message.attackerID);
-                        console.log('victimID', message.victimID);
+                        // console.log('attackerID', message.attackerID);
+                        // console.log('victimID', message.victimID);
                         reject(which + ' could not be determined, EVEN AFTER PROMISE!');
                     }
                     resolve({
