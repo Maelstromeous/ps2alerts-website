@@ -16,5 +16,6 @@
        "checkTypes": "capitalizedNativeCase",
        "checkRedundantAccess": true,
        "requireNewlineAfterDescription": true
-   }
+   },
+   "excludeFiles": ["template/common/scripts.html"]
 }
