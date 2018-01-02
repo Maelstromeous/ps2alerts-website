@@ -8,10 +8,26 @@ header {
         display: block;
     }
 
-    #site-alert {
+    #site-notice {
+        padding: @padding-base * 0.5;
         text-align: center;
-        background-color: @background-tr;
-        padding: @padding-base 0;
+
+        small {
+            font-weight: normal;
+        }
+
+        &.critical {
+            background-color: @background-tr;
+        }
+        &.warning {
+            background-color: #c57600;
+        }
+        &.notice {
+            background-color: #096ec5;
+        }
+        &.success {
+            background-color: #279e0a;
+        }
 
         p {
             margin: 0;
