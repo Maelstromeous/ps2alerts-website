@@ -44,7 +44,7 @@ app.controller('HomeTimelineController', function ($scope, HomeTimelineService) 
             chart: {
                 backgroundColor: '',
                 style: {
-                    color: '#FFF',
+                    color: '#FFF'
                 },
                 events: {
                     redraw: function() {
@@ -101,7 +101,7 @@ app.controller('HomeTimelineController', function ($scope, HomeTimelineService) 
                     index: 7,
                     text: 'All'
                 }],
-                selected: 3,
+                selected: 4
             },
 
             navigator: {

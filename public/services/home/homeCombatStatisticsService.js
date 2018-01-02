@@ -37,7 +37,7 @@ app.service('HomeCombatStatisticsService', function($http, $log, ConfigDataServi
         // Get the data
         $http({
             method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/combat/totals',
+            url: ConfigDataService.apiUrl + '/alerts/combat/totals'
         }).then(function(data) {
             factory.metrics = data.data;
             factory.metricsLoaded = 1;
@@ -51,7 +51,7 @@ app.service('HomeCombatStatisticsService', function($http, $log, ConfigDataServi
 
         $http({
             method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/combat/classTotals',
+            url: ConfigDataService.apiUrl + '/alerts/combat/classTotals'
         }).then(function(data) {
             factory.classMetrics = data.data;
             factory.classMetricsLoaded = 1;

@@ -12,7 +12,7 @@ app.service('HomeTimelineService', function ($http, $log, ConfigDataService, $ro
         // Get the data
         $http({
             method : 'GET',
-            url    : ConfigDataService.apiUrl + '/alerts/counts/daily',
+            url    : ConfigDataService.apiUrl + '/alerts/counts/daily'
         }).then(function(data) {
             var returned = data.data.data; //#dataception
 
@@ -22,7 +22,7 @@ app.service('HomeTimelineService', function ($http, $log, ConfigDataService, $ro
 
             $rootScope.$broadcast('timeline-loaded', 'loaded');
         });
-    }
+    };
 
     return factory;
 });

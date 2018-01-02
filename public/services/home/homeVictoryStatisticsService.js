@@ -54,7 +54,7 @@ app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataServ
         // Get the data
         $http({
             method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/counts/victories',
+            url: ConfigDataService.apiUrl + '/alerts/counts/victories'
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
             angular.forEach(returned, function(values, server) {
@@ -69,7 +69,7 @@ app.service('HomeVictoryStatisticsService', function($http, $log, ConfigDataServ
 
         $http({
             method: 'GET',
-            url: ConfigDataService.apiUrl + '/alerts/counts/dominations',
+            url: ConfigDataService.apiUrl + '/alerts/counts/dominations'
         }).then(function(data) {
             var returned = data.data.data; // #Dataception
             angular.forEach(returned, function(values, server) {

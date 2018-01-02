@@ -102,7 +102,7 @@ app.service('HomeZoneVictoryService', function ($http, $rootScope, ConfigDataSer
         return new Promise(function(resolve, reject) {
             $http({
                 method : 'GET',
-                url    : ConfigDataService.apiUrl + '/alerts/counts/victories?zones=' + zone,
+                url    : ConfigDataService.apiUrl + '/alerts/counts/victories?zones=' + zone
             }).then(function(data) {
                 return resolve(data.data.data); //#Dataception
             });
