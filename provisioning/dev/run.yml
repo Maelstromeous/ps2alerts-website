@@ -34,6 +34,11 @@
         project_src: .
         state: present
 
+    - name: "DEV BUILD: Environment : Inject .env"
+      copy:
+        src: env.dist
+        dest: ../../.env
+
     - name: "DEV BUILD : NPM : Get Dependencies"
       docker_container:
         name: npm
