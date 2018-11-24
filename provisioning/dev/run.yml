@@ -21,6 +21,14 @@
         - access.log
         - error.log
 
+    - name: "DEV BUILD : Infrastructure : Composer : Install"
+      docker_container:
+        name: composer
+        image: composer:latest
+        volumes:
+          - ../../:/app
+        command: install
+
     - name: "DEV BUILD : Infrastructure : Docker : Run Containers"
       docker_service:
         project_src: .
