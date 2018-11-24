@@ -12,8 +12,7 @@ module.exports = function(grunt) {
                     'public/assets/js/deps.js': [
                         'node_modules/angular/angular.min.js',
                         'node_modules/angular-cookies/angular-cookies.min.js',
-                        'node_modules/angular-route/angular-route.min.js',
-                        'public/assets/js/jsloader.js'
+                        'node_modules/angular-route/angular-route.min.js'
                     ]
                 }
             },
@@ -29,7 +28,7 @@ module.exports = function(grunt) {
                         'public/controllers/**/*.js',
                         'public/directives/**/*.js',
                         'public/services/**/*.js',
-                        'public/assets/js/change-log.js',
+                        'public/assets/js/change-log.js'
                     ]
                 }
             }
@@ -97,7 +96,6 @@ module.exports = function(grunt) {
                         baseUrl: 'http://dev.ps2alerts.com',
                         apiUrl: 'http://dev.api.ps2alerts.com/v2',
                         websocketUrl: 'ws://127.0.0.1:1337?apikey=FOO'
-                        //websocketUrl: 'ws.ps2alerts.com:1337?apikey=FOO'
                     }
                 }
             },

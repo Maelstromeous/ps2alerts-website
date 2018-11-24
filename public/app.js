@@ -3,8 +3,7 @@
 var app = angular.module('Ps2Alerts', [
     'ngRoute',
     'config',
-    'ngCookies',
-    'ngLoadScript'
+    'ngCookies'
 ]);
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider
@@ -77,8 +76,6 @@ app.run(function(
     $location,
     AnalyticsService
 ) {
-    var analytics = AnalyticsService;
-
     $rootScope.$on('$routeChangeSuccess', function(event, current) {
         $templateCache.removeAll();
         $rootScope.title = current.$$route.title + ' - PS2Alerts';
