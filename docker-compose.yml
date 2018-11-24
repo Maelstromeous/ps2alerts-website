@@ -10,31 +10,13 @@ services:
             - ../:/var/www/html # NGINX also needs access to serve statics
         environment:
             - VIRTUAL_HOST=dev.ps2alerts.com
+    php:
+        image: php7.3
     composer:
         image: composer/composer
         volumes:
             - .:/app
         command: install
-    npm:
-        image: digitallyseamless/nodejs-bower-grunt
-        volumes:
-            - .:/data
-        command: npm install
-    bower:
-        image: digitallyseamless/nodejs-bower-grunt
-        volumes:
-            - ./public:/data
-        command: bower install
-    grunt:
-        image: digitallyseamless/nodejs-bower-grunt
-        volumes:
-            - .:/data
-        command: "grunt envDev"
-    gruntwatch:
-        image: digitallyseamless/nodejs-bower-grunt
-        volumes:
-            - .:/data
-        command: "grunt watch"
 networks:
     default:
         external:

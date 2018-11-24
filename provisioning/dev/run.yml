@@ -1,0 +1,35 @@
+---
+- hosts: dev
+  tasks:
+    - name: "DEV BUILD : Infrastructure : Docker : Create Networks"
+      docker_network:
+        name: ps2alerts
+        state: present
+
+    - name: "DEV BUILD : Infrastructure : Create NGINX log dir"
+      file:
+        path: logs/nginx
+        state: directory
+        mode: 0777
+
+    - name: "DEV BUILD : Infrastructure : Create / Flush NGINX logs"
+      copy:
+        content: ""
+        dest: logs/nginx/{{ item }}
+        force: yes
+      with_items:
+        - access.log
+        - error.log
+
+    - name: "DEV BUILD : Infrastructure : Docker : Run Containers"
+      docker_service:
+        project_src: .
+        state: present
+
+    - name: "DEV BUILD : NPM : Get Dependencies"
+      docker_container:
+        name: npm
+        image: mkenney/npm:latest
+        volumes:
+          - ../:/src:rw
+        command: npm install

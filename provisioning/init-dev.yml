@@ -1,0 +1,15 @@
+---
+
+- hosts: dev
+  become: yes
+  roles:
+    - docker
+
+- hosts: dev
+  become: yes
+  tasks:
+    - name: "Ensure hosts file entry is present"
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^dev.ps2alerts.com'
+        line: 'dev.ps2alerts.com localhost'

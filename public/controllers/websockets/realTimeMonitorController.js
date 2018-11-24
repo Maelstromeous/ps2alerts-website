@@ -2,7 +2,7 @@ app.controller('RealTimeMonitorController', function($scope, ConfigDataService, 
     $scope.config    = ConfigDataService;
     $scope.websocket = WebsocketService;
 
-    $scope.websocket.hide = 0;
+    $scope.websocket.hide = 1;
     $scope.websocket.disabled = 0;
     $scope.message = 'Alert collection has been disabled!';
     $scope.messageCaption = '12-Jun-2017: Extended Census API is experiencing issues. Collection has been disabled to prevent statistical damage.';

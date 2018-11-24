@@ -1,0 +1,12 @@
+---
+- name: Create group "docker"
+  group:
+    name: docker
+    state: present
+
+- name: Create priviledged user "ubuntu" and add to docker group
+  user:
+    name: ubuntu
+    groups: sudo,docker
+    append: yes
+    shell: /bin/bash

@@ -1,0 +1,9 @@
+# This is used to manage Ansible role dependencies
+# http://docs.ansible.com/galaxy.html#installing-multiple-roles-from-a-file
+# Install with: `ansible-galaxy install -r ansible-requirements.yml`
+
+- src: geerlingguy.pip
+#- src: geerlingguy.ntp
+#- src: geerlingguy.mysql
+#- src: galexrt.timezone
+- src: geerlingguy.docker
