@@ -18,6 +18,7 @@ app.service('AlertWebsocketService', function(
     });
 
     factory.initAndSubscribe = function(resultID) {
+        return false;
         console.log('Alert websocket subscribing to alert...');
         factory.webSocket = new WebSocket(ConfigDataService.websocketUrl);
 

@@ -11,11 +11,12 @@ app.service('WebsocketService', function(
     factory.loaded = 0;
     factory.connecting = 0;
     factory.middlemanDown = 0;
-    factory.middlemanCheck;
+    factory.middlemanCheck = null;
 
     factory.actives = null;
 
     factory.initWebSocket = function() {
+        return false;
         factory.webSocket = new WebSocket(ConfigDataService.websocketUrl);
         factory.connecting = 1;
 
@@ -244,7 +245,7 @@ app.service('WebsocketService', function(
     };
 
     factory.parseMiddleman = function(message) {
-        if (message.value == '0') {
+        if (parseInt(message.value) === 0) {
             factory.middlemanDown = 1;
 
             if (!factory.middlemanCheck) {
@@ -255,7 +256,7 @@ app.service('WebsocketService', function(
             }
         }
 
-        if (message.value == '1') {
+        if (parseInt(message.value) === 0) {
             factory.middlemanDown = 0;
             factory.loaded = 1;
 
