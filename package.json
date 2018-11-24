@@ -1,0 +1,30 @@
+{
+  "name": "ps2alerts-website",
+  "version": "5.0.0",
+  "description": "Planetside 2 Alert Statistics",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Maelstromeous@github.com/Maelstromeous/ps2alerts-website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maelstromeous/ps2alerts-website/issues"
+  },
+  "homepage": "https://github.com/Maelstromeous/ps2alerts-website#readme",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-contrib-less": "latest",
+    "grunt-contrib-watch": "latest"
+  },
+  "dependencies": {
+    "grunt-concurrent": "^2.1.0",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-ng-constant": "latest"
+  }
+}

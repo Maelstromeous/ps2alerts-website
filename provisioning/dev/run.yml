@@ -1,6 +1,9 @@
 ---
 - hosts: dev
   tasks:
+    - name: "DEV BUILD : Facts : Get username for perms"
+      local_action: command whoami
+      register: username
     - name: "DEV BUILD : Infrastructure : Docker : Create Networks"
       docker_network:
         name: ps2alerts
@@ -21,13 +24,26 @@
         - access.log
         - error.log
 
-    - name: "DEV BUILD : Infrastructure : Composer : Install"
+    - name: "DEV BUILD : Dependencies : Composer : Install"
       docker_container:
-        name: composer
+        name: ps2alerts-website-composer
         image: composer:latest
         volumes:
           - ../../:/app
         command: install
+        user: 1000:1000
+        auto_remove: yes
+
+    - name: "DEV BUILD : Dependencies : npm : Install"
+      docker_container:
+        name: ps2alerts-website-npm
+        image: node:latest
+        volumes:
+          - ../../:/src:rw
+        working_dir: "/src"
+        command: "npm install"
+        user: 1000:1000
+        auto_remove: yes
 
     - name: "DEV BUILD: Environment : Inject .env"
       copy:
@@ -38,11 +54,3 @@
       docker_service:
         project_src: .
         state: present
-
-    - name: "DEV BUILD : NPM : Get Dependencies"
-      docker_container:
-        name: npm
-        image: mkenney/npm:latest
-        volumes:
-          - ../:/src:rw
-        command: npm install
