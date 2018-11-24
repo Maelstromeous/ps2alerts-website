@@ -10,15 +10,15 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/assets/js/deps.js': [
-                        'public/bower_components/jquery/dist/jquery.min.js',
-                        'public/bower_components/angular/angular.min.js',
-                        'public/bower_components/angular-cookies/angular-cookies.min.js',
-                        'public/bower_components/angular-route/angular-route.min.js',
-                        'public/bower_components/jquery.countdown/dist/jquery.countdown.min.js',
+                        'node_modules/jquery/dist/jquery.min.js',
+                        'node_modules/angular/angular.min.js',
+                        'node_modules/angular-cookies/angular-cookies.min.js',
+                        'node_modules/angular-route/angular-route.min.js',
+                        'node_modules/jquery.countdown/dist/jquery.countdown.min.js',
                         'public/assets/js/jsloader.js',
-                        'public/bower_components/lodash/dist/lodash.min.js',
-                        'public/bower_components/datatables.net/js/jquery.dataTables.min.js',
-                        'public/bower_components/highcharts/highstock.js'
+                        'node_modules/lodash/dist/lodash.min.js',
+                        'node_modules/datatables.net/js/jquery.dataTables.min.js',
+                        'node_modules/highcharts/highstock.js'
                     ]
                 }
             },
@@ -47,8 +47,8 @@ module.exports = function(grunt) {
             target: {
                 files: {
                     'public/assets/css/main.css': [
-                        'public/bower_components/SpinKit/css/spinners/7-three-bounce.css',
-                        'public/bower_components/datatables.net-dt/css/jquery.dataTables.css',
+                        'node_modules/SpinKit/css/spinners/7-three-bounce.css',
+                        'node_modules/datatables.net-dt/css/jquery.dataTables.css',
                         'public/assets/css/compiled/main.css'
                     ]
                 }

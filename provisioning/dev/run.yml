@@ -37,13 +37,34 @@
     - name: "DEV BUILD : Dependencies : npm : Install"
       docker_container:
         name: ps2alerts-website-npm
-        image: node:latest
+        image: digitallyseamless/nodejs-bower-grunt
         volumes:
           - ../../:/src:rw
         working_dir: "/src"
         command: "npm install"
         user: 1000:1000
         auto_remove: yes
+
+    - name: "DEV BUILD : Environment : Grunt : env"
+      docker_container:
+        name: ps2alerts-website-grunt-env
+        image: digitallyseamless/nodejs-bower-grunt
+        volumes:
+          - ../../:/src:rw
+        working_dir: "/src"
+        command: "grunt envDev"
+        user: 1000:1000
+        auto_remove: yes
+
+    - name: "DEV BUILD : Environment : Grunt : watch"
+      docker_container:
+        name: ps2alerts-website-grunt-watch
+        image: digitallyseamless/nodejs-bower-grunt
+        volumes:
+          - ../../:/src:rw
+        working_dir: "/src"
+        command: "grunt watch"
+        user: 1000:1000
 
     - name: "DEV BUILD: Environment : Inject .env"
       copy:

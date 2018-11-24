@@ -1,7 +1,7 @@
 version: "3"
 services:
   nginx:
-    container_name: ps2alerts_website_ngnix
+    container_name: ps2alerts-website-ngnix
     image: nginx:latest
     ports:
       - "80:80"
@@ -10,7 +10,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - ./logs/nginx:/var/log/nginx:rw
   php:
-    container_name: ps2alerts_website_php
+    container_name: ps2alerts-website-php
     image: maelstromeous/docker:php-72
     ports:
       - "9000:9000"
