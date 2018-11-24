@@ -31,7 +31,6 @@
     "angular-cookies": "^1.7.5",
     "spinkit": "^1.2.5",
     "jquery.countdown": "^1.2.8",
-    "lodash": "^4.17.11",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "highcharts": "^4.2.7"

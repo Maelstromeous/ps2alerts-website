@@ -45,6 +45,17 @@
         user: 1000:1000
         auto_remove: yes
 
+    - name: "DEV BUILD : Environment : Grunt : Run"
+      docker_container:
+        name: ps2alerts-website-grunt
+        image: digitallyseamless/nodejs-bower-grunt
+        volumes:
+          - ../../:/src:rw
+        working_dir: "/src"
+        command: "grunt"
+        user: 1000:1000
+        auto_remove: yes
+
     - name: "DEV BUILD : Environment : Grunt : env"
       docker_container:
         name: ps2alerts-website-grunt-env
@@ -64,6 +75,7 @@
           - ../../:/src:rw
         working_dir: "/src"
         command: "grunt watch"
+        restart: yes
         user: 1000:1000
 
     - name: "DEV BUILD: Environment : Inject .env"
@@ -75,3 +87,4 @@
       docker_service:
         project_src: .
         state: present
+        restarted: yes

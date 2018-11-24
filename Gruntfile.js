@@ -10,15 +10,10 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/assets/js/deps.js': [
-                        'node_modules/jquery/dist/jquery.min.js',
                         'node_modules/angular/angular.min.js',
                         'node_modules/angular-cookies/angular-cookies.min.js',
                         'node_modules/angular-route/angular-route.min.js',
-                        'node_modules/jquery.countdown/dist/jquery.countdown.min.js',
-                        'public/assets/js/jsloader.js',
-                        'node_modules/lodash/dist/lodash.min.js',
-                        'node_modules/datatables.net/js/jquery.dataTables.min.js',
-                        'node_modules/highcharts/highstock.js'
+                        'public/assets/js/jsloader.js'
                     ]
                 }
             },
